@@ -5,7 +5,7 @@ def main():
     image_dir_path = "./demo/data/images"
 
     fnet = FaceNet()
-    # fnet.load_model(model_dir_path)
+    fnet.load_model(model_dir_path)
 
     database = {}
 #     database["danielle"] = fnet.img_to_encoding(image_dir_path + "/danielle.png")
