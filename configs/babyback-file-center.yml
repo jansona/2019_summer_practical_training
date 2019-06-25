@@ -1,0 +1,67 @@
+logging:
+  level:
+    root: info
+    com.cloud: debug
+  file: logs/${spring.application.name}.log
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://47.105.220.129:1433;DatabaseName=BW-EMS
+    username: sa
+    password: G1veMeP@ss
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: bacco
+    password: bacco-dev
+    virtual-host: /
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  mvc:
+    servlet:
+      load-on-startup: 1
+  aop:
+    proxy-target-class: true
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+    sender:
+      type: web
+mybatis:
+  type-aliases-package: com.budweiser.ems.file.model
+  mapper-locations: classpath:/mybatis-mappers/*
+  configuration:
+    mapUnderscoreToCamelCase: true
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8895/api-oauth/user-me
+      prefer-token-info: false
+file:
+  local:
+    path: c:/CustomProjects/localFiles
+   # path: d:/localFile
+    prefix: /statics
+    urlPrefix: http://192.168.0.103:8895/api-file${file.local.prefix}
+  aliyun:
+    endpoint: xxx
+    accessKeyId: xxx
+    accessKeySecret: xxx
+    bucketName: xxx
+    domain: https://xxx
+ribbon:
+  ReadTimeout: 120000
+  ConnectTimeout: 120000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1260000
