@@ -37,13 +37,15 @@ public class UserController {
                               @RequestParam(value = "tel",required = false,defaultValue ="") String tel,
                               @RequestParam(value = "email",required = false,defaultValue ="") String email
                          ){
-        Specification<User> userSpecification =apiService.createSpecification(id,account,name,tel,email);
+        Specification<User> userSpecification =apiService.createUserSpecification(id,account,name,tel,email);
         return userRepository.findAll(userSpecification,pageable);
     }
-    @ApiOperation(value="新增一个用户")
+    @ApiOperation(value="删除一个用户")
     @DeleteMapping("")
     public void deleteUser(@RequestParam(value = "id") Integer id){
         userRepository.deleteById(id);
     }
+
+
 
 }
