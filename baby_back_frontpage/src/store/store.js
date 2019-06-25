@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
-import sys from './modules/system/sys'
-import global from './modules/global/global'
+//import sys from './modules/system/sys'
+//import global from './modules/global/global'
 import Vue from 'vue'
 Vue.use(Vuex)
 export const store = new Vuex.Store(
@@ -12,8 +12,8 @@ export const store = new Vuex.Store(
       hasLoadedRouter: false
     },
     modules: {
-      sys,
-      global
+      //sys,
+      //global
     },
     mutations: {
       setStatus(state, status) {
