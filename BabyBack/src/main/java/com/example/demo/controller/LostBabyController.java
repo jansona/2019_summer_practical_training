@@ -64,9 +64,9 @@ public class LostBabyController {
         Specification<LostBaby> lostBabySpecification =apiService.createLostBabySpecification(id,place,name,height,nativePlace,date);
         return new ResponseBase(200,"查找成功",lostBabyRepository.findAll(lostBabySpecification,pageable));
     }
-    @ApiOperation(value="新增一个用户")
+    @ApiOperation(value="删除某信息")
     @DeleteMapping("")
-    public ResponseBase deleteUser(@RequestParam(value = "id") Integer id){
+    public ResponseBase deleteLostBaby(@RequestParam(value = "id") Integer id){
         lostBabyRepository.deleteById(id);
         return new ResponseBase().succes("删除成功");
     }
