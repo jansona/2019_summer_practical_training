@@ -70,6 +70,7 @@ public class LostBabyController {
         lostBabyRepository.deleteById(id);
         return new ResponseBase().succes("删除成功");
     }
+
     @ApiOperation(value="根据关键字查找用户")
     @GetMapping("/{key}")
     public ResponseBase findLostBabyByKey(@PathVariable String key){
@@ -77,6 +78,7 @@ public class LostBabyController {
         for (String str:apiService.initKeyWord(key)) {
             set.addAll(keyWordRepository.findByName(str).getLostBabies());
         }
+
         return new ResponseBase(200,"查询成功",set);
     }
 
