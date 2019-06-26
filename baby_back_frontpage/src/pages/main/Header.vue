@@ -55,6 +55,7 @@
 <script>
 export default {
   name: "Header",
+  inject: ['reload'],
   data() {
     return {
       activeIndex: "1",
@@ -64,7 +65,8 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
+      this.$emit("on-navbar-click");
       if(key == 2) {
         this.$route
       }
@@ -81,7 +83,7 @@ export default {
   },
   computed: {
     activeMenuIndex() {
-      console.log("/" + this.$route.path.split("/").reverse()[0])
+      // console.log("/" + this.$route.path.split("/").reverse()[0])
       return "/" + this.$route.path.split("/").reverse()[0];
     }
   }

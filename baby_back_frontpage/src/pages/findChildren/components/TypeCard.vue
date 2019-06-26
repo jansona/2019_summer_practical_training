@@ -40,11 +40,10 @@ export default {
   methods: {
     showImg(url) {
       if (url === null || url === "") {
-        console.log('待加载的图片地址为:' + url)
-        let url = "@/assets/house.jpg"
+        // console.log('待加载的图片地址为:' + url)
         return require("@/assets/house.jpg");
       } else {
-        console.log('待加载的图片地址为:' + url)
+        // console.log('待加载的图片地址为:' + url)
         return require("@/assets/"+ url +"");
       }
     },
