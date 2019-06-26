@@ -3,3 +3,4 @@ data_crawl/data/*
 keras_face/demo/
 *.zip
 *.tar
+*.jpg

@@ -15,14 +15,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.StringReader;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @RestController
 @RequestMapping(value = "LostBaby")
 public class LostBabyController {
+
+    enum Action{
+        AS_PROFILE,
+        AS_PICS,
+        RECOGNITION
+    }
+
     @Autowired
     ApiService apiService;
     @Autowired

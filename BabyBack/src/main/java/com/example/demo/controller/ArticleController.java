@@ -40,6 +40,14 @@ public class ArticleController {
         return articleRepository.findAll(articleSpecification, pageable);
     }
 
+//    @ApiOperation(value = "查找特定用户的文章")
+//    @PostMapping("")
+//    public Page<Article> findArticleOfUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
+//        Pageable pageable, @RequestParam(value = "user_id") String user_id
+//    ){
+//
+//    }
+
     @ApiOperation(value="删除一篇文章")
     @DeleteMapping("")      // TODO 填写节点
     public void deleteArticle(@RequestParam(value = "id") Integer id){
