@@ -23,26 +23,34 @@ public class ArticleController {
     @Autowired
     ArticleRepository articleRepository;
 
-    @ApiOperation(value="新增一篇文章")
+    @ApiOperation(value = "新增一篇文章")
     @PutMapping("")     // TODO 填写节点
-    public Article insertArticle(@RequestBody Article article){
+    public Article insertArticle(@RequestBody Article article) {
         return articleRepository.save(article);
     }
 
-    @ApiOperation(value="查找文章")
+    @ApiOperation(value = "查找文章")
     @PostMapping("")    // TODO 填写节点
-    public Page<Article> findArticle(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
-                                       Pageable pageable,
-                               @RequestParam(value = "id",required = false,defaultValue ="") String id,
-                               @RequestParam(value = "user_id",required = false,defaultValue ="") String user_id
-    ){
+    public Page<Article> findArticle(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+                                             Pageable pageable,
+                                     @RequestParam(value = "id", required = false, defaultValue = "") String id,
+                                     @RequestParam(value = "user_id", required = false, defaultValue = "") String user_id
+    ) {
         Specification<Article> articleSpecification = apiService.createArticleSpecification(id, user_id);
         return articleRepository.findAll(articleSpecification, pageable);
     }
 
-    @ApiOperation(value="删除一篇文章")
+//    @ApiOperation(value = "查找特定用户的文章")
+//    @PostMapping("")
+//    public Page<Article> findArticleOfUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
+//        Pageable pageable, @RequestParam(value = "user_id") String user_id
+//    ){
+//
+//    }
+
+    @ApiOperation(value = "删除一篇文章")
     @DeleteMapping("")      // TODO 填写节点
-    public void deleteArticle(@RequestParam(value = "id") Integer id){
+    public void deleteArticle(@RequestParam(value = "id") Integer id) {
         articleRepository.deleteById(id);
     }
 

@@ -22,27 +22,29 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @ApiOperation(value="新增一个用户")
+    @ApiOperation(value = "新增一个用户")
     @PutMapping("")
-    public User insertUser(@RequestBody User user){
+    public User insertUser(@RequestBody User user) {
         return userRepository.save(user);
     }
-    @ApiOperation(value="查找功能")
+
+    @ApiOperation(value = "查找功能")
     @PostMapping("")
-    public Page<User> findUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
-                                     Pageable pageable,
-                              @RequestParam(value = "id",required = false,defaultValue ="") String id,
-                              @RequestParam(value = "account",required = false,defaultValue ="") String account,
-                              @RequestParam(value = "name",required = false,defaultValue ="") String name,
-                              @RequestParam(value = "tel",required = false,defaultValue ="") String tel,
-                              @RequestParam(value = "email",required = false,defaultValue ="") String email
-                         ){
-        Specification<User> userSpecification =apiService.createUserSpecification(id,account,name,tel,email);
-        return userRepository.findAll(userSpecification,pageable);
+    public Page<User> findUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+                                       Pageable pageable,
+                               @RequestParam(value = "id", required = false, defaultValue = "") String id,
+                               @RequestParam(value = "account", required = false, defaultValue = "") String account,
+                               @RequestParam(value = "name", required = false, defaultValue = "") String name,
+                               @RequestParam(value = "tel", required = false, defaultValue = "") String tel,
+                               @RequestParam(value = "email", required = false, defaultValue = "") String email
+    ) {
+        Specification<User> userSpecification = apiService.createUserSpecification(id, account, name, tel, email);
+        return userRepository.findAll(userSpecification, pageable);
     }
-    @ApiOperation(value="删除一个用户")
+
+    @ApiOperation(value = "删除一个用户")
     @DeleteMapping("")
-    public void deleteUser(@RequestParam(value = "id") Integer id){
+    public void deleteUser(@RequestParam(value = "id") Integer id) {
         userRepository.deleteById(id);
     }
 

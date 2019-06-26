@@ -15,71 +15,87 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.StringReader;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @RestController
 @RequestMapping(value = "LostBaby")
 public class LostBabyController {
+
+    enum Action {
+        AS_PROFILE,
+        AS_PICS,
+        RECOGNITION
+    }
+
     @Autowired
     ApiService apiService;
     @Autowired
     LostBabyRepository lostBabyRepository;
     @Autowired
     KeyWordRepository keyWordRepository;
-    @ApiOperation(value="新增一个丢失儿童信息")
-    @PutMapping("")
-    public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby){
-         lostBabyRepository.save(lostBaby);
-         lostBaby=lostBabyRepository.findById(lostBaby.getId()).get();
 
-        for(String str: apiService.initKeyWord(apiService.initDescription(lostBaby))){
-            if(keyWordRepository.existsByName(str)){
-                KeyWord existK=keyWordRepository.findByName(str);
+    @ApiOperation(value = "新增一个丢失儿童信息")
+    @PutMapping("")
+    public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
+        lostBabyRepository.save(lostBaby);
+        lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
+
+        for (String str : apiService.initKeyWord(apiService.initDescription(lostBaby))) {
+            if (keyWordRepository.existsByName(str)) {
+                KeyWord existK = keyWordRepository.findByName(str);
                 existK.getLostBabies().add(lostBaby);
                 keyWordRepository.save(existK);
-            }else{
-                KeyWord kw=new KeyWord(str);
+            } else {
+                KeyWord kw = new KeyWord(str);
                 kw.getLostBabies().add(lostBaby);
                 keyWordRepository.save(kw);
             }
         }
 
+        return new ResponseBase(200, "插入成功", lostBaby);
+    }
 
-         return new ResponseBase(200,"插入成功",lostBaby);
-    }
-    @ApiOperation(value="查找功能")
+    @ApiOperation(value = "查找功能")
     @PostMapping("")
-    public ResponseBase findLostBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
-                                       Pageable pageable,
-                                        @RequestParam(value = "id",required = false,defaultValue ="") String id,
-                                        @RequestParam(value = "place",required = false,defaultValue ="") String place,
-                                        @RequestParam(value = "name",required = false,defaultValue ="") String name,
-                                        @RequestParam(value = "height",required = false,defaultValue ="") String height,
-                                        @RequestParam(value = "nativePlace",required = false,defaultValue ="") String nativePlace,
-                                        @RequestParam(value = "date",required = false,defaultValue ="") String date
-    ){
-        Specification<LostBaby> lostBabySpecification =apiService.createLostBabySpecification(id,place,name,height,nativePlace,date);
-        return new ResponseBase(200,"查找成功",lostBabyRepository.findAll(lostBabySpecification,pageable));
+    public ResponseBase findLostBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+                                             Pageable pageable,
+                                     @RequestParam(value = "id", required = false, defaultValue = "") String id,
+                                     @RequestParam(value = "place", required = false, defaultValue = "") String place,
+                                     @RequestParam(value = "name", required = false, defaultValue = "") String name,
+                                     @RequestParam(value = "height", required = false, defaultValue = "") String height,
+                                     @RequestParam(value = "nativePlace", required = false, defaultValue = "") String nativePlace,
+                                     @RequestParam(value = "date", required = false, defaultValue = "") String date
+    ) {
+        Specification<LostBaby> lostBabySpecification = apiService.createLostBabySpecification(id, place, name, height, nativePlace, date);
+        return new ResponseBase(200, "查找成功", lostBabyRepository.findAll(lostBabySpecification, pageable));
     }
-    @ApiOperation(value="删除某信息")
+
+    @ApiOperation(value = "删除某信息")
     @DeleteMapping("")
-    public ResponseBase deleteLostBaby(@RequestParam(value = "id") Integer id){
+    public ResponseBase deleteLostBaby(@RequestParam(value = "id") Integer id) {
         lostBabyRepository.deleteById(id);
         return new ResponseBase().succes("删除成功");
     }
 
-    @ApiOperation(value="根据关键字查找用户")
+    @ApiOperation(value = "根据关键字查找用户")
     @GetMapping("/{key}")
-    public ResponseBase findLostBabyByKey(@PathVariable String key){
-        Set<LostBaby> set=new HashSet<>();
-        for (String str:apiService.initKeyWord(key)) {
+    public ResponseBase findLostBabyByKey(@PathVariable String key) {
+        Set<LostBaby> set = new HashSet<>();
+        for (String str : apiService.initKeyWord(key)) {
             set.addAll(keyWordRepository.findByName(str).getLostBabies());
         }
 
-        return new ResponseBase(200,"查询成功",set);
+        return new ResponseBase(200, "查询成功", set);
     }
 
 }

@@ -12,7 +12,7 @@ public class MatchBaby {
     private Integer id;
     private String description;
     private String imagePath;
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 

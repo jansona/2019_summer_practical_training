@@ -25,26 +25,26 @@ public class MatchBabyController {
     @Autowired
     MatchBabyRepository matchBabyRepository;
 
-    @ApiOperation(value="新增孤儿")
+    @ApiOperation(value = "新增孤儿")
     @PutMapping("")     // TODO 填写节点
-    public MatchBaby insertMatchBaby(@RequestBody MatchBaby matchBaby){
+    public MatchBaby insertMatchBaby(@RequestBody MatchBaby matchBaby) {
         return matchBabyRepository.save(matchBaby);
     }
 
-    @ApiOperation(value="查找孤儿")
+    @ApiOperation(value = "查找孤儿")
     @PostMapping("")    // TODO 填写节点
-    public Page<MatchBaby> findMatchBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
-                                             Pageable pageable,
-                                     @RequestParam(value = "id",required = false,defaultValue ="") String id,
-                                     @RequestParam(value = "user_id",required = false,defaultValue ="") String user_id
-    ){
+    public Page<MatchBaby> findMatchBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+                                                 Pageable pageable,
+                                         @RequestParam(value = "id", required = false, defaultValue = "") String id,
+                                         @RequestParam(value = "user_id", required = false, defaultValue = "") String user_id
+    ) {
         Specification<MatchBaby> matchBabySpecification = apiService.createMatchBabySpecification(id, user_id);
         return matchBabyRepository.findAll(matchBabySpecification, pageable);
     }
 
-    @ApiOperation(value="删除孤儿")
+    @ApiOperation(value = "删除孤儿")
     @DeleteMapping("")      // TODO 填写节点
-    public void deleteMatchBaby(@RequestParam(value = "id") Integer id){
+    public void deleteMatchBaby(@RequestParam(value = "id") Integer id) {
         matchBabyRepository.deleteById(id);
     }
 

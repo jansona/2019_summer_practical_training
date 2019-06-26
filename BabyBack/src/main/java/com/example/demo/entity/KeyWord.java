@@ -12,13 +12,15 @@ import java.util.Set;
 public class KeyWord {
     @Id
     private String name;
-    @ManyToMany(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY)
-    private Set<LostBaby> lostBabies=new HashSet<>();
-    public KeyWord(){}
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private Set<LostBaby> lostBabies = new HashSet<>();
+
+    public KeyWord() {
+    }
+
     public KeyWord(String name) {
         this.name = name;
     }
-
 
 
     public String getName() {

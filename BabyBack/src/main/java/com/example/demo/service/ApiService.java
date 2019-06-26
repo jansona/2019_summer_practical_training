@@ -164,7 +164,7 @@ public class ApiService implements InitializingBean {
     }
 
     public Specification<Article> createArticleSpecification(String id,
-                                                          String user_id) {
+                                                             String user_id) {
 
         return new Specification<Article>() {
 
@@ -174,14 +174,8 @@ public class ApiService implements InitializingBean {
                 List<Predicate> predicatesList = new ArrayList<>();
 
                 //like示例
-                if (!id.equals("")) {
-                    Predicate contactPredicate = cb.equal(root.get("id"), Integer.valueOf(id));
-                    predicatesList.add(contactPredicate);
-                }
-                if (!user_id.equals("")) {
-                    Predicate descriptionPredicate = cb.equal(root.get("user_id"), Integer.valueOf(user_id));
-                    predicatesList.add(descriptionPredicate);
-                }
+                insertIDPredicate(id, "id", cb, root, predicatesList);
+                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));
@@ -202,14 +196,8 @@ public class ApiService implements InitializingBean {
                 List<Predicate> predicatesList = new ArrayList<>();
 
                 //like示例
-                if (!article_id.equals("")) {
-                    Predicate contactPredicate = cb.equal(root.get("article_id"), Integer.valueOf(article_id));
-                    predicatesList.add(contactPredicate);
-                }
-                if (!user_id.equals("")) {
-                    Predicate descriptionPredicate = cb.equal(root.get("user_id"), Integer.valueOf(user_id));
-                    predicatesList.add(descriptionPredicate);
-                }
+                insertIDPredicate(article_id, "article_id", cb, root, predicatesList);
+                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));
@@ -229,14 +217,8 @@ public class ApiService implements InitializingBean {
                 List<Predicate> predicatesList = new ArrayList<>();
 
                 //like示例
-                if (!id.equals("")) {
-                    Predicate contactPredicate = cb.equal(root.get("id"), Integer.valueOf(id));
-                    predicatesList.add(contactPredicate);
-                }
-                if (!user_id.equals("")) {
-                    Predicate descriptionPredicate = cb.equal(root.get("user_id"), Integer.valueOf(user_id));
-                    predicatesList.add(descriptionPredicate);
-                }
+                insertIDPredicate(id, "id", cb, root, predicatesList);
+                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));
@@ -245,10 +227,10 @@ public class ApiService implements InitializingBean {
         };
     }
 
-//    void generateIDPredicate(String value, String key, CriteriaBuilder cb, Root<?> root){
-//        if (!value.equals("")) {
-//            Predicate contactPredicate = cb.equal(root.get("article_id"), Integer.valueOf(value));
-//            predicatesList.add(contactPredicate);
-//        }
-//    }
+    void insertIDPredicate(String value, String key, CriteriaBuilder cb, Root<?> root, List<Predicate> predicatesList) {
+        if (!value.equals("")) {
+            Predicate predicate = cb.equal(root.get("article_id"), Integer.valueOf(value));
+            predicatesList.add(predicate);
+        }
+    }
 }
