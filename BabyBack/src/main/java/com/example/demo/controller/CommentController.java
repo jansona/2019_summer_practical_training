@@ -4,6 +4,7 @@ import com.example.demo.entity.Article;
 import com.example.demo.entity.Comment;
 import com.example.demo.reposity.CommentRepository;
 import com.example.demo.service.ApiService;
+import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class CommentController {
     ApiService apiService;
     @Autowired
     CommentRepository commentRepository;
+
+    PageHelper pageHelper = new PageHelper();
 
     @ApiOperation(value="新增一篇评论")
     @PutMapping("")     // TODO 填写节点
@@ -47,14 +50,7 @@ public class CommentController {
     public Page<Comment> findCommandOfArticle(Pageable page, @RequestParam(value = "article_id") Article article){
         List<Comment> result = commentRepository.findAllByArticle(article);
 
-        int pageSize = page.getPageSize();
-        int index = page.getPageNumber();
-
-        int leftIndex = index * pageSize;
-        int rightIndex = (index + 1) * pageSize;
-        rightIndex = rightIndex <= result.size() ? rightIndex : result.size();
-
-        result = result.subList(leftIndex, rightIndex);
+        pageHelper.doPage(result, page);
 
         Page<Comment> pageResult = new PageImpl(result, page, result.size());
         return pageResult;
