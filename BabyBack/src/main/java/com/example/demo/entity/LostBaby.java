@@ -27,7 +27,6 @@ public class LostBaby {
     private String otherDescription;//其他信息描述
     private String otherExplain;//其他说明
     private String relationship;//和报备人关系
-    private String imagePath;//图片路径
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
@@ -140,14 +139,6 @@ public class LostBaby {
 
     public void setRelationship(String relationship) {
         this.relationship = relationship;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 
     public User getUser() {
