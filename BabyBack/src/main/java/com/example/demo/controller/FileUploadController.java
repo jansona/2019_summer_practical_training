@@ -31,7 +31,7 @@ public class FileUploadController {
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/temp")
-    public String uploadPic(@RequestParam(value = "file") MultipartFile file, Action action) throws Exception {
+    public String uploadPic(@RequestParam(value = "file") MultipartFile file, Action action) {
         String result = "";
 
         switch (action) {
