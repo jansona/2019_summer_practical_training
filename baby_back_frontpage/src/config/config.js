@@ -7,8 +7,9 @@ if (mode === 'dev') {
 } else {
 }
 
+const fillFormUrl = baseUrl + "user/addForm"
 const URLS = {
-
+  fillFormUrl,
 }
 
 module.exports = URLS
