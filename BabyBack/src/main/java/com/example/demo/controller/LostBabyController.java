@@ -3,39 +3,29 @@ package com.example.demo.controller;
 import com.example.demo.entity.KeyWord;
 import com.example.demo.entity.LostBaby;
 import com.example.demo.entity.ResponseBase;
-import com.example.demo.entity.User;
 import com.example.demo.reposity.KeyWordRepository;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.service.ApiService;
+import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.html.Option;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.StringReader;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
+import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "LostBaby")
+@RequestMapping(value = "lost-baby")
 public class LostBabyController {
-
-    enum Action {
-        AS_PROFILE,
-        AS_PICS,
-        RECOGNITION
-    }
 
     @Autowired
     ApiService apiService;
@@ -44,8 +34,11 @@ public class LostBabyController {
     @Autowired
     KeyWordRepository keyWordRepository;
 
+    PageHelper pageHelper = new PageHelper();
+
+    @CrossOrigin
     @ApiOperation(value = "新增一个丢失儿童信息")
-    @PutMapping("")
+    @PostMapping("/insert")
     public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
         lostBabyRepository.save(lostBaby);
         lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
@@ -89,13 +82,19 @@ public class LostBabyController {
 
     @ApiOperation(value = "根据关键字查找用户")
     @GetMapping("/{key}")
-    public ResponseBase findLostBabyByKey(@PathVariable String key) {
+    public ResponseBase findLostBabyByKey(Pageable page, @PathVariable String key) {
         Set<LostBaby> set = new HashSet<>();
         for (String str : apiService.initKeyWord(key)) {
             set.addAll(keyWordRepository.findByName(str).getLostBabies());
         }
 
-        return new ResponseBase(200, "查询成功", set);
+        List result = new ArrayList();
+        result.addAll(set);
+
+        pageHelper.doPage(result, page);
+
+        Page<LostBaby> pageResult = new PageImpl(result, page, set.size());
+        return new ResponseBase(200, "查询成功", page);
     }
 
 }

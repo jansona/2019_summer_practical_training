@@ -39,19 +39,19 @@ public class ApiService implements InitializingBean {
     public String initDescription(LostBaby lostBaby) {
         StringBuilder sb = new StringBuilder();
         if (lostBaby.getBabyDescription() != null) {
-            sb.append(lostBaby.getBabyDescription());
+            sb.append(lostBaby.getBabyDescription() + " ");
         }
         if (lostBaby.getMissDescription() != null) {
-            sb.append(lostBaby.getMissDescription());
+            sb.append(lostBaby.getMissDescription() + " ");
         }
         if (lostBaby.getBackGround() != null) {
-            sb.append(lostBaby.getBackGround());
+            sb.append(lostBaby.getBackGround() + " ");
         }
         if (lostBaby.getOtherDescription() != null) {
-            sb.append(lostBaby.getOtherDescription());
+            sb.append(lostBaby.getOtherDescription() + " ");
         }
         if (lostBaby.getOtherExplain() != null) {
-            sb.append(lostBaby.getOtherExplain());
+            sb.append(lostBaby.getOtherExplain() + " ");
         }
         return sb.toString();
 

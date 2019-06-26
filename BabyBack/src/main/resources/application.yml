@@ -12,3 +12,6 @@ spring:
 
 ybg:
   store-path: d://jupyter_workplace/2019_summer_practical_training/face_recognition/
+
+server:
+  port: 18080
