@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "LostBaby")
+@RequestMapping(value = "lost-baby")
 public class LostBabyController {
 
     @Autowired
@@ -36,8 +36,9 @@ public class LostBabyController {
 
     PageHelper pageHelper = new PageHelper();
 
+    @CrossOrigin
     @ApiOperation(value = "新增一个丢失儿童信息")
-    @PutMapping("")
+    @PostMapping("/insert")
     public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
         lostBabyRepository.save(lostBaby);
         lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
