@@ -1,10 +1,10 @@
 <template>
   <el-container class="main-container">
     <el-header>
-      <home-header @headImgClick="handleHeadImgClick"></home-header>
+      <home-header @on-navbar-click="handleNavBarClick"></home-header>
     </el-header>
     <el-main>
-      <home-content></home-content>
+      <home-content ref="content"></home-content>
     </el-main>
   </el-container>
 </template>
@@ -24,9 +24,13 @@ export default {
   },
   methods: {
     handleSelect(indexPath) {
-      console.log(indexPath);
+      // console.log(indexPath);
     },
-    handleHeadImgClick() {}
+    handleHeadImgClick() {},
+    handleNavBarClick(){
+      // console.log("click!")
+      this.$refs.content.reload();
+    }
   },
   watch: {}
 };
