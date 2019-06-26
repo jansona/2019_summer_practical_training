@@ -23,6 +23,7 @@ const i18n_en = new VueI18n({
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
+import "@/assets/public.css";
 
 // 引入vuex和axios
 import { store } from '@/store/store'

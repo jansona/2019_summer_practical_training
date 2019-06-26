@@ -29,4 +29,6 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+
+
 </style>

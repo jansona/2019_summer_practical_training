@@ -1,17 +1,12 @@
 <template>
   <div class="hello">
-     <img
-      :src="require('@/assets/logo.png')"><br>
-      <img
-      :src="require('@/assets/logo.png')"><br>
-      <img
-      :src="require('@/assets/logo.png')"><br>
+     首页
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'ParentFindChildren',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

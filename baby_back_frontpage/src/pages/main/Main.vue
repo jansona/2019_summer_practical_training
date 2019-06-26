@@ -98,6 +98,9 @@ body {
   color: #333;
   text-align: center;
   /* overflow: hidden; */
+  width: 60%;
+  left: 20%;
+  position: relative;
 }
 
 body {
