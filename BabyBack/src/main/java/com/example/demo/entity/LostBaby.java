@@ -17,6 +17,8 @@ public class LostBaby {
     private Integer id;
     private String name;//失踪宝贝姓名
     private Integer age;//失踪时年龄
+    private String sex;//性别
+    private Date birthday;//生日
     private Double height;//失踪时身高
     private String place;//失踪时地点
     private String nativePlace;//失踪人籍贯
@@ -27,6 +29,7 @@ public class LostBaby {
     private String otherDescription;//其他信息描述
     private String otherExplain;//其他说明
     private String relationship;//和报备人关系
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
@@ -59,6 +62,22 @@ public class LostBaby {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public Double getHeight() {

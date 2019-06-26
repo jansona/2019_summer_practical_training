@@ -92,6 +92,14 @@ export default {
         age: 0,
         height: 0,
         place: "",
+        nativePlace: "",
+        date: "0-0-0-0",
+        babyDescription: "",
+        missDescription: "",
+        backGround: "",
+        otherDescription: "",
+        otherExplain: "",
+        relationship: "",
         
       },
       rules: {
