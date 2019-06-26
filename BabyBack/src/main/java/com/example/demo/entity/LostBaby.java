@@ -28,12 +28,12 @@ public class LostBaby {
     private String otherExplain;//其他说明
     private String relationship;//和报备人关系
     private String imagePath;//图片路径
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToMany(fetch=FetchType.EAGER,mappedBy="lostBabies")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "lostBabies")
     @JsonIgnore
-    private Set<KeyWord> keyWords= new HashSet<>();
+    private Set<KeyWord> keyWords = new HashSet<>();
 
     public LostBaby() {
     }

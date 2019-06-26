@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Recognizer {
 
-//    @Value("${ybg.store-path}")
+    //    @Value("${ybg.store-path}")
     String store_path = "d://jupyter_workplace/2019_summer_practical_training/face_recognition/";
 
     public String getStore_path() {

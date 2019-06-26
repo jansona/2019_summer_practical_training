@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 
-
 @Entity
 public class User {
     @Id
@@ -20,7 +19,7 @@ public class User {
     private String name;//姓名
     private String tel;//联系电话
     private String email;//邮箱
-    @OneToMany(mappedBy = "user", fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<LostBaby> lostBabies;//发布的走丢儿童信息
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)

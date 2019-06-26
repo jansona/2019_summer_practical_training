@@ -20,7 +20,7 @@ public class FileUploadController {
     @Value("${ybg.store-path}")
     private String store_path;
 
-    enum Action{
+    enum Action {
         AS_PROFILE,
         AS_PICS,
         RECOGNITION
@@ -31,10 +31,10 @@ public class FileUploadController {
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/temp")
-    public String uploadPic(@RequestParam(value = "file")MultipartFile file, Action action) throws Exception{
+    public String uploadPic(@RequestParam(value = "file") MultipartFile file, Action action) throws Exception {
         String result = "";
 
-        switch(action){
+        switch (action) {
             case AS_PICS:
                 fileManager.savePic(file, file.getOriginalFilename());
                 break;
@@ -50,8 +50,7 @@ public class FileUploadController {
     }
 
 
-
-    public String generateRandomFilename(){
+    public String generateRandomFilename() {
         String RandomFilename = "";
         Random rand = new Random();//生成随机数
         int random = rand.nextInt();
@@ -63,7 +62,7 @@ public class FileUploadController {
         String now = String.valueOf(intYear) + "_" + String.valueOf(intMonth) + "_" +
                 String.valueOf(intDay) + "_";
 
-        RandomFilename = now + String.valueOf(random > 0 ? random : ( -1) * random);
+        RandomFilename = now + String.valueOf(random > 0 ? random : (-1) * random);
 
         return RandomFilename;
     }

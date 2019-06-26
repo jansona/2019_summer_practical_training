@@ -10,6 +10,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     /**
      * 在请求被处理之前调用
+     *
      * @param request
      * @param response
      * @param handler
@@ -32,6 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     /**
      * 在请求被处理后，视图渲染之前调用
+     *
      * @param request
      * @param response
      * @param handler
@@ -45,6 +47,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     /**
      * 在整个请求结束后调用
+     *
      * @param request
      * @param response
      * @param handler
