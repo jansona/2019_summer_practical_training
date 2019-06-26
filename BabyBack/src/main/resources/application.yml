@@ -10,4 +10,5 @@ spring:
     #  在控制台显示数据表
     show-sql: true
 
-store-path: "d://jupyter_workplace/2019_summer_practical_training/face_recognition/"
+ybg:
+  store-path: d://jupyter_workplace/2019_summer_practical_training/face_recognition/

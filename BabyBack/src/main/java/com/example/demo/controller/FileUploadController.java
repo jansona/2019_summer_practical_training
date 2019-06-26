@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ import java.util.Random;
 @RequestMapping(value = "file")
 public class FileUploadController {
 
-    @Value("${store-path}")
+    @Value("${ybg.store-path}")
     private String store_path;
 
     enum Action{
@@ -26,6 +27,7 @@ public class FileUploadController {
     }
 
     private Recognizer recognizer = new Recognizer();
+    private FileManager fileManager = new FileManager();
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/temp")
@@ -34,9 +36,10 @@ public class FileUploadController {
 
         switch(action){
             case AS_PICS:
-
+                fileManager.savePic(file, file.getOriginalFilename());
                 break;
             case AS_PROFILE:
+                fileManager.saveProfile(file, file.getOriginalFilename());
                 break;
             case RECOGNITION:
                 result = recognizer.recognition(file, generateRandomFilename());

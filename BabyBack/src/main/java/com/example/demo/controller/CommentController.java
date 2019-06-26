@@ -17,6 +17,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.Inet4Address;
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "Comment")
 public class CommentController {
@@ -40,6 +43,12 @@ public class CommentController {
                                   @RequestParam(value = "user_id", required = false, defaultValue = "") String article_id){
         Specification<Comment> commentSpecification = apiService.createCommentSpecification(article_id, user_id);
         return commentRepository.findAll(commentSpecification, pageable);
+    }
+
+    @ApiOperation(value = "查询特定文章的评论")
+    @PostMapping("/temp")   // TODO 待填
+    public List<Comment> findCommandOfArticle(@RequestParam(value = "article_id") Article article){
+        return commentRepository.findAllByArticle(article);
     }
 
     @ApiOperation(value="删除一篇评论")
