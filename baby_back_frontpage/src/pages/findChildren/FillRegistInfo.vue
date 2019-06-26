@@ -8,10 +8,10 @@
       class="demo-ruleForm"
     >
       <el-form-item label="姓名" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
+        <el-input v-model="missing_person.name"></el-input>
       </el-form-item>
       <el-form-item label="性别" prop="gender">
-        <el-radio-group v-model="ruleForm.resource">
+        <el-radio-group v-model="missing_person.sex">
           <el-radio label="男"></el-radio>
           <el-radio label="女"></el-radio>
         </el-radio-group>
@@ -77,19 +77,8 @@ export default {
   name: "FillRegistInfo",
   data() {
     return {
-      ruleForm: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
       missing_person: {
         name: "",
-        age: 0,
         height: 0,
         place: "",
         nativePlace: "",
@@ -99,18 +88,16 @@ export default {
         backGround: "",
         otherDescription: "",
         otherExplain: "",
-        relationship: "",
-        
+        relationship: ""
       },
       rules: {
         name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+          { required: true, message: "请输入姓名", trigger: "blur" }
         ],
-        region: [
-          { required: true, message: "请选择活动区域", trigger: "change" }
+        nativePlace: [
+          { required: true, message: "请输入籍贯", trigger: "change" }
         ],
-        date1: [
+        birthday: [
           {
             type: "date",
             required: true,
@@ -118,7 +105,7 @@ export default {
             trigger: "change"
           }
         ],
-        date2: [
+        lost_date: [
           {
             type: "date",
             required: true,

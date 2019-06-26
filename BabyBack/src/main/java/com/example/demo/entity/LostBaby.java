@@ -16,7 +16,6 @@ public class LostBaby {
     @GeneratedValue
     private Integer id;
     private String name;//失踪宝贝姓名
-    private Integer age;//失踪时年龄
     private String sex;//性别
     private Date birthday;//生日
     private Double height;//失踪时身高
@@ -54,14 +53,6 @@ public class LostBaby {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     public String getSex() {
