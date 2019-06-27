@@ -23,12 +23,13 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @CrossOrigin
     @ApiOperation(value = "新增一个用户")
-    @PutMapping("/insert")
+    @PostMapping("/insert")
     public ResponseBase insertUser(@RequestBody User user) {
         ResponseBase responseBase;
-        if(userRepository.findByAccount(user.getAccount()) != null){
-            responseBase = new ResponseBase(13240, "该账号名已被使用", user);
+        if(userRepository.findByTel(user.getTel()) != null){
+            responseBase = new ResponseBase(13240, "该手机号已被使用", user);
         }else{
             responseBase = new ResponseBase(200, "注册成功", userRepository.save(user));
         }

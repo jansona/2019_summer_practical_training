@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
      首页
+     <el-button @click="show">asd</el-button>
   </div>
 </template>
 
@@ -13,6 +14,14 @@ export default {
     }
   },
   methods: {
+    show(){
+      let id = localStorage.getItem('userID') 
+      let flag = localStorage.getItem('hasLogin') 
+      let f2 = this.$store.state.hasLogin
+      console.log(id,flag,typeof(flag),f2,typeof(f2));
+      let ss = 'false'  
+      console.log(ss == 'false')
+    }
   }
 }
 </script>
