@@ -82,12 +82,12 @@ export default {
         if(valid){
           request(URLS.loginUrl,this.loginForm).then(data => {
             console.log(data);
+            this.$store.commit('setUserID', {id:10,flag:this.rememberLogin});
+            this.$router.push('home');
+            this.reload();
           }).catch(error => {
             console.log(error);
           })
-          this.$store.commit('setUserID', {id:10,flag:this.rememberLogin});
-          this.$router.push('home');
-          this.reload();
         }
       })
     }

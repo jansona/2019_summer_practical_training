@@ -5,3 +5,4 @@ keras_face/demo/
 *.tar
 *.jpg
 *.png
+./data_crawl/text_data/

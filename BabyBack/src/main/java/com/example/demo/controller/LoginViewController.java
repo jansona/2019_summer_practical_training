@@ -40,8 +40,10 @@ public class LoginViewController {
         rightUserName = user.getAccount();
         rightPassword = user.getPassWord();
 
-        String md5info = rightUserName.toLowerCase() + rightPassword.toLowerCase();
-        String realPassword = DigestUtils.md5DigestAsHex(md5info.getBytes());
+//        String md5info = rightUserName.toLowerCase() + rightPassword.toLowerCase();
+//        String realPassword = DigestUtils.md5DigestAsHex(md5info.getBytes());
+        String realPassword = rightPassword;
+
         if (!password.equals(realPassword)) {
             return "redirect:/";    // TODO 重定向地址填写
         }
@@ -58,7 +60,7 @@ public class LoginViewController {
      * @param request
      * @return
      */
-    @RequestMapping("/loginout")
+    @RequestMapping("/logout")
     public String loginOut(HttpServletRequest request) {
         request.getSession().invalidate();
         return "redirect:/";    // TODO 重定向地址填写

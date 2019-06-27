@@ -29,6 +29,14 @@ public class LostBaby {
     private String otherExplain;//其他说明
     private String relationship;//和报备人关系
 
+    // 联系人信息
+    private String contactName;
+    private String contactRel;
+    private String contactAddress;
+    private String contactEmail;
+    private String contactPhone;
+    private String otherContactMethod;
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
@@ -165,5 +173,53 @@ public class LostBaby {
 
     public void setKeyWords(Set<KeyWord> keyWords) {
         this.keyWords = keyWords;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactRel() {
+        return contactRel;
+    }
+
+    public void setContactRel(String contactRel) {
+        this.contactRel = contactRel;
+    }
+
+    public String getContactAddress() {
+        return contactAddress;
+    }
+
+    public void setContactAddress(String contactAddress) {
+        this.contactAddress = contactAddress;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getOtherContactMethod() {
+        return otherContactMethod;
+    }
+
+    public void setOtherContactMethod(String otherContactMethod) {
+        this.otherContactMethod = otherContactMethod;
     }
 }

@@ -23,6 +23,14 @@ public class MatchBaby {
     private String otherDescription;//其他信息描述
     private String otherExplain;//其他说明
 
+    // 联系人信息
+    private String contactName;
+    private String contactRel;
+    private String contactAddress;
+    private String contactEmail;
+    private String contactPhone;
+    private String otherContactMethod;
+
     private String description;
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
@@ -141,5 +149,53 @@ public class MatchBaby {
 
     public void setOtherExplain(String otherExplain) {
         this.otherExplain = otherExplain;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactRel() {
+        return contactRel;
+    }
+
+    public void setContactRel(String contactRel) {
+        this.contactRel = contactRel;
+    }
+
+    public String getContactAddress() {
+        return contactAddress;
+    }
+
+    public void setContactAddress(String contactAddress) {
+        this.contactAddress = contactAddress;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getOtherContactMethod() {
+        return otherContactMethod;
+    }
+
+    public void setOtherContactMethod(String otherContactMethod) {
+        this.otherContactMethod = otherContactMethod;
     }
 }
