@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import jieba
 import numpy as np
+import sys
 def getConnectData():
     # 创建连接
     conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db='babyback')
@@ -146,4 +147,4 @@ def main2(testArr: list):
     Res=getMatchRes(tfidf,tfTest,trainData,idArr)
     return Res
 if __name__ == '__main__':
-    main2(['贵州省,黔西南布依族苗族自治州,兴义市萍东大道四巷不详'])
+    main2(sys.argv[1:])

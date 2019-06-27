@@ -24,18 +24,26 @@
 			"style": {}
 		},
 		{
+			"path": "pages/tabbar-3-detial/tabbar-3-findchild/tabbar-3-findchild",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-3-detial/tabbar-3-findparent/tabbar-3-findparent",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-3-detial/tabbar-3-suspicion/tabbar-3-suspicion",
+			"style": {}
+		},
+		{
 			"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
 			"style": {}
 		},
 		{
-			"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
+			"path": "pages/tabbar-5-detail/tabbar-5-regionselect/tabbar-5-regionselect",
 			"style": {}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
@@ -57,7 +65,7 @@
 				"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
 				"iconPath": "static/img/tabbar/guanzhu.png",
 				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
-				"text": "关注"
+				"text": "论坛"
 			},
 			//#ifdef MP-WEIXIN
 			{
