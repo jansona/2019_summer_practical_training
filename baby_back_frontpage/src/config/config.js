@@ -9,9 +9,12 @@ if (mode === 'dev') {
 
 const fillFormUrl = baseUrl + "/lost-baby/insert"
 const uploadPictureUrl = baseUrl + "/file/temp"
+const loginUrl = baseUrl + "/login"
+
 const URLS = {
   fillFormUrl,
   uploadPictureUrl,
+  loginUrl,
 }
 
 module.exports = URLS
