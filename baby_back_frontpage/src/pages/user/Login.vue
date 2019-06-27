@@ -58,6 +58,7 @@
 <script>
 import { request } from "@/api/api";
 import URLS from "@/config/config";
+import axios from 'axios'
 export default {
   name: "Login",
   inject: ["reload"],
@@ -103,7 +104,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loginingLoading = true;
-          request(URLS.loginUrl, this.loginForm)
+          axios.post(URLS.loginUrl, this.loginForm)
             .then(data => {
               console.log(data);
               if (data.data.rtnCode == 200) {

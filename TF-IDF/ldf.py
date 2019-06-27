@@ -5,7 +5,7 @@ import jieba
 import numpy as np
 def getConnectData():
     # 创建连接
-    conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='babyback')
+    conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db='babyback')
     # 创建游标
     cursor = conn.cursor()
     cursor.execute("select id,baby_description,back_ground,miss_description," +

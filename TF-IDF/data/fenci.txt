@@ -1,2 +1,5 @@
-聪明 可爱 天天开心   string   string   string   string   string 
-客户   安徽 文达   广东省 广州 奥沙利 文   非洲 安徽   沙 鲁克山 脉 东侧   阿瓦 达   阿斯 达克 
+asdf 
+string   string   string   string   string   string   string 
+string   string   string   string   string   string   string 
+string   string   string   string   string   string   string 
+string   string   string   string   string   string   string 

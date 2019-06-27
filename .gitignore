@@ -6,3 +6,6 @@ keras_face/demo/
 *.jpg
 *.png
 ./data_crawl/text_data/
+./TF-IDF/data/*
+./TF-IDF/res/*
+!./TF-IDF/data/stop_word.txt

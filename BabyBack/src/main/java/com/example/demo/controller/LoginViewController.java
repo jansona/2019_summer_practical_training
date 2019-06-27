@@ -6,9 +6,13 @@ import com.example.demo.reposity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginViewController {
@@ -23,16 +27,17 @@ public class LoginViewController {
     /**
      * 登录校验
      *
-     * @param request
+     * @param account
+     * @param password
      * @return
      */
-    @RequestMapping("/login")
-    public ResponseBase login(HttpServletRequest request) {
+    @CrossOrigin
+    @PostMapping("/login")
+    public ResponseBase login(@RequestParam("account") String account,
+                              @RequestParam("password") String password) {
 
         ResponseBase responseBase;
 
-        String account = request.getParameter("account");
-        String password = request.getParameter("password");
         if (null == account || null == password) {
             return new ResponseBase(20001, "登陆异常", null);    // TODO 重定向地址填写
         }
@@ -63,7 +68,7 @@ public class LoginViewController {
 
         // 校验通过时，在session里放入一个标识
         // 后续通过session里是否存在该标识来判断用户是否登录
-        request.getSession().setAttribute("account", account);
+//        request.getSession().setAttribute("account", account);
         return responseBase; // TODO 重定向地址填写
     }
 
