@@ -1,13 +1,7 @@
 package com.example.demo.utils;
 
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.HashMap;
@@ -15,16 +9,13 @@ import java.util.Map;
 
 public class Recognizer {
 
-    //    @Value("${ybg.store-path}")
-//    String store_path = "d://jupyter_workplace/2019_summer_practical_training/face_recognition/";
-
     FileManager fileManager = new FileManager();
 
     public String recognition(MultipartFile file, String fileName) {
         String result = "failed";
         try {
             file.transferTo(fileManager.generateFile(FileManager.Path.MATCH, fileName));
-            String[] cmd = {"docker", "exec", "fr_2", "face_recognition", "/photo/I_know", "/photo/stranger/" + fileName + ".jpg"};
+            String[] cmd = {"docker", "exec", "fr_3", "face_recognition", "/photo/missing", "/photo/match/" + fileName + ".jpg"};
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
