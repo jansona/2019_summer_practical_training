@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
@@ -15,7 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "User")
+@RequestMapping(value = "user")
 public class UserController {
     @Autowired
     ApiService apiService;
@@ -23,9 +24,15 @@ public class UserController {
     UserRepository userRepository;
 
     @ApiOperation(value = "新增一个用户")
-    @PutMapping("")
-    public User insertUser(@RequestBody User user) {
-        return userRepository.save(user);
+    @PutMapping("/insert")
+    public ResponseBase insertUser(@RequestBody User user) {
+        ResponseBase responseBase;
+        if(userRepository.findByAccount(user.getAccount()) != null){
+            responseBase = new ResponseBase(13240, "该账号名已被使用", user);
+        }else{
+            responseBase = new ResponseBase(200, "注册成功", userRepository.save(user));
+        }
+        return responseBase;
     }
 
     @ApiOperation(value = "查找功能")

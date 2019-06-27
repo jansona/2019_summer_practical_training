@@ -28,7 +28,7 @@ public class FileUploadController {
     private FileManager fileManager = new FileManager();
 
     @ApiOperation(value = "上传图片")
-    @PostMapping("/temp")
+    @PostMapping("/upload")
     public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, Action action) {
         String result = "";
 
