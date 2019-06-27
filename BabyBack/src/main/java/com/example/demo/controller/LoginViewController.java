@@ -36,10 +36,15 @@ public class LoginViewController {
         // 前端传回的密码实际为用户输入的：用户名（小写）+ 密码（小写）组合的字符串生成的md5值
         // 此处先通过后台保存的正确的用户名和密码计算出正确的md5值，然后和前端传回来的作比较
 
-        User user = userRepository.findByAccount(account);
-        rightUserName = user.getAccount();
-        rightPassword = user.getPassWord();
+        if(account.contains("@")){
+            rightPassword = userRepository.findByEmail(account).getPassWord();
+        }else{
+            rightPassword = userRepository.findByTel(account).getPassWord();
+        }
 
+//        User user = userRepository.findByAccount(account);
+//        rightUserName = user.getAccount();
+//        rightPassword = user.getPassWord();
 //        String md5info = rightUserName.toLowerCase() + rightPassword.toLowerCase();
 //        String realPassword = DigestUtils.md5DigestAsHex(md5info.getBytes());
         String realPassword = rightPassword;

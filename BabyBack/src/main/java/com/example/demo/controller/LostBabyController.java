@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.KeyWord;
-import com.example.demo.entity.LostBaby;
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.entity.*;
 import com.example.demo.reposity.KeyWordRepository;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.service.ApiService;
@@ -78,6 +76,17 @@ public class LostBabyController {
     public ResponseBase deleteLostBaby(@RequestParam(value = "id") Integer id) {
         lostBabyRepository.deleteById(id);
         return new ResponseBase().succes("删除成功");
+    }
+
+    @ApiOperation(value = "查找特定用户上传的失踪者")
+    @PostMapping("/find-by-user")   // TODO 待填
+    public Page<LostBaby> findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user){
+        List<LostBaby> result = lostBabyRepository.findAllByUser(user);
+
+        pageHelper.doPage(result, page);
+
+        Page<LostBaby> pageResult = new PageImpl(result, page, result.size());
+        return pageResult;
     }
 
     @ApiOperation(value = "根据关键字查找用户")
