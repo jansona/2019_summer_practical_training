@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     status: 'offline',
     hasLoadedRouter: false,
     userID: localStorage.getItem('userID') || -1,
-    hasLogin: localStorage.getItem('hasLogin') || false,
+    hasLogin: localStorage.getItem('hasLogin') === 'true' || false,
   },
   modules: {
     //sys,
@@ -32,7 +32,8 @@ export const store = new Vuex.Store({
       }
 
       if (data.flag) {
-        localStorage.setItem('userID', data)
+        console.log("save",data,state.userID,state.hasLogin)
+        localStorage.setItem('userID', state.userID)
         localStorage.setItem('hasLogin', state.hasLogin)
       }
     },
