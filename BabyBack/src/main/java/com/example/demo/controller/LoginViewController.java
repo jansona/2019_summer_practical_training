@@ -6,15 +6,13 @@ import com.example.demo.reposity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
-@Controller
+@RestController
 public class LoginViewController {
 
     // 预先设置好的正确的用户名和密码，用于登录验证
@@ -27,14 +25,15 @@ public class LoginViewController {
     /**
      * 登录校验
      *
-     * @param account
-     * @param password
+     * @param map
      * @return
      */
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseBase login(@RequestParam("account") String account,
-                              @RequestParam("password") String password) {
+    public ResponseBase login(@RequestBody Map<String, String> map) {
+
+        String account = map.get("account");
+        String password = map.get("password");
 
         ResponseBase responseBase;
 
@@ -51,7 +50,11 @@ public class LoginViewController {
         }else{
             user = userRepository.findByTel(account);
         }
-        rightPassword = user.getPassWord();
+        if(user != null) {
+            rightPassword = user.getPassWord();
+        }else{
+            return new ResponseBase(20001, "账号或密码错误", null);
+        }
 
 //        User user = userRepository.findByAccount(account);
 //        rightUserName = user.getAccount();
@@ -78,7 +81,7 @@ public class LoginViewController {
      * @param request
      * @return
      */
-    @RequestMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
         return "redirect:/";    // TODO 重定向地址填写
