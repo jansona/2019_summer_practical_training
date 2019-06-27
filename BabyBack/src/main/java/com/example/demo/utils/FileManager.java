@@ -9,16 +9,40 @@ import java.io.IOException;
 
 public class FileManager<RequestMapping> {
 
-    //    @Value("${store-path}")
-    String store_path = "d://jupyter_workplace/2019_summer_practical_training/face_recognition/";
+    enum Path{
+        BASE,
+        MISSING,
+        MATCH,
+        PROFILE
+    }
+
+    String store_base_path = "./photo/";
+    String store_missing_path = "./photo/missing/";
+    String store_match_path = "./photo/match/";
+    String store_profile_path = "./photo/profile/";
+
+    File files[];
 
     UserRepository userRepository;
     LostBabyRepository lostBabyRepository;
 
+
+    public FileManager(){
+        String paths[] = {store_base_path, store_missing_path, store_match_path, store_profile_path};
+        files = new File[paths.length];
+
+        for(int i = 0; i < files.length; i++){
+            files[i] = new File(paths[i]);
+        }
+    }
+
     public String savePic(MultipartFile file, String fileName) {
+
+        checkAndMakeDir();
+
         String result = "succeed";
         try {
-            file.transferTo(new File(store_path + "photo/I_know/" + fileName + ".jpg"));
+            file.transferTo(generateFile(Path.MISSING, fileName));
         } catch (IOException ioe) {
             result = "failed";
             ioe.printStackTrace();
@@ -28,14 +52,38 @@ public class FileManager<RequestMapping> {
     }
 
     public String saveProfile(MultipartFile file, String fileName) {
+
+        checkAndMakeDir();
+
         String result = "succeed";
         try {
-            file.transferTo(new File(store_path + "photo/profile/" + fileName + ".jpg"));
-        } catch (IOException ioe) {
+            file.transferTo(generateFile(Path.PROFILE, fileName));
+        } catch (Exception ioe) {
             result = "failed";
         }
 
         return result;
+    }
+
+    public File generateFile(Path basePath, String fileName){
+
+        String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName + ".jpg";
+        File file = new File(pathStr);
+        return file;
+    }
+
+    public void checkAndMakeDir(){
+//        String paths[] = {store_base_path, store_missing_path, store_match_path, store_profile_path};
+
+        for(File file : files){
+            try {
+                if (!file.exists()) {
+                    file.mkdir();
+                }
+            }catch(Exception ioe){
+                ioe.printStackTrace();
+            }
+        }
     }
 
 }

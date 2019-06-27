@@ -91,7 +91,7 @@ export default {
         relationship: "",
 
         user: {
-          id: 3
+          id: 2
         }
       },
       rules: {

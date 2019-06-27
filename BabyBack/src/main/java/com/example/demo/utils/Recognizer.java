@@ -16,21 +16,14 @@ import java.util.Map;
 public class Recognizer {
 
     //    @Value("${ybg.store-path}")
-    String store_path = "d://jupyter_workplace/2019_summer_practical_training/face_recognition/";
+//    String store_path = "d://jupyter_workplace/2019_summer_practical_training/face_recognition/";
 
-    public String getStore_path() {
-        return store_path;
-    }
-
-    public void setStore_path(String store_path) {
-        this.store_path = store_path;
-    }
+    FileManager fileManager = new FileManager();
 
     public String recognition(MultipartFile file, String fileName) {
         String result = "failed";
         try {
-            file.transferTo(new File(store_path + "photo/stranger/" +
-                    fileName + ".jpg"));
+            file.transferTo(fileManager.generateFile(FileManager.Path.MATCH, fileName));
             String[] cmd = {"docker", "exec", "fr_2", "face_recognition", "/photo/I_know", "/photo/stranger/" + fileName + ".jpg"};
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
