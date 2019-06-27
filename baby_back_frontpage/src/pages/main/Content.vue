@@ -24,6 +24,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.home-conten {
+  position: relative;
+  width: 60%;
+  left: 20%;
+}
 </style>
 
 

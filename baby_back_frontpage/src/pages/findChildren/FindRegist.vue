@@ -51,7 +51,7 @@ export default {
     handleTypeClick(type) {
       console.log(type);
       this.findType = type;
-      this.activeStep += 2;
+      this.activeStep+=2;
       if (type == 1) {
         this.title += " - 家寻宝贝";
       } else if (type == 2) {

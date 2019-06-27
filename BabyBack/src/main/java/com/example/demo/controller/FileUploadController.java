@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.ResponseBase;
 import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +32,7 @@ public class FileUploadController {
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/temp")
-    public String uploadPic(@RequestParam(value = "file") MultipartFile file, Action action) {
+    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, Action action) {
         String result = "";
 
         switch (action) {
@@ -46,7 +47,7 @@ public class FileUploadController {
 
         }
 
-        return result;
+        return new ResponseBase().succes("success！");
     }
 
 

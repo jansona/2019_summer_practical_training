@@ -21,6 +21,7 @@ public class FileManager<RequestMapping> {
             file.transferTo(new File(store_path + "photo/I_know/" + fileName + ".jpg"));
         } catch (IOException ioe) {
             result = "failed";
+            ioe.printStackTrace();
         }
 
         return result;

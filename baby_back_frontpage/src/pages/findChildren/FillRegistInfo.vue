@@ -91,32 +91,32 @@ export default {
         relationship: "",
 
         user: {
-          user_id: 2
+          id: 3
         }
       },
       rules: {
         name: [
           { required: true, message: "请输入姓名", trigger: "blur" }
         ],
-        nativePlace: [
-          { required: true, message: "请输入籍贯", trigger: "change" }
-        ],
-        birthday: [
-          {
-            type: "date",
-            required: false,
-            message: "请选择出生日期",
-            trigger: "change"
-          }
-        ],
-        lost_date: [
-          {
-            type: "date",
-            required: false,
-            message: "请选择失踪时间",
-            trigger: "change"
-          }
-        ],
+        // nativePlace: [
+        //   { required: true, message: "请输入籍贯", trigger: "change" }
+        // ],
+        // birthday: [
+        //   {
+        //     type: "date",
+        //     required: false,
+        //     message: "请选择出生日期",
+        //     trigger: "change"
+        //   }
+        // ],
+        // lost_date: [
+        //   {
+        //     type: "date",
+        //     required: false,
+        //     message: "请选择失踪时间",
+        //     trigger: "change"
+        //   }
+        // ],
         
       }
     };

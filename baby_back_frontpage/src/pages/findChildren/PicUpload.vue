@@ -3,7 +3,6 @@
     <el-upload
       class="upload-demo"
       drag
-      action="https://jsonplaceholder.typicode.com/posts/"
       :multiple="false"
       list-type="picture"
       :data="{'id':id}"
@@ -12,6 +11,10 @@
       :limit="1"
       ref="uploader"
       :on-success="uploadOnSuccess"
+      :on-exceed="handleExceed"
+      :before-upload="beforeFileUpload"
+      :http-request="handleHttpRequest" 
+      :action="uploadUrl"
     >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">
@@ -33,15 +36,22 @@
 </template>
 
 <script>
+import URLS from '@/config/config';
+import {importRequest} from '@/api/api'
 export default {
   name: "PicUpload",
   props: {
     id: String
   },
   data() {
-    return {};
+    return {
+      uploadUrl: '',
+      uploadFile: null,
+    };
   },
-  mounted() {},
+  mounted() {
+    this.uploadUrl = URLS.uploadPictureUrl + "?action=AS_PICS"
+  },
   methods: {
     gotoPriorStep() {
       this.$emit("on-prior-step-click");
@@ -52,7 +62,35 @@ export default {
     uploadOnSuccess() {
       //图片上传成功
       this.$emit("on-next-step-click");
-    }
+    },
+    handleExceed() {
+      this.$notify({
+        title: "提示",
+        message: "只能上传一张图片",
+        type: "warning"
+      });
+    },
+    beforeFileUpload(file) {
+      if (file == null || file == undefined) {
+        return false
+      }
+      this.uploadFile = file
+    },
+    handleHttpRequest() {
+      // console.log("http");
+      let fd = new FormData()
+      fd.append('file', this.uploadFile)
+      importRequest(this.uploadUrl, fd).then(data => {
+        console.log(data)
+        if (data.rtnCode == 0) {
+          this.$notify({
+            type: 'success',
+            message: data.msg,
+            title: 'import successful!'
+          })
+        }
+      })
+    },
   }
 };
 </script>
