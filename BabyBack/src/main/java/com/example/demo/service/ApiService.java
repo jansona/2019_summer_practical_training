@@ -163,8 +163,7 @@ public class ApiService implements InitializingBean {
 
     }
 
-    public Specification<Article> createArticleSpecification(String id,
-                                                             String user_id) {
+    public Specification<Article> createArticleSpecification(String id) {
 
         return new Specification<Article>() {
 
@@ -175,7 +174,7 @@ public class ApiService implements InitializingBean {
 
                 //like示例
                 insertIDPredicate(id, "id", cb, root, predicatesList);
-                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
+//                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));
@@ -185,8 +184,7 @@ public class ApiService implements InitializingBean {
 
     }
 
-    public Specification<Comment> createCommentSpecification(String article_id,
-                                                             String user_id) {
+    public Specification<Comment> createCommentSpecification(String id) {
 
         return new Specification<Comment>() {
 
@@ -196,8 +194,8 @@ public class ApiService implements InitializingBean {
                 List<Predicate> predicatesList = new ArrayList<>();
 
                 //like示例
-                insertIDPredicate(article_id, "article_id", cb, root, predicatesList);
-                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
+                insertIDPredicate(id, "id", cb, root, predicatesList);
+//                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));
@@ -206,8 +204,7 @@ public class ApiService implements InitializingBean {
         };
     }
 
-    public Specification<MatchBaby> createMatchBabySpecification(String id,
-                                                                 String user_id) {
+    public Specification<MatchBaby> createMatchBabySpecification(String id) {
 
         return new Specification<MatchBaby>() {
 
@@ -218,7 +215,7 @@ public class ApiService implements InitializingBean {
 
                 //like示例
                 insertIDPredicate(id, "id", cb, root, predicatesList);
-                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
+//                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));

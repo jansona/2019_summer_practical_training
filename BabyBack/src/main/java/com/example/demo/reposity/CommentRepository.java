@@ -2,6 +2,7 @@ package com.example.demo.reposity;
 
 import com.example.demo.entity.Article;
 import com.example.demo.entity.Comment;
+import com.example.demo.entity.User;
 import lombok.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -20,5 +21,6 @@ public interface CommentRepository extends JpaRepository<Comment,Integer>, JpaSp
 //    public List<Comment> findByArticleId(@Param("team_id") String sId);
 
     List<Comment> findAllByArticle(Article article);
+    List<Comment> findAllByUser(User user);
 
 }
