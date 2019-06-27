@@ -58,7 +58,7 @@ public class LoginViewController {
      * @param request
      * @return
      */
-    @RequestMapping("/loginout")
+    @RequestMapping("/logout")
     public String loginOut(HttpServletRequest request) {
         request.getSession().invalidate();
         return "redirect:/";    // TODO 重定向地址填写

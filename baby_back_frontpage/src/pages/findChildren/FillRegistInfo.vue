@@ -7,35 +7,34 @@
       label-width="100px"
       class="demo-ruleForm"
     >
+      <el-divider content-position="left">失踪者信息</el-divider>
       <el-form-item label="姓名" prop="name">
         <el-input v-model="missing_person.name"></el-input>
       </el-form-item>
-      <el-form-item label="性别" prop="gender">
+      <el-form-item label="性别" prop="sex">
         <el-radio-group v-model="missing_person.sex">
           <el-radio label="男"></el-radio>
           <el-radio label="女"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="出生日期" required>
-        <!-- <el-col :span="22"> -->
-          <el-form-item prop="birthday" class="fill-width">
-            <el-date-picker
-              type="date"
-              placeholder="选择日期"
-              v-model="missing_person.birthday"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-form-item>
-        <!-- </el-col> -->
+      <el-form-item label="出生日期">
+        <el-form-item prop="birthday" class="fill-width">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="missing_person.birthday"
+            style="width: 100%;"
+          ></el-date-picker>
+        </el-form-item>
       </el-form-item>
-      <el-form-item label="身高(cm)" prop="height" required>
+      <el-form-item label="身高(cm)" prop="height">
         <el-slider v-model="missing_person.height" :min="100" :max="250"></el-slider>
       </el-form-item>
       <el-form-item label="失踪人籍贯" prop="native_location">
         <el-input v-model="missing_person.nativePlace"></el-input>
       </el-form-item>
-      <el-form-item label="失踪日期" required>
-          <el-form-item prop="lost_date">
+      <el-form-item label="失踪日期">
+          <el-form-item prop="date">
             <el-date-picker
               type="date"
               placeholder="选择日期"
@@ -44,20 +43,40 @@
             ></el-date-picker>
           </el-form-item>
       </el-form-item>
-      <el-form-item label="失踪时地址" prop="lost_location">
+      <el-form-item label="失踪时地址" prop="place">
         <el-input v-model="missing_person.place"></el-input>
       </el-form-item>
-      <el-form-item label="失踪人特征描述" prop="desc">
+      <el-form-item label="失踪人特征描述" prop="">
         <el-input type="textarea" v-model="missing_person.babyDescription"></el-input>
       </el-form-item>
-      <el-form-item label="失踪经过" prop="desc">
+      <el-form-item label="失踪经过" prop="">
         <el-input type="textarea" v-model="missing_person.missDescription"></el-input>
       </el-form-item>
-      <el-form-item label="其余信息" prop="desc">
+      <el-form-item label="其余信息" prop="">
         <el-input type="textarea" v-model="missing_person.otherDescription"></el-input>
       </el-form-item>
-      <el-form-item label="其余说明" prop="desc">
+      <el-form-item label="其余说明" prop="">
         <el-input type="textarea" v-model="missing_person.otherExplain"></el-input>
+      </el-form-item>
+
+      <el-divider content-position="left">联系人信息</el-divider>
+      <el-form-item label="联系人姓名" prop="">
+        <el-input v-model="missing_person.contactName"></el-input>
+      </el-form-item>
+      <el-form-item label="联系人与失踪者关系" prop="">
+        <el-input v-model="missing_person.contactRel"></el-input>
+      </el-form-item>
+      <el-form-item label="联系人地址" prop="">
+        <el-input v-model="missing_person.contactAddress"></el-input>
+      </el-form-item>
+      <el-form-item label="联系人邮箱地址" prop="contactEmail">
+        <el-input v-model="missing_person.contactEmail"></el-input>
+      </el-form-item>
+      <el-form-item label="联系人电话号码" prop="contactPhone">
+        <el-input v-model="missing_person.contactPhone"></el-input>
+      </el-form-item>
+      <el-form-item label="联系人其它联系方式" prop="">
+        <el-input type="textarea" v-model="missing_person.otherContactMethod"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -77,7 +96,9 @@ export default {
   data() {
     return {
       missing_person: {
+        // 失踪人信息
         name: "",
+        sex: "男",
         height: 0,
         birthday: "",
         place: "",
@@ -88,35 +109,47 @@ export default {
         backGround: "",
         otherDescription: "",
         otherExplain: "",
-        relationship: "",
-
+        // 联系人信息
+        contactName: "",
+        contactRel: "",
+        contactAddress: "",
+        contactEmail: "",
+        contactPhone: "",
+        otherContactMethod: "",
+        // 外键
         user: {
-          id: 2
+          id: 1
         }
       },
       rules: {
         name: [
           { required: true, message: "请输入姓名", trigger: "blur" }
         ],
-        // nativePlace: [
-        //   { required: true, message: "请输入籍贯", trigger: "change" }
-        // ],
-        // birthday: [
-        //   {
-        //     type: "date",
-        //     required: false,
-        //     message: "请选择出生日期",
-        //     trigger: "change"
-        //   }
-        // ],
-        // lost_date: [
-        //   {
-        //     type: "date",
-        //     required: false,
-        //     message: "请选择失踪时间",
-        //     trigger: "change"
-        //   }
-        // ],
+        sex: [
+          { required: true, message: '请选择性别', trigger: 'change' }
+        ],
+        birthday: [
+          {
+            type: "date", required: true, message: "请选择出生日期", trigger: "blur"
+          }
+        ],
+        height: [
+          { required: true, message: "请选择身高", trigger: "blur"}
+        ],
+        date: [
+          {
+            type: "date", required: true, message: "请选择失踪时间", trigger: "blur"
+          }
+        ],
+        place: [
+          { required: true, message: "请输入失踪地址", trigger: "blur" }
+        ],
+        contactEmail: [
+          { type: "email" }
+        ],
+        contactPhone: [
+          { required: true, message: "请输入联系人电话", trigger: "blur" }
+        ]
         
       }
     };
