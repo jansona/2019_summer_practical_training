@@ -41,20 +41,40 @@
 }
 
 .font-size-1em {
-    font-size: 1em;
+  font-size: 1em;
 }
+
 .font-size-2em {
-    font-size: 2em;
+  font-size: 2em;
 }
+
 .font-size-3em {
-    font-size: 3em;
+  font-size: 3em;
 }
+
 .font-size-1-5em {
-    font-size: 1.5em
+  font-size: 1.5em
 }
+
+.font-size-5em {
+  font-size: 5em
+}
+
 .font-size-2-5em {
-    font-size: 2.5em;
+  font-size: 2.5em;
 }
+.font-size-0-8em {
+  font-size: 0.8em;
+}
+
 .fill-width {
-    width: 100%;
+  width: 100%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.flex-container {
+  display: flex;
 }

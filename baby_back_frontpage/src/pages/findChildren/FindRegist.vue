@@ -24,6 +24,7 @@
           @on-prior-step-click="handlePriorStepClick"
           @on-next-step-click="handleNextStepClick"
         ></PicUpload>
+        <FinishRegist v-if="activeStep == 3"></FinishRegist>
       </div>
     </el-card>
   </div>
@@ -33,12 +34,14 @@
 import ChooseRegistType from "@/pages/findChildren/ChooseRegistType";
 import FillRegistInfo from "@/pages/findChildren/FillRegistInfo";
 import PicUpload from "@/pages/findChildren/PicUpload";
+import FinishRegist from '@/pages/findChildren/FinishRegist';
 export default {
   name: "FindRegist",
   components: {
     ChooseRegistType,
     FillRegistInfo,
-    PicUpload
+    PicUpload,
+    FinishRegist,
   },
   data() {
     return {

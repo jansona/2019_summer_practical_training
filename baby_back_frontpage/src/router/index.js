@@ -29,6 +29,11 @@ export default new Router({
           path: 'fastMatch',
           name: 'FastMatch',
           component: () => import('@/pages/fastMatch/FastMatch')
+        },
+        {
+          path: 'loginOrRegist',
+          name: 'LoginOrRegist',
+          component: () => import('@/pages/user/LoginOrRegist')
         }
       ]
     }

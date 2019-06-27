@@ -4,4 +4,5 @@ keras_face/demo/
 *.zip
 *.tar
 *.jpg
+*.png
 ./data_crawl/text_data/

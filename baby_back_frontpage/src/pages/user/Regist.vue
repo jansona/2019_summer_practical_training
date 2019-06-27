@@ -4,9 +4,8 @@
 </template>
 
 <script>
-import URLS from '@/config/config'
 export default {
-  name: 'FsatMatch',
+  name: 'Regist',
   data () {
     return {
     }

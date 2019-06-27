@@ -23,7 +23,7 @@
         </el-submenu> -->
         <el-menu-item index="/findRegist">寻亲登记</el-menu-item>
         <el-menu-item index="/fastMatch">快速匹配</el-menu-item>
-        <el-menu-item index="/bbsHome">论坛</el-menu-item>
+        <el-menu-item index="/bbsHome">论坛{{this.$store.state.userID}}{{this.$store.state.hasLogin}}</el-menu-item>
       </el-menu>
     </el-col>
     <el-col :span="7" class="person-container">
@@ -47,7 +47,7 @@
         </el-popover>
       </template>
       <template v-else>
-        <el-button type="primary" round class="login-btn">登录/注册</el-button>
+        <el-button type="primary" round class="login-btn" @click="gotoLoginOrRegist">登录/注册</el-button>
       </template>
     </el-col>
   </div>
@@ -60,7 +60,7 @@ export default {
     return {
       activeIndex: "1",
       hasMessage: true,
-      hasLogin: true,
+      hasLogin: this.$store.state.hasLogin
     };
   },
   methods: {
@@ -76,9 +76,15 @@ export default {
     },
     logout() {
       console.log("logout");
+      this.$store.commit('setUserID', {id:-1,flag:true});
+      this.$router.push('home');
+      this.reload();
     },
     openMessage() {
       console.log("open message");
+    },
+    gotoLoginOrRegist(){
+      this.$router.push('loginOrRegist')
     }
   },
   computed: {

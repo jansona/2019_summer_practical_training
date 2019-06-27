@@ -23,7 +23,11 @@ const i18n_en = new VueI18n({
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
+
+// 引入自己的工具css
 import "@/assets/public.css";
+// 引入导入的阿里巴巴图标库
+import '@/assets/icons/iconfont.css'
 
 // 引入vuex和axios
 import { store } from '@/store/store'
