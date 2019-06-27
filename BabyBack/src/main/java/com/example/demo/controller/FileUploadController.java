@@ -18,9 +18,6 @@ import java.util.Random;
 @RequestMapping(value = "file")
 public class FileUploadController {
 
-    @Value("${ybg.store-path}")
-    private String store_path;
-
     enum Action {
         AS_PROFILE,
         AS_PICS,
@@ -37,17 +34,17 @@ public class FileUploadController {
 
         switch (action) {
             case AS_PICS:
-                fileManager.savePic(file, file.getOriginalFilename());
+                result = fileManager.savePic(file, file.getOriginalFilename());
                 break;
             case AS_PROFILE:
-                fileManager.saveProfile(file, file.getOriginalFilename());
+                result = fileManager.saveProfile(file, file.getOriginalFilename());
                 break;
             case RECOGNITION:
                 result = recognizer.recognition(file, generateRandomFilename());
 
         }
 
-        return new ResponseBase().succes("success！");
+        return new ResponseBase().succes(result);
     }
 
 

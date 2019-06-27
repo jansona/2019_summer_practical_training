@@ -73,7 +73,6 @@ public class FileManager<RequestMapping> {
     }
 
     public void checkAndMakeDir(){
-//        String paths[] = {store_base_path, store_missing_path, store_match_path, store_profile_path};
 
         for(File file : files){
             try {
