@@ -21,7 +21,7 @@
 				<view class="title">身高范围</view>
 				<input placeholder="请输入嫌疑人的身高范围" name="height"></input>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">最近发现时间</view>
 				<picker mode="date" :value="latestDate" start="2000-09-01" end="2020-09-01" @change="LatestDateChange">
 					<view class="picker">
@@ -45,8 +45,8 @@
 				<view class="title">其他说明</view>
 				<textarea maxlength="-1" :disabled="modalName!=null" @input="otherDescriptionInput" placeholder="请输入其他的说明"></textarea>
 			</view>
-			<view class="uni-title" style="color: #5E00FF">联系人信息</view>
-			<view class="cu-form-group">
+			<view class="uni-title" style="padding-left: 35upx;color: #888888;">联系人信息</view>
+			<view class="cu-form-group" style="padding-left: 35upx;color: #888888;">
 				<view class="title">姓名</view>
 				<input placeholder="请输入联系人姓名" name="contactName"></input>
 			</view>
@@ -95,7 +95,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" style="margin-top: 30upx;">
 				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:300upx;margin: 0 auto;" @click="submit">提交</button>
 			</view>
 		</form>
