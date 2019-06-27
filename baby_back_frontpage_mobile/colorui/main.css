@@ -633,7 +633,7 @@ radio.white.checked .uni-radio-input {
 	line-height: 1;
 	text-align: center;
 	text-decoration: none;
-	overflow: visible;
+	overflow: hidden;
 	margin-left: initial;
 	transform: translate(0upx, 0upx);
 	margin-right: initial;

@@ -1,7 +1,5 @@
 <template>
-	<view class="content">
-		页面 - 1
-	</view>
+
 </template>
 
 <script>
@@ -17,9 +15,14 @@ export default {
 </script>
 
 <style>
+page {
+	height: auto;
+	min-height: 100%;
+}
 .content {
 	text-align: center;
 	height: 400upx;
 	margin-top: 200upx;
 }
+
 </style>
