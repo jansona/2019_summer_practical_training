@@ -29,15 +29,24 @@ public class FileUploadController {
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
-    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, Action action) {
+    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id")String id, Action action) {
         String result = "";
+
+        String fileName;
+        try{
+            String postfix = file.getOriginalFilename().split(".")[1];
+            fileName = String.format("%s.%s", id, postfix);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseBase(40001, "上传文件名异常", null);
+        }
 
         switch (action) {
             case AS_PICS:
-                result = fileManager.savePic(file, file.getOriginalFilename());
+                result = fileManager.savePic(file, fileName);
                 break;
             case AS_PROFILE:
-                result = fileManager.saveProfile(file, file.getOriginalFilename());
+                result = fileManager.saveProfile(file, fileName);
                 break;
             case RECOGNITION:
                 result = recognizer.recognition(file, generateRandomFilename());
@@ -49,7 +58,7 @@ public class FileUploadController {
 
 
     public String generateRandomFilename() {
-        String RandomFilename = "";
+        String RandomFilename;
         Random rand = new Random();//生成随机数
         int random = rand.nextInt();
 

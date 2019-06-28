@@ -57,7 +57,7 @@ public class LostBabyController {
     }
 
     @ApiOperation(value = "查找功能")
-    @PostMapping("")
+    @PostMapping("/find")
     public ResponseBase findLostBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                              Pageable pageable,
                                      @RequestParam(value = "id", required = false, defaultValue = "") String id,
@@ -72,7 +72,7 @@ public class LostBabyController {
     }
 
     @ApiOperation(value = "删除某信息")
-    @DeleteMapping("")
+    @DeleteMapping("/delete")
     public ResponseBase deleteLostBaby(@RequestParam(value = "id") Integer id) {
         lostBabyRepository.deleteById(id);
         return new ResponseBase().succes("删除成功");
