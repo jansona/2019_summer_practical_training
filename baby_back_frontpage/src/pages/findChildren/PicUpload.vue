@@ -80,6 +80,7 @@ export default {
       // console.log("http");
       let fd = new FormData()
       fd.append('file', this.uploadFile)
+      fd.append('id',this.$store.state.imageId)
       importRequest(this.uploadUrl, fd).then(data => {
         console.log(data)
         if (data.rtnCode == 0) {
