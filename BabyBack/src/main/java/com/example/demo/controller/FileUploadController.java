@@ -18,7 +18,8 @@ public class FileUploadController {
 
     enum Action {
         AS_PROFILE,
-        AS_PICS,
+        AS_LOST_PICS,
+        AS_MATCH_PICS,
         RECOGNITION
     }
 
@@ -43,8 +44,11 @@ public class FileUploadController {
         }
 
         switch (action) {
-            case AS_PICS:
+            case AS_LOST_PICS:
                 result = fileManager.saveLostPic(file, fileName);
+                break;
+            case AS_MATCH_PICS:
+                result = fileManager.saveMatchPic(file, fileName);
                 break;
             case AS_PROFILE:
                 result = fileManager.saveProfile(file, fileName);
