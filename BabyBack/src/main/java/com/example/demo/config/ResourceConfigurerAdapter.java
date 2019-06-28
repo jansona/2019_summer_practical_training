@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class ResourceConfigurerAdapter extends WebMvcConfigurerAdapter {
 
-    final String path = "file:D:/jupyter_workplace/2019_summer_practical_training/BabyBack/";
+    final String path = "file:D:/labCodes/2019_summer_practical_training/BabyBack/";
 
     /**
      * 配置静态访问资源

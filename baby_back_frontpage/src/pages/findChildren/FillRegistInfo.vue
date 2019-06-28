@@ -121,7 +121,7 @@ export default {
         otherContactMethod: "",
         // 外键
         user: {
-          id: 1
+          id: this.$store.state.userID
         }
       },
       rules: {

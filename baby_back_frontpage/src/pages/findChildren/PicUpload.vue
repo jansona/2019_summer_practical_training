@@ -78,6 +78,7 @@ export default {
     },
     uploadOnSuccess() {
       //图片上传成功
+      console.log("上传成功！")
       this.$emit("on-next-step-click");
     },
     handleExceed() {
@@ -100,12 +101,13 @@ export default {
       fd.append("id", this.$store.state.imageId);
       importRequest(this.uploadUrl, fd).then(data => {
         console.log(data);
-        if (data.rtnCode == 0) {
+        if (data.rtnCode == 200) {
           this.$notify({
             type: "success",
             message: data.msg,
-            title: "import successful!"
+            title: "上传成功"
           });
+          this.$emit('on-next-step-click')
         }
       });
     },
