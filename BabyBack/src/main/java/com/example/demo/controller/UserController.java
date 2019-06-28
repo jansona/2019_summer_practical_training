@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "查找功能")
-    @PostMapping("")
+    @PostMapping("/find")
     public Page<User> findUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                        Pageable pageable,
                                @RequestParam(value = "id", required = false, defaultValue = "") String id,
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "删除一个用户")
-    @DeleteMapping("")
+    @DeleteMapping("/delete")
     public void deleteUser(@RequestParam(value = "id") Integer id) {
         userRepository.deleteById(id);
     }

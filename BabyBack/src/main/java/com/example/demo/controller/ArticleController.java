@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Article;
+import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.ArticleRepository;
 import com.example.demo.service.ApiService;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "Article")
+@RequestMapping(value = "article")
 public class ArticleController {
     @Autowired
     ApiService apiService;
@@ -29,19 +30,37 @@ public class ArticleController {
     PageHelper pageHelper = new PageHelper();
 
     @ApiOperation(value = "新增一篇文章")
-    @PutMapping("")     // TODO 填写节点
-    public Article insertArticle(@RequestBody Article article) {
-        return articleRepository.save(article);
+    @PutMapping("/insert")     // TODO 填写节点
+    public ResponseBase insertArticle(@RequestBody Article article) {
+        Article article_insert = null;
+        ResponseBase responseBase;
+        try {
+            article_insert = articleRepository.save(article);
+        }catch (Exception e){
+            responseBase = new ResponseBase(30001, "新增文章失败", article);
+            e.printStackTrace();
+        }
+        responseBase = new ResponseBase(200, "新增文章成功", article_insert);
+
+        return  responseBase;
     }
 
     @ApiOperation(value = "查找文章")
-    @PostMapping("")    // TODO 填写节点
-    public Page<Article> findArticle(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+    @PostMapping("/find")    // TODO 填写节点
+    public ResponseBase findArticle(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                              Pageable pageable,
-                                     @RequestParam(value = "id", required = false, defaultValue = "") String id
-    ) {
-        Specification<Article> articleSpecification = apiService.createArticleSpecification(id);
-        return articleRepository.findAll(articleSpecification, pageable);
+                                     @RequestParam(value = "id", required = false, defaultValue = "") String id) {
+
+        ResponseBase responseBase;
+        try {
+            Specification<Article> articleSpecification = apiService.createArticleSpecification(id);
+            Page<Article> page = articleRepository.findAll(articleSpecification, pageable);
+            responseBase = new ResponseBase(200, "查找文章成功", page);
+        }catch (Exception e){
+            e.printStackTrace();
+            responseBase = new ResponseBase(30002, "查找文章失败", null);
+        }
+        return responseBase;
     }
 
     @ApiOperation(value = "查找特定用户的文章")
@@ -56,7 +75,7 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "删除一篇文章")
-    @DeleteMapping("")      // TODO 填写节点
+    @DeleteMapping("/delete")      // TODO 填写节点
     public void deleteArticle(@RequestParam(value = "id") Integer id) {
         articleRepository.deleteById(id);
     }

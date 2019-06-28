@@ -29,17 +29,16 @@ public class MatchBabyController {
     PageHelper pageHelper = new PageHelper();
 
     @ApiOperation(value = "新增孤儿")
-    @PutMapping("")     // TODO 填写节点
+    @PutMapping("/insert")     // TODO 填写节点
     public MatchBaby insertMatchBaby(@RequestBody MatchBaby matchBaby) {
         return matchBabyRepository.save(matchBaby);
     }
 
     @ApiOperation(value = "查找孤儿")
-    @PostMapping("")    // TODO 填写节点
+    @PostMapping("/find")    // TODO 填写节点
     public Page<MatchBaby> findMatchBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                                  Pageable pageable,
-                                         @RequestParam(value = "id", required = false, defaultValue = "") String id
-    ) {
+                                         @RequestParam(value = "id", required = false, defaultValue = "") String id) {
         Specification<MatchBaby> matchBabySpecification = apiService.createMatchBabySpecification(id);
         return matchBabyRepository.findAll(matchBabySpecification, pageable);
     }
@@ -56,7 +55,7 @@ public class MatchBabyController {
     }
 
     @ApiOperation(value = "删除孤儿")
-    @DeleteMapping("")      // TODO 填写节点
+    @DeleteMapping("/delete")      // TODO 填写节点
     public void deleteMatchBaby(@RequestParam(value = "id") Integer id) {
         matchBabyRepository.deleteById(id);
     }
