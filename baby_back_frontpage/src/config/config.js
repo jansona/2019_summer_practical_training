@@ -9,7 +9,7 @@ if (mode === 'dev') {
 
 const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
 const matchBabyInsertUrl = baseUrl + "/MatchBaby/insert"
-const uploadPictureUrl = baseUrl + "/file/temp"
+const uploadPictureUrl = baseUrl + "/file/upload"
 const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/user/insert"
 
