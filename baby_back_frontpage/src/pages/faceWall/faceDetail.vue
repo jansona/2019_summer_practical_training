@@ -97,8 +97,8 @@ export default {
     return {
       tableData1: [],
       tableData2: [],
-      type: this.$route.params.type,
-      id: this.$route.params.id,
+      type: this.$route.query.type,
+      id: this.$route.query.id,
       picUrl: ""
     };
   },
@@ -113,7 +113,7 @@ export default {
         .then(data => {
           if (data.rtnCode == 200) {
             this.picUrl =
-              URLS.baseUrl + "/resource/photo/missing/" + this.id + ".jpg.jpg";
+              URLS.baseUrl + "/resource/photo/lost/" + this.id + ".jpg";
 
             let content = data.data.content[0];
             for (var key in nameDict1) {

@@ -64,7 +64,7 @@ export default {
   },
   mounted() {
     if(this.type === 1){
-      this.uploadUrl = URLS.uploadPictureUrl + "?action=AS_PICS";
+      this.uploadUrl = URLS.uploadPictureUrl + "?action=AS_LOST_PICS";
     }else{
       this.uploadUrl = URLS.uploadPictureUrl + "?action=RECOGNITION";
     }

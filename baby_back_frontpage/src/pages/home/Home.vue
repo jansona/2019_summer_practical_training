@@ -22,7 +22,7 @@ export default {
       let ss = 'false'  
       console.log(ss == 'false')
 
-      this.$router.push({ name: "FaceDetail", params: { type: 1, id: 13 } });
+      this.$router.push({ name: "FaceDetail", query: { type: 1, id: 1 } });
     }
   }
 }
