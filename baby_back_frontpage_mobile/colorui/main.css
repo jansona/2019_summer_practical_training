@@ -1780,6 +1780,8 @@ button.cuIcon.lg {
 
 .cu-bar.tabbar .action .cuIcon-cu-image {
 	margin: 0 auto;
+	margin-bottom: -20upx;
+	margin-top: 10upx;
 }
 
 .cu-bar.tabbar .action .cuIcon-cu-image image {

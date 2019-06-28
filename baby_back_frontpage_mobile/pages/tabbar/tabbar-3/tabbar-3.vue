@@ -1,22 +1,22 @@
 <template>
-	<view class="content" :class="{'active':active}">
-		<image class="logo" :class="{'active':active}" src="../../../static/logo.png"  mode="aspectFit"></image>
+	<view class="" :class="{'active':active}">
+		<!-- <image class="logo" :class="{'active':active}" src="../../../static/logo.png"  mode="aspectFit"></image> -->
 		<view class="tabbar-box-wrap">
 			<view class="tabbar-box">
 				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-findchild/tabbar-3-findchild')">
-					<image class="box-image" src="../../../static/img/release.png" mode="aspectFit"></image>
+					<image class="box-image" :src="'/static/img/release.png'" mode="aspectFit"></image>
 					<text class="explain">亲人寻子</text>
 				</view>
 				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-findparent/tabbar-3-findparent')">
-					<image class="box-image" src="../../../static/img/video.png" mode="aspectFit"></image>
+					<image class="box-image" :src="'/static/img/video.png'" mode="aspectFit"></image>
 					<text class="explain">游子寻亲</text>
 				</view>
 				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-suspicion/tabbar-3-suspicion')">
-					<image class="box-image" src="../../../static/img/qa.png" mode="aspectFit"></image>
+					<image class="box-image" :src="'/static/img/qa.png'" mode="aspectFit"></image>
 					<text class="explain">疑似登记</text>
 				</view>
 				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release')">
-					<image class="box-image" src="../../../static/img/qa.png" mode="aspectFit"></image>
+					<image class="box-image" :src="'/static/img/qa.png'" mode="aspectFit"></image>
 					<text class="explain">发帖</text>
 				</view>
 			</view>
@@ -28,7 +28,7 @@
 export default {
 	data() {
 		return {
-			active: false
+			active: true
 		};
 	},
 	onLoad() {},
@@ -83,6 +83,7 @@ export default {
 	}
 }
 .tabbar-box-wrap {
+	margin-bottom: 100upx;
 	position: absolute;
 	width: 100%;
 	padding: 50upx;

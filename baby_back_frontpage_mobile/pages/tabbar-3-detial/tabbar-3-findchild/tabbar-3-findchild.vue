@@ -13,7 +13,7 @@
 					</label>
 				</radio-group>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">出生日期</view>
 				<picker mode="date" :value="birthDate" start="1910-09-01" end="2020-09-01" @change="BirthDateChange">
 					<view class="picker">
@@ -33,7 +33,7 @@
 				<view class="title">身高</view>
 				<input placeholder="请输入失踪时身高" name="height"></input>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">失踪日期</view>
 				<picker mode="date" :value="lostDate" start="1910-09-01" end="2020-09-01" @change="LostDateChange">
 					<view class="picker">
@@ -57,7 +57,7 @@
 				<view class="title">其他说明</view>
 				<textarea maxlength="-1" :disabled="modalName!=null" @input="otherDescriptionInput" placeholder="请输入其他的说明"></textarea>
 			</view>
-			<view class="uni-title" style="color: #5E00FF">联系人信息</view>
+			<view class="uni-title" style="padding-left: 35upx;color: #888888;">联系人信息</view>
 			<view class="cu-form-group">
 				<view class="title">姓名</view>
 				<input placeholder="请输入联系人姓名" name="contactName"></input>
@@ -70,7 +70,7 @@
 				<view class="title">填表人与失踪人关系</view>
 				<input placeholder="请输入填表人与失踪人的关系" name="writerRelation"></input>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">地址</view>
 				<input placeholder="请输入详细地址" name="address"></input>
 			</view>
@@ -115,7 +115,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" style="margin-top: 30upx;">
 				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:300upx;margin: 0 auto;" @click="submit">提交</button>
 			</view>
 		</form>
