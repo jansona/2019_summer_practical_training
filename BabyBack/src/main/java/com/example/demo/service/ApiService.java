@@ -122,7 +122,6 @@ public class ApiService implements InitializingBean {
     }
 
     public Specification<User> createUserSpecification(String id,
-                                                       String account,
                                                        String name,
                                                        String tel,
                                                        String email) {
@@ -138,10 +137,6 @@ public class ApiService implements InitializingBean {
                 if (!id.equals("")) {
                     Predicate contactPredicate = cb.equal(root.get("id"), Integer.valueOf(id));
                     predicatesList.add(contactPredicate);
-                }
-                if (!account.equals("")) {
-                    Predicate descriptionPredicate = cb.like(root.get("account"), "%" + account + "%");
-                    predicatesList.add(descriptionPredicate);
                 }
                 if (!name.equals("")) {
                     Predicate titlePredicate = cb.like(root.get("name"), "%" + name + "%");

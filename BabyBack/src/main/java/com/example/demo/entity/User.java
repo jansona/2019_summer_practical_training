@@ -11,12 +11,13 @@ import java.util.Set;
 @Entity
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true)
-    private String account;//账号
+//    @Column(unique = true)
+//    private String account;//账号
     private String passWord;//密码
     private String name;//姓名
+    @Column(unique = true)
     private String tel;//联系电话
     private String email;//邮箱
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
@@ -43,13 +44,13 @@ public class User {
         this.id = id;
     }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
+//    public String getAccount() {
+//        return account;
+//    }
+//
+//    public void setAccount(String account) {
+//        this.account = account;
+//    }
 
     public String getPassWord() {
         return passWord;
