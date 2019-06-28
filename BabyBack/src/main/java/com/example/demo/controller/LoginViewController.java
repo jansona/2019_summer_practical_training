@@ -30,10 +30,11 @@ public class LoginViewController {
      */
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseBase login(@RequestBody Map<String, String> map) {
+    public ResponseBase login(@RequestBody Map<String, Object> map) {
 
-        String account = map.get("account");
-        String password = map.get("password");
+        String account = (String)map.get("account");
+        String password = (String)map.get("password");
+//        HttpSession session = (HttpSession)map.get("session");
 
         ResponseBase responseBase;
 
@@ -71,20 +72,27 @@ public class LoginViewController {
 
         // 校验通过时，在session里放入一个标识
         // 后续通过session里是否存在该标识来判断用户是否登录
-//        request.getSession().setAttribute("account", account);
+//        session.setAttribute("account", account);
         return responseBase; // TODO 重定向地址填写
     }
 
     /**
      * 注销登录
      *
-     * @param request
+     * @param session
      * @return
      */
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        request.getSession().invalidate();
-        return "redirect:/";    // TODO 重定向地址填写
+    public ResponseBase logout(@RequestBody HttpSession session) {
+        ResponseBase responseBase;
+        try {
+            session.invalidate();
+            responseBase = new ResponseBase(200, "登出成功", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            responseBase = new ResponseBase(20002, "登出异常", null);
+        }
+        return responseBase;
     }
 
 }
