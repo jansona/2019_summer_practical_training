@@ -98,7 +98,8 @@ export default {
       tableData1: [],
       tableData2: [],
       type: this.$route.params.type,
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      picUrl: '',
     };
   },
   methods: {
@@ -128,6 +129,7 @@ export default {
                 });
               }
             }
+            
           }
         })
         .catch(error => {

@@ -10,3 +10,4 @@ keras_face/demo/
 ./TF-IDF/res/*
 !./TF-IDF/data/stop_word.txt
 */unpackage
+*/*.jpg
