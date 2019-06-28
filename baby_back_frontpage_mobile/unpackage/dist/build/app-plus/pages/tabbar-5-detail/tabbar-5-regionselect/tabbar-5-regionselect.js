@@ -1,1 +1,0 @@
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/tabbar-5-detail/tabbar-5-regionselect/tabbar-5-regionselect.wxml') } }));
