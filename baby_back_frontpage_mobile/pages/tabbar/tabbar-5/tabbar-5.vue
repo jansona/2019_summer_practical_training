@@ -6,14 +6,20 @@
 		<view class="usernick-text">牛咕咕</view>
 		<view class="cu-list menu">
 			<!-- <view class="cu-item" @click="goToPage('/pages/tabbar-5-detail/tabbar-5-regionselect/tabbar-5-regionselect')"> -->
-			<view class="cu-item" @click="showMulLinkageThreePicker">
+			<view class="cu-item" style="border-radius: 600upx;margin-left: 10upx;margin-right: 10upx;" @click="showMulLinkageThreePicker">
 				<view class="content">
 					<image src="/static/logo.png" class="png" mode="aspectFit"></image>
-					<text class="text-grey">设置活动范围{{detail}}</text>
+					<text class="text-grey">设置活动范围</text>
 				</view>
 			</view>
 			<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm"></mpvue-city-picker>
-			<view class="cu-item">
+			<view class="cu-item" style="border-radius: 600upx;margin-left: 10upx;margin-right: 10upx;margin-top: 20upx;">
+				<view class="content">
+					<image src="/static/logo.png" class="png" mode="aspectFit"></image>
+					<text class="text-grey">设置</text>
+				</view>
+			</view>
+			<view class="cu-item" style="border-radius: 600upx;margin-left: 10upx;margin-right: 10upx;margin-top: 20upx;">
 				<view class="content">
 					<image src="/static/logo.png" class="png" mode="aspectFit"></image>
 					<text class="text-grey">设置</text>
@@ -71,6 +77,18 @@
 					<text class="text-grey">我的回复</text>
 				</view>
 			</view> -->
+			<view class="cu-item" style="border-radius: 600upx;margin-left: 10upx;margin-right: 10upx;margin-top: 20upx;">
+				<view class="content">
+					<image src="/static/logo.png" class="png" mode="aspectFit"></image>
+					<text class="text-grey">设置</text>
+				</view>
+			</view>
+			<view class="cu-item" style="border-radius: 600upx;margin-left: 10upx;margin-right: 10upx;margin-top: 20upx;">
+				<view class="content">
+					<image src="/static/logo.png" class="png" mode="aspectFit"></image>
+					<text class="text-grey">设置</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
