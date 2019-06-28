@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"bg-grey-index { background-color: #333; }\n.",[1],"selected-color { color: #f33e54; }\n.",[1],"my-add-btn { margin: 0 auto; padding: ",[0,19]," 0 ",[0,19]," 0; }\n.",[1],"my-add-btn wx-image { width: ",[0,70],"; height: ",[0,70],"; }\n.",[1],"index-bar-text { margin-bottom: ",[0,10],"; }\n",],undefined,{path:"./pages/index/index.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/index/index.wxml') } }));

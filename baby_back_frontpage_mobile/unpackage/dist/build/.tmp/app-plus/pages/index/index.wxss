@@ -1,0 +1,20 @@
+
+.bg-grey-index {
+	background-color: #333;
+}
+.selected-color {
+	color: #f33e54;
+}
+.my-add-btn {
+	margin: 0 auto;
+	padding: 19rpx 0 19rpx 0;
+}
+.my-add-btn image {
+	width: 70rpx;
+	height: 70rpx;
+	/* display: inline-block; */
+}
+.index-bar-text {
+	margin-bottom: 10rpx;
+}
+
