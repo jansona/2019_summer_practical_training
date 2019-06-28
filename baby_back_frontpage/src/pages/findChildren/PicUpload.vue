@@ -18,10 +18,9 @@
     >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">
-        将文件拖到此处，或
+        将照片(jpg/png)拖到此处，或
         <em>点击上传</em>
       </div>
-      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件</div>
     </el-upload>
 
     <el-row class="ctrl-row">
@@ -34,7 +33,12 @@
         </el-col>
       </template>
       <template v-else>
-        
+        <el-col :span="15" :offset="5">
+          <el-button type="primary" @click="uploadAndRecog">上传照片并识别</el-button>
+        </el-col>
+        <el-col :span="4">
+          <el-button type="danger" icon="el-icon-delete" circle></el-button>
+        </el-col>
       </template>
     </el-row>
   </div>
@@ -47,7 +51,10 @@ export default {
   name: "PicUpload",
   props: {
     id: String,
-    type: Number
+    type: {
+      type:Number,
+      default: 1,
+    }
   },
   data() {
     return {
@@ -56,7 +63,11 @@ export default {
     };
   },
   mounted() {
-    this.uploadUrl = URLS.uploadPictureUrl + "?action=AS_PICS";
+    if(this.type === 1){
+      this.uploadUrl = URLS.uploadPictureUrl + "?action=AS_PICS";
+    }else{
+      this.uploadUrl = URLS.uploadPictureUrl + "?action=RECOGNITION";
+    }
   },
   methods: {
     gotoPriorStep() {
@@ -97,6 +108,9 @@ export default {
           });
         }
       });
+    },
+    uploadAndRecog(){
+      this.$refs.uploader.submit();
     }
   }
 };
