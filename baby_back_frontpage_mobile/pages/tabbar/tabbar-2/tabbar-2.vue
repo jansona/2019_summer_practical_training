@@ -9,7 +9,30 @@
 				<button class="cu-btn round" style="margin-right: 10upx;background-color: rgba(200,140,100,0.2);">搜索</button>
 			</view>
 		</view>
-		<view class="cu-card dynamic">
+		<view v-for="(item, index) in passageList" :key="index" class="cu-card dynamic" @click="navToDetails(item)">
+			<view class="cu-item shadow">
+				<view class="cu-list menu-avatar">
+					<view class="cu-item" @click="navToDetails(item)">
+						<view class="cu-avatar round lg" :style="{backgroundImage:'url(' + item.avatarurl + ')'}"></view>
+						<view class="content flex-sub">
+							<view>{{item.author}}</view>
+							<view class="text-gray text-sm flex justify-between">
+								{{item.time}}
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="title">
+					<view class="text-cut" style="font-weight: 700;padding-left: 10upx;">{{item.tittle}}</view>
+				</view>
+				<view class="passage-content" style="margin-top: 5upx;">
+					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
+					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
+					<view class="desc"><view class="text-content">{{item.content}}</view></view>
+				</view>
+			</view>
+		</view>
+		<!-- <view class="cu-card dynamic">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
 					<view class="cu-item">
@@ -28,11 +51,10 @@
 				<view class="passage-content" style="margin-top: 5upx;">
 					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
 					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
-					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
 					<view class="desc"><view class="text-content">{{content}}</view></view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<!-- <view class="cu-card article">
 			<view class="cu-item shadow">
 				<view class="title"><view class="text-cut">{{tittle}}</view></view>
@@ -58,11 +80,11 @@
 				author:'贺谷牛牛',
 				date:'2019-6-27',
 				tittle:'用心耕耘 深情护送宝贝回家 —志愿者小梅寻亲成功案例的启示',
-				content:"朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。他们有自己的名字，却并不知道自己真正姓甚名谁"
+				content:"朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。他们有自己的名字，却并不知道自己真正姓甚名谁",
+				imgList:[],
+				passageList:[{avatarurl:'../../../static/img/tabbar/hgsz.jpg',author:'hgnn',time:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'},
+				{avatarurl:'../../../static/logo.png',author:'hgnn',time:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'}]
 			}
-		},
-		onLoad() {
-
 		},
 		methods: {
 			InputFocus(e) {
@@ -73,6 +95,24 @@
 			},
 			searchClick(e){
 				
+			},
+			ViewImage(e) {
+				uni.previewImage({
+					//imgList:
+					current: e.currentTarget.dataset.url
+				});
+			},
+			navToDetails(item){
+				let data = {
+					title: item.title,
+					author: item.author,
+					time: item.time,
+					content:'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
+				}
+				uni.navigateTo({
+					//url: '/pages/tabbar-2-detail/passage-detail?data=JSON.stringify(data)'
+					url: '/pages/tabbar-2-detail/passage-detail'
+				})
 			}
 		}
 	}
