@@ -11,7 +11,7 @@
         <el-row>
           <el-col :span="8">
             <div class="pic-container">
-              <el-image :src="require('@/assets/house.jpg')">
+              <el-image :src="showImg(picUrl)">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
                 </div>
@@ -99,7 +99,7 @@ export default {
       tableData2: [],
       type: this.$route.params.type,
       id: this.$route.params.id,
-      picUrl: '',
+      picUrl: ""
     };
   },
   methods: {
@@ -112,9 +112,15 @@ export default {
       request(url, { id: this.id })
         .then(data => {
           if (data.rtnCode == 200) {
+            this.picUrl =
+              URLS.baseUrl + "/resource/photo/missing/" + this.id + ".jpg.jpg";
+
             let content = data.data.content[0];
             for (var key in nameDict1) {
               if (content.hasOwnProperty(key)) {
+                if (key == "height") content[key] = content[key] + "cm";
+                if (key == "date" || key == "birthday")
+                  content[key] = content[key].substring(0, 10);
                 this.tableData1.push({
                   name: nameDict1[key],
                   content: content[key]
@@ -129,12 +135,20 @@ export default {
                 });
               }
             }
-            
           }
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    showImg(url) {
+      if (url === null || url === "") {
+        // console.log('待加载的图片地址为:' + url)
+        return require("@/assets/house.jpg");
+      } else {
+        // console.log('待加载的图片地址为:' + url)
+        return url;
+      }
     }
   },
   mounted() {

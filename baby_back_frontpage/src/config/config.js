@@ -16,12 +16,14 @@ const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/user/insert"
 
 const URLS = {
+  baseUrl,
   lostBabyInsertUrl,
   uploadPictureUrl,
   loginUrl,
   registUrl,
   matchBabyInsertUrl,
   lostBabyFindUrl,
+  matchBabyFindUrl,
 }
 
 module.exports = URLS

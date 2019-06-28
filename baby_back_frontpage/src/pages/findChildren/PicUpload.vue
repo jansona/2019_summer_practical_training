@@ -6,7 +6,7 @@
       :multiple="false"
       list-type="picture"
       :data="{'id':id}"
-      accept=".png, .jpg"
+      accept=".png, .jpg, .jpeg"
       :auto-upload="false"
       :limit="1"
       ref="uploader"
@@ -18,7 +18,7 @@
     >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">
-        将照片(jpg/png)拖到此处，或
+        将照片(jpg/jpeg/png)拖到此处，或
         <em>点击上传</em>
       </div>
     </el-upload>
@@ -91,7 +91,27 @@ export default {
     beforeFileUpload(file) {
       if (file == null || file == undefined) {
         return false;
+      } 
+      const isFormatCorr =
+        file.type === "image/jpg" ||
+        file.type === "image/png" ||
+        file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isFormatCorr) {
+        this.$notify({
+          type: "error",
+          message: "图片格式请使用jpg/png",
+          title: "格式错误"
+        });
       }
+      if (!isLt2M) {
+        this.$notify({
+          type: "error",
+          message: "图片大小大于2M",
+          title: "图片过大"
+        });
+      }
+      if(!isFormatCorr||!isLt2M) return false
       this.uploadFile = file;
     },
     handleHttpRequest() {
@@ -113,7 +133,30 @@ export default {
     },
     uploadAndRecog(){
       this.$refs.uploader.submit();
-    }
+    },
+    beforeImgUpload(file) {
+      console.log(file);
+      const isFormatCorr =
+        file.type === "image/jpg" ||
+        file.type === "image/png" ||
+        file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isFormatCorr) {
+        this.$notify({
+          type: "error",
+          message: "图片格式请使用jpg/png",
+          title: "格式错误"
+        });
+      }
+      if (!isLt2M) {
+        this.$notify({
+          type: "error",
+          message: "图片大小大于2M",
+          title: "图片过大"
+        });
+      }
+      return isFormatCorr && isLt2M;
+    },
   }
 };
 </script>

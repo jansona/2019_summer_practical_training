@@ -25,7 +25,7 @@ export default {
       this.$router.push({ name: "Home" });
     },
     gotoDetail() {
-      this.$router.push({ name: "FaceDetail", params: { type: 1, id: 4 } });
+      this.$router.push({ name: "FaceDetail", params: { type: 1, id:  this.$store.state.imageId } });
     }
   }
 };
