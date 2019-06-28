@@ -90,7 +90,7 @@ public class LostBabyController {
     }
 
     @ApiOperation(value = "根据关键字查找用户")
-    @GetMapping("/{key}")
+    @GetMapping("/find-by-key/{key}")
     public ResponseBase findLostBabyByKey(Pageable page, @PathVariable String key) {
         Set<LostBaby> set = new HashSet<>();
         for (String str : apiService.initKeyWord(key)) {

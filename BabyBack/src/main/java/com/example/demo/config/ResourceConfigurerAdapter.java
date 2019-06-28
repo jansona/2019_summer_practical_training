@@ -4,10 +4,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.io.File;
+
 @Configuration
 public class ResourceConfigurerAdapter extends WebMvcConfigurerAdapter {
 
-    final String path = "file:D:/jupyter_workplace/2019_summer_practical_training/BabyBack/";
+    String path = "";
 
     /**
      * 配置静态访问资源
@@ -16,7 +18,11 @@ public class ResourceConfigurerAdapter extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resource/**").addResourceLocations(path);
+
+        File directory = new File(".");
+        path = directory.getAbsolutePath();
+
+        registry.addResourceHandler("/resource/**").addResourceLocations("file:" + path);
         super.addResourceHandlers(registry);
     }
 }
