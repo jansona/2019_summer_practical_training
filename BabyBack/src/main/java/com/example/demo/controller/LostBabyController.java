@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "lost-baby")
 public class LostBabyController {
@@ -57,7 +58,7 @@ public class LostBabyController {
     }
 
     @ApiOperation(value = "查找功能")
-    @PostMapping("")
+    @PostMapping("/find")
     public ResponseBase findLostBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                              Pageable pageable,
                                      @RequestParam(value = "id", required = false, defaultValue = "") String id,
@@ -72,7 +73,7 @@ public class LostBabyController {
     }
 
     @ApiOperation(value = "删除某信息")
-    @DeleteMapping("")
+    @DeleteMapping("/delete")
     public ResponseBase deleteLostBaby(@RequestParam(value = "id") Integer id) {
         lostBabyRepository.deleteById(id);
         return new ResponseBase().succes("删除成功");
@@ -90,7 +91,7 @@ public class LostBabyController {
     }
 
     @ApiOperation(value = "根据关键字查找用户")
-    @GetMapping("/{key}")
+    @GetMapping("/find-by-key/{key}")
     public ResponseBase findLostBabyByKey(Pageable page, @PathVariable String key) {
         Set<LostBaby> set = new HashSet<>();
         for (String str : apiService.initKeyWord(key)) {

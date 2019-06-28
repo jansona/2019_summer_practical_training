@@ -1,14 +1,13 @@
 <template>
   <div>
-    
+    面孔
   </div>
 </template>
 
 <script>
 import URLS from '@/config/config'
-import {request} from "@/api/api";
 export default {
-  name: 'FsatMatch',
+  name: 'FaceWall',
   data () {
     return {
     }

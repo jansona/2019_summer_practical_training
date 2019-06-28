@@ -11,14 +11,16 @@ public class FileManager<RequestMapping> {
 
     enum Path{
         BASE,
-        MISSING,
+        LOST,
         MATCH,
+        TEMP,
         PROFILE
     }
 
     String store_base_path = "./photo/";
-    String store_missing_path = "./photo/missing/";
+    String store_lost_path = "./photo/lost/";
     String store_match_path = "./photo/match/";
+    String store_temp_path = "./photo/temp/";
     String store_profile_path = "./photo/profile/";
 
     File files[];
@@ -28,7 +30,7 @@ public class FileManager<RequestMapping> {
 
 
     public FileManager(){
-        String paths[] = {store_base_path, store_missing_path, store_match_path, store_profile_path};
+        String paths[] = {store_base_path, store_lost_path, store_match_path, store_temp_path, store_profile_path};
         files = new File[paths.length];
 
         for(int i = 0; i < files.length; i++){
@@ -36,13 +38,28 @@ public class FileManager<RequestMapping> {
         }
     }
 
-    public String savePic(MultipartFile file, String fileName) {
+    public String saveLostPic(MultipartFile file, String fileName) {
 
         checkAndMakeDir();
 
         String result = "succeed";
         try {
-            file.transferTo(generateFile(Path.MISSING, fileName));
+            file.transferTo(generateFile(Path.LOST, fileName));
+        } catch (IOException ioe) {
+            result = "failed";
+            ioe.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public String saveMatchPic(MultipartFile file, String fileName){
+
+        checkAndMakeDir();
+
+        String result = "succeed";
+        try {
+            file.transferTo(generateFile(Path.MATCH, fileName));
         } catch (IOException ioe) {
             result = "failed";
             ioe.printStackTrace();
@@ -67,7 +84,7 @@ public class FileManager<RequestMapping> {
 
     public File generateFile(Path basePath, String fileName){
 
-        String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName + ".jpg";
+        String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName;
         File file = new File(pathStr);
         return file;
     }

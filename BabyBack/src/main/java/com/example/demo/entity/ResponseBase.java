@@ -21,7 +21,6 @@ public class ResponseBase {
         return new ResponseBase(200, msg, null);
     }
 
-
     public ResponseBase error(String e) {
         return new ResponseBase(500, e, null);
     }

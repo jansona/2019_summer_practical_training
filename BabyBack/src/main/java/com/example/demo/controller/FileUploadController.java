@@ -4,23 +4,22 @@ import com.example.demo.entity.ResponseBase;
 import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "file")
 public class FileUploadController {
 
     enum Action {
         AS_PROFILE,
-        AS_PICS,
+        AS_LOST_PICS,
+        AS_MATCH_PICS,
         RECOGNITION
     }
 
@@ -29,27 +28,42 @@ public class FileUploadController {
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
-    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, Action action) {
+    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id")String id, Action action) {
         String result = "";
+        ArrayList<String> matches = null;
+
+        String fileName;
+        try{
+            file.getOriginalFilename();
+            file.getName();
+            String postfix = file.getOriginalFilename().split("\\.")[1];
+            fileName = String.format("%s.%s", id, postfix);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseBase(40001, "上传文件名异常", null);
+        }
 
         switch (action) {
-            case AS_PICS:
-                result = fileManager.savePic(file, file.getOriginalFilename());
+            case AS_LOST_PICS:
+                result = fileManager.saveLostPic(file, fileName);
+                break;
+            case AS_MATCH_PICS:
+                result = fileManager.saveMatchPic(file, fileName);
                 break;
             case AS_PROFILE:
-                result = fileManager.saveProfile(file, file.getOriginalFilename());
+                result = fileManager.saveProfile(file, fileName);
                 break;
             case RECOGNITION:
-                result = recognizer.recognition(file, generateRandomFilename());
+                matches = recognizer.recognition(file, generateRandomFilename());
 
         }
 
-        return new ResponseBase().succes(result);
+        return new ResponseBase(200, result, matches);
     }
 
 
     public String generateRandomFilename() {
-        String RandomFilename = "";
+        String RandomFilename;
         Random rand = new Random();//生成随机数
         int random = rand.nextInt();
 

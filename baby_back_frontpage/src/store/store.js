@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     hasLoadedRouter: false,
     userID: localStorage.getItem('userID') || -1,
     hasLogin: localStorage.getItem('hasLogin') === 'true' || false,
+    imageId: -1,
   },
   modules: {
     //sys,
@@ -37,6 +38,9 @@ export const store = new Vuex.Store({
         localStorage.setItem('hasLogin', state.hasLogin)
       }
     },
+    setImageId(state,id){
+      state.imageId = id;
+    }
   }
 })
 

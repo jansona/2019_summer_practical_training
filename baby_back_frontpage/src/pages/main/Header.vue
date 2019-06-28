@@ -23,6 +23,7 @@
         </el-submenu> -->
         <el-menu-item index="/findRegist">寻亲登记</el-menu-item>
         <el-menu-item index="/fastMatch">快速匹配</el-menu-item>
+        <el-menu-item index="/faceWall">面孔墙</el-menu-item>
         <el-menu-item index="/bbsHome">论坛{{this.$store.state.userID}}{{this.$store.state.hasLogin}}</el-menu-item>
       </el-menu>
     </el-col>
@@ -89,7 +90,7 @@ export default {
   },
   computed: {
     activeMenuIndex() {
-      // console.log("/" + this.$route.path.split("/").reverse()[0])
+      console.log("/" + this.$route.path.split("/").reverse()[0])
       return "/" + this.$route.path.split("/").reverse()[0];
     }
   }

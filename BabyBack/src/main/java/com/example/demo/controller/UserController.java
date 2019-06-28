@@ -37,21 +37,20 @@ public class UserController {
     }
 
     @ApiOperation(value = "查找功能")
-    @PostMapping("")
+    @PostMapping("/find")
     public Page<User> findUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                        Pageable pageable,
                                @RequestParam(value = "id", required = false, defaultValue = "") String id,
-                               @RequestParam(value = "account", required = false, defaultValue = "") String account,
                                @RequestParam(value = "name", required = false, defaultValue = "") String name,
                                @RequestParam(value = "tel", required = false, defaultValue = "") String tel,
                                @RequestParam(value = "email", required = false, defaultValue = "") String email
     ) {
-        Specification<User> userSpecification = apiService.createUserSpecification(id, account, name, tel, email);
+        Specification<User> userSpecification = apiService.createUserSpecification(id, name, tel, email);
         return userRepository.findAll(userSpecification, pageable);
     }
 
     @ApiOperation(value = "删除一个用户")
-    @DeleteMapping("")
+    @DeleteMapping("/delete")
     public void deleteUser(@RequestParam(value = "id") Integer id) {
         userRepository.deleteById(id);
     }

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "Comment")
+@RequestMapping(value = "comment")
 public class CommentController {
     @Autowired
     ApiService apiService;
@@ -30,13 +30,13 @@ public class CommentController {
     PageHelper pageHelper = new PageHelper();
 
     @ApiOperation(value="新增一篇评论")
-    @PutMapping("")     // TODO 填写节点
+    @PutMapping("/insert")     // TODO 填写节点
     public Comment insertComment(@RequestBody Comment comment){
         return commentRepository.save(comment);
     }
 
     @ApiOperation(value="查找评论")
-    @PostMapping("")    // TODO 填写节点
+    @PostMapping("/find")    // TODO 填写节点
     public Page<Comment> findComment(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
                                           Pageable pageable,
                                   @RequestParam(value = "id",required = false,defaultValue ="") String id){
@@ -67,7 +67,7 @@ public class CommentController {
     }
 
     @ApiOperation(value="删除一篇评论")
-    @DeleteMapping("")      // TODO 填写节点
+    @DeleteMapping("/delete")      // TODO 填写节点
     public void deleteComment(@RequestParam(value = "id") Integer id){
         commentRepository.deleteById(id);
     }

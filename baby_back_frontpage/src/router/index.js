@@ -34,6 +34,16 @@ export default new Router({
           path: 'loginOrRegist',
           name: 'LoginOrRegist',
           component: () => import('@/pages/user/LoginOrRegist')
+        },
+        {
+          path: 'faceWall',
+          name: 'FaceWall',
+          component: () => import('@/pages/faceWall/FaceWall')
+        },
+        {
+          path: 'faceDetail',
+          name: 'FaceDetail',
+          component: () => import('@/pages/faceWall/FaceDetail')
         }
       ]
     }

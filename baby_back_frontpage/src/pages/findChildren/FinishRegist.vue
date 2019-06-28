@@ -8,8 +8,8 @@
     </div>
     <el-divider></el-divider>
     <div>
-      <el-button type="success">返回首页</el-button>
-      <el-button type="primary">查看提交信息</el-button>
+      <el-button type="success" @click="gotoHomePage">返回首页</el-button>
+      <el-button type="primary" @click="gotoDetail">查看提交信息</el-button>
     </div>
   </div>
 </template>
@@ -21,11 +21,11 @@ export default {
     return {};
   },
   methods: {
-    gotoHomePage(){
-
+    gotoHomePage() {
+      this.$router.push({ name: "Home" });
     },
-    gotoDetail(){
-      
+    gotoDetail() {
+      this.$router.push({ name: "FaceDetail", query: { type: 1, id:  this.$store.state.imageId } });
     }
   }
 };
@@ -35,5 +35,4 @@ export default {
 .finish-container {
   margin-top: 30px;
 }
-
 </style>
