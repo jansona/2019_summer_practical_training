@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Integer> , JpaSpecificationExecutor<User> {
 
      Optional<User> findById(Integer id);
-     User findByAccount(String account);
      User findByTel(String tel);
      User findByEmail(String email);
 }

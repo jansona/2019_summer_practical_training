@@ -4,7 +4,6 @@ import com.example.demo.entity.ResponseBase;
 import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,7 +44,7 @@ public class FileUploadController {
 
         switch (action) {
             case AS_PICS:
-                result = fileManager.savePic(file, fileName);
+                result = fileManager.saveLostPic(file, fileName);
                 break;
             case AS_PROFILE:
                 result = fileManager.saveProfile(file, fileName);

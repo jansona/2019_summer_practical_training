@@ -15,8 +15,8 @@ public class Recognizer {
     public ArrayList<String> recognition(MultipartFile file, String fileName) {
         ArrayList<String> matches = new ArrayList<>();
         try {
-            file.transferTo(fileManager.generateFile(FileManager.Path.MATCH, fileName));
-            String[] cmd = {"docker", "exec", "fr_3", "face_recognition", "/photo/missing", "/photo/match/" + fileName + ".jpg"};
+            file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
+            String[] cmd = {"docker", "exec", "fr_3", "face_recognition", "/photo/lost", "/photo/temp/" + fileName + ".jpg"};
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);

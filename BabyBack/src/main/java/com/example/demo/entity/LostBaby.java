@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class LostBaby {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;//失踪宝贝姓名
     private String sex;//性别

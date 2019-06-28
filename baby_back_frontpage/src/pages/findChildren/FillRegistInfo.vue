@@ -17,7 +17,7 @@
           <el-radio label="女"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="出生日期">
+      <el-form-item label="出生日期" required>
         <el-form-item prop="birthday" class="fill-width">
           <el-date-picker
             type="date"
@@ -33,7 +33,7 @@
       <el-form-item label="失踪人籍贯" prop="native_location">
         <el-input v-model="missing_person.nativePlace"></el-input>
       </el-form-item>
-      <el-form-item label="失踪日期">
+      <el-form-item label="失踪日期" required>
         <el-form-item prop="date">
           <el-date-picker
             type="date"
