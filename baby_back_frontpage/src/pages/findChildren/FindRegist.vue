@@ -17,7 +17,7 @@
       </div>
       <div>
         <choose-regist-type @on-choose-type-click="handleTypeClick" v-if="activeStep == 0"></choose-regist-type>
-        <fill-regist-info v-if="activeStep == 1" @on-next-step-click="handleNextStepClick"></fill-regist-info>
+        <fill-regist-info v-if="activeStep == 1" @on-next-step-click="handleNextStepClick" :fillType="findType"></fill-regist-info>
         <PicUpload
           v-if="activeStep == 2"
           :id="'dfgsdfg'"

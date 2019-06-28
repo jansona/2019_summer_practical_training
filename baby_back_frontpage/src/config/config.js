@@ -7,16 +7,18 @@ if (mode === 'dev') {
 } else {
 }
 
-const fillFormUrl = baseUrl + "/lost-baby/insert"
+const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
+const matchBabyInsertUrl = baseUrl + "/MatchBaby/insert"
 const uploadPictureUrl = baseUrl + "/file/temp"
 const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/user/insert"
 
 const URLS = {
-  fillFormUrl,
+  lostBabyInsertUrl,
   uploadPictureUrl,
   loginUrl,
-  registUrl
+  registUrl,
+  matchBabyInsertUrl
 }
 
 module.exports = URLS

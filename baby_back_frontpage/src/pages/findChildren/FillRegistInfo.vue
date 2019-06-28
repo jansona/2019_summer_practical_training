@@ -93,6 +93,9 @@ import axios from "axios";
 import URLS from "@/config/config";
 export default {
   name: "FillRegistInfo",
+  props: {
+    fillType: Number,
+  },
   data() {
     return {
       missing_person: {
@@ -153,9 +156,10 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          // alert("submit!");
+          let url = this.fillType == 1 ? URLS.lostBabyInsertUrl : URLS.matchBabyInsertUrl
           axios
-            .post(URLS.fillFormUrl, this.missing_person)
+            .post(url, this.missing_person)
             .then(data => {
               if (data.data.rtnCode == 200) {
                 console.log("success", data);
