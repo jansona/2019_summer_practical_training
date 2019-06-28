@@ -67,7 +67,7 @@ public class FileManager<RequestMapping> {
 
     public File generateFile(Path basePath, String fileName){
 
-        String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName + ".jpg";
+        String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName;
         File file = new File(pathStr);
         return file;
     }

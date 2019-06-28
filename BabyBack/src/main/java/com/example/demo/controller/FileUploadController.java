@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -29,6 +30,7 @@ public class FileUploadController {
     @PostMapping("/upload")
     public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id")String id, Action action) {
         String result = "";
+        ArrayList<String> matches = null;
 
         String fileName;
         try{
@@ -49,11 +51,11 @@ public class FileUploadController {
                 result = fileManager.saveProfile(file, fileName);
                 break;
             case RECOGNITION:
-                result = recognizer.recognition(file, generateRandomFilename());
+                matches = recognizer.recognition(file, generateRandomFilename());
 
         }
 
-        return new ResponseBase().succes(result);
+        return new ResponseBase(200, result, matches);
     }
 
 

@@ -1,16 +1,22 @@
 <template>
   <div class="hello">
-     快速匹配
+     <PicUpload :type="2">
+
+     </PicUpload>
   </div>
 </template>
 
 <script>
+import PicUpload from "@/pages/findChildren/PicUpload";
 export default {
   name: 'FsatMatch',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  components: {
+    PicUpload
   },
   methods: {
   }
