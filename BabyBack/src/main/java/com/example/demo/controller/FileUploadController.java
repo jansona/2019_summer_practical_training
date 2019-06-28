@@ -28,17 +28,17 @@ public class FileUploadController {
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
-    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id")String id, Action action) {
+    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id") String id, Action action) {
         String result = "";
         ArrayList<String> matches = null;
 
         String fileName;
-        try{
+        try {
             file.getOriginalFilename();
             file.getName();
             String postfix = file.getOriginalFilename().split("\\.")[1];
             fileName = String.format("%s.%s", id, postfix);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseBase(40001, "上传文件名异常", null);
         }

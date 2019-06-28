@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PageHelper {
 
-    public void doPage(List<?> list, Pageable pageable){
+    public void doPage(List<?> list, Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int index = pageable.getPageNumber();
 
@@ -14,7 +14,7 @@ public class PageHelper {
         int rightIndex = (index + 1) * pageSize;
         rightIndex = rightIndex <= list.size() ? rightIndex : list.size();
 
-        list = list.subList(leftIndex, rightIndex);
+        list.subList(leftIndex, rightIndex);
     }
 
 }

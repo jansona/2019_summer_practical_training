@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@RequestMapping(value = "MatchBaby")
+@RequestMapping(value = "match-baby")
 public class MatchBabyController {
     @Autowired
     ApiService apiService;
@@ -45,7 +46,7 @@ public class MatchBabyController {
 
     @ApiOperation(value = "查找特定用户上传的孤儿")
     @PostMapping("/find-by-user")
-    public Page<MatchBaby> findMatchBabyByUser(Pageable page, @RequestParam(value = "user") User user){
+    public Page<MatchBaby> findMatchBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<MatchBaby> result = matchBabyRepository.findAllByUser(user);
 
         pageHelper.doPage(result, page);

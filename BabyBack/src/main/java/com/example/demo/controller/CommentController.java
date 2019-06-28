@@ -29,24 +29,24 @@ public class CommentController {
 
     PageHelper pageHelper = new PageHelper();
 
-    @ApiOperation(value="新增一篇评论")
+    @ApiOperation(value = "新增一篇评论")
     @PutMapping("/insert")     // TODO 填写节点
-    public Comment insertComment(@RequestBody Comment comment){
+    public Comment insertComment(@RequestBody Comment comment) {
         return commentRepository.save(comment);
     }
 
-    @ApiOperation(value="查找评论")
+    @ApiOperation(value = "查找评论")
     @PostMapping("/find")    // TODO 填写节点
-    public Page<Comment> findComment(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC)@ApiParam(value = "分页信息")
-                                          Pageable pageable,
-                                  @RequestParam(value = "id",required = false,defaultValue ="") String id){
+    public Page<Comment> findComment(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+                                             Pageable pageable,
+                                     @RequestParam(value = "id", required = false, defaultValue = "") String id) {
         Specification<Comment> commentSpecification = apiService.createCommentSpecification(id);
         return commentRepository.findAll(commentSpecification, pageable);
     }
 
     @ApiOperation(value = "查询特定文章的评论")
     @PostMapping("/find-by-article")   // TODO 待填
-    public Page<Comment> findCommentByArticle(Pageable page, @RequestParam(value = "article") Article article){
+    public Page<Comment> findCommentByArticle(Pageable page, @RequestParam(value = "article") Article article) {
         List<Comment> result = commentRepository.findAllByArticle(article);
 
         pageHelper.doPage(result, page);
@@ -57,7 +57,7 @@ public class CommentController {
 
     @ApiOperation(value = "查询特定用户的评论")
     @PostMapping("/find-by-user")   // TODO 待填
-    public Page<Comment> findCommentByUser(Pageable page, @RequestParam(value = "user") User user){
+    public Page<Comment> findCommentByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<Comment> result = commentRepository.findAllByUser(user);
 
         pageHelper.doPage(result, page);
@@ -66,9 +66,9 @@ public class CommentController {
         return pageResult;
     }
 
-    @ApiOperation(value="删除一篇评论")
+    @ApiOperation(value = "删除一篇评论")
     @DeleteMapping("/delete")      // TODO 填写节点
-    public void deleteComment(@RequestParam(value = "id") Integer id){
+    public void deleteComment(@RequestParam(value = "id") Integer id) {
         commentRepository.deleteById(id);
     }
 

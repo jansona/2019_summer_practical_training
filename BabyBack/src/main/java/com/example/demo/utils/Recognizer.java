@@ -21,7 +21,7 @@ public class Recognizer {
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
             String tempStr = input.readLine();
-            while(tempStr != null){
+            while (tempStr != null) {
                 String id = tempStr.split(",")[1];
                 matches.add(id);
                 tempStr = input.readLine();

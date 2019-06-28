@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class FileManager<RequestMapping> {
 
-    enum Path{
+    enum Path {
         BASE,
         LOST,
         MATCH,
@@ -29,11 +29,11 @@ public class FileManager<RequestMapping> {
     LostBabyRepository lostBabyRepository;
 
 
-    public FileManager(){
+    public FileManager() {
         String paths[] = {store_base_path, store_lost_path, store_match_path, store_temp_path, store_profile_path};
         files = new File[paths.length];
 
-        for(int i = 0; i < files.length; i++){
+        for (int i = 0; i < files.length; i++) {
             files[i] = new File(paths[i]);
         }
     }
@@ -53,7 +53,7 @@ public class FileManager<RequestMapping> {
         return result;
     }
 
-    public String saveMatchPic(MultipartFile file, String fileName){
+    public String saveMatchPic(MultipartFile file, String fileName) {
 
         checkAndMakeDir();
 
@@ -82,21 +82,21 @@ public class FileManager<RequestMapping> {
         return result;
     }
 
-    public File generateFile(Path basePath, String fileName){
+    public File generateFile(Path basePath, String fileName) {
 
         String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName;
         File file = new File(pathStr);
         return file;
     }
 
-    public void checkAndMakeDir(){
+    public void checkAndMakeDir() {
 
-        for(File file : files){
+        for (File file : files) {
             try {
                 if (!file.exists()) {
                     file.mkdir();
                 }
-            }catch(Exception ioe){
+            } catch (Exception ioe) {
                 ioe.printStackTrace();
             }
         }
