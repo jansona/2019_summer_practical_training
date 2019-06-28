@@ -32,7 +32,10 @@ export default {
       this.$refs.content.reload();
     }
   },
-  watch: {}
+  watch: {},
+  mounted() {
+    console.log("main mounted")
+  }
 };
 </script>
 <style scoped>

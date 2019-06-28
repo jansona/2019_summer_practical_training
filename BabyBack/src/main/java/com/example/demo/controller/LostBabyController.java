@@ -56,6 +56,7 @@ public class LostBabyController {
         return new ResponseBase(200, "插入成功", lostBaby);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "查找功能")
     @PostMapping("/find")
     public ResponseBase findLostBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")

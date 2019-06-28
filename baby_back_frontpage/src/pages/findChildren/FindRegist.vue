@@ -54,7 +54,7 @@ export default {
     handleTypeClick(type) {
       console.log(type);
       this.findType = type;
-      this.activeStep+=2;
+      this.activeStep+=3;
       if (type == 1) {
         this.title += " - 家寻宝贝";
       } else if (type == 2) {
@@ -69,7 +69,7 @@ export default {
     }
   },
   mounted() {
-    console.log("mounted");
+    // console.log("mounted");
   }
 };
 </script>

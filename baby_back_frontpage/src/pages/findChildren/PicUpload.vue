@@ -47,7 +47,10 @@ export default {
   name: "PicUpload",
   props: {
     id: String,
-    type: Number
+    type: {
+      type:Number,
+      default: 1
+    }
   },
   data() {
     return {
