@@ -39,6 +39,11 @@ export default new Router({
           path: 'faceWall',
           name: 'FaceWall',
           component: () => import('@/pages/faceWall/FaceWall')
+        },
+        {
+          path: 'faceDetail',
+          name: 'FaceDetail',
+          component: () => import('@/pages/faceWall/FaceDetail')
         }
       ]
     }

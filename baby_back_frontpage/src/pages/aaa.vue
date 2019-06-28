@@ -6,6 +6,7 @@
 
 <script>
 import URLS from '@/config/config'
+import {request} from "@/api/api";
 export default {
   name: 'FsatMatch',
   data () {

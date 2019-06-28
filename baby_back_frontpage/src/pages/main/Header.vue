@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     activeMenuIndex() {
-      // console.log("/" + this.$route.path.split("/").reverse()[0])
+      console.log("/" + this.$route.path.split("/").reverse()[0])
       return "/" + this.$route.path.split("/").reverse()[0];
     }
   }

@@ -2,7 +2,7 @@
   <div class="flex-container">
     <el-row class="fill-width">
       <el-col :span="10" :offset="2">
-        <div class="left-part">
+        <div class="left-part" ref="leftPart">
           <el-form
             label-position="right"
             label-width="100px"
@@ -131,6 +131,9 @@ export default {
         }
       });
     }
+  },
+  mounted() {
+    console.log("mouted",this.$refs.leftPart.clientHeight)
   }
 };
 </script>
@@ -145,7 +148,7 @@ ul {
   padding-inline-start: 0px;
 }
 .flex-container /deep/ .el-divider {
-  height: 13em;
+  height: 226px;
   /* margin-left: 40px; */
 }
 .left-part {
