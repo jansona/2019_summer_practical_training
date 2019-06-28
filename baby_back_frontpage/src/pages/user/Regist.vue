@@ -18,7 +18,9 @@
           v-model="registForm.verifacationCode"
           type="verifacationCode"
           placeholder="请输入手机验证码"
-        ></el-input>
+        >
+        <el-button slot="append" >发送验证码</el-button>
+        </el-input>
       </el-form-item>
       <el-form-item label="密码" prop="passWord">
         <el-input v-model="registForm.passWord" placeholder="请输入密码" type="password"></el-input>
