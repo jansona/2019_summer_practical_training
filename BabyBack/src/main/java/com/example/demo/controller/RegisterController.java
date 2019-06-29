@@ -7,10 +7,7 @@ import com.example.demo.utils.SMSSender;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,9 +25,14 @@ public class RegisterController {
     @PostMapping("/sms-verify")
     public ResponseBase logout(@RequestBody String tel) {
         ResponseBase responseBase;
+
+        if(userRepository.findByTel(tel) != null){
+            return new ResponseBase(50004, "短信验证电话已被占用", null);
+        }
+
         try {
             String code = SMSSender.sendSMS(tel);
-            stringRedisTemplate.opsForValue().set(tel, code);
+            stringRedisTemplate.opsForValue().set(tel, code, 300);
             responseBase = new ResponseBase(200, "验证码短信发送成功", null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,12 +43,12 @@ public class RegisterController {
 
     @ApiOperation(value = "验证并注册一个用户")
     @PostMapping("/register")
-    public ResponseBase insertUser(@RequestBody User user, @RequestBody String code) {
+    public ResponseBase insertUser(@RequestBody User user, @RequestParam String code) {
         ResponseBase responseBase;
         try {
             String realCode = stringRedisTemplate.opsForValue().get(user.getTel());
 
-            if (realCode.equals(code)) {
+            if (realCode != null && realCode.equals(code)) {
                 User user_saved = userRepository.save(user);
                 stringRedisTemplate.delete(user.getTel());
                 responseBase = new ResponseBase(200, "短信验证成功", user_saved);

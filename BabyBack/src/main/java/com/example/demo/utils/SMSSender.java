@@ -16,8 +16,8 @@ public class SMSSender {
     static final int codeLength = 6;
 
     public static String sendSMS(String tel) {
-        DefaultProfile profile = DefaultProfile.getProfile("default", "<accessKeyId>", "<accessSecret>");
-        IAcsClient client = new DefaultAcsClient(profile);
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAIIDYDeNbGY15M", "677hr6fbFS4DvIgIsJAZZEJNpiOUSD");
+            IAcsClient client = new DefaultAcsClient(profile);
 
         String code = verifyCode();
 
@@ -26,8 +26,11 @@ public class SMSSender {
         request.setDomain("dysmsapi.aliyuncs.com");
         request.setVersion("2017-05-25");
         request.setAction("SendSms");
+        request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumbers", tel);
-        request.putQueryParameter("TemplateParam", code);
+        request.putQueryParameter("SignName", "宝贝回家");
+        request.putQueryParameter("TemplateCode", "SMS_169103269");
+        request.putQueryParameter("TemplateParam", String.format("{\"code\":\"%s\"}", code));
         try {
             CommonResponse response = client.getCommonResponse(request);
             System.out.println(response.getData());
