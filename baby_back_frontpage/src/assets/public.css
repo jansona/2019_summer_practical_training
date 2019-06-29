@@ -63,6 +63,7 @@
 .font-size-2-5em {
   font-size: 2.5em;
 }
+
 .font-size-0-8em {
   font-size: 0.8em;
 }
@@ -77,4 +78,19 @@
 
 .flex-container {
   display: flex;
+}
+
+/*垂直居中*/
+.verticalCenter {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/*水平居中*/
+.horizaCenter {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }

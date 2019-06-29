@@ -42,19 +42,40 @@
         ></el-date-picker>
       </el-collapse-item>
     </el-collapse>
-    <el-tabs type="border-card">
+    <el-tabs type="border-card" @tab-click="tabClick">
       <el-tab-pane class="tab-container">
         <div slot="label">
           &nbsp&nbsp
           <span class="font-size-1-5em">家寻宝贝</span>
         </div>
-        <Pictures></Pictures>
+        <template v-if="choosed == 0">
+          <Pictures :datas="datas" :types="dataTypes" ref="pictures0"></Pictures>
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage3"
+            :page-size="100"
+            layout="prev, pager, next, jumper"
+            :total="1000"
+          ></el-pagination>
+        </template>
       </el-tab-pane>
       <el-tab-pane>
         <div slot="label">
           &nbsp&nbsp
           <span class="font-size-1-5em">宝贝寻家</span>
         </div>
+        <template v-if="choosed == 1">
+          <Pictures :datas="datas" :types="dataTypes" ref="pictures1"></Pictures>
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage3"
+            :page-size="100"
+            layout="prev, pager, next, jumper"
+            :total="1000"
+          ></el-pagination>
+        </template>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -62,8 +83,8 @@
 
 <script>
 import URLS from "@/config/config";
-import { request,fetch } from "@/api/api";
-import Pictures from './components/Pictures';
+import { request, fetch } from "@/api/api";
+import Pictures from "./components/Pictures";
 export default {
   name: "FaceWall",
   components: {
@@ -74,36 +95,50 @@ export default {
       hasPhoto: "",
       input: "",
       sex: "",
-      date: '',
-      type: '',
+      date: "",
+      type: "",
+      datas: [],
+      dataTypes: [],
+      choosed: 0,
       sexs: [
         {
-          value: true,
+          value: 0,
+          label: "全部"
+        },
+        {
+          value: 1,
           label: "男"
         },
         {
-          value: false,
+          value: 2,
           label: "女"
         }
       ],
       hasPhotos: [
         {
-          value: true,
+          value: 0,
+          label: "全部"
+        },
+        {
+          value: 1,
           label: "有照片"
         },
         {
-          value: false,
+          value: 2,
           label: "无照片"
         }
       ],
       types: [
         {
-          value: "全部",
-        },{
+          value: "全部"
+        },
+        {
           value: "姓名"
-        },{
+        },
+        {
           value: "特征"
-        },{
+        },
+        {
           value: "失踪地点"
         }
       ],
@@ -137,7 +172,7 @@ export default {
             }
           }
         ]
-      },
+      }
     };
   },
   methods: {
@@ -146,7 +181,41 @@ export default {
     },
     doSearch() {
       console.log("search");
+      console.log(this.$refs.pictures0);
+    },
+    loadData() {
+      request(this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl)
+        .then(data => {
+          console.log(data);
+          if (data.rtnCode == 200) {
+            if (this.choosed == -1) this.choosed = 0;
+            this.datas = JSON.parse(JSON.stringify(data.data.content));
+            this.dataTypes = [];
+            for (var i = 0, len = this.datas.length; i < len; i++) {
+              this.dataTypes.push(this.choosed);
+            }
+            // console.log("datas2:",this.datas,"type2:",this.dataTypes);
+            // this.$refs["pictures"+this.choosed].reloadData();
+
+            // 通过使用vif重新加载子组件
+            let saved = this.choosed;
+            this.choosed = -1;
+            this.$nextTick(function() {
+              this.choosed = saved;
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    tabClick(e) {
+      this.choosed = e.index;
+      this.loadData();
     }
+  },
+  mounted() {
+    this.loadData();
   }
 };
 </script>
@@ -154,9 +223,6 @@ export default {
 <style scoped>
 .tab-container {
   height: 100%;
-}
-.content-container /deep/ .el-tabs__item {
-  margin: 10px 0px 10px 0px;
 }
 .content-container .el-tabs {
   border-radius: 5px;
@@ -188,5 +254,8 @@ export default {
 }
 .search-container /deep/ .el-collapse-item__content {
   padding-bottom: 10px;
+}
+.content-container /deep/ .is-active {
+  height: 100%;
 }
 </style>

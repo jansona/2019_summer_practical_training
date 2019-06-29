@@ -34,7 +34,7 @@ export default {
   },
   watch: {},
   mounted() {
-    console.log("main mounted")
+    // console.log("main mounted")
   }
 };
 </script>

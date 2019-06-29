@@ -24,7 +24,7 @@
           @on-prior-step-click="handlePriorStepClick"
           @on-next-step-click="handleNextStepClick"
         ></PicUpload>
-        <FinishRegist v-if="activeStep == 3"></FinishRegist>
+        <FinishRegist v-if="activeStep == 3" :type="findType"></FinishRegist>
       </div>
     </el-card>
   </div>

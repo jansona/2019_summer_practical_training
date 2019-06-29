@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <el-row>
-      <el-col :span="6" v-for="(o, index) in 4" :key="o">
-        <div class="card-container">
+  <div class="main-container">
+    <el-row :gutter="25">
+      <el-col :span="6" v-for="(o, index) in datas" :key="index">
+        <div class="card-container" :ref="'image'+index" @click="gotoDetail(types[index],o.id)">
           <el-card :body-style="{ padding: '3px' }" shadow="hover">
-            <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-              class="image"
-            >
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
+            <div class="image-container" :style=" {backgroundImage:'url('+picUrls[index]+')'}"></div>
+            <div class="text-inline">
+              <span>{{o.name}}</span>
+              <span class="grey-text">{{o.place}}</span>
             </div>
           </el-card>
         </div>
@@ -23,13 +21,38 @@ import URLS from "@/config/config";
 import { request, fetch } from "@/api/api";
 export default {
   name: "Pictures",
+  props: {
+    datas: Array,
+    types: Array
+  },
   data() {
     return {
       currentDate: new Date(),
       data: [],
+      rows: [],
+      picUrls: []
     };
   },
-  methods: {}
+  methods: {
+    click() {},
+    reloadData() {
+      for (var i = 0, len = this.datas.length; i < len; i++) {
+        let id = this.datas[i].id;
+        let urlType = this.types[i] == 0 ? "lost" : "match";
+        this.$set(
+          this.picUrls,
+          i,
+          URLS.baseUrl + "/resource/photo/" + urlType + "/" + id + ".jpg"
+        );
+      }
+    },
+    gotoDetail(type,id) {
+      this.$router.push({ name: "FaceDetail", query: { type: 1, id: id } });
+    }
+  },
+  mounted() {
+    this.reloadData();
+  }
 };
 </script>
 
@@ -64,12 +87,35 @@ export default {
   clear: both;
 }
 .card-container {
-  margin: 0 3px 0 3px;
+  margin-bottom: 20px;
 }
 .card-container:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 .card-container .is-hover-shadow:hover {
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.3);
+}
+
+.main-container {
+  margin: 0 10px 0 10px;
+}
+.image-container {
+  width: 100%;
+  height: 0;
+  padding-bottom: 120%;
+  /* overflow: hidden; */
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+.text-inline {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding: 7px;
+  margin-left: -7px;
+}
+.grey-text {
+  color: #999;
 }
 </style>
