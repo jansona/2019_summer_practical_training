@@ -5,6 +5,7 @@ import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.utils.SMSSender;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class RegisterController {
         try {
             String code = SMSSender.sendSMS(tel);
             stringRedisTemplate.delete(tel);
-            stringRedisTemplate.opsForValue().set(tel, code, 300);
+            stringRedisTemplate.opsForValue().set(tel, code);
             responseBase = new ResponseBase(200, "验证码短信发送成功", null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,6 +49,13 @@ public class RegisterController {
         ResponseBase responseBase;
         try {
             String realCode = stringRedisTemplate.opsForValue().get(user.getTel());
+//            char[] chrCharArray; //创建一个字符数组chrCharArray
+//            chrCharArray = realCode.toCharArray(); //将字符串变量转换为字符数组
+//            realCode = String.valueOf(chrCharArray ); //将字符数组转换为字符串
+
+            System.out.println("AAAAAAAAAAAAAAAA: " + realCode + " : " + code);
+//            int a = Integer.valueOf(realCode);
+            int b = Integer.valueOf(code);
 
             if (realCode != null && realCode.equals(code)) {
                 User user_saved = userRepository.save(user);
