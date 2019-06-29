@@ -32,6 +32,7 @@ public class RegisterController {
 
         try {
             String code = SMSSender.sendSMS(tel);
+            stringRedisTemplate.delete(tel);
             stringRedisTemplate.opsForValue().set(tel, code, 300);
             responseBase = new ResponseBase(200, "验证码短信发送成功", null);
         } catch (Exception e) {
