@@ -49,13 +49,6 @@ public class RegisterController {
         ResponseBase responseBase;
         try {
             String realCode = stringRedisTemplate.opsForValue().get(user.getTel());
-//            char[] chrCharArray; //创建一个字符数组chrCharArray
-//            chrCharArray = realCode.toCharArray(); //将字符串变量转换为字符数组
-//            realCode = String.valueOf(chrCharArray ); //将字符数组转换为字符串
-
-            System.out.println("AAAAAAAAAAAAAAAA: " + realCode + " : " + code);
-//            int a = Integer.valueOf(realCode);
-            int b = Integer.valueOf(code);
 
             if (realCode != null && realCode.equals(code)) {
                 User user_saved = userRepository.save(user);
