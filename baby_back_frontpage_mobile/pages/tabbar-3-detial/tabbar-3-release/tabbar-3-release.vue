@@ -6,7 +6,7 @@
 		</view>
 		<view class="cu-form-group align-start">
 			<view class="title">内容</view>
-			<textarea style="height: 1040upx;" maxlength="-1" :disabled="modalName!=null" @input="contentInput" placeholder="请输入具体的内容"></textarea>
+			<textarea style="height: 930upx;" maxlength="-1" :disabled="modalName!=null" @input="contentInput" placeholder="请输入具体的内容"></textarea>
 		</view>
 		<view class="cu-form-group">
 			<view class="action">

@@ -11,9 +11,9 @@
 					<image class="box-image" :src="'/static/img/video.png'" mode="aspectFit"></image>
 					<text class="explain">游子寻亲</text>
 				</view>
-				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-suspicion/tabbar-3-suspicion')">
+				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-quickmatch/tabbar-3-quickmatch')">
 					<image class="box-image" :src="'/static/img/qa.png'" mode="aspectFit"></image>
-					<text class="explain">疑似登记</text>
+					<text class="explain">快速匹配</text>
 				</view>
 				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release')">
 					<image class="box-image" :src="'/static/img/qa.png'" mode="aspectFit"></image>
