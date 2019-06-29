@@ -10,8 +10,8 @@ if (mode === 'dev') {
 // 填写信息部分
 const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
 const lostBabyFindUrl = baseUrl + "/lost-baby/find"
-const matchBabyInsertUrl = baseUrl + "/MatchBaby/insert"
-const matchBabyFindUrl = baseUrl + "/MatchBaby/find"
+const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
+const matchBabyFindUrl = baseUrl + "/match-baby/find"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
 // 登录注册部分
