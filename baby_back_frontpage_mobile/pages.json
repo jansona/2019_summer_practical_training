@@ -40,7 +40,7 @@
 			"style": {}
 		},
 		{
-			"path": "pages/tabbar-3-detial/tabbar-3-suspicion/tabbar-3-suspicion",
+			"path": "pages/tabbar-3-detial/tabbar-3-quickmatch/tabbar-3-quickmatch",
 			"style": {}
 		},
 		{
@@ -53,6 +53,10 @@
 		},
 		{
 			"path": "pages/tabbar-2-detail/passage-detail",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-4-detail/joinvolunteer",
 			"style": {}
 		}
     ],
