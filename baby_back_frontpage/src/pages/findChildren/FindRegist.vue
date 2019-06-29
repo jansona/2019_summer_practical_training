@@ -2,10 +2,10 @@
   <div class="hello">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span class="icon-size">
+        <span class="font-size-3em">
           <i class="el-icon-edit"></i>
         </span>
-        <span class="title-size">&nbsp&nbsp{{title}}</span>
+        <span class="font-size-2em">&nbsp&nbsp{{title}}</span>
       </div>
       <div>
         <el-steps :active="activeStep" simple finish-status="success">
@@ -76,10 +76,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.icon-size {
-  font-size: 3em;
-}
-.title-size {
-  font-size: 2em;
-}
 </style>

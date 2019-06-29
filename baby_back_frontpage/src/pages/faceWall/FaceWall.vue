@@ -1,22 +1,192 @@
 <template>
   <div>
-    面孔
+    <el-collapse accordion class="search-container">
+      <el-collapse-item>
+        <div slot="title" class="base-search-container" @click.stop>
+          <el-input
+            v-model="input"
+            placeholder="请输入关键字"
+            style="width:200px;"
+            @click.stop="inputClick"
+          ></el-input>
+          <el-select v-model="type" placeholder="类型" style="width:100px;">
+            <el-option
+              v-for="item in types"
+              :key="item.value"
+              :label="item.value"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-button icon="el-icon-search" circle @click="doSearch" class="search-btn"></el-button>
+        </div>
+        <el-select v-model="sex" placeholder="性别" style="width:100px;">
+          <el-option v-for="item in sexs" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+        <el-select v-model="hasPhoto" placeholder="照片" style="width:100px;">
+          <el-option
+            v-for="item in hasPhotos"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+        <el-date-picker
+          v-model="date"
+          type="daterange"
+          align="right"
+          unlink-panels
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-collapse-item>
+    </el-collapse>
+    <el-tabs type="border-card">
+      <el-tab-pane class="tab-container">
+        <div slot="label">
+          &nbsp&nbsp
+          <span class="font-size-1-5em">家寻宝贝</span>
+        </div>
+        <Pictures></Pictures>
+      </el-tab-pane>
+      <el-tab-pane>
+        <div slot="label">
+          &nbsp&nbsp
+          <span class="font-size-1-5em">宝贝寻家</span>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
-import URLS from '@/config/config'
+import URLS from "@/config/config";
+import { request,fetch } from "@/api/api";
+import Pictures from './components/Pictures';
 export default {
-  name: 'FaceWall',
-  data () {
+  name: "FaceWall",
+  components: {
+    Pictures
+  },
+  data() {
     return {
-    }
+      hasPhoto: "",
+      input: "",
+      sex: "",
+      date: '',
+      type: '',
+      sexs: [
+        {
+          value: true,
+          label: "男"
+        },
+        {
+          value: false,
+          label: "女"
+        }
+      ],
+      hasPhotos: [
+        {
+          value: true,
+          label: "有照片"
+        },
+        {
+          value: false,
+          label: "无照片"
+        }
+      ],
+      types: [
+        {
+          value: "全部",
+        },{
+          value: "姓名"
+        },{
+          value: "特征"
+        },{
+          value: "失踪地点"
+        }
+      ],
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "最近一周",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近一个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近三个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            }
+          }
+        ]
+      },
+    };
   },
   methods: {
+    inputClick() {
+      console.log("asdasd");
+    },
+    doSearch() {
+      console.log("search");
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-
+.tab-container {
+  height: 100%;
+}
+.content-container /deep/ .el-tabs__item {
+  margin: 10px 0px 10px 0px;
+}
+.content-container .el-tabs {
+  border-radius: 5px;
+}
+.to-right {
+  text-align: right;
+}
+.base-search-container {
+  width: 100%;
+  text-align: right;
+  position: relative;
+}
+.base-search-container /deep/ .el-button {
+  width: 40px;
+  height: 40px;
+}
+.base-search-container /deep/ .el-select {
+  padding-right: 5px;
+}
+.search-btn {
+  margin-left: 10px;
+  margin-top: 4px;
+  position: relative;
+  margin-right: 20px;
+  float: right;
+}
+.search-container {
+  padding-bottom: 10px;
+}
+.search-container /deep/ .el-collapse-item__content {
+  padding-bottom: 10px;
+}
 </style>

@@ -121,12 +121,12 @@ body {
 
 .main-container /deep/ ::-webkit-scrollbar {
   /*滚动条整体样式*/
-  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 10px;
+  width: 7px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 7px;
   border-radius: 10px;
 }
 .main-container /deep/ ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: 5px;
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: rgba(0, 0, 0, 0.2);
 }
