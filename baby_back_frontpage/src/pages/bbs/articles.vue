@@ -1,0 +1,78 @@
+<template>
+  <div>
+    <div v-for="(article,index) in articles" :key="index">
+      <el-row>
+        <el-col :span="2">
+          <img :src="require('@/assets/house.jpg')" class="round_icon" />
+        </el-col>
+        <el-col :span="18" :offset="1">
+          <p style="margin-bottom: 5px">
+            <a class="a-style">
+              <span @click="gotoArticle">{{article.title}}</span>
+            </a>
+          </p>
+          <p class="name">
+            <a class="a-style">
+              <span @click="gotoAuthorInfo">{{article.user.name}}</span>
+            </a>
+            &nbsp{{' '+article.date}}
+            <span
+              style="float:right"
+            >&nbsp {{' | 浏览 '+article.viewNum+' '}}</span>
+            <span style="float:right">&nbsp{{' | 赞 '+article.likeNum+' '}}</span>
+            <span style="float:right">&nbsp{{' 回复 '+article.commentNum+' '}}</span>
+          </p>
+        </el-col>
+      </el-row>
+      <el-divider style="margin-top: 15px;margin-right: 0px;margin-bottom: 15px;margin-left: 0px;"></el-divider>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "articles",
+  props: {
+    articles: Array
+  },
+  watch: {},
+  data() {
+    return {};
+  },
+  methods: {
+    gotoArticle(e) {
+      console.log(e);
+    },
+    gotoAuthorInfo(e){
+      
+    }
+  }
+};
+</script>
+
+<style scoped>
+.round_icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+p {
+  text-align: left;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+.el-divider--horizontal {
+  margin-top: 15px;
+  margin-right: 0px;
+  margin-bottom: 15px;
+  margin-left: 0px;
+}
+.name {
+  font-size: 10px;
+  color: gray;
+}
+</style>
