@@ -22,8 +22,8 @@ public class RegisterController {
     private UserRepository userRepository;
 
     @ApiOperation(value = "发送验证码")
-    @PostMapping("/sms-verify")
-    public ResponseBase logout(@RequestBody String tel) {
+    @GetMapping("/sms-verify")
+    public ResponseBase logout(@RequestParam String tel) {
         ResponseBase responseBase;
 
         if(userRepository.findByTel(tel) != null){

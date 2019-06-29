@@ -7,13 +7,17 @@ if (mode === 'dev') {
 } else {
 }
 
+// 填写信息部分
 const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
 const lostBabyFindUrl = baseUrl + "/lost-baby/find"
 const matchBabyInsertUrl = baseUrl + "/MatchBaby/insert"
 const matchBabyFindUrl = baseUrl + "/MatchBaby/find"
 const uploadPictureUrl = baseUrl + "/file/upload"
+
+// 登录注册部分
 const loginUrl = baseUrl + "/login"
-const registUrl = baseUrl + "/user/insert"
+const registUrl = baseUrl + "/register"
+const sendSMSUrl = baseUrl + "/sms-verify"
 
 const URLS = {
   baseUrl,
@@ -24,6 +28,7 @@ const URLS = {
   matchBabyInsertUrl,
   lostBabyFindUrl,
   matchBabyFindUrl,
+  sendSMSUrl,
 }
 
 module.exports = URLS
