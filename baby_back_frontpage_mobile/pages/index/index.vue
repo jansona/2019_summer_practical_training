@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<tabbar_1 v-if="curPage == '1'"></tabbar_1>
-		<tabbar_2 v-if="curPage == '2'"></tabbar_2>
+		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
 		<tabbar_3 v-if="showNewPop"></tabbar_3>
-		<tabbar_4 v-if="curPage == '4'"></tabbar_4>
+		<tabbar_2 v-if="curPage == '4'"></tabbar_2>
 		<tabbar_5 v-if="curPage == '5'"></tabbar_5>
 		
 		<view class="cu-bar tabbar bg-grey-index shadow foot">
@@ -17,7 +17,7 @@
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/img/tabbar/guanzhu' + [curPage == '2'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='2'?'selected-color':'text-gray'">论坛</view>
+				<view class="index-bar-text" :class="curPage=='2'?'selected-color':'text-gray'">紧急</view>
 			</view>
 			<view class="action" @click="onAddClick" data-cur="plugin">
 				<view class='my-add-btn'>
@@ -29,7 +29,7 @@
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/img/tabbar/news' + [curPage == '4'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='4'?'selected-color':'text-gray'">消息</view>
+				<view class="index-bar-text" :class="curPage=='4'?'selected-color':'text-gray'">论坛</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="5">
 				<view class='cuIcon-cu-image'>

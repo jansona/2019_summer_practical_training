@@ -19,6 +19,11 @@ const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
 
+// 论坛部分
+const articleFindUrl = baseUrl + '/article/find'
+const articleDeleteUrl = baseUrl + '/article/delete'
+const articleFindByUserUrl = baseUrl + '/article/find-by-user'
+const articleInsertUrl = baseUrl + '/article/insert'
 const URLS = {
   baseUrl,
   lostBabyInsertUrl,
@@ -29,6 +34,10 @@ const URLS = {
   lostBabyFindUrl,
   matchBabyFindUrl,
   sendSMSUrl,
+  articleFindUrl,
+  articleDeleteUrl,
+  articleFindByUserUrl,
+  articleInsertUrl
 }
 
 module.exports = URLS
