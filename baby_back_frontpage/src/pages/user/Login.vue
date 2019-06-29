@@ -114,7 +114,7 @@ export default {
                 });
                 this.loginingLoading = false;
                 this.$store.commit("setUserID", {
-                  id: 10,
+                  id: data.data.data.id,
                   flag: this.rememberLogin
                 });
                 this.$router.push("home");

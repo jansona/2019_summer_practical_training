@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -17,6 +18,7 @@ public class Comment {
     @JoinColumn(name = "article_id")
     private Article article;
     private String content;
+    private Date date;
 
     public Comment() {
     }
@@ -51,5 +53,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

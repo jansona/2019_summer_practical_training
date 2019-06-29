@@ -1,9 +1,15 @@
 <template>
-  <div class="hello">
-     <PicUpload :type="2">
+  <el-card class="box-card">
+    <div slot="header" class="clearfix">
+      <PicUpload :type="2">
 
-     </PicUpload>
-  </div>
+      </PicUpload>
+    </div>
+    <div class="text item">
+      <div class="block">
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <script>
