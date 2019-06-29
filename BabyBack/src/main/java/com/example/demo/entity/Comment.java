@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,6 +19,7 @@ public class Comment {
     @JoinColumn(name = "article_id")
     private Article article;
     private String content;
+    @DateTimeFormat(pattern = "yyyyMMdd")
     private Date date;
 
     public Comment() {
