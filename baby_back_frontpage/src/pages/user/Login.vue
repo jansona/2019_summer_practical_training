@@ -121,6 +121,10 @@ export default {
                 this.reload();
               } else {
                 this.wrongPass = true;
+                this.loginingLoading = false;
+                this.$refs.loginForm.validateField("account", error => {
+                  
+                })
               }
             })
             .catch(error => {
