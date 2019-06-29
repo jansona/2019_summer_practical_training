@@ -29,7 +29,8 @@
         @current-change="handleCurrentChange"
         background
         layout="prev, pager, next"
-        :total="1000"
+        :page-size="pageSize"
+        :total="numOfElements"
       ></el-pagination>
     </el-card>
   </div>
@@ -37,13 +38,20 @@
 
 <script>
 import articles from "@/pages/bbs/articles";
+import axios from "axios";
+import URLS from "@/config/config";
 export default {
   name: "BbsHome",
   components: {
     articles
   },
+  mounted:function(){
+    this.getArticles(0,true)
+  },
   data() {
     return {
+      numOfElements : 0,
+      pageSize : 0,
       input: "",
       select: "",
       activeName: "first",
@@ -52,18 +60,18 @@ export default {
           title: "震惊，深夜母猪哀嚎究竟为何",
           date: "2019-7-12",
           content: "哈哈哈哈哈",
-          likeNum:10,
-          viewNum:20,
-          commentNum:30,
+          likeNum: 10,
+          viewNum: 20,
+          commentNum: 30,
           user: { id: "2", imagePath: "", name: "黄卜江" }
         },
         {
           title: "男人看了会沉默，女人看了会流泪",
           date: "2019-7-13",
           content: "哈哈哈哈哈",
-          likeNum:10,
-          viewNum:20,
-          commentNum:30,
+          likeNum: 10,
+          viewNum: 20,
+          commentNum: 30,
           user: { id: "2", imagePath: "", name: "尹邦国" }
         }
       ]
@@ -75,6 +83,27 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(val);
+    },
+    getArticles(pageNum, sort) {
+      let _this = this
+      if (sort) {
+        axios
+          .post(URLS.articleFindUrl, {
+            page : pageNum
+          })
+          .then(function(response) {
+            
+            _this.articles=response.data.data.content;
+            _this.pageSize = response.data.data.size;
+            _this.numOfElements = response.data.data.numberOfElements
+
+          })
+          .catch(function(error) {
+            console.log(error);
+            alert("查询数据错误，请联系技术人员")
+          });
+      } else {
+      }
     }
   }
 };
