@@ -28,37 +28,40 @@ public class FileUploadController {
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
-    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id")String id, Action action) {
-        String result = "";
+    public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id") String id, Action action) {
+        ResponseBase responseBase;
+        String postfix = "";
         ArrayList<String> matches = null;
 
         String fileName;
-        try{
+        try {
             file.getOriginalFilename();
             file.getName();
-            String postfix = file.getOriginalFilename().split("\\.")[1];
+            postfix = file.getOriginalFilename().split("\\.")[1];
             fileName = String.format("%s.%s", id, postfix);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseBase(40001, "上传文件名异常", null);
         }
 
         switch (action) {
             case AS_LOST_PICS:
-                result = fileManager.saveLostPic(file, fileName);
+                responseBase = fileManager.saveLostPic(file, fileName);
                 break;
             case AS_MATCH_PICS:
-                result = fileManager.saveMatchPic(file, fileName);
+                responseBase = fileManager.saveMatchPic(file, fileName);
                 break;
             case AS_PROFILE:
-                result = fileManager.saveProfile(file, fileName);
+                responseBase = fileManager.saveProfile(file, fileName);
                 break;
             case RECOGNITION:
-                matches = recognizer.recognition(file, generateRandomFilename());
-
+                responseBase = recognizer.recognition(file, String.format("%s.%s", generateRandomFilename(), postfix));
+                break;
+            default:
+                responseBase = new ResponseBase(40006, "未知图片上传行为", null);
         }
 
-        return new ResponseBase(200, result, matches);
+        return responseBase;
     }
 
 

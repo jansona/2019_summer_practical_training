@@ -7,14 +7,23 @@ if (mode === 'dev') {
 } else {
 }
 
+// 填写信息部分
 const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
 const lostBabyFindUrl = baseUrl + "/lost-baby/find"
 const matchBabyInsertUrl = baseUrl + "/MatchBaby/insert"
 const matchBabyFindUrl = baseUrl + "/MatchBaby/find"
 const uploadPictureUrl = baseUrl + "/file/upload"
-const loginUrl = baseUrl + "/login"
-const registUrl = baseUrl + "/user/insert"
 
+// 登录注册部分
+const loginUrl = baseUrl + "/login"
+const registUrl = baseUrl + "/register"
+const sendSMSUrl = baseUrl + "/sms-verify"
+
+// 论坛部分
+const articleFindUrl = baseUrl + '/article/find'
+const articleDeleteUrl = baseUrl + '/article/delete'
+const articleFindByUserUrl = baseUrl + '/article/find-by-user'
+const articleInsertUrl = baseUrl + '/article/insert'
 const URLS = {
   baseUrl,
   lostBabyInsertUrl,
@@ -24,6 +33,11 @@ const URLS = {
   matchBabyInsertUrl,
   lostBabyFindUrl,
   matchBabyFindUrl,
+  sendSMSUrl,
+  articleFindUrl,
+  articleDeleteUrl,
+  articleFindByUserUrl,
+  articleInsertUrl
 }
 
 module.exports = URLS

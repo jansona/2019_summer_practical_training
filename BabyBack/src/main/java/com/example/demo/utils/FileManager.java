@@ -1,5 +1,6 @@
 package com.example.demo.utils;
 
+import com.example.demo.entity.ResponseBase;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.UserRepository;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public class FileManager<RequestMapping> {
 
-    enum Path{
+    enum Path {
         BASE,
         LOST,
         MATCH,
@@ -29,74 +30,75 @@ public class FileManager<RequestMapping> {
     LostBabyRepository lostBabyRepository;
 
 
-    public FileManager(){
+    public FileManager() {
         String paths[] = {store_base_path, store_lost_path, store_match_path, store_temp_path, store_profile_path};
         files = new File[paths.length];
 
-        for(int i = 0; i < files.length; i++){
+        for (int i = 0; i < files.length; i++) {
             files[i] = new File(paths[i]);
         }
     }
 
-    public String saveLostPic(MultipartFile file, String fileName) {
-
+    public ResponseBase saveLostPic(MultipartFile file, String fileName) {
+        ResponseBase responseBase;
         checkAndMakeDir();
 
-        String result = "succeed";
         try {
             file.transferTo(generateFile(Path.LOST, fileName));
+            responseBase = new ResponseBase(200, "失踪者照片上传成功", null);
         } catch (IOException ioe) {
-            result = "failed";
             ioe.printStackTrace();
+            responseBase = new ResponseBase(40002, "失踪者照片上传异常", null);
         }
 
-        return result;
+        return responseBase;
     }
 
-    public String saveMatchPic(MultipartFile file, String fileName){
-
+    public ResponseBase saveMatchPic(MultipartFile file, String fileName) {
+        ResponseBase responseBase;
         checkAndMakeDir();
 
-        String result = "succeed";
         try {
             file.transferTo(generateFile(Path.MATCH, fileName));
+            responseBase = new ResponseBase(200, "匹配值照片上传成功", null);
         } catch (IOException ioe) {
-            result = "failed";
             ioe.printStackTrace();
+            responseBase = new ResponseBase(40003, "匹配者照片上传失败", null);
         }
 
-        return result;
+        return responseBase;
     }
 
-    public String saveProfile(MultipartFile file, String fileName) {
-
+    public ResponseBase saveProfile(MultipartFile file, String fileName) {
+        ResponseBase responseBase;
         checkAndMakeDir();
 
-        String result = "succeed";
         try {
             file.transferTo(generateFile(Path.PROFILE, fileName));
+            responseBase = new ResponseBase(200, "头像上传成功", null);
         } catch (Exception ioe) {
-            result = "failed";
+            ioe.printStackTrace();
+            responseBase = new ResponseBase(40004, "头像上传异常", null);
         }
 
-        return result;
+        return responseBase;
     }
 
-    public File generateFile(Path basePath, String fileName){
+    public File generateFile(Path basePath, String fileName) {
 
         String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName;
         File file = new File(pathStr);
         return file;
     }
 
-    public void checkAndMakeDir(){
+    public void checkAndMakeDir() {
 
-        for(File file : files){
+        for (File file : files) {
             try {
                 if (!file.exists()) {
                     file.mkdir();
                 }
-            }catch(Exception ioe){
+            } catch (Exception ioe) {
                 ioe.printStackTrace();
             }
         }

@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment,Integer>, JpaSpecificationExecutor<Comment> {
+public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaSpecificationExecutor<Comment> {
 
 //    final String findByArticleIdSQL = "SELECT *" +
 //            "FROM article" +
@@ -21,6 +21,7 @@ public interface CommentRepository extends JpaRepository<Comment,Integer>, JpaSp
 //    public List<Comment> findByArticleId(@Param("team_id") String sId);
 
     List<Comment> findAllByArticle(Article article);
+
     List<Comment> findAllByUser(User user);
 
 }

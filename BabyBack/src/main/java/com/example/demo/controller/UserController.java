@@ -28,9 +28,9 @@ public class UserController {
     @PostMapping("/insert")
     public ResponseBase insertUser(@RequestBody User user) {
         ResponseBase responseBase;
-        if(userRepository.findByTel(user.getTel()) != null){
+        if (userRepository.findByTel(user.getTel()) != null) {
             responseBase = new ResponseBase(13240, "该手机号已被使用", user);
-        }else{
+        } else {
             responseBase = new ResponseBase(200, "注册成功", userRepository.save(user));
         }
         return responseBase;
@@ -43,8 +43,7 @@ public class UserController {
                                @RequestParam(value = "id", required = false, defaultValue = "") String id,
                                @RequestParam(value = "name", required = false, defaultValue = "") String name,
                                @RequestParam(value = "tel", required = false, defaultValue = "") String tel,
-                               @RequestParam(value = "email", required = false, defaultValue = "") String email
-    ) {
+                               @RequestParam(value = "email", required = false, defaultValue = "") String email) {
         Specification<User> userSpecification = apiService.createUserSpecification(id, name, tel, email);
         return userRepository.findAll(userSpecification, pageable);
     }

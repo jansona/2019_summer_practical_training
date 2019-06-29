@@ -32,8 +32,8 @@ public class LoginViewController {
     @PostMapping("/login")
     public ResponseBase login(@RequestBody Map<String, Object> map) {
 
-        String account = (String)map.get("account");
-        String password = (String)map.get("password");
+        String account = (String) map.get("account");
+        String password = (String) map.get("password");
 //        HttpSession session = (HttpSession)map.get("session");
 
         ResponseBase responseBase;
@@ -46,14 +46,14 @@ public class LoginViewController {
         // 此处先通过后台保存的正确的用户名和密码计算出正确的md5值，然后和前端传回来的作比较
 
         User user;
-        if(account.contains("@")){
+        if (account.contains("@")) {
             user = userRepository.findByEmail(account);
-        }else{
+        } else {
             user = userRepository.findByTel(account);
         }
-        if(user != null) {
+        if (user != null) {
             rightPassword = user.getPassWord();
-        }else{
+        } else {
             return new ResponseBase(20001, "账号或密码错误", null);
         }
 
@@ -66,7 +66,7 @@ public class LoginViewController {
 
         if (!password.equals(realPassword)) {
             responseBase = new ResponseBase(20001, "账号或密码错误", null);    // TODO 重定向地址填写
-        }else{
+        } else {
             responseBase = new ResponseBase(200, "登陆成功", user);
         }
 
@@ -88,7 +88,7 @@ public class LoginViewController {
         try {
             session.invalidate();
             responseBase = new ResponseBase(200, "登出成功", null);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             responseBase = new ResponseBase(20002, "登出异常", null);
         }

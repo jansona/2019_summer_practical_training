@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
-public interface ArticleRepository extends JpaRepository<Article,Integer>, JpaSpecificationExecutor<Article> {
+public interface ArticleRepository extends JpaRepository<Article, Integer>, JpaSpecificationExecutor<Article> {
 
-//    String findAllByUserIdSQL = "SELECT * FROM ";
+    //    String findAllByUserIdSQL = "SELECT * FROM ";
     List<Article> findAllByUser(User user);
 }

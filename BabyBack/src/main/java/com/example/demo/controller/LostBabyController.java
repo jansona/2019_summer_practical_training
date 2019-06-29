@@ -66,8 +66,7 @@ public class LostBabyController {
                                      @RequestParam(value = "name", required = false, defaultValue = "") String name,
                                      @RequestParam(value = "height", required = false, defaultValue = "") String height,
                                      @RequestParam(value = "nativePlace", required = false, defaultValue = "") String nativePlace,
-                                     @RequestParam(value = "date", required = false, defaultValue = "") String date
-    ) {
+                                     @RequestParam(value = "date", required = false, defaultValue = "") String date) {
         Specification<LostBaby> lostBabySpecification = apiService.createLostBabySpecification(id, place, name, height, nativePlace, date);
         return new ResponseBase(200, "查找成功", lostBabyRepository.findAll(lostBabySpecification, pageable));
     }
@@ -81,7 +80,7 @@ public class LostBabyController {
 
     @ApiOperation(value = "查找特定用户上传的失踪者")
     @PostMapping("/find-by-user")   // TODO 待填
-    public Page<LostBaby> findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user){
+    public Page<LostBaby> findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<LostBaby> result = lostBabyRepository.findAllByUser(user);
 
         pageHelper.doPage(result, page);

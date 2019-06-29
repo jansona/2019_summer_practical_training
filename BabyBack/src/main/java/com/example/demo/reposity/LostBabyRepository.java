@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
-public interface LostBabyRepository extends JpaRepository<LostBaby,Integer> , JpaSpecificationExecutor<LostBaby> {
+public interface LostBabyRepository extends JpaRepository<LostBaby, Integer>, JpaSpecificationExecutor<LostBaby> {
     List<LostBaby> findAllByUser(User user);
 }

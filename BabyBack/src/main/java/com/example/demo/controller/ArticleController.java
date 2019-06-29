@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "article")
 public class ArticleController {
@@ -36,27 +37,27 @@ public class ArticleController {
         ResponseBase responseBase;
         try {
             article_insert = articleRepository.save(article);
-        }catch (Exception e){
-            responseBase = new ResponseBase(30001, "新增文章失败", article);
+            responseBase = new ResponseBase(200, "新增文章成功", article_insert);
+        } catch (Exception e) {
             e.printStackTrace();
+            responseBase = new ResponseBase(30001, "新增文章失败", article);
         }
-        responseBase = new ResponseBase(200, "新增文章成功", article_insert);
 
-        return  responseBase;
+        return responseBase;
     }
 
     @ApiOperation(value = "查找文章")
     @PostMapping("/find")    // TODO 填写节点
     public ResponseBase findArticle(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
-                                             Pageable pageable,
-                                     @RequestParam(value = "id", required = false, defaultValue = "") String id) {
+                                            Pageable pageable,
+                                    @RequestParam(value = "id", required = false, defaultValue = "") String id) {
 
         ResponseBase responseBase;
         try {
             Specification<Article> articleSpecification = apiService.createArticleSpecification(id);
             Page<Article> page = articleRepository.findAll(articleSpecification, pageable);
             responseBase = new ResponseBase(200, "查找文章成功", page);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             responseBase = new ResponseBase(30002, "查找文章失败", null);
         }
@@ -65,7 +66,7 @@ public class ArticleController {
 
     @ApiOperation(value = "查找特定用户的文章")
     @PostMapping("/find-by-user")   // TODO 待填
-    public Page<Article> findArticleByUser(Pageable page, @RequestParam(value = "user") User user){
+    public Page<Article> findArticleByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<Article> result = articleRepository.findAllByUser(user);
 
         pageHelper.doPage(result, page);
