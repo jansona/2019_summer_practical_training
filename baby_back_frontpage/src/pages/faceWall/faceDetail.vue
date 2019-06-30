@@ -10,13 +10,15 @@
       <div>
         <el-row>
           <el-col :span="8">
-            <div class="pic-container">
+            <!-- <div class="pic-container"> -->
+              <el-card :body-style="{ padding: '3px'}" class="pic-container">
               <el-image :src="showImg(picUrl)">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
                 </div>
               </el-image>
-            </div>
+              </el-card>
+            <!-- </div> -->
           </el-col>
           <el-col :span="1" class="divider-container">
             <el-divider direction="vertical"></el-divider>
@@ -170,9 +172,12 @@ export default {
   font-size: 3em;
   max-width: 250px;
   max-height: 350px;
-  border: 5px solid #ddd;
-  padding: 5px;
-  background: #fff;
+  /* border: 5px solid #ddd; */
+  /* padding: 5px; */
+  background: #ddd;
+}
+.pic-container /deep/ .el-card__body {
+  background-color: #ddd;
 }
 .demo-table-expand {
   font-size: 0;

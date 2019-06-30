@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "article")
 public class ArticleController {
@@ -38,8 +39,8 @@ public class ArticleController {
             article_insert = articleRepository.save(article);
             responseBase = new ResponseBase(200, "新增文章成功", article_insert);
         } catch (Exception e) {
-            responseBase = new ResponseBase(30001, "新增文章失败", article);
             e.printStackTrace();
+            responseBase = new ResponseBase(30001, "新增文章失败", article);
         }
 
         return responseBase;

@@ -33,12 +33,8 @@
         </el-col>
       </template>
       <template v-else>
-        <el-col :span="15" :offset="5">
-          <el-button type="primary" @click="uploadAndRecog">上传照片并识别</el-button>
-        </el-col>
-        <el-col :span="4">
-          <el-button type="danger" icon="el-icon-delete" circle></el-button>
-        </el-col>
+        <el-button type="primary" @click="uploadAndRecog">上传照片并识别</el-button>
+        <el-button type="danger" icon="el-icon-delete" circle></el-button>
       </template>
     </el-row>
   </div>

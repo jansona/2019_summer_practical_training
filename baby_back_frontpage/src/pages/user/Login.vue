@@ -114,13 +114,17 @@ export default {
                 });
                 this.loginingLoading = false;
                 this.$store.commit("setUserID", {
-                  id: 10,
+                  id: data.data.data.id,
                   flag: this.rememberLogin
                 });
                 this.$router.push("home");
                 this.reload();
               } else {
                 this.wrongPass = true;
+                this.loginingLoading = false;
+                this.$refs.loginForm.validateField("account", error => {
+
+                })
               }
             })
             .catch(error => {

@@ -19,7 +19,7 @@
           type="verifacationCode"
           placeholder="请输入手机验证码"
         >
-        <el-button slot="append" >发送验证码</el-button>
+          <el-button slot="append" @click="sendSMS" :disabled="disabled">{{btnTitle}}</el-button>
         </el-input>
       </el-form-item>
       <el-form-item label="密码" prop="passWord">
@@ -41,14 +41,14 @@
 </template>
 
 <script>
-import { request } from "@/api/api";
+import { request,fetch } from "@/api/api";
 import URLS from "@/config/config";
-import axios from "axios"
+import axios from "axios";
 export default {
-  name: 'Regist',
+  name: "Regist",
   inject: ["reload"],
-  data () {
-     var checkPhone = (rule, value, callback) => {
+  data() {
+    var checkPhone = (rule, value, callback) => {
       const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
       if (!value) {
         return callback(new Error("请输入电话号码"));
@@ -72,33 +72,37 @@ export default {
       }
     };
     return {
+      btnTitle: "获取验证码",
+      disabled: false, //是否可点击
+      countdown: 60,
       registingLoading: false,
       registForm: {
-        name: '',
-        tel:'',
-        verifacationCode : '',
-        passWord: '',
-        password2: '',
+        name: "",
+        tel: "",
+        verifacationCode: "",
+        passWord: "",
+        password2: ""
       },
       rules: {
-        name: [{ required: true,  message: "请输入用户名", trigger: "blur" }],
-        tel: [
-          { required: true, validator: checkPhone, trigger: "blur" }
-        ],
+        name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        tel: [{ required: true, validator: checkPhone, trigger: "blur" }],
         verifacationCode: [
           { required: true, message: "请输入手机验证码", trigger: "blur" }
         ],
-        passWord: [{ required: true, message:"请输入密码", trigger: "blur" }],
-        password2: [{ required: true, validator: validatePass2, trigger: "blur" }]
-      },
-    }
+        passWord: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password2: [
+          { required: true, validator: validatePass2, trigger: "blur" }
+        ]
+      }
+    };
   },
   methods: {
-    regist(){
+    regist() {
       this.$refs.registForm.validate(valid => {
         if (valid) {
           this.registingLoading = true;
-          axios.post(URLS.registUrl, this.registForm)
+          axios
+            .post(URLS.registUrl+"?code="+this.registForm.verifacationCode, this.registForm)
             .then(data => {
               console.log(data);
               this.registingLoading = false;
@@ -113,23 +117,63 @@ export default {
                 });
                 this.$router.push("home");
                 this.reload();
-              } else if(data.data.rtnCode == 13240){
+              } else  {
                 this.$message({
-                  message: "该手机号已被注册",
+                  message: data.data.msg,
                   type: "warning"
-                })
+                });
               }
             })
             .catch(error => {
-              this.registingLoading = false;  
+              this.registingLoading = false;
               this.$message.error("服务器错误");
               console.log(error);
             });
         }
       });
+    },
+    sendSMS() {
+      if (this.btnTitle == "获取验证码") {
+        this.$refs.registForm.validateField("tel", error => {
+          if (error != "") {
+            return false;
+          }
+          this.disabled = true;
+          let countTime = setInterval(() => {
+            --this.countdown;
+            this.btnTitle = this.countdown + "S";
+            if (this.countdown <= 0) {
+              clearInterval(countTime);
+              this.countdown = 60;
+              this.disabled = false;
+              this.btnTitle = "获取验证码";
+              return;
+            }
+          }, 1000);
+
+          let phoneNum = this.registForm.tel;
+          fetch(URLS.sendSMSUrl, {tel:phoneNum}).then(data => {
+            console.log(data);
+            if (data.rtnCode != 200) {
+              this.$message({
+                message: data.msg,
+                type: "warning"
+              });
+              this.disabled = false;
+              this.countdown = 60;
+              this.btnTitle = "获取验证码";
+            } else {
+              this.$message({
+                message: "发送成功",
+                type: "success"
+              });
+            }
+          });
+        });
+      }
     }
   }
-}
+};
 </script>
 
 <style scoped>

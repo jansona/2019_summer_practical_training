@@ -81,7 +81,7 @@
 
       <el-form-item>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')">下一步</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" :loading="fillLoading">下一步</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -149,11 +149,13 @@ export default {
         contactPhone: [
           { required: true, message: "请输入联系人电话", trigger: "blur" }
         ]
-      }
+      },
+      fillLoading: false,
     };
   },
   methods: {
     submitForm(formName) {
+      this.fillLoading = true;
       this.$refs[formName].validate(valid => {
         if (valid) {
           // alert("submit!");
@@ -166,8 +168,12 @@ export default {
                 this.$store.commit("setImageId", data.data.data.id);
                 this.$emit("on-next-step-click");
               }
+              this.fillLoading = false;
             })
-            .catch(error => {});
+            .catch(error => {
+              console.log(error);
+              this.fillLoading = false;
+            });
         } else {
           console.log("error submit!!");
           return false;

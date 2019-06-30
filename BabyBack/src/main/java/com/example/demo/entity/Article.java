@@ -2,8 +2,10 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -12,6 +14,7 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String title;
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
@@ -19,6 +22,12 @@ public class Article {
     @JsonIgnore
     private Set<Comment> comments;//发布的可能匹配的儿童信息
     private String content;
+    @DateTimeFormat(pattern = "yyyyMMdd")
+    private Date date;
+
+    private Long likeNum;
+    private Long viewNum;
+    private int replyNum;
 
     public Integer getId() {
         return id;
@@ -50,5 +59,48 @@ public class Article {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Long getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Long likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public Long getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(Long viewNum) {
+        this.viewNum = viewNum;
+    }
+
+    public int getReplyNum() {
+        if(comments != null){
+            return comments.size();
+        }
+        return 0;
+    }
+
+    public void setReplyNum(int replyNum) {
+        this.replyNum = replyNum;
     }
 }
