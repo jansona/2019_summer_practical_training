@@ -109,7 +109,7 @@ export default {
               console.log(data);
               if (data.data.rtnCode == 200) {
                 this.$notify({
-                  message: "登陆成功！",
+                  title: "登陆成功！",
                   type: "succcess",
                   duration: 1500,
                   offset: 50

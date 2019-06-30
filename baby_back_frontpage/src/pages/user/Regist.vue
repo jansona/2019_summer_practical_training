@@ -108,7 +108,7 @@ export default {
               this.registingLoading = false;
               if (data.data.rtnCode == 200) {
                   this.$notify({
-                  message: "注册成功！",
+                  title: "注册成功！",
                   type: "succcess",
                   duration: 1500,
                   offset: 50

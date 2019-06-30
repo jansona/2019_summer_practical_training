@@ -55,7 +55,7 @@
 			</view>
 			<view class="cu-form-group align-start">
 				<view class="title">其他说明</view>
-				<textarea maxlength="-1" :disabled="modalName!=null" @input="otherDescriptionInput" placeholder="请输入其他的说明"></textarea>
+				<textarea maxlength="-1" :disabled="modalName!=null" @input="otherDescriptionInput" placeholder="请输入其他的说明" :value="otherDescription"></textarea>
 			</view>
 			<view class="uni-title" style="padding-left: 35upx;color: #888888;">联系人信息</view>
 			<view class="cu-form-group">
@@ -136,7 +136,8 @@
 				lostProcess:'',
 				otherInfo:'',
 				otherDescription:'',
-				imgList: []
+				imgList: [],
+				modalName: null,
 			}
 		},
 		onLoad() {
@@ -163,6 +164,7 @@
 			},
 			otherDescriptionInput(e){
 				this.otherDescription = e.detail.value
+				console.log(this.otherDescription)
 			},
 			ChooseImage() {
 				uni.chooseImage({
@@ -198,7 +200,7 @@
 				})
 			},
 			submit(e){
-				
+				let params = {};
 			}
 		}
 	}
