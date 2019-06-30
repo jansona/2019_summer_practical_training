@@ -121,7 +121,8 @@ export default {
           this.$notify({
             type: "success",
             message: data.msg,
-            title: "上传成功"
+            title: "上传成功",
+            offset: 50,
           });
           this.$emit('on-next-step-click')
         }
