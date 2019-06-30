@@ -44,6 +44,11 @@ export default new Router({
           path: 'faceDetail',
           name: 'FaceDetail',
           component: () => import('@/pages/faceWall/FaceDetail')
+        },
+        {
+          path: 'insertArticle',
+          name: 'InsertArticle',
+          component: () => import('@/pages/bbs/InsertArticle')
         }
       ]
     }
