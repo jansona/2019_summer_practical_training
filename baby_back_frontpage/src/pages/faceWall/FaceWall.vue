@@ -42,7 +42,7 @@
         ></el-date-picker>
       </el-collapse-item>
     </el-collapse>
-    <el-tabs type="border-card" @tab-click="tabClick">
+    <el-tabs type="border-card" @tab-click="tabClick" style="margin-top:10px;">
       <el-tab-pane class="tab-container">
         <div slot="label">
           &nbsp&nbsp

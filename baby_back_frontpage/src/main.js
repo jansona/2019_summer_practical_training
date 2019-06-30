@@ -39,7 +39,7 @@ new Vue({
   el: '#app',
   router,
   store,
-  i18n_en,
+  i18n_zh,
   components: { App },
   template: '<App/>'
 })

@@ -108,9 +108,11 @@ export default {
             .then(data => {
               console.log(data);
               if (data.data.rtnCode == 200) {
-                this.$message({
+                this.$notify({
                   message: "登陆成功！",
-                  type: "succcess"
+                  type: "succcess",
+                  duration: 1500,
+                  offset: 50
                 });
                 this.loginingLoading = false;
                 this.$store.commit("setUserID", {

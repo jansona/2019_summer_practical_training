@@ -2,8 +2,8 @@
   <div class="head-container">
     <el-col :span="3">
       <img
-        style="width: 14.24rem;height:4rem;max-width:100%;float:left"
-        :src="require('@/assets/house.jpg')"
+        style="width: 199px;height:64px;float:left"
+        :src="require('@/assets/logo_2.png')"
       >
     </el-col>
     <el-col :span="12" :offset="2">

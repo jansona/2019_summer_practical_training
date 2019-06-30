@@ -5,7 +5,7 @@
         <div slot="label" class="regist-tab">
           <span class="font-size-2em">
             <i class="el-icon-user"></i>
-          </span>&nbsp&nbsp
+          </span> &nbsp&nbsp
           <span class="font-size-2em">登录</span>
         </div>
         <Login class="content-margin"></Login>
@@ -67,8 +67,8 @@ export default {
   margin-top: 50px;
 }
 .main-container {
-  width: 1000px;
-  margin: 50px auto;
+  width: 800px;
+  margin: 100px auto;
 }
 
 @-webkit-keyframes animate-cloud {
@@ -95,7 +95,7 @@ $light_gray: #eee;
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
+  // background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
   -webkit-animation: animate-cloud 20s linear infinite;
   animation: animate-cloud 20s linear infinite;
 

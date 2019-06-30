@@ -85,8 +85,17 @@ export default {
     handleCurrentChange(val) {
       console.log(val);
     },
-    gotoInsertArticle(){
-      this.$router.push("insertArticle");
+    gotoInsertArticle() {
+      if (this.$store.state.hasLogin == "true") {
+        this.$router.push("insertArticle");
+      } else {
+        this.$notify({
+          message: "您尚未登陆，不能发帖",
+          type: "warning",
+          duration: 1500,
+          offset: 50
+        });
+      }
     },
     getArticles(pageNum, sort) {
       let _this = this;

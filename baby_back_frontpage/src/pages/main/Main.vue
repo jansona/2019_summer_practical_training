@@ -3,11 +3,12 @@
     <el-header class="bottom-shadow">
       <home-header @on-navbar-click="handleNavBarClick"></home-header>
     </el-header>
-    <el-main>
-      <div class="full-container">
+    <!-- <div class="full-container"> -->
+      <el-main>
+        <div class="full-container"></div>
         <home-content ref="content" class="content-container"></home-content>
-      </div>
-    </el-main>
+      </el-main>
+    <!-- </div> -->
   </el-container>
 </template>
 <script>
@@ -77,6 +78,7 @@ body {
   position: relative;
   width: 60%;
   left: 20%;
+  margin-top: 20px;
 }
 body {
   width: 100%;
@@ -116,18 +118,25 @@ body {
 }
 
 .full-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: relative;
+  /* display: -webkit-box;
+  display: -ms-flexbox; */
+  /* display: flex; */
+  /* -webkit-box-align: center;
+  -ms-flex-align: center; */
+  /* align-items: center; */
+  position: absolute;
   width: 100%;
-  height: 800px;
+  height: 100%;
   margin: 0 auto;
   background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
   -webkit-animation: animate-cloud 20s linear infinite;
   animation: animate-cloud 20s linear infinite;
+}
+.el-main {
+  padding: 0;
+}
+
+.el-menu--horizontal>.el-menu-item.is-active {
+  border-bottom: 3px solid #409EFF;
 }
 </style>

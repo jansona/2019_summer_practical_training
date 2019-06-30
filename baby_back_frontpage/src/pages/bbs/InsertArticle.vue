@@ -54,11 +54,11 @@ export default {
           .catch(function(error) {
             console.log(error);
             _this.user = null;
-            alert("您尚未登陆，不能发帖");
+            // alert("您尚未登陆，不能发帖");
             this.$router.push("bbsHome");
           });
       } else {
-        alert("您尚未登陆，不能发帖");
+        // alert("您尚未登陆，不能发帖");
         this.$router.push("bbsHome");
       }
     },

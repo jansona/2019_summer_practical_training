@@ -4,10 +4,14 @@
       :model="missing_person"
       :rules="rules"
       ref="ruleForm"
-      label-width="100px"
+      label-width="150px"
       class="demo-ruleForm"
     >
-      <el-divider content-position="left">失踪者信息</el-divider>
+      <div style="padding-top:10px">
+        <el-divider content-position="left">
+          <span class="font-size-1-3em">失踪者信息</span>
+        </el-divider>
+      </div>
       <el-form-item label="姓名" prop="name">
         <el-input v-model="missing_person.name"></el-input>
       </el-form-item>
@@ -59,7 +63,9 @@
         <el-input type="textarea" v-model="missing_person.otherExplain"></el-input>
       </el-form-item>
 
-      <el-divider content-position="left">联系人信息</el-divider>
+      <div style="padding-top:20px ">
+        <el-divider content-position="left"><span class="font-size-1-3em">联系人信息</span></el-divider>
+      </div>
       <el-form-item label="联系人姓名" prop>
         <el-input v-model="missing_person.contactName"></el-input>
       </el-form-item>
@@ -94,7 +100,7 @@ import URLS from "@/config/config";
 export default {
   name: "FillRegistInfo",
   props: {
-    fillType: Number,
+    fillType: Number
   },
   data() {
     return {
@@ -150,7 +156,7 @@ export default {
           { required: true, message: "请输入联系人电话", trigger: "blur" }
         ]
       },
-      fillLoading: false,
+      fillLoading: false
     };
   },
   methods: {
@@ -159,7 +165,10 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // alert("submit!");
-          let url = this.fillType == 1 ? URLS.lostBabyInsertUrl : URLS.matchBabyInsertUrl
+          let url =
+            this.fillType == 1
+              ? URLS.lostBabyInsertUrl
+              : URLS.matchBabyInsertUrl;
           axios
             .post(url, this.missing_person)
             .then(data => {
