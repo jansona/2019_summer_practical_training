@@ -14,6 +14,10 @@ Vue.component('tabbar_3',tabbar_3)
 Vue.component('tabbar_4',tabbar_4)
 Vue.component('tabbar_5',user)
 
+// 注册网络请求插件
+import api from '@/common/vmeitime-http/'
+Vue.prototype.$api = api
+
 App.mpType = 'app'
 
 const app = new Vue({

@@ -2,8 +2,8 @@
   <div class="head-container">
     <el-col :span="3">
       <img
-        style="width: 14.24rem;height:4rem;max-width:100%;float:left"
-        :src="require('@/assets/house.jpg')"
+        style="width: 199px;height:64px;float:left"
+        :src="require('@/assets/logo_2.png')"
       >
     </el-col>
     <el-col :span="12" :offset="2">
@@ -24,7 +24,7 @@
         <el-menu-item index="/findRegist">寻亲登记</el-menu-item>
         <el-menu-item index="/fastMatch">快速匹配</el-menu-item>
         <el-menu-item index="/faceWall">面孔墙</el-menu-item>
-        <el-menu-item index="/bbsHome">论坛{{this.$store.state.userID}}{{this.$store.state.hasLogin}}</el-menu-item>
+        <el-menu-item index="/bbsHome">论坛</el-menu-item>
       </el-menu>
     </el-col>
     <el-col :span="7" class="person-container">

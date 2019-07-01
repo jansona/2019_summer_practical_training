@@ -108,9 +108,11 @@ export default {
             .then(data => {
               console.log(data);
               if (data.data.rtnCode == 200) {
-                this.$message({
-                  message: "登陆成功！",
-                  type: "succcess"
+                this.$notify({
+                  title: "登陆成功！",
+                  type: "succcess",
+                  duration: 1500,
+                  offset: 50
                 });
                 this.loginingLoading = false;
                 this.$store.commit("setUserID", {
@@ -123,7 +125,7 @@ export default {
                 this.wrongPass = true;
                 this.loginingLoading = false;
                 this.$refs.loginForm.validateField("account", error => {
-                  
+
                 })
               }
             })

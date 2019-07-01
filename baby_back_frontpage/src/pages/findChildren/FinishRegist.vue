@@ -17,6 +17,9 @@
 <script>
 export default {
   name: "FinishRegist",
+  props: {
+    type: Number,
+  },
   data() {
     return {};
   },
@@ -25,7 +28,7 @@ export default {
       this.$router.push({ name: "Home" });
     },
     gotoDetail() {
-      this.$router.push({ name: "FaceDetail", query: { type: 1, id:  this.$store.state.imageId } });
+      this.$router.push({ name: "FaceDetail", query: { type: this.type, id:  this.$store.state.imageId } });
     }
   }
 };

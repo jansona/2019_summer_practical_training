@@ -1,8 +1,8 @@
-let mode = 'dev'
-let baseUrl = ''
-if (mode === 'dev') {
+let model = 'dev'
+let baseUrl = 'http://localhost:18080'
+if (model === 'dev') {
   baseUrl = 'http://localhost:18080'
-} else if (mode == 'hbj'){
+} else if (model == 'hbj'){
   baseUrl = 'http://192.168.137.1:18080'
 } else {
 }
