@@ -51,12 +51,11 @@
         <template v-if="choosed == 0">
           <Pictures :datas="datas" :types="dataTypes" ref="pictures0"></Pictures>
           <el-pagination
-            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page.sync="currentPage3"
-            :page-size="100"
+            :current-page.sync="currentPage"
+            :page-size="pageSize"
             layout="prev, pager, next, jumper"
-            :total="1000"
+            :total="totalNum"
           ></el-pagination>
         </template>
       </el-tab-pane>
@@ -68,12 +67,11 @@
         <template v-if="choosed == 1">
           <Pictures :datas="datas" :types="dataTypes" ref="pictures1"></Pictures>
           <el-pagination
-            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page.sync="currentPage3"
-            :page-size="100"
+            :current-page.sync="currentPage"
+            :page-size="pageSize"
             layout="prev, pager, next, jumper"
-            :total="1000"
+            :total="totalNum"
           ></el-pagination>
         </template>
       </el-tab-pane>
@@ -100,6 +98,9 @@ export default {
       datas: [],
       dataTypes: [],
       choosed: 0,
+      totalNum: 0,
+      currentPage: 1,
+      pageSize: 2,
       sexs: [
         {
           value: 0,
@@ -184,11 +185,12 @@ export default {
       console.log(this.$refs.pictures0);
     },
     loadData() {
-      request(this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl)
+      request(this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl,{size:this.pageSize,page:this.currentPage-1})
         .then(data => {
           console.log(data);
           if (data.rtnCode == 200) {
             if (this.choosed == -1) this.choosed = 0;
+            this.totalNum = data.data.totalElements;
             this.datas = JSON.parse(JSON.stringify(data.data.content));
             this.dataTypes = [];
             for (var i = 0, len = this.datas.length; i < len; i++) {
@@ -211,6 +213,11 @@ export default {
     },
     tabClick(e) {
       this.choosed = e.index;
+      this.loadData();
+    },
+    handleCurrentChange(e){
+      console.log(e);
+      this.currentPage = e;
       this.loadData();
     }
   },
@@ -250,12 +257,18 @@ export default {
   float: right;
 }
 .search-container {
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 }
 .search-container /deep/ .el-collapse-item__content {
   padding-bottom: 10px;
 }
 .content-container /deep/ .is-active {
   height: 100%;
+}
+.content-container .el-tabs {
+  margin-top: 20px!important;
+}
+.content-container .el-collapse {
+  /* border-radius: 10px; */
 }
 </style>
