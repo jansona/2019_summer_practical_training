@@ -1,16 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.utils.SMSSender;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 @CrossOrigin
 @RestController

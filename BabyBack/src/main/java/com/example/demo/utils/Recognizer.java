@@ -1,7 +1,7 @@
 package com.example.demo.utils;
 
 import com.example.demo.entity.LostBaby;
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.reposity.LostBabyRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

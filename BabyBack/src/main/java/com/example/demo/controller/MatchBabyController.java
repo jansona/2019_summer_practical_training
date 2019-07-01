@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.MatchBaby;
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.MatchBabyRepository;
 import com.example.demo.service.ApiService;
