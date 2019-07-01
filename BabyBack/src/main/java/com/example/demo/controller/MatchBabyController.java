@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.MatchBaby;
+import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.MatchBabyRepository;
 import com.example.demo.service.ApiService;
@@ -37,11 +38,11 @@ public class MatchBabyController {
 
     @ApiOperation(value = "查找孤儿")
     @PostMapping("/find")    // TODO 填写节点
-    public Page<MatchBaby> findMatchBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+    public ResponseBase findMatchBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                                  Pageable pageable,
-                                         @RequestParam(value = "id", required = false, defaultValue = "") String id) {
+                                      @RequestParam(value = "id", required = false, defaultValue = "") String id) {
         Specification<MatchBaby> matchBabySpecification = apiService.createMatchBabySpecification(id);
-        return matchBabyRepository.findAll(matchBabySpecification, pageable);
+        return new ResponseBase(200,"查询成功", matchBabyRepository.findAll(matchBabySpecification, pageable));
     }
 
     @ApiOperation(value = "查找特定用户上传的孤儿")

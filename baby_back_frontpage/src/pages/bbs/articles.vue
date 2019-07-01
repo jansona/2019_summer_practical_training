@@ -20,7 +20,7 @@
               style="float:right"
             >&nbsp {{' | 浏览 '+article.viewNum+' '}}</span>
             <span style="float:right">&nbsp{{' | 赞 '+article.likeNum+' '}}</span>
-            <span style="float:right">&nbsp{{' 回复 '+article.commentNum+' '}}</span>
+            <span style="float:right">&nbsp{{' 回复 '+article.replyNum+' '}}</span>
           </p>
         </el-col>
       </el-row>

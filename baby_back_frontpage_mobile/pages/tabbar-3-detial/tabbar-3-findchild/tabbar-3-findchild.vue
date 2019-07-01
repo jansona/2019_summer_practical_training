@@ -55,7 +55,11 @@
 			</view>
 			<view class="cu-form-group align-start">
 				<view class="title">其他说明</view>
+<<<<<<< HEAD
 				<textarea maxlength="-1" :disabled="modalName!=null" v-model="findChildForm.otherExplain" placeholder="请输入其他的说明"></textarea>
+=======
+				<textarea maxlength="-1" :disabled="modalName!=null" @input="otherDescriptionInput" placeholder="请输入其他的说明" v-model="otherDescription"></textarea>
+>>>>>>> 94031a32fcdf7852c6721fa7b92c89fdd64f64c0
 			</view>
 			<view class="uni-title" style="padding-left: 35upx;color: #888888;">联系人信息</view>
 			<view class="cu-form-group">
@@ -164,7 +168,24 @@
 				this.findChildForm.birthday = e.detail.value
 			},
 			LostDateChange(e) {
+<<<<<<< HEAD
 				this.findChildForm.date = e.detail.value
+=======
+				this.lostDate = e.detail.value
+			},
+			feaInput(e) {
+				this.feature = e.detail.value
+			},
+			lostInput(e) {
+				this.lostProcess = e.detail.value
+			},
+			otherInfoInput(e){
+				this.otherInfo = e.detail.value
+			},
+			otherDescriptionInput(e){
+				// this.otherDescription = e.detail.value
+				console.log(this.otherDescription)
+>>>>>>> 94031a32fcdf7852c6721fa7b92c89fdd64f64c0
 			},
 			ChooseImage() {
 				uni.chooseImage({
@@ -200,7 +221,12 @@
 				})
 			},
 			submit(e){
+<<<<<<< HEAD
 				
+=======
+				let params = {};
+                console.log(this.otherDescription)
+>>>>>>> 94031a32fcdf7852c6721fa7b92c89fdd64f64c0
 			}
 		}
 	}

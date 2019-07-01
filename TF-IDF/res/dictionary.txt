@@ -1,2 +1,5 @@
 0	asdf
-1	string
+1	none
+2	微软
+3	斯蒂芬
+4	阿克苏
