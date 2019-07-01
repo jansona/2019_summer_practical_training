@@ -44,18 +44,19 @@ export default {
             id: userID
           })
           .then(function(response) {
+            console.log(response);
             if (response.data.data.numberOfElements == 1) {
               _this.user = response.data.data.content[0];
             } else {
               _this.user = null;
-              this.$router.push("bbsHome");
+              _this.$router.push("bbsHome");
             }
           })
           .catch(function(error) {
             console.log(error);
             _this.user = null;
             // alert("您尚未登陆，不能发帖");
-            this.$router.push("bbsHome");
+            _this.$router.push("bbsHome");
           });
       } else {
         // alert("您尚未登陆，不能发帖");
@@ -63,22 +64,23 @@ export default {
       }
     },
     insert() {
-      if (title == "") {
+      if (this.title == "") {
         alert("文章标题不能为空");
         return;
       }
-      if (content == "") {
+      if (this.content == "") {
         alert("文章内容不能为空");
         return;
       }
       var date = new Date();
       var article = {};
       article["date"] = date;
-      article["user"] = user;
-      article["title"] = title;
-      article["content"] = content;
+      article["user"] = this.user;
+      article["title"] = this.title;
+      article["content"] = this.content;
       article["likeNum"] = 0;
       article["viewNum"] = 0;
+      console.log(article);
       axios
         .put(URLS.articleInsertUrl, {
           article: article
