@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pic-container">
     <el-collapse accordion class="search-container">
       <el-collapse-item>
         <div slot="title" class="base-search-container" @click.stop>
@@ -19,34 +19,42 @@
           </el-select>
           <el-button icon="el-icon-search" circle @click="doSearch" class="search-btn"></el-button>
         </div>
-        <el-select v-model="sex" placeholder="性别" style="width:100px;">
-          <el-option v-for="item in sexs" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select>
-        <el-select v-model="hasPhoto" placeholder="照片" style="width:100px;">
-          <el-option
-            v-for="item in hasPhotos"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-        <el-date-picker
-          v-model="date"
-          type="daterange"
-          align="right"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :picker-options="pickerOptions"
-        ></el-date-picker>
+        <div class="options-container">
+          <el-select v-model="sex" placeholder="性别" style="width:100px;">
+            <el-option
+              v-for="item in sexs"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-select v-model="hasPhoto" placeholder="照片" style="width:100px;">
+            <el-option
+              v-for="item in hasPhotos"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-date-picker
+            v-model="date"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="pickerOptions"
+          ></el-date-picker>
+        </div>
       </el-collapse-item>
     </el-collapse>
-    <el-tabs type="border-card" @tab-click="tabClick" style="margin-top:10px;">
+    <div class="content-margins">
+    <el-tabs @tab-click="tabClick" style="margin-top:10px;">
       <el-tab-pane class="tab-container">
         <div slot="label">
           &nbsp&nbsp
-          <span class="font-size-1-5em">家寻宝贝</span>
+          <span class="font-size-1-3em">家寻宝贝</span>
         </div>
         <template v-if="choosed == 0">
           <Pictures :datas="datas" :types="dataTypes" ref="pictures0"></Pictures>
@@ -62,7 +70,7 @@
       <el-tab-pane>
         <div slot="label">
           &nbsp&nbsp
-          <span class="font-size-1-5em">宝贝寻家</span>
+          <span class="font-size-1-3em">宝贝寻家</span>
         </div>
         <template v-if="choosed == 1">
           <Pictures :datas="datas" :types="dataTypes" ref="pictures1"></Pictures>
@@ -76,6 +84,7 @@
         </template>
       </el-tab-pane>
     </el-tabs>
+    </div>
   </div>
 </template>
 
@@ -185,7 +194,10 @@ export default {
       console.log(this.$refs.pictures0);
     },
     loadData() {
-      request(this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl,{size:this.pageSize,page:this.currentPage-1})
+      request(
+        this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl,
+        { size: this.pageSize, page: this.currentPage - 1 }
+      )
         .then(data => {
           console.log(data);
           if (data.rtnCode == 200) {
@@ -215,7 +227,7 @@ export default {
       this.choosed = e.index;
       this.loadData();
     },
-    handleCurrentChange(e){
+    handleCurrentChange(e) {
       console.log(e);
       this.currentPage = e;
       this.loadData();
@@ -266,9 +278,19 @@ export default {
   height: 100%;
 }
 .content-container .el-tabs {
-  margin-top: 20px!important;
+  margin-top: 20px !important;
 }
 .content-container .el-collapse {
   /* border-radius: 10px; */
+}
+.options-container {
+  text-align: right;
+  padding-right: 20px;
+}
+.pic-container {
+  background-color: white
+}
+.content-margins {
+  margin: 10px 20px;
 }
 </style>
