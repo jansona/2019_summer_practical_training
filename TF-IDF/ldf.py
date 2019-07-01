@@ -147,4 +147,4 @@ def main2(testArr: list):
     Res=getMatchRes(tfidf,tfTest,trainData,idArr)
     return Res
 if __name__ == '__main__':
-    main2(sys.argv[1:])
+    main1()
