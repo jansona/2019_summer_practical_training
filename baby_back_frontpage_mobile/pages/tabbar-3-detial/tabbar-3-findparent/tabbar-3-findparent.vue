@@ -3,7 +3,7 @@
 		<form method="post">
 			<view class="cu-form-group">
 				<view class="title">姓名</view>
-				<input placeholder="请输入寻亲者姓名" name="lostName"></input>
+				<input placeholder="请输入寻亲者姓名" v-model="findParentForm.name"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width:100upx;">性别</view>
@@ -134,19 +134,30 @@
 	export default {
 		data() {
 			return {
-				gender:'',
-				isOrNo:'是',
+				findParentForm: {
+					id:'',
+					name: '',
+					sex:'',
+					birthday:'2018-12-25',
+					nativePlace:'', //籍贯
+					height:'',
+					date:'2019-6-25', //失踪时间
+					place:'',
+					babyDescription:'', //特征描述
+					missDescription:'', //失踪经过
+					otherExplain:'', //其他说明
+					otherDescription:'', //其他信息描述
+					//联系人信息👇
+					contactName:'', //联系人姓名
+					contactRel:'', //联系人与失踪人关系
+					//writerRelation:'',
+					contactAddress:'',
+					contactEmail:'',
+					contactPhone:'',
+					otherContactMethod:'', 
+					imgList: []
+				},
 				items:[{name:'man',value:'男'},{name:'woman',value:'女'}],
-				items1:[{name:'yes',value:'是'},{name:'no',value:'否'}],
-				content:'',
-				tatVal:0,
-				birthDate: '2018-12-25',
-				lostDate: '2019-6-25',
-				feature:'',
-				lostProcess:'',
-				otherInfo:'',
-				otherDescription:'',
-				imgList: []
 			}
 		},
 		onLoad() {

@@ -124,7 +124,11 @@ export default {
             title: "上传成功",
             offset: 50,
           });
+          if(this.type == 1){
           this.$emit('on-next-step-click')
+          } else {
+            this.$emit('return-data',data)
+          }
         }
       });
     },

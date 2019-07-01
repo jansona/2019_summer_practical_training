@@ -40,10 +40,13 @@
 		data() {
 			return {
 				imgList:[],
-				contentInput:'',
+				content:'',
 			}
 		},
 		methods: {
+			contentInput(e){
+				this.content=e.detail.value
+			},
 			ChooseImage() {
 				uni.chooseImage({
 					count: 4, //默认9
