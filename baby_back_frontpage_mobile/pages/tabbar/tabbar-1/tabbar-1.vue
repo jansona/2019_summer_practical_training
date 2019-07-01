@@ -44,7 +44,7 @@
 					<image :src="lostList[index]" mode="aspectFit" style="size: 500upx;border-radius: 20upx;overflow: hidden;margin-left: 27upx;"></image>
 			</view>
 		</view> -->
-		
+		<view class="cu-tabbar-height"></view>
 	</view>
 </template>
 

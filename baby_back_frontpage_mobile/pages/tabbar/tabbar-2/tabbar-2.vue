@@ -31,6 +31,7 @@
 					<view class="desc"><view class="text-content">{{item.content}}</view></view>
 				</view>
 			</view>
+        <view class="cu-tabbar-height"></view>
 		</view>
 		<!-- <view class="cu-card dynamic">
 			<view class="cu-item shadow">
