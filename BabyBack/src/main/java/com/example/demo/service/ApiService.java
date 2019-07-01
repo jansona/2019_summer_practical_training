@@ -2,13 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.entity.*;
 import com.example.demo.reposity.*;
-import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,7 +14,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class ApiService implements InitializingBean {
@@ -221,7 +222,7 @@ public class ApiService implements InitializingBean {
 
     void insertIDPredicate(String value, String key, CriteriaBuilder cb, Root<?> root, List<Predicate> predicatesList) {
         if (!value.equals("")) {
-            Predicate predicate = cb.equal(root.get("article_id"), Integer.valueOf(value));
+            Predicate predicate = cb.equal(root.get(key), Integer.valueOf(value));
             predicatesList.add(predicate);
         }
     }
