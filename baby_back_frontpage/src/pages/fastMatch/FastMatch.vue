@@ -2,8 +2,7 @@
 <div>
   <el-card>
   <div slot="header" class="clearfix">
-      <PicUpload :type="2">
-
+      <PicUpload :type="2" @return-data="getData">
       </PicUpload>
     </div>
     <div class="text item">
@@ -27,6 +26,9 @@ export default {
     PicUpload
   },
   methods: {
+    getData(data){
+      console.log("waimian:",data);
+    }
   }
 }
 </script>
