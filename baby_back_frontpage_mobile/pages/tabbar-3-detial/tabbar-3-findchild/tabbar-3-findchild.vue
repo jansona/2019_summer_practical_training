@@ -139,7 +139,7 @@
 					missDescription:'', //失踪经过
 					otherExplain:'', //其他说明
 					otherDescription:'', //其他信息描述
-					//联系人信息👇
+					//联系人信息
 					contactName:'', //联系人姓名
 					contactRel:'', //联系人与失踪人关系
 					//writerRelation:'',
@@ -165,18 +165,6 @@
 			},
 			LostDateChange(e) {
 				this.lostDate = e.detail.value
-			},
-			feaInput(e) {
-				this.feature = e.detail.value
-			},
-			lostInput(e) {
-				this.lostProcess = e.detail.value
-			},
-			otherInfoInput(e){
-				this.otherInfo = e.detail.value
-			},
-			otherDescriptionInput(e){
-				// this.otherDescription = e.detail.value
 			},
 			ChooseImage() {
 				uni.chooseImage({
