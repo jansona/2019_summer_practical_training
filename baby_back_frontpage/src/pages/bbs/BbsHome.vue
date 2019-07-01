@@ -31,6 +31,7 @@
         layout="prev, pager, next"
         :page-size="pageSize"
         :total="numOfElements"
+        :current-page.sync="pageNo"
       ></el-pagination>
     </el-card>
   </div>
@@ -53,37 +54,23 @@ export default {
     return {
       numOfElements: 0,
       pageSize: 0,
+      pageNo : 1,
       input: "",
       select: "",
       activeName: "first",
-      articles: [
-        {
-          title: "震惊，深夜母猪哀嚎究竟为何",
-          date: "2019-7-12",
-          content: "哈哈哈哈哈",
-          likeNum: 10,
-          viewNum: 20,
-          commentNum: 30,
-          user: { id: "2", imagePath: "", name: "黄卜江" }
-        },
-        {
-          title: "男人看了会沉默，女人看了会流泪",
-          date: "2019-7-13",
-          content: "哈哈哈哈哈",
-          likeNum: 10,
-          viewNum: 20,
-          commentNum: 30,
-          user: { id: "2", imagePath: "", name: "尹邦国" }
-        }
-      ]
+      articles: [],
+      isSort : true
     };
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      this.isSort = !this.isSort;
+      this.pageNo=1;
+      this.getArticles(this.pageNo-1,this.isSort);
     },
     handleCurrentChange(val) {
-      console.log(val);
+      
+      this.getArticles(this.pageNo-1,this.isSort);
     },
     gotoInsertArticle() {
       console.log(this.$store.state.hasLogin);
@@ -100,22 +87,29 @@ export default {
     },
     getArticles(pageNum, sort) {
       let _this = this;
+      let url=''
       if (sort) {
+        url=URLS.articleFindUrl+'?page='+pageNum
+       } else {
+    url=URLS.articleFindUrl+'?page='+pageNum+'&sort=date'
+      }
         axios
-          .post(URLS.articleFindUrl, {
-            page: pageNum
-          })
+          .post(url)
           .then(function(response) {
             _this.articles = response.data.data.content;
             _this.pageSize = response.data.data.size;
-            _this.numOfElements = response.data.data.numberOfElements;
+            _this.numOfElements = response.data.data.totalElements;
           })
           .catch(function(error) {
             console.log(error);
-            alert("查询数据错误，请联系技术人员");
+            _this.$notify({
+              message: "网络不稳定",
+              type: "warning",
+              duration: 1500,
+              offset: 50
+            });
           });
-      } else {
-      }
+     
     }
   }
 };

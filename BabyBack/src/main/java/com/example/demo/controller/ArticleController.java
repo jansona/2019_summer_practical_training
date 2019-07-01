@@ -48,7 +48,7 @@ public class ArticleController {
 
     @ApiOperation(value = "查找文章")
     @PostMapping("/find")    // TODO 填写节点
-    public ResponseBase findArticle(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+    public ResponseBase findArticle(@PageableDefault(value = 5, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                             Pageable pageable,
                                     @RequestParam(value = "id", required = false, defaultValue = "") String id) {
 

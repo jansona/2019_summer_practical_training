@@ -32,7 +32,8 @@ export default {
     return {
       user: null,
       title: "",
-      content: ""
+      content: "",
+      article:{}
     };
   },
   methods: {
@@ -45,8 +46,8 @@ export default {
           })
           .then(function(response) {
             console.log(response);
-            if (response.data.data.numberOfElements == 1) {
-              _this.user = response.data.data.content[0];
+            if (response.data.numberOfElements == 1) {
+              _this.user = response.data.content[0];
             } else {
               _this.user = null;
               _this.$router.push("bbsHome");
@@ -64,36 +65,65 @@ export default {
       }
     },
     insert() {
+      let _this = this;
       if (this.title == "") {
-        alert("文章标题不能为空");
+
+        _this.$notify({
+                  title: "文章标题不能为空",
+                  type: "warning",
+                  duration: 1500,
+                  offset: 50
+                });
         return;
       }
       if (this.content == "") {
-        alert("文章内容不能为空");
+
+        _this.$notify({
+                  title: "文章内容不能为空",
+                  type: "warning",
+                  duration: 1500,
+                  offset: 50
+                });
         return;
       }
       var date = new Date();
-      var article = {};
-      article["date"] = date;
-      article["user"] = this.user;
-      article["title"] = this.title;
-      article["content"] = this.content;
-      article["likeNum"] = 0;
-      article["viewNum"] = 0;
-      console.log(article);
+      
+      _this.article["date"] = date;
+      _this.article["user"] = _this.user;
+      _this.article["title"] = _this.title;
+      _this.article["content"] = _this.content;
+      _this.article["likeNum"] = 0;
+      _this.article["viewNum"] = 0;
+      console.log(_this.article);
       axios
-        .put(URLS.articleInsertUrl, {
-          article: article
-        })
+        .put(URLS.articleInsertUrl, _this.article
+        )
         .then(function(response) {
-          if (response.data.code == 200) {
-            alert("发布成功");
+          console.log(response)
+          if (response.data.rtnCode == 200) {
+            _this.$notify({
+                  title: "发布成功",
+                  type: "success",
+                  duration: 1500,
+                  offset: 50
+                });
           } else {
-            alert("发布失败");
+            _this.$notify({
+                  title: "发布失败",
+                  type: "warning",
+                  duration: 1500,
+                  offset: 50
+                });
           }
         })
         .catch(function(error) {
           console.log(error);
+          _this.$notify({
+                  title: "发布失败",
+                  type: "warning",
+                  duration: 1500,
+                  offset: 50
+                });
         });
     },
     returnBbs(){
