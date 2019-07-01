@@ -3,9 +3,12 @@
     <el-header class="bottom-shadow">
       <home-header @on-navbar-click="handleNavBarClick"></home-header>
     </el-header>
-    <el-main>
-      <home-content ref="content" class="content-container"></home-content>
-    </el-main>
+    <!-- <div class="full-container"> -->
+      <el-main>
+        <div class="full-container"></div>
+        <home-content ref="content" class="content-container"></home-content>
+      </el-main>
+    <!-- </div> -->
   </el-container>
 </template>
 <script>
@@ -27,23 +30,23 @@ export default {
       // console.log(indexPath);
     },
     handleHeadImgClick() {},
-    handleNavBarClick(){
+    handleNavBarClick() {
       // console.log("click!")
       this.$refs.content.reload();
     }
   },
   watch: {},
   mounted() {
-    console.log("main mounted")
+    // console.log("main mounted")
   }
 };
 </script>
 <style scoped>
-.bottom-shadow{
-  box-shadow: 0px 10px 30px  #111111;
+.bottom-shadow {
+  box-shadow: 0px 10px 30px #111111;
 }
-.bottom-shadow /deep/ .head-container{
-  box-shadow: 0px 5px 10px  #888888;
+.bottom-shadow /deep/ .head-container {
+  box-shadow: 0px 5px 10px #888888;
 }
 .main-el-sider {
   /* width: 15%; */
@@ -56,25 +59,6 @@ export default {
 body {
   background: #333;
 }
-.main-content-container {
-  margin-top: 3px;
-  /* overflow-y: hidden;
-  height: 100%;
-  overflow-x: hidden; */
-}
-.main-content-container /deep/ .el-submenu__title {
-  line-height: 35px;
-  height: 35px;
-  font-family: "Hiragino Sans GB";
-  font-size: 0.9rem;
-  color: #6a6a6a;
-}
-.main-content-container /deep/ .el-menu-item {
-  height: 35px;
-  line-height: 35px;
-  /* font-size: 12px; */
-  font-family: "Hiragino Sans GB";
-}
 .el-header,
 .el-footer {
   background-color: white;
@@ -84,14 +68,6 @@ body {
   padding: 0 0 0 0;
   margin: 0 0 0 0;
 }
-
-.el-aside {
-  background-color: #d3dce6;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
-}
-
 .el-main {
   background-color: #f1f3f4;
   color: #333;
@@ -102,6 +78,7 @@ body {
   position: relative;
   width: 60%;
   left: 20%;
+  margin-top: 20px;
 }
 body {
   width: 100%;
@@ -121,13 +98,45 @@ body {
 
 .main-container /deep/ ::-webkit-scrollbar {
   /*滚动条整体样式*/
-  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 10px;
+  width: 7px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 7px;
   border-radius: 10px;
 }
 .main-container /deep/ ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: 5px;
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: rgba(0, 0, 0, 0.2);
+}
+
+@-webkit-keyframes animate-cloud {
+  0% {
+    background-position: 600px 100%;
+  }
+  to {
+    background-position: 0 100%;
+  }
+}
+
+.full-container {
+  /* display: -webkit-box;
+  display: -ms-flexbox; */
+  /* display: flex; */
+  /* -webkit-box-align: center;
+  -ms-flex-align: center; */
+  /* align-items: center; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
+  -webkit-animation: animate-cloud 20s linear infinite;
+  animation: animate-cloud 20s linear infinite;
+}
+.el-main {
+  padding: 0;
+}
+
+.el-menu--horizontal>.el-menu-item.is-active {
+  border-bottom: 3px solid #409EFF;
 }
 </style>

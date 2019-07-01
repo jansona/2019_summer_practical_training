@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
      首页
-     <el-button @click="show">asd</el-button>
+     <!-- <el-button @click="show">asd</el-button> -->
   </div>
 </template>
 

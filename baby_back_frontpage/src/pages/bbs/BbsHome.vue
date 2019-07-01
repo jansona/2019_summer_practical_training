@@ -21,7 +21,7 @@
               <articles :articles="articles"></articles>
             </el-tab-pane>
           </el-tabs>
-          <el-button type="primary" size="small" class="add-btn">我要发帖</el-button>
+          <el-button type="primary" size="small" class="add-btn" @click="gotoInsertArticle">我要发帖</el-button>
         </div>
       </el-row>
 
@@ -40,18 +40,19 @@
 import articles from "@/pages/bbs/articles";
 import axios from "axios";
 import URLS from "@/config/config";
+import { request, fetch } from "@/api/api";
 export default {
   name: "BbsHome",
   components: {
     articles
   },
-  mounted:function(){
-    this.getArticles(0,true)
+  mounted: function() {
+    this.getArticles(0, true);
   },
   data() {
     return {
-      numOfElements : 0,
-      pageSize : 0,
+      numOfElements: 0,
+      pageSize: 0,
       input: "",
       select: "",
       activeName: "first",
@@ -84,23 +85,33 @@ export default {
     handleCurrentChange(val) {
       console.log(val);
     },
+    gotoInsertArticle() {
+      if (this.$store.state.hasLogin == "true") {
+        this.$router.push("insertArticle");
+      } else {
+        this.$notify({
+          message: "您尚未登陆，不能发帖",
+          type: "warning",
+          duration: 1500,
+          offset: 50
+        });
+      }
+    },
     getArticles(pageNum, sort) {
-      let _this = this
+      let _this = this;
       if (sort) {
         axios
           .post(URLS.articleFindUrl, {
-            page : pageNum
+            page: pageNum
           })
           .then(function(response) {
-            
-            _this.articles=response.data.data.content;
+            _this.articles = response.data.data.content;
             _this.pageSize = response.data.data.size;
-            _this.numOfElements = response.data.data.numberOfElements
-
+            _this.numOfElements = response.data.data.numberOfElements;
           })
           .catch(function(error) {
             console.log(error);
-            alert("查询数据错误，请联系技术人员")
+            alert("查询数据错误，请联系技术人员");
           });
       } else {
       }

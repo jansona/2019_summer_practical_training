@@ -107,9 +107,11 @@ export default {
               console.log(data);
               this.registingLoading = false;
               if (data.data.rtnCode == 200) {
-                this.$message({
-                  message: "注册成功！",
-                  type: "succcess"
+                  this.$notify({
+                  title: "注册成功！",
+                  type: "succcess",
+                  duration: 1500,
+                  offset: 50
                 });
                 this.$store.commit("setUserID", {
                   id: data.data.data.id,
@@ -159,14 +161,17 @@ export default {
                 message: data.msg,
                 type: "warning"
               });
+
               this.disabled = false;
               this.countdown = 60;
               this.btnTitle = "获取验证码";
             } else {
-              this.$message({
-                message: "发送成功",
-                type: "success"
-              });
+              this.$notify({
+                  message: "发送成功",
+                  type: "succcess",
+                  duration: 1500,
+                  offset: 50
+                });
             }
           });
         });

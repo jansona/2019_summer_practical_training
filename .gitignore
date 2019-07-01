@@ -12,3 +12,7 @@ keras_face/demo/
 */unpackage
 */*.jpg
 unpackage
+!baby_back_frontpage/src/assets/*
+!baby_back_frontpage/src/assets/**/*
+!baby_back_frontpage_mobile/static/*
+!baby_back_frontpage_mobile/static/**/*
