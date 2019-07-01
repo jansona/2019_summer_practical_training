@@ -147,7 +147,10 @@
 					contactEmail:'',
 					contactPhone:'',
 					otherContactMethod:'', 
-					imgList: []
+					imgList: [],
+                    user: {
+                        id: 3,
+                    },
 				},
 				modalName:null,
 				items:[{name:'man',value:'男'},{name:'woman',value:'女'}]
@@ -212,8 +215,13 @@
 				})
 			},
 			submit(e){
-				let params = {};
-                console.log(this.findChildForm)
+				delete this.findChildForm.imgList
+                console.log(this.findChildForm,this.URLS.lostBabyInsertUrl)
+                this.$api.post(this.URLS.lostBabyInsertUrl,this.findChildForm).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    console.log(error)
+                })
 			}
 		}
 	}
