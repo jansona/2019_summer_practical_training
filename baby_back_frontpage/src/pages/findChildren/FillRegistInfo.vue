@@ -165,6 +165,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // alert("submit!");
+          console.log(this.missing_person)
           let url =
             this.fillType == 1
               ? URLS.lostBabyInsertUrl

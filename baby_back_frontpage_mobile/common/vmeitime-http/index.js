@@ -39,8 +39,26 @@ export const banner = (data) => {
     })
 }
 
+// get方法
+export const get = (url,params) => {
+    return http.get(url,params)
+}
+
+// post方法
+export const post = (url,data) => {
+    return http.post(url,data)
+}
+
+// put方法
+export const put = (url,data) => {
+    return http.put(url,data)
+}
+
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
 	test,
-    banner
+    banner,
+    get,
+    post,
+    put,
 }

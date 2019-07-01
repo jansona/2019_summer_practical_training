@@ -74,6 +74,7 @@ export default {
     },
     personalHome(){
       console.log("enter personal home");
+      this.$router.push('userDetail')
     },
     logout() {
       console.log("logout");

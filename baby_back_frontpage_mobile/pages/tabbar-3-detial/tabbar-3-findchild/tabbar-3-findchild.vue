@@ -9,7 +9,7 @@
 				<view class="title" style="width:100upx;">性别</view>
 				<radio-group class="radio-group" name="sex" @change="radioChange">
 					<label class="radio" v-for="(item,index) in items" :key=index>
-						<radio :value="item.value" :checked="item.checked" color="#FFCC33" style="transform:scale(0.7)"/>{{item.value}}
+						<radio :value="item.value" :checked="item.checked" color="#FFCC33" style="transform:scale(0.7)" />{{item.value}}
 					</label>
 				</radio-group>
 			</view>
@@ -105,7 +105,7 @@
 			<view class="cu-form-group">
 				<view class="grid col-4 grid-square flex-sub">
 					<view class="bg-img" v-for="(item,index) in findChildForm.imgList" :key="index" @tap="ViewImage" :data-url="findChildForm.imgList[index]">
-					 <image :src="findChildForm.imgList[index]" mode="aspectFill"></image>
+						<image :src="findChildForm.imgList[index]" mode="aspectFill"></image>
 						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 							<text class='cuIcon-close'></text>
 						</view>
@@ -124,35 +124,41 @@
 </template>
 
 <script>
-	var  graceChecker = require("../../../common/graceChecker.js");
+	var graceChecker = require("../../../common/graceChecker.js");
 	export default {
 		data() {
 			return {
 				findChildForm: {
-					id:'',
+					id: '',
 					name: '',
-					sex:'',
-					birthday:'2018-12-25',
-					nativePlace:'', //籍贯
-					height:'',
-					date:'2019-6-25', //失踪时间
-					place:'',
-					babyDescription:'', //特征描述
-					missDescription:'', //失踪经过
-					otherExplain:'', //其他说明
-					otherDescription:'', //其他信息描述
+					sex: '',
+					birthday: '2018-12-25',
+					nativePlace: '', //籍贯
+					height: '',
+					date: '2019-6-25', //失踪时间
+					place: '',
+					babyDescription: '', //特征描述
+					missDescription: '', //失踪经过
+					otherExplain: '', //其他说明
+					otherDescription: '', //其他信息描述
 					//联系人信息
-					contactName:'', //联系人姓名
-					contactRel:'', //联系人与失踪人关系
+					contactName: '', //联系人姓名
+					contactRel: '', //联系人与失踪人关系
 					//writerRelation:'',
-					contactAddress:'',
-					contactEmail:'',
-					contactPhone:'',
-					otherContactMethod:'', 
+					contactAddress: '',
+					contactEmail: '',
+					contactPhone: '',
+					otherContactMethod: '',
 					imgList: []
 				},
-				modalName:null,
-				items:[{name:'man',value:'男'},{name:'woman',value:'女'}]
+				modalName: null,
+				items: [{
+					name: 'man',
+					value: '男'
+				}, {
+					name: 'woman',
+					value: '女'
+				}]
 			}
 		},
 		onLoad() {
@@ -160,7 +166,13 @@
 		},
 		methods: {
 			radioChange: function(e) {
-				this.findChildForm.sex=e.detail.value;
+				this.findChildForm.sex = e.detail.value;
+			},
+			BirthDateChange(e) {
+				this.findChildForm.birthday = e.detail.value
+			},
+			LostDateChange(e) {
+				this.findChildForm.date = e.detail.value
 			},
 			ChooseImage() {
 				uni.chooseImage({
@@ -195,32 +207,82 @@
 					}
 				})
 			},
-			formSubmit: function (e) {
+			formSubmit: function(e) {
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
-				var rule = [
-					{name:"name", checkType : "string", checkRule:"2,15",  errorMsg:"姓名应为2-15个字符"},
-					{name:"sex", checkType : "in", checkRule:"男,女",  errorMsg:"请选择性别"},
-					{name:"birthday", checkType : "notnull", checkRule:"",  errorMsg:"请选择出生日期"},
-					{name:"height", checkType : "notnull", checkRule:"",  errorMsg:"请选择身高"},
-					{name:"date", checkType : "notnull", checkRule:"",  errorMsg:"请选择失踪日期"},
-					{name:"place", checkType : "notnull", checkRule:"",  errorMsg:"请填写失踪地点"}
+				var rule = [{
+						name: "name",
+						checkType: "string",
+						checkRule: "2,15",
+						errorMsg: "姓名应为2-15个字符"
+					},
+					{
+						name: "sex",
+						checkType: "in",
+						checkRule: "男,女",
+						errorMsg: "请选择性别"
+					},
+					{
+						name: "birthday",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请选择出生日期"
+					},
+					{
+						name: "height",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请选择身高"
+					},
+					{
+						name: "date",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请选择失踪日期"
+					},
+					{
+						name: "place",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请填写失踪地点"
+					}
 					//{name:"img", checkType : "notnull", checkRule:"",  errorMsg:"请上传照片"}
 				];
 				//进行表单检查
 				var formData = e.detail.value;
 				var checkRes = graceChecker.check(formData, rule);
-				if(checkRes){
-					uni.showToast({title:"验证通过!", icon:"none"});
-				}else{
-					uni.showToast({ title: graceChecker.error, icon: "none" });
+				if (checkRes) {
+					uni.showToast({
+						title: "验证通过!",
+						icon: "none"
+					});
+				} else {
+					uni.showToast({
+						title: graceChecker.error,
+						icon: "none"
+					});
+				}
+
+				if (this.findChildForm.imgList != null && this.findChildForm.imgList.length > 0) {
+					uni.uploadFile({
+						url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS", //仅为示例，非真实的接口地址
+						filePath: this.findChildForm.imgList[0],
+						name: 'file',
+						formData: {
+							'id': '6'
+						},
+						success: (uploadFileRes) => {
+							console.log(uploadFileRes);
+						}
+					});
 				}
 			},
-			formReset: function (e) {
+			formReset: function(e) {
 				console.log("清空数据")
 				this.chosen = ''
 			}
 		}
+
 	}
 </script>
 

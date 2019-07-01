@@ -19,8 +19,8 @@ import api from '@/common/vmeitime-http/'
 Vue.prototype.$api = api
 
 // 使用Vuex
-import store from './store/store'
-Vue.prototype.$store = store;
+// import store from './store/store'
+// Vue.prototype.$store = store;
 
 App.mpType = 'app'
 

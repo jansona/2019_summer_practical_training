@@ -1,11 +1,12 @@
 <template>
 	<view>
+        <view class="content-container">
 		<tabbar_1 v-if="curPage == '1'"></tabbar_1>
 		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
-		<tabbar_3 v-if="showNewPop"></tabbar_3>
+		<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
 		<tabbar_2 v-if="curPage == '4'"></tabbar_2>
 		<tabbar_5 v-if="curPage == '5'"></tabbar_5>
-		
+		</view>
 		<view class="cu-bar tabbar bg-grey-index shadow foot">
 			<view class="action" @click="NavChange" data-cur="1">
 				<view class='cuIcon-cu-image'>
@@ -62,7 +63,11 @@
 				} else {
 					this.showNewPop = false
 				}
-			}
+			},
+            closeAddNav(e){
+                console.log(e)
+                this.showNewPop = false;
+            }
 		}
 	}
 </script>
@@ -76,7 +81,7 @@
 	}
 	.my-add-btn {
 		margin: 0 auto;
-		padding: 19upx 0 19upx 0;
+		padding: 18upx 0 19upx 0;
 	}
 	
 	.my-add-btn image {
@@ -87,4 +92,7 @@
 	.index-bar-text {
 		margin-bottom: 10upx;
 	}
+    .content-container {
+        
+    }
 </style>
