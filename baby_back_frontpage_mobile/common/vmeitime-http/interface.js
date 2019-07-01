@@ -31,10 +31,11 @@ http.delete('user/1').then((res)=>{
 */
 export default {
 	config: {
-		baseUrl: "https://unidemo.dcloud.net.cn/",
+		baseUrl: "",
 		header: {
 			'Content-Type':'application/json;charset=UTF-8',
-			'Content-Type':'application/x-www-form-urlencoded'
+			'Content-Type':'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': '*',
 		},  
 		data: {},
 		method: "GET",
