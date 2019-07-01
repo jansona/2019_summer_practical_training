@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "user")
 public class UserController {
@@ -23,7 +24,7 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @CrossOrigin
+
     @ApiOperation(value = "新增一个用户")
     @PostMapping("/insert")
     public ResponseBase insertUser(@RequestBody User user) {

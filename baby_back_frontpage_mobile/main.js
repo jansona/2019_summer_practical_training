@@ -18,6 +18,10 @@ Vue.component('tabbar_5',user)
 import api from '@/common/vmeitime-http/'
 Vue.prototype.$api = api
 
+// 使用Vuex
+import store from './store/store'
+Vue.prototype.$store = store;
+
 App.mpType = 'app'
 
 const app = new Vue({

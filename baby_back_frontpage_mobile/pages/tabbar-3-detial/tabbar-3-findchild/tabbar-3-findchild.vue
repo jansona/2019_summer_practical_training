@@ -55,7 +55,7 @@
 			</view>
 			<view class="cu-form-group align-start">
 				<view class="title">其他说明</view>
-				<textarea maxlength="-1" :disabled="modalName!=null" @input="otherDescriptionInput" placeholder="请输入其他的说明" :value="otherDescription"></textarea>
+				<textarea maxlength="-1" :disabled="modalName!=null" @input="otherDescriptionInput" placeholder="请输入其他的说明" v-model="otherDescription"></textarea>
 			</view>
 			<view class="uni-title" style="padding-left: 35upx;color: #888888;">联系人信息</view>
 			<view class="cu-form-group">
@@ -163,7 +163,7 @@
 				this.otherInfo = e.detail.value
 			},
 			otherDescriptionInput(e){
-				this.otherDescription = e.detail.value
+				// this.otherDescription = e.detail.value
 				console.log(this.otherDescription)
 			},
 			ChooseImage() {
@@ -201,6 +201,7 @@
 			},
 			submit(e){
 				let params = {};
+                console.log(this.otherDescription)
 			}
 		}
 	}

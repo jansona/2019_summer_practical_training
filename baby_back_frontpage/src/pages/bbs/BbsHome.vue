@@ -86,7 +86,8 @@ export default {
       console.log(val);
     },
     gotoInsertArticle() {
-      if (this.$store.state.hasLogin == "true") {
+      console.log(this.$store.state.hasLogin);
+      if (this.$store.state.hasLogin) {
         this.$router.push("insertArticle");
       } else {
         this.$notify({
