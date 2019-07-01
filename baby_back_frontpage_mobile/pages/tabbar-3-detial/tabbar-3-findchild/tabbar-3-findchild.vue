@@ -168,9 +168,6 @@
 				this.findChildForm.birthday = e.detail.value
 			},
 			LostDateChange(e) {
-<<<<<<< HEAD
-				this.findChildForm.date = e.detail.value
-=======
 				this.lostDate = e.detail.value
 			},
 			feaInput(e) {
@@ -184,8 +181,6 @@
 			},
 			otherDescriptionInput(e){
 				// this.otherDescription = e.detail.value
-				console.log(this.otherDescription)
->>>>>>> 94031a32fcdf7852c6721fa7b92c89fdd64f64c0
 			},
 			ChooseImage() {
 				uni.chooseImage({
@@ -221,12 +216,8 @@
 				})
 			},
 			submit(e){
-<<<<<<< HEAD
-				
-=======
 				let params = {};
-                console.log(this.otherDescription)
->>>>>>> 94031a32fcdf7852c6721fa7b92c89fdd64f64c0
+                console.log(this.findChildForm)
 			}
 		}
 	}
