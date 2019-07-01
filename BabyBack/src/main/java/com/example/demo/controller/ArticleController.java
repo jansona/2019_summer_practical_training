@@ -6,6 +6,7 @@ import com.example.demo.entity.User;
 import com.example.demo.reposity.ArticleRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,13 @@ public class ArticleController {
     @DeleteMapping("/delete")      // TODO 填写节点
     public void deleteArticle(@RequestParam(value = "id") Integer id) {
         articleRepository.deleteById(id);
+    }
+
+    @ApiOperation(value = "点赞")
+    @PostMapping("/like")
+    public void likeArticle(@RequestParam(value = "article_id") Integer id){
+        Article article = articleRepository.findById(id).get();
+        article.setLikeNum(article.getLikeNum() + 1);
     }
 
 }
