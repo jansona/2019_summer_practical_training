@@ -76,7 +76,7 @@
 	}
 	.my-add-btn {
 		margin: 0 auto;
-		padding: 19upx 0 19upx 0;
+		padding: 18upx 0 19upx 0;
 	}
 	
 	.my-add-btn image {

@@ -17,6 +17,8 @@ Vue.component('tabbar_5',user)
 // 注册网络请求插件
 import api from '@/common/vmeitime-http/'
 Vue.prototype.$api = api
+import URLS from '@/common/urls'
+Vue.prototype.URLS = URLS
 
 // 使用Vuex
 import store from './store/store'

@@ -32,6 +32,10 @@
 			"style": {}
 		},
 		{
+			"path": "pages/tabbar-2-detail/passage-detail",
+			"style": {}
+		},
+		{
 			"path": "pages/tabbar-3-detial/tabbar-3-findchild/tabbar-3-findchild",
 			"style": {}
 		},
@@ -48,15 +52,19 @@
 			"style": {}
 		},
 		{
-			"path": "pages/tabbar-5-detail/tabbar-5-regionselect/tabbar-5-regionselect",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-2-detail/passage-detail",
-			"style": {}
-		},
-		{
 			"path": "pages/tabbar-4-detail/joinvolunteer",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-4-detail/recognition",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-4-detail/releaseurgence",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-5-detail/tabbar-5-regionselect/tabbar-5-regionselect",
 			"style": {}
 		}
     ],
@@ -105,7 +113,7 @@
 	// 			"text": "消息"
 	// 		},
 	// 		{
-	// 			"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
+	// 			"pagePath": "pages/tabbar/tabbar-5/user/user",
 	// 			"iconPath": "static/img/tabbar/me.png",
 	// 			"selectedIconPath": "static/img/tabbar/meactive.png",
 	// 			"text": "我"
