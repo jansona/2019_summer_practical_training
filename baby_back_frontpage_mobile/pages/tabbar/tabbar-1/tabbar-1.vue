@@ -14,7 +14,7 @@
 		<view class="cu-bar search bg-white">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索帖子" confirm-type="search"></input>
+				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索宝贝" confirm-type="search"></input>
 			</view>
 			<view class="margin-tb-sm text-center">
 				<button class="cu-btn round" style="margin-right: 10upx;background-color: rgba(200,140,100,0.2);">搜索</button>
