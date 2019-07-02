@@ -36,11 +36,6 @@
 			</view>
 			
 			<view class="list">
-				<view class="li " @click="changeSkin">
-					<view class="icon"><image src="../../../../static/user/skin.png" mode="aspectFit"></image></view>
-					<view class="text">主题切换</view>
-					<image class="to" src="../../../../static/user/to.png"></image>
-				</view>
 				<view class="li " >
 					<view class="icon"><image src="../../../../static/user/help.png"></image></view>
 					<view class="text">帮助中心</view>
@@ -77,11 +72,6 @@
 		onLoad() {
 		},
 		methods: {
-			changeSkin(){
-				uni.navigateTo({
-					url:"../tabbar/tabbar-5/skin-change/skin-change"
-				});
-			},
 			SetArea() {
 			    uni.navigateTo({
 			    	url:"../tabbar-4-detail/joinvolunteer"
