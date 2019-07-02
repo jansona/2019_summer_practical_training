@@ -57,7 +57,7 @@ export default {
 			enableScroll: true,
 			InputBottom:0,
 			lostList:['../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png'],
-			findList:['../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png']
+			findList:[this.URLS.imgUrl+'/static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png']
 		};
 	},
 	onLoad() {},
