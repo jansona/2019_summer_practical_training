@@ -1,9 +1,7 @@
 <template>
   <el-card>
-    <div slot="header" class="clearfix">
-      <el-button style="float: right; padding: 1px">
-      <el-button type="primary" icon="el-icon-edit">编辑</el-button>
-      </el-button>
+    <div slot="header">
+      <el-button type="primary" icon="el-icon-edit" style="float: right; padding: 1px">编辑</el-button>
     </div>
     <div>
       <el-card :body-style="{ padding: '3px'}" style="float: left; padding: 1px" class="pic-container">

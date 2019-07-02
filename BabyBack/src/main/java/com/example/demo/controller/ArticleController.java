@@ -51,11 +51,12 @@ public class ArticleController {
     @PostMapping("/find")    // TODO 填写节点
     public ResponseBase findArticle(@PageableDefault(value = 5, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                             Pageable pageable,
-                                    @RequestParam(value = "id", required = false, defaultValue = "") String id) {
+                                    @RequestParam(value = "id", required = false, defaultValue = "") String id,
+                                    @RequestParam(value = "key_word", required = false, defaultValue = "")String keyWord) {
 
         ResponseBase responseBase;
         try {
-            Specification<Article> articleSpecification = apiService.createArticleSpecification(id);
+            Specification<Article> articleSpecification = apiService.createArticleSpecification(id, keyWord);
             Page<Article> page = articleRepository.findAll(articleSpecification, pageable);
             responseBase = new ResponseBase(200, "查找文章成功", page);
         } catch (Exception e) {
@@ -75,6 +76,15 @@ public class ArticleController {
         Page<Article> pageResult = new PageImpl(result, page, result.size());
         return new ResponseBase(200, "查询成功", pageResult);
     }
+
+//    @ApiOperation(value = "查找包含特定内容的文章")
+//    @PostMapping("/find-by-content")
+//    public ResponseBase findArticleByContent(Pageable page, @RequestParam(value = "key_word")String keyWord){
+//        ResponseBase responseBase;
+//
+//
+//
+//    }
 
     @ApiOperation(value = "删除一篇文章")
     @DeleteMapping("/delete")      // TODO 填写节点

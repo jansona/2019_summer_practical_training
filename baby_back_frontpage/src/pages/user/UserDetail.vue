@@ -43,7 +43,9 @@
       </el-tab-pane>
     </el-tabs>
     </el-tab-pane>
-    <el-tab-pane label="我的文章">我的文章</el-tab-pane>
+    <el-tab-pane label="我的文章">
+      <articles :articles="articles"></articles>
+    </el-tab-pane>
     <el-tab-pane label="我的评论">我的评论</el-tab-pane>
   </el-tabs>
 </el-card>
@@ -54,6 +56,7 @@ import URLS from '@/config/config'
 import { request,fetch } from "@/api/api";
 import Pictures from "../faceWall/components/Pictures";
 import UserInfo from "./components/UserInfo";
+import articles from "../bbs/articles";
 const nameDict = {
   name: "姓名",
   tel: "邮箱",
@@ -63,7 +66,8 @@ export default {
   name: 'UserDetail',
   components: {
     UserInfo,
-    Pictures
+    Pictures,
+    articles
   },
   data () {
     return {
@@ -78,7 +82,9 @@ export default {
       dataTypes: [],
       totalNum: 0,
       currentPage: 1,
-      pageSize: 4
+      pageSize: 4,
+
+      articles_of_user: []
     }
   },
   methods: {
