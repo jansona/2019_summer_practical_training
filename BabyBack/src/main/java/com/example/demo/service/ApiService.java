@@ -158,7 +158,7 @@ public class ApiService implements InitializingBean {
 
     }
 
-    public Specification<Article> createArticleSpecification(String id) {
+    public Specification<Article> createArticleSpecification(String id, String keyWord) {
 
         return new Specification<Article>() {
 
@@ -169,7 +169,10 @@ public class ApiService implements InitializingBean {
 
                 //like示例
                 insertIDPredicate(id, "id", cb, root, predicatesList);
-//                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
+                if (!keyWord.equals("")) {
+                    Predicate serviceNamePredicate = cb.like(root.get("content"), "%" + keyWord + "%");
+                    predicatesList.add(serviceNamePredicate);
+                }
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));

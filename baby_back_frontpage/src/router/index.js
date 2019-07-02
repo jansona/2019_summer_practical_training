@@ -51,8 +51,8 @@ export default new Router({
           component: () => import('@/pages/bbs/InsertArticle')
         },
         {
-          path: 'showArticle/:id',
-          name: 'ShowArticle',
+          path: 'showArticle',
+          name: 'showArticle',
           component: () => import('@/pages/bbs/ShowArticle')
         }
         ,

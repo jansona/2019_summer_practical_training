@@ -58,13 +58,16 @@ public class UserController {
     @ApiOperation(value = "查找单个特定用户")
     @PostMapping("/find-by-id")
     public ResponseBase findById(@RequestParam(value = "id") Integer id) {
-        return new ResponseBase(200, "获取用户信息成功", userRepository.findById(id));
+        User user = userRepository.findById(id).get();
+        user.setPassWord("");   // 防止密码泄露
+        return new ResponseBase(200, "获取用户信息成功", user);
     }
 
     @ApiOperation(value = "删除一个用户")
     @DeleteMapping("/delete")
-    public void deleteUser(@RequestParam(value = "id") Integer id) {
+    public ResponseBase deleteUser(@RequestParam(value = "id") Integer id) {
         userRepository.deleteById(id);
+        return new ResponseBase(200, "删除成功", null);
     }
 
 }

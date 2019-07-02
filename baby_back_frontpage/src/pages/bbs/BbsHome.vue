@@ -7,7 +7,7 @@
             <el-option label="内容" value="内容"></el-option>
             <el-option label="用户" value="用户"></el-option>
           </el-select>
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
         </el-input>
       </el-row>
       <br />
@@ -54,23 +54,22 @@ export default {
     return {
       numOfElements: 0,
       pageSize: 0,
-      pageNo : 1,
+      pageNo: 1,
       input: "",
       select: "",
       activeName: "first",
       articles: [],
-      isSort : true
+      isSort: true
     };
   },
   methods: {
     handleClick(tab, event) {
       this.isSort = !this.isSort;
-      this.pageNo=1;
-      this.getArticles(this.pageNo-1,this.isSort);
+      this.pageNo = 1;
+      this.getArticles(this.pageNo - 1, this.isSort);
     },
     handleCurrentChange(val) {
-      
-      this.getArticles(this.pageNo-1,this.isSort);
+      this.getArticles(this.pageNo - 1, this.isSort);
     },
     gotoInsertArticle() {
       console.log(this.$store.state.hasLogin);
@@ -87,29 +86,37 @@ export default {
     },
     getArticles(pageNum, sort) {
       let _this = this;
-      let url=''
+      let url = "";
       if (sort) {
-        url=URLS.articleFindUrl+'?page='+pageNum
-       } else {
-    url=URLS.articleFindUrl+'?page='+pageNum+'&sort=date'
+        url = URLS.articleFindUrl + "?page=" + pageNum+ "&sort=id,asc";
+      } else {
+        url = URLS.articleFindUrl + "?page=" + pageNum + "&sort=date,desc";
       }
-        axios
-          .post(url)
-          .then(function(response) {
-            _this.articles = response.data.data.content;
-            _this.pageSize = response.data.data.size;
-            _this.numOfElements = response.data.data.totalElements;
-          })
-          .catch(function(error) {
-            console.log(error);
-            _this.$notify({
-              message: "网络不稳定",
-              type: "warning",
-              duration: 1500,
-              offset: 50
-            });
+      if(this.select =='用户'){
+        url = URLS.articleFindByUserUrl +"?page=" + pageNum+ "&sort=id,asc&user=" +this.input;
+      }else if(this.select == '内容'){
+
+      }
+
+      axios
+        .post(url)
+        .then(function(response) {
+          _this.articles = response.data.data.content;
+          _this.pageSize = response.data.data.size;
+          _this.numOfElements = response.data.data.totalElements;
+        })
+        .catch(function(error) {
+          console.log(error);
+          _this.$notify({
+            message: "网络不稳定",
+            type: "warning",
+            duration: 1500,
+            offset: 50
           });
-     
+        });
+    },
+    search(){
+      this.getArticles(this.pageNo - 1, this.isSort);
     }
   }
 };
