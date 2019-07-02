@@ -37,7 +37,7 @@
 					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
 				</view>
 			</view>
-        <view class="cu-tabbar-height"></view>
+        <!-- <view class="cu-tabbar-height"></view> -->
 		</view>
 		<!-- <view class="cu-card dynamic">
 			<view class="cu-item shadow">
@@ -140,13 +140,12 @@
 <style>
 	.content {
 		text-align: center;
-		height: 400upx;
 		margin-top: 150upx;
 	},
 	.passage-content {
 		text-align: center;
-		height: 120upx;
-		margin-top: 100upx;
+		height: 110upx;
+		margin-top: 0;
 	},
 	.text-content{
 		text-align: center;
