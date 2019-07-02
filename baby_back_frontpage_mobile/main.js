@@ -22,6 +22,9 @@ Vue.prototype.$api = api
 import store from './store'
 Vue.prototype.$store = store;
 
+// 引入URL
+import URLS from './common/urls.js'
+Vue.prototype.URLS = URLS
 
 App.mpType = 'app'
 

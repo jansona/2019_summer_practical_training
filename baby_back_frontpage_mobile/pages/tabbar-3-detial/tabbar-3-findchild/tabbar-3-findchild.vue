@@ -235,12 +235,12 @@
 						checkRule: "",
 						errorMsg: "请选择出生日期"
 					},
-					{
-						name: "height",
-						checkType: "notnull",
-						checkRule: "",
-						errorMsg: "请选择身高"
-					},
+					// {
+					// 	name: "height",
+					// 	checkType: "notnull",
+					// 	checkRule: "",
+					// 	errorMsg: "请选择身高"
+					// },
 					{
 						name: "date",
 						checkType: "notnull",
@@ -269,7 +269,7 @@
 						icon: "none"
 					});
 				}
-
+				
 				if (this.findChildForm.imgList != null && this.findChildForm.imgList.length > 0) {
 					uni.uploadFile({
 						url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS", //仅为示例，非真实的接口地址

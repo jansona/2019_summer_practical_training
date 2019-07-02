@@ -7,6 +7,8 @@ if (model === 'dev') {
 } else {
 }
 
+let imgUrl = 'http://42.159.4.66:2333'
+
 // 填写信息部分
 const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
 const lostBabyFindUrl = baseUrl + "/lost-baby/find"
@@ -29,6 +31,7 @@ const articleInsertUrl = baseUrl + '/article/insert'
 const userFindUrl = baseUrl + '/user/find'
 
 const URLS = {
+	imgUrl,
   baseUrl,
   lostBabyInsertUrl,
   uploadPictureUrl,
