@@ -26,9 +26,12 @@
 				<input placeholder="请输入失踪人籍贯" v-model="findChildForm.nativePlace"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">身高</view>
-				<input placeholder="请输入失踪时身高" name="height" v-model="findChildForm.height"></input>
+				<view class="uni-title">身高</view>
+				<view>
+					<slider value="100" style="width: 500upx;" @change="sliderChange" min="50" max="200" show-value />
+				</view>
 			</view>
+			
 			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">失踪日期</view>
 				<picker name="date" mode="date" :value="findChildForm.date" start="1910-09-01" end="2020-09-01" @change="LostDateChange">
@@ -167,6 +170,10 @@
 		methods: {
 			radioChange: function(e) {
 				this.findChildForm.sex = e.detail.value;
+			},
+			sliderChange(e) {
+				console.log('value 发生变化：' + e.detail.value);
+				this.findChildForm.height=e.detail.value
 			},
 			BirthDateChange(e) {
 				this.findChildForm.birthday = e.detail.value

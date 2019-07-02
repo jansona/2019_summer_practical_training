@@ -27,14 +27,14 @@
 			</view>
 		</view>
 		<view class="list-content" style="margin-top: 100upx;">
-			<view class="list" @click="showMulLinkageThreePicker">
+			<view class="list" @click="SetArea">
 				<view class="li noborder" >
 					<view class="icon"><image src="../../../../static/user/card.png" mode="aspectFit"></image></view>
 					<view class="text">设置活动范围</view>
 					<image class="to" src="../../../../static/user/to.png"></image>
 				</view>
 			</view>
-			<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm"></mpvue-city-picker>
+			
 			<view class="list">
 				<view class="li " @click="changeSkin">
 					<view class="icon"><image src="../../../../static/user/skin.png" mode="aspectFit"></image></view>
@@ -68,20 +68,10 @@
 	</view>
 </template>
 <script>
-	import mpvuePicker from '@/components/mpvue-picker/mpvuePicker.vue';
-	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
-	import cityData from '@/common/city.data.js';
 	export default {
-		components: {
-		    mpvuePicker,
-		    mpvueCityPicker
-		},
 		data() {
 			return {
-				cityPickerValueDefault: [0, 0, 1],
-				themeColor: '#007AFF',
-				pickerText: '',
-				detail:''
+
 			};
 		},
 		onLoad() {
@@ -89,11 +79,13 @@
 		methods: {
 			changeSkin(){
 				uni.navigateTo({
-						url:"../tabbar/tabbar-5/skin-change/skin-change"
+					url:"../tabbar/tabbar-5/skin-change/skin-change"
 				});
 			},
-			showMulLinkageThreePicker() {
-			    this.$refs.mpvueCityPicker.show()
+			SetArea() {
+			    uni.navigateTo({
+			    	url:"../tabbar-4-detail/joinvolunteer"
+			    })
 			},
 			onConfirm(e) {
 			    this.pickerText = JSON.stringify(e);
