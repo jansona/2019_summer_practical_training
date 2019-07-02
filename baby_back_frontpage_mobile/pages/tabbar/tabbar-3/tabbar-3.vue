@@ -43,6 +43,7 @@ export default {
 	methods: {
 		goToPage(url) {
 			if (!url) return;
+            this.$emit('onAddClick')
 			uni.navigateTo({
 				url
 			});
