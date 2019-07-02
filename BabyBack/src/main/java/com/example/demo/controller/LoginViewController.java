@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 

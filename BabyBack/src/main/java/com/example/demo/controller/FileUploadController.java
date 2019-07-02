@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;

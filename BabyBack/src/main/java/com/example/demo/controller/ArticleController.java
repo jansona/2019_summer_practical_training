@@ -1,12 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Article;
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.ArticleRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;

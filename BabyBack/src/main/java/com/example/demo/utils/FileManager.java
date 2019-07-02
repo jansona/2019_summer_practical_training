@@ -1,6 +1,6 @@
 package com.example.demo.utils;
 
-import com.example.demo.entity.ResponseBase;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.UserRepository;
 import org.springframework.web.multipart.MultipartFile;
