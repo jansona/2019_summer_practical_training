@@ -84,7 +84,7 @@
         <br />
         <br />
         <el-col :span="4" :offset="20">
-          <el-button type="primary" size="small" @click="slideToBottom" style="float:right">
+          <el-button type="primary" size="small" @click="insertComment" style="float:right">
             回帖
             <!-- <i class="el-icon-edit el-icon--right"></i> -->
           </el-button>
@@ -269,7 +269,7 @@ export default {
       axios
         .post(url)
         .then(function(response) {
-          _this.comments = response.data.data.content;
+          _this.comments = response.data.content;
         })
         .catch(function(error) {
           console.log(error);
@@ -286,6 +286,24 @@ export default {
       //document.documentElement.scrollTop=document.documentElement.scrollHeight
     },
     insertComment() {
+      if( !this.$store.state.hasLogin){
+        this.$notify({
+            message: "您尚未登陆,无法回复",
+            type: "warning",
+            duration: 1500,
+            offset: 50
+          });
+        return ;
+      }
+      if(this.myComment ==''){
+         this.$notify({
+            message: "评论内容不能为空",
+            type: "warning",
+            duration: 1500,
+            offset: 50
+          });
+          return;
+      }
       let url = URLS.commentInsertUrl;
       let comment = {};
       let date = new Date();

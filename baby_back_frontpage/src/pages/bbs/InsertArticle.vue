@@ -39,15 +39,14 @@ export default {
   methods: {
     getUser(userID, hasLogin) {
       let _this = this;
+      let url=URLS.userFindUrl+'?id='+userID
       if (hasLogin) {
         axios
-          .post(URLS.userFindUrl, {
-            id: userID
-          })
+          .post(url)
           .then(function(response) {
             console.log(response);
-            if (response.data.numberOfElements >= 1) {
-              _this.user = response.data.content[0];
+            if (response.data.data.numberOfElements >= 1) {
+              _this.user = response.data.data.content[0];
             } else {
               _this.user = null;
               _this.$router.push("bbsHome");
