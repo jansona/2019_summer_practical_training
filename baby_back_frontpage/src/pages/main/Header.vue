@@ -145,7 +145,7 @@ export default {
 .head-container {
   color: transparent;
   height: 100%;
-  background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
+  // background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
   /* margin: 10px */
 }
 .head-img {
@@ -158,5 +158,8 @@ export default {
   height: 30px;
   margin-top: 15px;
   margin-right: 10px;
+}
+.el-menu--horizontal {
+  border-bottom-width: 0px!important ;
 }
 </style>

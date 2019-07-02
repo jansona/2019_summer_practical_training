@@ -1,13 +1,16 @@
 <template>
   <el-container class="main-container">
     <!-- <el-header class="bottom-shadow"> -->
+      <div class="m-head">
       <home-header @on-navbar-click="handleNavBarClick"></home-header>
+      </div>
     <!-- </el-header> -->
     <!-- <div class="full-container"> -->
-      <el-main>
+      <!-- <el-main> -->
         <div class="full-container"></div>
         <home-content ref="content" class="content-container"></home-content>
-      </el-main>
+        </div>
+      <!-- </el-main> -->
     <!-- </div> -->
   </el-container>
 </template>
@@ -75,10 +78,10 @@ body {
   /* overflow: hidden; */
 }
 .content-container {
-  position: relative;
+  position: fixed;
   width: 60%;
   left: 20%;
-  margin-top: 20px;
+  top: 64px;
 }
 body {
   width: 100%;
@@ -139,12 +142,17 @@ body {
 .el-menu--horizontal>.el-menu-item.is-active {
   /* border-bottom: 3px solid #409EFF; */
 }
-.el-menu .el-menu--horizontal {
-  border-bottom-width: 0px!important ;
-}
 
 .el-header {
   background-color: transparent;
   background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
+}
+
+.m-head {
+  position: fixed;
+  height: 64px;
+  z-index: 100;
+  width: 100%;
+  background-color: transparent
 }
 </style>
