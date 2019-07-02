@@ -1,7 +1,7 @@
 let mode = 'dev'
 let baseUrl = ''
 if (mode === 'dev') {
-  baseUrl = 'http://localhost:18080'
+  baseUrl = 'http://127.0.0.1:18080'
 } else if (mode == 'hbj'){
   baseUrl = 'http://192.168.137.1:18080'
 } else if (mode == 'prod'){

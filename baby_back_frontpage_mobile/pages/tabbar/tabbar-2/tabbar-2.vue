@@ -9,26 +9,32 @@
 				<button class="cu-btn round" style="margin-right: 10upx;background-color: rgba(200,140,100,0.2);">搜索</button>
 			</view>
 		</view>
-		<view v-for="(item, index) in passageList" :key="index" class="cu-card dynamic" @click="navToDetails(item)">
+		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic" @click="navToDetails(item)">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
 					<view class="cu-item" @click="navToDetails(item)">
-						<view class="cu-avatar round lg" :style="{backgroundImage:'url(' + item.avatarurl + ')'}"></view>
+						<view class="cu-avatar round lg" :style="{backgroundImage:'url(' + item.userimg + ')'}"></view>
 						<view class="content flex-sub">
-							<view>{{item.author}}</view>
+							<view>{{item.usernick}}</view>
 							<view class="text-gray text-sm flex justify-between">
-								{{item.time}}
+								{{item.date}}
 							</view>
 						</view>
 					</view>
 				</view>
 				<view class="title">
-					<view class="text-cut" style="font-weight: 700;padding-left: 10upx;">{{item.tittle}}</view>
+					<view class="text-cut" style="font-weight: 700;text-align: center;">{{item.title}}</view>
 				</view>
 				<view class="passage-content" style="margin-top: 5upx;">
-					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
-					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
+					<!-- <view class="bg-img" v-for="(item1,index1) in item.imgList" :key="index1">
+						<image :src="item1.value" style="max-height:200upx;max-width: 200upx;"></image>
+					</view> -->
 					<view class="desc"><view class="text-content">{{item.content}}</view></view>
+				</view>
+				<view class="text-gray text-sm text-right padding">
+					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
+					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
+					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
 				</view>
 			</view>
         <view class="cu-tabbar-height"></view>
@@ -77,17 +83,32 @@
 	export default {
 		data() {
 			return {
+				article: {
+					id:0,
+					title:'',
+					usernick:'',
+					userimg:'',
+					content:'',
+					date:'',
+					comments:[],
+					likeNum:0,
+					viewNum:0,
+					replyNum:0
+				},
 				InputBottom:0,
-				author:'贺谷牛牛',
-				date:'2019-6-27',
-				tittle:'用心耕耘 深情护送宝贝回家 —志愿者小梅寻亲成功案例的启示',
-				content:"朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。他们有自己的名字，却并不知道自己真正姓甚名谁",
-				imgList:[],
-				passageList:[{avatarurl:'../../../static/img/pkq.png',author:'hgnn',time:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'},
-				{avatarurl:'../../../static/img/pkq.png',author:'hgnn',time:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'}]
+				//author:'贺谷牛牛',
+				//date:'2019-6-27',
+				//tittle:'用心耕耘 深情护送宝贝回家 —志愿者小梅寻亲成功案例的启示',
+				//content:"朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。他们有自己的名字，却并不知道自己真正姓甚名谁",
+				//imgList:[],
+				articleList:[{userimg:'../../../static/img/pkq.png',usernick:'hgnn',likeNum:10,replyNum:20,viewNum:5,date:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'},
+				{userimg:'../../../static/img/pkq.png',usernick:'hgnn',likeNum:10,replyNum:20,viewNum:5,date:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'}]
 			}
 		},
 		methods: {
+			getArticleList(){
+				
+			},
 			InputFocus(e) {
 				this.InputBottom = e.detail.height
 			},
@@ -105,10 +126,7 @@
 			},
 			navToDetails(item){
 				let data = {
-					title: item.title,
-					author: item.author,
-					time: item.time,
-					content:'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
+					id: item.id,
 				}
 				uni.navigateTo({
 					//url: '/pages/tabbar-2-detail/passage-detail?data=JSON.stringify(data)'
@@ -127,7 +145,7 @@
 	},
 	.passage-content {
 		text-align: center;
-		height: 370upx;
+		height: 120upx;
 		margin-top: 100upx;
 	},
 	.text-content{

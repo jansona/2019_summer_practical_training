@@ -13,6 +13,7 @@
         mode="horizontal"
         @select="handleSelect"
         router=""
+        background-color="transparent"
       >
         <el-menu-item index="/home">首页</el-menu-item>
         <!-- <el-submenu index="2">
@@ -142,8 +143,9 @@ export default {
   }
 }
 .head-container {
-  color: white;
+  color: transparent;
   height: 100%;
+  background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
   /* margin: 10px */
 }
 .head-img {

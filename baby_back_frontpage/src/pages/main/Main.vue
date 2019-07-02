@@ -1,8 +1,8 @@
 <template>
   <el-container class="main-container">
-    <el-header class="bottom-shadow">
+    <!-- <el-header class="bottom-shadow"> -->
       <home-header @on-navbar-click="handleNavBarClick"></home-header>
-    </el-header>
+    <!-- </el-header> -->
     <!-- <div class="full-container"> -->
       <el-main>
         <div class="full-container"></div>
@@ -137,6 +137,14 @@ body {
 }
 
 .el-menu--horizontal>.el-menu-item.is-active {
-  border-bottom: 3px solid #409EFF;
+  /* border-bottom: 3px solid #409EFF; */
+}
+.el-menu .el-menu--horizontal {
+  border-bottom-width: 0px!important ;
+}
+
+.el-header {
+  background-color: transparent;
+  background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
 }
 </style>
