@@ -8,6 +8,10 @@
       </UserInfo>
     </el-tab-pane>
     <el-tab-pane label="我的失踪者申报">
+      <el-tabs type="border-card">
+        <el-tab-pane label="家寻宝贝"></el-tab-pane>
+        <el-tab-pane label="宝贝寻家"></el-tab-pane>
+      </el-tabs>
       <Pictures :datas="this.datas" :types="this.dataTypes" ref="pictures0"></Pictures>
       <el-pagination
         @current-change="handleCurrentChange"

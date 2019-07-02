@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     gotoArticle(id) {
-      this.$router.push("showArticle/"+ id);
+      this.$router.push({name:"showArticle",query:{id:id}});
     },
     gotoAuthorInfo(e){
       
