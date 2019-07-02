@@ -4,17 +4,17 @@
     <div class="main-container">
       <!-- <el-header class="bottom-shadow"> -->
       <div class="m-head">
-        <home-header @on-navbar-click="handleNavBarClick"></home-header>
+        <home-header @on-navbar-click="handleNavBarClick" @change-container-class="handleChangeClass"></home-header>
       </div>
       <!-- </el-header> -->
       <!-- <div class="bg"> -->
       <!-- <el-main> -->
-      <home-content ref="content" class="content-container"></home-content>
+      <home-content ref="content" :class="{'content-container':!isHomePage,'homepage-container':isHomePage}"></home-content>
       <!-- </el-main> -->
       <!-- </div> -->
     </div>
   </div>
-</template>
+</template> 
 <script>
 import HomeHeader from "@/pages/main/Header";
 import HomeContent from "@/pages/main/Content";
@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      currentWidth: 300
+      isHomePage: false,
     };
   },
   methods: {
@@ -37,11 +37,16 @@ export default {
     handleNavBarClick() {
       // console.log("click!")
       this.$refs.content.reload();
+    },
+    handleChangeClass(flag){
+      this.isHomePage = flag;
     }
   },
   watch: {},
   mounted() {
     // console.log("main mounted")
+  },
+  computed: {
   }
 };
 </script>
@@ -74,7 +79,12 @@ body {
   position: absolute;
   width: 60%;
   left: 20%;
-  margin-top: 100px;
+  top: 100px;
+}
+.homepage-container {
+  position: absolute;
+  width: 100%;
+  left: 0;
 }
 body {
   width: 100%;
@@ -91,8 +101,6 @@ body {
   top: 0;
   left: 0;
 }
-
-
 
 @-webkit-keyframes animate-cloud {
   0% {

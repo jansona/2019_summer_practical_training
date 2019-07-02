@@ -51,4 +51,4 @@ const URLS = {
   userFindByIdUrl
 }
 
-module.exports = URLS
+export default URLS
