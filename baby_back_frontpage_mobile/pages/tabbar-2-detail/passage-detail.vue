@@ -41,17 +41,17 @@
 				<!-- </view> -->
 				<!-- 加载图标 -->
 				<!-- <mixLoading class="mix-loading" v-if="loading"></mixLoading> -->
-				<view class="uni-comment" v-for="(item, index) in commentList" :key="index">
-					<view class="uni-comment-list" style="background-color: #FFFFFF;">
-						<view class="uni-comment-face"><image :src="item.userimg" mode="widthFix"></image></view>
+				<view class="uni-comment" style="margin-bottom: 100upx;">
+					<view class="uni-comment-list" v-for="(item, index) in commentList" :key="index" style="background-color: #FFFFFF;">
+						<view class="uni-comment-face" style="margin-left: 15upx;"><image :src="item.userimg" mode="widthFix"></image></view>
 						<view class="uni-comment-body">
-							<view class="uni-comment-top">
+							<view class="uni-comment-top" style="text-align: left">
 								<text>{{item.usernick}}</text>
 							</view>
 							<view class="uni-comment-date">
 								<text>{{item.date}}</text>
 							</view>
-							<view class="uni-comment-content">{{item.content}}</view>
+							<view class="uni-comment-content" style="text-align: left;">{{item.content}}</view>
 						</view>
 					</view>
 				</view>
@@ -98,7 +98,7 @@
 					likeNum:19,
 					viewNum:100,
 					replyNum:4},
-				commentList: [{usernick:'小明',date:'2019-6-28 19:10:20',content:'人贩子千刀万剐！',userimg:'../../static/user/face.jpg'},{usernick:'小李',date:'2019-6-28 19:10:20',content:'心疼！',userimg:"../../static/user/face.jpg"},{usernick:'小花',date:'2019-6-28 19:10:20',content:'希望孩子们能早日找到！',userimg:"../../static/user/face.jpg"},{usernick:'小桃',date:'2019-6-28 19:10:20',content:'人贩子千刀万剐！',userimg:"../../static/user/face.jpg"}],
+				commentList: [{usernick:'小明',date:'2019-6-28 19:10:20',content:'人贩子千刀万剐！',userimg:'../../static/user/face.jpg'},{usernick:'小李',date:'2019-6-28 19:10:20',content:'心疼！',userimg:"../../static/user/face.jpg"},{usernick:'小花',date:'2019-6-28 19:10:20',content:'希望孩子们能早日找到！',userimg:"../../static/user/face.jpg"},{usernick:'小桃',date:'2019-6-28 19:10:20',content:'人贩子千刀万剐！人贩子千刀万剐！人贩子千刀万剐！人贩子千刀万剐！',userimg:"../../static/user/face.jpg"}],
 				InputBottom:0,
 				comment:{
 					id:0,
