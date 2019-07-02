@@ -11,8 +11,10 @@ if (mode === 'dev') {
 // 填写信息部分
 const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
 const lostBabyFindUrl = baseUrl + "/lost-baby/find"
+const lostBabyFindByUserUrl = baseUrl + "/lost-baby/find-by-user"
 const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
 const matchBabyFindUrl = baseUrl + "/match-baby/find"
+const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
 // 登录注册部分
@@ -39,6 +41,7 @@ const URLS = {
   registUrl,
   matchBabyInsertUrl,
   lostBabyFindUrl,
+  lostBabyFindByUserUrl,
   matchBabyFindUrl,
   sendSMSUrl,
   articleFindUrl,
@@ -47,8 +50,8 @@ const URLS = {
   articleInsertUrl,
   articleLike,
   userFindUrl,
-  commentFindByArticle,
-  userFindByIdUrl
+  userFindByIdUrl,
+  commentFindByArticle
 }
 
 module.exports = URLS

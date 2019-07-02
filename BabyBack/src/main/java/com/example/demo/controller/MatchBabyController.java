@@ -47,19 +47,20 @@ public class MatchBabyController {
 
     @ApiOperation(value = "查找特定用户上传的孤儿")
     @PostMapping("/find-by-user")
-    public Page<MatchBaby> findMatchBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
+    public ResponseBase findMatchBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<MatchBaby> result = matchBabyRepository.findAllByUser(user);
 
         pageHelper.doPage(result, page);
 
         Page<MatchBaby> pageResult = new PageImpl(result, page, result.size());
-        return pageResult;
+        return new ResponseBase(200, "查询成功", pageResult);
     }
 
     @ApiOperation(value = "删除孤儿")
     @DeleteMapping("/delete")      // TODO 填写节点
-    public void deleteMatchBaby(@RequestParam(value = "id") Integer id) {
+    public ResponseBase deleteMatchBaby(@RequestParam(value = "id") Integer id) {
         matchBabyRepository.deleteById(id);
+        return new ResponseBase(200, "删除成功", null);
     }
 
 }

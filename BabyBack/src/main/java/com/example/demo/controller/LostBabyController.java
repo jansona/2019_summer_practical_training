@@ -80,13 +80,13 @@ public class LostBabyController {
 
     @ApiOperation(value = "查找特定用户上传的失踪者")
     @PostMapping("/find-by-user")   // TODO 待填
-    public Page<LostBaby> findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
+    public ResponseBase findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<LostBaby> result = lostBabyRepository.findAllByUser(user);
 
         pageHelper.doPage(result, page);
 
         Page<LostBaby> pageResult = new PageImpl(result, page, result.size());
-        return pageResult;
+        return new ResponseBase(200, "查询成功", pageResult);
     }
 
     @ApiOperation(value = "根据关键字查找用户")
