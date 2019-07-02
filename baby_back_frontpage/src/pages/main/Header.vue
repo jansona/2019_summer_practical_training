@@ -162,4 +162,8 @@ export default {
 .el-menu--horizontal {
   border-bottom-width: 0px!important ;
 }
+
+.el-menu-item{
+  background-color: transparent!important
+}
 </style>
