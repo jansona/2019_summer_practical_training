@@ -29,6 +29,7 @@ const articleLike = baseUrl + '/article/like'
 const commentFindByArticle = baseUrl + '/comment/find-by-article'
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
+const userFindByIdUrl = baseUrl + '/user/find-by-id'
 
 const URLS = {
   baseUrl,
@@ -46,7 +47,8 @@ const URLS = {
   articleInsertUrl,
   articleLike,
   userFindUrl,
-  commentFindByArticle
+  commentFindByArticle,
+  userFindByIdUrl
 }
 
 module.exports = URLS
