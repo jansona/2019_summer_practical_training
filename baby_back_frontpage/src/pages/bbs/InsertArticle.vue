@@ -46,7 +46,7 @@ export default {
           })
           .then(function(response) {
             console.log(response);
-            if (response.data.numberOfElements == 1) {
+            if (response.data.numberOfElements >= 1) {
               _this.user = response.data.content[0];
             } else {
               _this.user = null;
@@ -56,11 +56,9 @@ export default {
           .catch(function(error) {
             console.log(error);
             _this.user = null;
-            // alert("您尚未登陆，不能发帖");
             _this.$router.push("bbsHome");
           });
       } else {
-        // alert("您尚未登陆，不能发帖");
         this.$router.push("bbsHome");
       }
     },
