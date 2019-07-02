@@ -221,7 +221,7 @@ public class ApiService implements InitializingBean {
 
     void insertIDPredicate(String value, String key, CriteriaBuilder cb, Root<?> root, List<Predicate> predicatesList) {
         if (!value.equals("")) {
-            Predicate predicate = cb.equal(root.get("article_id"), Integer.valueOf(value));
+            Predicate predicate = cb.equal(root.get(key), Integer.valueOf(value));
             predicatesList.add(predicate);
         }
     }
