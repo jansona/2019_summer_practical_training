@@ -4,7 +4,8 @@ if (mode === 'dev') {
   baseUrl = 'http://localhost:18080'
 } else if (mode == 'hbj'){
   baseUrl = 'http://192.168.137.1:18080'
-} else {
+} else if (mode == 'prod'){
+  baseUrl = 'http://42.159.4.66:18080'
 }
 
 // 填写信息部分

@@ -21,7 +21,7 @@ import URLS from '@/common/urls'
 Vue.prototype.URLS = URLS
 
 // 使用Vuex
-import store from './store/store'
+import store from './store'
 Vue.prototype.$store = store;
 
 App.mpType = 'app'
