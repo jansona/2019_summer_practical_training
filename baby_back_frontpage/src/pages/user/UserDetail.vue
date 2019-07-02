@@ -8,18 +8,40 @@
       </UserInfo>
     </el-tab-pane>
     <el-tab-pane label="我的失踪者申报">
-      <el-tabs type="border-card">
-        <el-tab-pane label="家寻宝贝"></el-tab-pane>
-        <el-tab-pane label="宝贝寻家"></el-tab-pane>
-      </el-tabs>
-      <Pictures :datas="this.datas" :types="this.dataTypes" ref="pictures0"></Pictures>
-      <el-pagination
-        @current-change="handleCurrentChange"
-        :current-page.sync="currentPage"
-        :page-size="pageSize"
-        layout="prev, pager, next, jumper"
-        :total="totalNum">
-      </el-pagination>
+      <el-tabs @tab-click="subTabClick" style="margin-top:10px;">
+      <el-tab-pane class="tab-container">
+        <div slot="label">
+          &nbsp&nbsp
+          <span class="font-size-1-3em">家寻宝贝申报</span>
+        </div>
+        <template v-if="choosed == 0">
+          <Pictures :datas="datas" :types="dataTypes" ref="pictures0"></Pictures>
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            :page-size="pageSize"
+            layout="prev, pager, next, jumper"
+            :total="totalNum"
+          ></el-pagination>
+        </template>
+      </el-tab-pane>
+      <el-tab-pane>
+        <div slot="label">
+          &nbsp&nbsp
+          <span class="font-size-1-3em">宝贝寻家申报</span>
+        </div>
+        <template v-if="choosed == 1">
+          <Pictures :datas="datas" :types="dataTypes" ref="pictures1"></Pictures>
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            :page-size="pageSize"
+            layout="prev, pager, next, jumper"
+            :total="totalNum"
+          ></el-pagination>
+        </template>
+      </el-tab-pane>
+    </el-tabs>
     </el-tab-pane>
     <el-tab-pane label="我的文章">我的文章</el-tab-pane>
     <el-tab-pane label="我的评论">我的评论</el-tab-pane>
@@ -51,11 +73,12 @@ export default {
       tableData: [],
       picUrl: "",
       type: "",
+      choosed: 0,
       datas: [],
       dataTypes: [],
       totalNum: 0,
       currentPage: 1,
-      pageSize: 2
+      pageSize: 4
     }
   },
   methods: {
@@ -90,17 +113,26 @@ export default {
         });
     },
     loadBabyData() {
-      let url = URLS.lostBabyFindByUserUrl;
-      request(url, { size: this.pageSize, page: this.currentPage - 1, user: this.id })
+      request(
+        this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl,
+        { size: this.pageSize, page: this.currentPage - 1 }
+      )
         .then(data => {
           console.log(data);
           if (data.rtnCode == 200) {
+            if (this.choosed == -1) this.choosed = 0;
             this.totalNum = data.data.totalElements;
             this.datas = JSON.parse(JSON.stringify(data.data.content));
             this.dataTypes = [];
             for (var i = 0, len = this.datas.length; i < len; i++) {
               this.dataTypes.push(this.choosed);
             }
+
+            let saved = this.choosed;
+            this.choosed = -1;
+            this.$nextTick(function() {
+              this.choosed = saved;
+            });
           }
         })
         .catch(error => {
@@ -124,7 +156,18 @@ export default {
           break;
       }
     },
+    refreshLostBabyData(){
+      this.loadBabyData(URLS.lostBabyFindByUserUrl);
+    },
+    refreshMatchBabyData(){
+      this.loadBabyData(URLS.matchBabyFindByUserUrl);
+    },
+    subTabClick(e) {
+      this.choosed = e.index;
+      this.loadBabyData();
+    },
   },
+
   mounted() {
     this.loadUserInfo();
   }
