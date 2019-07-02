@@ -1,12 +1,13 @@
 package com.example.demo.entity;
 
-import lombok.Data;
+
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.util.Date;
 
-
+@CrossOrigin
 @Entity
 public class Comment {
     @Id

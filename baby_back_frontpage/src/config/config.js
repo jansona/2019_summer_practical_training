@@ -25,7 +25,8 @@ const articleFindUrl = baseUrl + '/article/find'
 const articleDeleteUrl = baseUrl + '/article/delete'
 const articleFindByUserUrl = baseUrl + '/article/find-by-user'
 const articleInsertUrl = baseUrl + '/article/insert'
-
+const articleLike = baseUrl + '/article/like'
+const commentFindByArticle = baseUrl + '/comment/find-by-article'
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
 
@@ -43,7 +44,9 @@ const URLS = {
   articleDeleteUrl,
   articleFindByUserUrl,
   articleInsertUrl,
-  userFindUrl
+  articleLike,
+  userFindUrl,
+  commentFindByArticle
 }
 
 module.exports = URLS

@@ -87,6 +87,7 @@ public class ArticleController {
     public void likeArticle(@RequestParam(value = "article_id") Integer id){
         Article article = articleRepository.findById(id).get();
         article.setLikeNum(article.getLikeNum() + 1);
+        articleRepository.save(article);
     }
 
 }
