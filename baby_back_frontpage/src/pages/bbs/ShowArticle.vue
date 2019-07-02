@@ -120,15 +120,15 @@ import dateFormat from "@/api/api";
 export default {
   name: "ShowArticle",
   mounted: function() {
-    this.getArticles(this.$route.params.id);
-    this.getComment(this.$route.params.id);
+    this.getArticles(this.$route.query.id);
+    this.getComment(this.$route.query.id);
     this.getLikeArticle();
     //this.getArticles(1);
   },
   watch: {
     $route(to, from) {
-      this.getArticles(this.$route.params.id);
-      this.getComment(this.$route.params.id);
+      this.getArticles(this.$route.query.id);
+      this.getComment(this.$route.query.id);
     }
   },
   data() {
@@ -348,7 +348,7 @@ export default {
         });
     },
     gotoArticle(id) {
-      this.$router.push({ path: `/showArticle/${id}` });
+      this.$router.push({name:"showArticle",query:{id:id}});
     }
   }
 };
