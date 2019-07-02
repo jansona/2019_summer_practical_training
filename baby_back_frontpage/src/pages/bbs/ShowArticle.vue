@@ -118,6 +118,7 @@ import axios from "axios";
 import URLS from "@/config/config";
 import dateFormat from "@/api/api";
 export default {
+  inject : ['reload'],
   name: "ShowArticle",
   mounted: function() {
     this.getArticles(this.$route.query.id);
@@ -133,70 +134,12 @@ export default {
   },
   data() {
     return {
+      isRouterAlive : true,
       article: {},
       likeArticle: [],
       islike: "el-icon-star-off",
       myComment: "",
-      comments: [
-        {
-          id: 1,
-          user: {
-            id: 1,
-            passWord: "19981228lrf",
-            name: "吕若凡",
-            tel: "18031098057",
-            email: "935802216@qq.com"
-          },
-          article: {
-            id: 1,
-            title: "我和空姐同居的日子",
-            user: {
-              id: 1,
-              passWord: "19981228lrf",
-              name: "吕若凡",
-              tel: "18031098057",
-              email: "935802216@qq.com"
-            },
-            content:
-              "我和空姐同居的日子，竟是如此美妙。\\n美好的日子呀，请不要溜走。",
-            date: "2019-06-29T00:00:00.000+0000",
-            likeNum: 2,
-            viewNum: 0,
-            replyNum: 1
-          },
-          content: "好哥哥，你真猛",
-          date: "2019-07-02T09:04:41.000+0000"
-        },
-        {
-          id: 1,
-          user: {
-            id: 1,
-            passWord: "19981228lrf",
-            name: "吕若凡",
-            tel: "18031098057",
-            email: "935802216@qq.com"
-          },
-          article: {
-            id: 1,
-            title: "我和空姐同居的日子",
-            user: {
-              id: 1,
-              passWord: "19981228lrf",
-              name: "吕若凡",
-              tel: "18031098057",
-              email: "935802216@qq.com"
-            },
-            content:
-              "我和空姐同居的日子，竟是如此美妙。\n美好的日子呀，请不要溜走。",
-            date: "2019-06-29T00:00:00.000+0000",
-            likeNum: 2,
-            viewNum: 0,
-            replyNum: 1
-          },
-          content: "duang的一下就顺滑了呀，洗发液我只认霸王。\n--成龙",
-          date: "2019-07-02T09:04:41.000+0000"
-        }
-      ]
+      comments: []
     };
   },
   methods: {
@@ -259,7 +202,7 @@ export default {
       if (this.islike !== "el-icon-star-on") {
         this.islike = "el-icon-star-on";
 
-        let url = URLS.articleLike + "?article_id=" + this.$route.params.id;
+        let url = URLS.articleLike + "?article_id=" + this.$route.query.id;
         axios.post(url);
       }
     },
@@ -286,6 +229,7 @@ export default {
       //document.documentElement.scrollTop=document.documentElement.scrollHeight
     },
     insertComment() {
+      let _this=this;
       if( !this.$store.state.hasLogin){
         this.$notify({
             message: "您尚未登陆,无法回复",
@@ -315,6 +259,13 @@ export default {
         .put(url, comment)
         .then(function(response) {
           console.log("发布评论成功");
+          _this.$notify({
+            message: "发布评论成功",
+            type: "warning",
+            duration: 1500,
+            offset: 50
+          });
+          _this.reload()
         })
         .catch(function(error) {
           console.log(error);
@@ -330,7 +281,7 @@ export default {
       let _this = this;
       let url = "";
 
-      url = URLS.articleFindUrl + "?sort=likeNum&size=3";
+      url = URLS.articleFindUrl + "?sort=likeNum,desc&size=3";
 
       axios
         .post(url)

@@ -104,6 +104,7 @@ export default {
                   duration: 1500,
                   offset: 50
                 });
+            _this.$router.push('bbsHome')
           } else {
             _this.$notify({
                   title: "发布失败",
