@@ -29,7 +29,10 @@
 export default {
 	data() {
 		return {
-			active: true
+			active: true,
+			URLS:{
+				imgUrl:'http://42.159.4.66:2333'
+			}
 		};
 	},
 	onLoad() {},
@@ -85,12 +88,11 @@ export default {
 	}
 }
 .tabbar-box-wrap {
-	margin-bottom: 100upx;
-	position: absolute;
+	position: fixed;
 	width: 100%;
 	padding: 50upx;
 	box-sizing: border-box;
-	bottom: 0;
+	bottom: 100upx;
 	left: 0;
 	.tabbar-box {
 		position: relative;

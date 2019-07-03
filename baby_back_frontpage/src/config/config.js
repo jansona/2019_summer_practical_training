@@ -30,10 +30,11 @@ const articleDeleteUrl = baseUrl + '/article/delete'
 const articleFindByUserUrl = baseUrl + '/article/find-by-user'
 const articleInsertUrl = baseUrl + '/article/insert'
 const articleLike = baseUrl + '/article/like'
+const articleInfiniteUrl = baseUrl + '/article/infinite-scroll'
 const commentFindByArticle = baseUrl + '/comment/find-by-article'
 const commentInsertUrl = baseUrl + '/comment/insert'
+const commentInfiniteUrl = baseUrl + "/comment/infinite-scroll"
 const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
-//查询用户信息
 const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
 
@@ -48,16 +49,19 @@ const URLS = {
   lostBabyFindUrl,
   lostBabyFindByUserUrl,
   matchBabyFindUrl,
+  matchBabyFindByUserUrl,
   sendSMSUrl,
   articleFindUrl,
   articleDeleteUrl,
   articleFindByUserUrl,
   articleInsertUrl,
   articleLike,
+  articleInfiniteUrl,
   userFindUrl,
   commentFindByArticle,
   commentInsertUrl,
   commentFindByArticle,
+  commentInfiniteUrl,
   userFindByIdUrl,
   articleFindByUserNameUrl
 }

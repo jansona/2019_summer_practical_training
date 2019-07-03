@@ -70,6 +70,20 @@ public class CommentController {
         return new ResponseBase(200, "查找成功", pageResult);
     }
 
+    @ApiOperation(value = "查询特定用户的特定索引的评论(为无限滚动提供数据)")
+    @PostMapping("/infinite-scroll")
+    public ResponseBase getArticleInfinite(@RequestParam(value = "user") User user, @RequestParam(value = "index") Integer index){
+        ResponseBase responseBase;
+        List<Comment> commentList = commentRepository.findAllByUser(user);
+        if(index >= commentList.size()){
+            return new ResponseBase(200, "无更多评论", null);
+        }
+        Comment comment = commentList.get(index);
+        comment.setUser(null);
+        comment.getArticle().setUser(null);
+        return new ResponseBase(200, "成功返回无限滚动所需数据", comment);
+    }
+
     @ApiOperation(value = "删除一篇评论")
     @DeleteMapping("/delete")      // TODO 填写节点
     public ResponseBase deleteComment(@RequestParam(value = "id") Integer id) {

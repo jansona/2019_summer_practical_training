@@ -45,17 +45,16 @@
     </el-tabs>
     </el-tab-pane>
     <el-tab-pane label="我的文章">
-      <articles :articles="articles_of_user"></articles>
-      <el-pagination
-        @current-change="handleCurrentChange"
-        background
-        layout="prev, pager, next"
-        :page-size="articlePageSize"
-        :total="numOfArticles"
-        :current-page.sync="pageNo"
-      ></el-pagination>
+      <ArticleInfiniteList
+      :user="this.id"
+      >
+      </ArticleInfiniteList>
     </el-tab-pane>
-    <el-tab-pane label="我的评论">我的评论</el-tab-pane>
+    <el-tab-pane label="我的评论">
+      <CommentInfiniteList
+      :user="this.id"
+      ></CommentInfiniteList>
+    </el-tab-pane>
   </el-tabs>
 </el-card>
 </div>
@@ -67,6 +66,8 @@ import { request,fetch } from "@/api/api";
 import Pictures from "../faceWall/components/Pictures";
 import UserInfo from "./components/UserInfo";
 import articles from "../bbs/articles";
+import ArticleInfiniteList from "./components/ArticleInfiniteList";
+import CommentInfiniteList from "./components/CommentInfiniteList";
 const nameDict = {
   name: "姓名",
   tel: "邮箱",
@@ -77,13 +78,15 @@ export default {
   components: {
     UserInfo,
     Pictures,
-    articles
+    articles,
+    ArticleInfiniteList,
+    CommentInfiniteList
   },
   data () {
     return {
       tabPosition: 'left',
-      // id: this.$route.query.id,
-      id: 8,
+      id: this.$route.query.id,
+      // id: 8,
       // 申报信息分页相关
       tableData: [],
       picUrl: "",
@@ -97,10 +100,12 @@ export default {
 
 
       // 文章分页相关
-      articles_of_user: [],
-      articlePageSize: 5,
-      numOfArticles: 0,
-      pageNo: 0
+      // articles_of_user: [],
+      // articlePageSize: 5,
+      // numOfArticles: 0,
+      // pageNo: 0
+      articles: [],
+      articleIndex: 0
     }
   },
   methods: {
@@ -188,6 +193,9 @@ export default {
       this.choosed = e.index;
       this.loadBabyData();
     },
+    reachBottom(){
+      articles.push()
+    }
   },
 
   mounted() {

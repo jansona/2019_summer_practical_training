@@ -1,6 +1,30 @@
 <template>
 	<view>
-		<!-- 顶部选项卡 -->
+		<view class="mpvue-picker">
+			<mpvue-picker
+				:themeColor="themeColor"
+				ref="mpvuePicker"
+				:mode="mode"
+				:deepLength="deepLength"
+				:pickerValueDefault="pickerValueDefault"
+				@onConfirm="onConfirm"
+				@onCancel="onCancel"
+				:pickerValueArray="pickerValueArray"
+			></mpvue-picker>
+		</view>
+		<!--搜索框-->
+		<view class="cu-bar search bg-white">
+			<view style="margin-left: 20upx;" @click="showSinglePicker">{{pickerLabel}}</view>
+			<uni-icon type="arrowdown" color="#333333" size="22" @click="showSinglePicker"></uni-icon>
+			<view class="search-form round" style="margin-left: 8upx;">
+				<text class="cuIcon-search"></text>
+				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索宝贝" confirm-type="search"></input>
+			</view>
+			<view class="margin-tb-sm text-center">
+				<button class="cu-btn round bg-blue" style="margin-right: 20upx;">搜索</button>
+			</view>
+		</view>
+		<!-- 选项卡 -->
 		<scroll-view scroll-x class="bg-white nav text-center" :scroll-left="scrollLeft">
 			<view class="cu-item" :class="0==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="0">
 				走失
@@ -9,20 +33,8 @@
 				发现
 			</view>
 		</scroll-view>
-		
-		<!--搜索框-->
-		<view class="cu-bar search bg-white">
-			<view class="search-form round">
-				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索宝贝" confirm-type="search"></input>
-			</view>
-			<view class="margin-tb-sm text-center">
-				<button class="cu-btn round bg-blue" style="margin-right: 20upx;">搜索</button>
-			</view>
-		</view>
-		
 		<!--图片布局-->
-		<view class="grid col-2 grid-square">
+		<view class="grid col-2 grid-square" v-show="findShow">
 			<!-- <view class="cu-card" v-for="(item,index) in findList" :key="index">
 				<view class="bg-img" :style="[{ backgroundImage:'url(' + findList[index] + ')' }]" style="border-radius: 20upx;overflow: hidden;"></view>
 			</view> -->
@@ -32,7 +44,16 @@
 					<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">2019-5-20</text></view>
 			</view>
 		</view>
-	
+		<view class="grid col-2 grid-square" v-show="lostShow">
+			<!-- <view class="cu-card" v-for="(item,index) in findList" :key="index">
+				<view class="bg-img" :style="[{ backgroundImage:'url(' + findList[index] + ')' }]" style="border-radius: 20upx;overflow: hidden;"></view>
+			</view> -->
+			<!-- <view class="bg-img" v-for="(item,index) in findList" :key="index" :style="[{ backgroundImage:'url(' + findList[index] + ')' }]" style="width: 330upx;height: 330upx;margin-top: 15upx;margin-left: 20upx;margin-right: 20upx;border-radius: 10upx;overflow: hidden;"></view> -->
+			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;" v-for="(item,index) in lostList" :key="index">
+				<img :src="lostList[index]" mode="aspectFill" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+					<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">2019-5-20</text></view>
+			</view>
+		</view>
 		<!-- <view class="cu-card" v-for="(item,index) in lostList" :key="index">
 			<view class="cu-item shadow">
 					<view style="text-align: center;">
@@ -47,23 +68,77 @@
 </template>
 
 <script>
+	import mpvuePicker from '@/components/mpvue-picker/mpvuePicker.vue';
+	import uniIcon from '@/components/uni-icon/uni-icon.vue'
 export default {
-	
+	components: {
+		mpvuePicker,
+		uniIcon
+	},
 	data() {
 		return {
+			findShow:false,
+			lostShow:true,
 			title: 'Hello',
 			tabCurrentIndex: 0, //当前选项卡索引
 			scrollLeft: 0, //顶部选项卡左滑距离
 			enableScroll: true,
 			InputBottom:0,
 			lostList:['../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png'],
-			findList:[this.URLS.imgUrl+'/static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png']
+			findList:[this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png'],
+			themeColor: '#007AFF',
+			mode: '',
+			deepLength: 1,
+			pickerValueDefault: [0],
+			pickerLabel:'全部',
+			pickerValueArray: [
+				{
+					label: '全部',
+					value: 0
+				},
+				{
+					label: '姓名',
+					value: 1
+				},
+				{
+					label: '特征',
+					value: 2
+				},
+				{
+					label: '失踪地点',
+					value: 3
+				}
+			]
 		};
 	},
 	onLoad() {},
 	methods: {
+		onCancel(e) {
+			console.log(e);
+		},
+		// 单列
+		showSinglePicker() {
+			this.mode = 'selector';
+			this.deepLength = 1;
+			this.pickerValueDefault = [0];
+			this.$refs.mpvuePicker.show();
+		},
+		onConfirm(e) {
+			console.log(e.label);
+			this.pickerLabel=e.label;
+			//this.setStyle(0, e.label);
+		},
 		tabSelect(e) {
 			this.tabCurrentIndex = e.currentTarget.dataset.id;
+			if(this.tabCurrentIndex==0)
+			{
+				this.lostShow=true;
+				this.findShow=false
+			}
+			else{
+				this.findShow=true;
+				this.lostShow=false
+			}
 			this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 		},
 		InputFocus(e) {
