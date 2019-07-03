@@ -1,13 +1,13 @@
 <template>
 	<view>
-		<form method="post">
+		<form @submit="formSubmit" @reset="formReset">
 			<view class="cu-form-group">
 				<view class="title">姓名</view>
-				<input placeholder="请输入寻亲者姓名" v-model="findParentForm.name"></input>
+				<input placeholder="请输入寻亲者姓名" name="name" v-model="findParentForm.name"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width:100upx;">性别</view>
-				<radio-group class="radio-group" bindchange="radioChange">
+				<radio-group class="radio-group" name="sex" bindchange="radioChange">
 					<label class="radio" v-for="(item,index) in items" :key=index>
 						<radio :value="item.value" :checked="item.checked" color="#FFCC33" style="transform:scale(0.7)" />{{item.value}}
 					</label>
@@ -15,7 +15,7 @@
 			</view>
 			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">出生日期</view>
-				<picker mode="date" :value="findParentForm.birthday" start="1910-09-01" end="2020-09-01" @change="BirthDateChange">
+				<picker mode="date" name="birthday" :value="findParentForm.birthday" start="1910-09-01" end="2020-09-01" @change="BirthDateChange">
 					<view class="picker">
 						{{findParentForm.birthday}}
 					</view>
@@ -26,12 +26,14 @@
 				<input placeholder="请输入寻亲者籍贯" v-model="findParentForm.nativePlace"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">身高</view>
-				<input placeholder="请输入寻亲者失踪时身高" v-model="findParentForm.height"></input>
+				<view class="uni-title">身高</view>
+				<view>
+					<slider value="100" style="width: 500upx;" @change="sliderChange" min="50" max="200" show-value />
+				</view>
 			</view>
 			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">失踪日期</view>
-				<picker mode="date" :value="findParentForm.date" start="1910-09-01" end="2020-09-01" @change="LostDateChange">
+				<picker name="date" mode="date" :value="findParentForm.date" start="1910-09-01" end="2020-09-01" @change="LostDateChange">
 					<view class="picker">
 						{{findParentForm.date}}
 					</view>
@@ -39,7 +41,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">失踪时地址</view>
-				<input placeholder="请输入寻亲者失踪时的地址" v-model="findParentForm.place"></input>
+				<input name="place" placeholder="请输入寻亲者失踪时的地址" v-model="findParentForm.place"></input>
 			</view>
 			<view class="cu-form-group align-start">
 				<view class="title">特征描述</view>
@@ -107,7 +109,7 @@
 					图片上传
 				</view>
 				<view class="action">
-					{{findParentForm.imgList.length}}/4
+					{{findParentForm.imgList.length}}/1
 				</view>
 			</view>
 			<view class="cu-form-group">
@@ -118,19 +120,21 @@
 							<text class='cuIcon-close'></text>
 						</view>
 					</view>
-					<view class="solids" @tap="ChooseImage" v-if="findParentForm.imgList.length<4">
+					<view class="solids" @tap="ChooseImage" v-if="findParentForm.imgList.length<1">
 						<text class='cuIcon-cameraadd'></text>
 					</view>
 				</view>
 			</view>
 			<view class="cu-form-group" style="margin-top: 30upx;">
-				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:300upx;margin: 0 auto;" @click="submit">提交</button>
+				<button class="cu-btn bg-blue margin-tb-sm lg" form-type="submit" style="width:300upx;margin: 0 auto;">提交</button>
+				<button class="cu-btn bg-blue margin-tb-sm lg" form-type="reset" style="width:300upx;margin: 0 auto;">清空数据</button>
 			</view>
 		</form>
 	</view>
 </template>
 
 <script>
+	var  graceChecker = require("../../../common/graceChecker.js");
 	export default {
 		data() {
 			return {
@@ -147,7 +151,7 @@
 					missDescription: '', //失踪经过
 					otherExplain: '', //其他说明
 					otherDescription: '', //其他信息描述
-					//联系人信息👇
+					//联系人信息
 					contactName: '', //联系人姓名
 					contactRel: '', //联系人与失踪人关系
 					//writerRelation:'',
@@ -172,6 +176,10 @@
 		methods: {
 			radioChange(e) {
 				this.findParentForm.sex = e.detail.value
+			},
+			sliderChange(e) {
+				console.log('value 发生变化：' + e.detail.value);
+				this.findParentForm.height=e.detail.value
 			},
 			// radio1Change(e){
 			// 	this.isOrNo=e.detail.value
@@ -215,9 +223,30 @@
 			LostDateChange(e) {
 				this.findParentForm.date = e.detail.value
 			},
-			submit(e) {
-				let params = {};
-				console.log(this.findParentForm)
+			formSubmit: function (e) {
+				//将下列代码加入到对应的检查位置
+				//定义表单规则
+				var rule = [
+					{name:"name", checkType : "string", checkRule:"2,15",  errorMsg:"姓名应为2-15个字符"},
+					{name:"sex", checkType : "in", checkRule:"男,女",  errorMsg:"请选择性别"},
+					{name:"birthday", checkType : "notnull", checkRule:"",  errorMsg:"请选择出生日期"},
+					{name:"height", checkType : "notnull", checkRule:"",  errorMsg:"请选择身高"},
+					{name:"date", checkType : "notnull", checkRule:"",  errorMsg:"请选择失踪日期"},
+					{name:"place", checkType : "notnull", checkRule:"",  errorMsg:"请填写失踪地点"}
+					//{name:"img", checkType : "notnull", checkRule:"",  errorMsg:"请上传照片"}
+				];
+				//进行表单检查
+				var formData = e.detail.value;
+				var checkRes = graceChecker.check(formData, rule);
+				if(checkRes){
+					uni.showToast({title:"验证通过!", icon:"none"});
+				}else{
+					uni.showToast({ title: graceChecker.error, icon: "none" });
+				}
+			},
+			formReset: function (e) {
+				console.log("清空数据")
+				this.chosen = ''
 			}
 		}
 	}

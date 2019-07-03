@@ -38,20 +38,35 @@ public class UserController {
 
     @ApiOperation(value = "查找功能")
     @PostMapping("/find")
-    public Page<User> findUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+    public ResponseBase findUser(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                        Pageable pageable,
                                @RequestParam(value = "id", required = false, defaultValue = "") String id,
                                @RequestParam(value = "name", required = false, defaultValue = "") String name,
                                @RequestParam(value = "tel", required = false, defaultValue = "") String tel,
                                @RequestParam(value = "email", required = false, defaultValue = "") String email) {
-        Specification<User> userSpecification = apiService.createUserSpecification(id, name, tel, email);
-        return userRepository.findAll(userSpecification, pageable);
+        ResponseBase responseBase;
+        try {
+            Specification<User> userSpecification = apiService.createUserSpecification(id, name, tel, email);
+            responseBase = new ResponseBase(200, "用户信息获取成功", userRepository.findAll(userSpecification, pageable));
+        }catch (Exception e){
+            responseBase = new ResponseBase(60001, "获取用户信息异常", null);
+        }
+        return responseBase;
+    }
+
+    @ApiOperation(value = "查找单个特定用户")
+    @PostMapping("/find-by-id")
+    public ResponseBase findById(@RequestParam(value = "id") Integer id) {
+        User user = userRepository.findById(id).get();
+        user.setPassWord("");   // 防止密码泄露
+        return new ResponseBase(200, "获取用户信息成功", user);
     }
 
     @ApiOperation(value = "删除一个用户")
     @DeleteMapping("/delete")
-    public void deleteUser(@RequestParam(value = "id") Integer id) {
+    public ResponseBase deleteUser(@RequestParam(value = "id") Integer id) {
         userRepository.deleteById(id);
+        return new ResponseBase(200, "删除成功", null);
     }
 
 }

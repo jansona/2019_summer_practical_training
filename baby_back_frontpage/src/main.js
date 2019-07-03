@@ -24,6 +24,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
 
+// 引入无限滚动
+import infiniteScroll from 'vue-infinite-scroll'
+Vue.use(infiniteScroll)
+
 // 引入自己的工具css
 import "@/assets/public.css";
 // 引入导入的阿里巴巴图标库

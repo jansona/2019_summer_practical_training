@@ -1,17 +1,20 @@
 let mode = 'dev'
 let baseUrl = ''
 if (mode === 'dev') {
-  baseUrl = 'http://localhost:18080'
+  baseUrl = 'http://127.0.0.1:18080'
 } else if (mode == 'hbj'){
   baseUrl = 'http://192.168.137.1:18080'
-} else {
+} else if (mode == 'prod'){
+  baseUrl = 'http://42.159.4.66:18080'
 }
 
 // 填写信息部分
 const lostBabyInsertUrl = baseUrl + "/lost-baby/insert"
 const lostBabyFindUrl = baseUrl + "/lost-baby/find"
+const lostBabyFindByUserUrl = baseUrl + "/lost-baby/find-by-user"
 const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
 const matchBabyFindUrl = baseUrl + "/match-baby/find"
+const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
 // 登录注册部分
@@ -24,9 +27,14 @@ const articleFindUrl = baseUrl + '/article/find'
 const articleDeleteUrl = baseUrl + '/article/delete'
 const articleFindByUserUrl = baseUrl + '/article/find-by-user'
 const articleInsertUrl = baseUrl + '/article/insert'
-
+const articleLike = baseUrl + '/article/like'
+const articleInfiniteUrl = baseUrl + '/article/infinite-scroll'
+const commentFindByArticle = baseUrl + '/comment/find-by-article'
+const commentInsertUrl = baseUrl + '/comment/insert'
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
+const userFindByIdUrl = baseUrl + '/user/find-by-id'
+
 
 const URLS = {
   baseUrl,
@@ -36,13 +44,21 @@ const URLS = {
   registUrl,
   matchBabyInsertUrl,
   lostBabyFindUrl,
+  lostBabyFindByUserUrl,
   matchBabyFindUrl,
   sendSMSUrl,
   articleFindUrl,
   articleDeleteUrl,
   articleFindByUserUrl,
   articleInsertUrl,
-  userFindUrl
+  articleLike,
+  articleInfiniteUrl,
+  userFindUrl,
+  commentFindByArticle,
+  commentInsertUrl,
+  commentFindByArticle,
+  userFindByIdUrl
 }
 
-module.exports = URLS
+export default URLS
+

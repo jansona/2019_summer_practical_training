@@ -13,6 +13,7 @@
         mode="horizontal"
         @select="handleSelect"
         router=""
+        background-color="transparent"
       >
         <el-menu-item index="/home">首页</el-menu-item>
         <!-- <el-submenu index="2">
@@ -92,6 +93,12 @@ export default {
   computed: {
     activeMenuIndex() {
       console.log("/" + this.$route.path.split("/").reverse()[0])
+      let path = "/" + this.$route.path.split("/").reverse()[0];
+      if (path == '/home'){
+        this.$emit('change-container-class',true);
+      } else {
+        this.$emit('change-container-class',false);
+      }
       return "/" + this.$route.path.split("/").reverse()[0];
     }
   }
@@ -142,8 +149,9 @@ export default {
   }
 }
 .head-container {
-  color: white;
+  color: transparent;
   height: 100%;
+  // background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
   /* margin: 10px */
 }
 .head-img {
@@ -156,5 +164,12 @@ export default {
   height: 30px;
   margin-top: 15px;
   margin-right: 10px;
+}
+.el-menu--horizontal {
+  border-bottom-width: 0px!important ;
+}
+
+.el-menu-item{
+  background-color: transparent!important
 }
 </style>

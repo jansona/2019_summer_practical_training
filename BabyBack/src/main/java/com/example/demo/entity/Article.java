@@ -22,6 +22,8 @@ public class Article {
     @OneToMany(mappedBy = "article", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Comment> comments;//发布的可能匹配的儿童信息
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String content;
     @DateTimeFormat(pattern = "yyyyMMdd")
     private Date date;

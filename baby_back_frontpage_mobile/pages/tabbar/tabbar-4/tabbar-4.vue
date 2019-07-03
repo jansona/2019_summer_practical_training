@@ -30,7 +30,9 @@
 		},
 		methods: {
 			ReleaseUrgence(){
-				
+				uni.navigateTo({
+					url:'/pages/tabbar-4-detail/releaseurgence'
+				})
 			},
 			JoinClick(){
 				uni.navigateTo({
@@ -38,7 +40,9 @@
 				})
 			},
 			Recognition(){
-				
+				uni.navigateTo({
+					url:'/pages/tabbar-4-detail/recognition'
+				})
 			}
 		}
 	}

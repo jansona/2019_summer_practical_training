@@ -1,12 +1,13 @@
 <template>
 	<view>
+        <view class="content-container">
 		<tabbar_1 v-if="curPage == '1'"></tabbar_1>
 		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
-		<tabbar_3 v-if="showNewPop"></tabbar_3>
+		<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
 		<tabbar_2 v-if="curPage == '4'"></tabbar_2>
 		<tabbar_5 v-if="curPage == '5'"></tabbar_5>
-		
-		<view class="cu-bar tabbar bg-grey-index shadow foot">
+		</view>
+		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="1">
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/img/tabbar/home' + [curPage=='1'?'active':''] + '.png'"></image>
@@ -19,12 +20,15 @@
 				</view>
 				<view class="index-bar-text" :class="curPage=='2'?'selected-color':'text-gray'">紧急</view>
 			</view>
-			<view class="action" @click="onAddClick" data-cur="plugin">
+			<view class="action text-gray add-action" @click="onAddClick" data-cur="plugin">
+				<button class="cu-btn cuIcon-add bg-blue shadow"></button>
+				发布
+			</view>
+			<!-- <view class="action" @click="onAddClick" data-cur="plugin">
 				<view class='my-add-btn'>
 					<image :src="'/static/img/tabbar/add' + [curPage == '3'?'active':''] + '.png'"></image>
 				</view>
-				<!-- <view :class="curPage=='plugin'?'text-green':'text-gray'">发布</view> -->
-			</view>
+			</view> -->
 			<view class="action" @click="NavChange" data-cur="4">
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/img/tabbar/news' + [curPage == '4'?'active':''] + '.png'"></image>
@@ -62,7 +66,11 @@
 				} else {
 					this.showNewPop = false
 				}
-			}
+			},
+            closeAddNav(e){
+                console.log(e)
+                this.showNewPop = false;
+            }
 		}
 	}
 </script>
@@ -87,4 +95,7 @@
 	.index-bar-text {
 		margin-bottom: 10upx;
 	}
+    .content-container {
+        
+    }
 </style>
