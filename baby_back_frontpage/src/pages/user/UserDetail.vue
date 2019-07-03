@@ -44,15 +44,9 @@
     </el-tabs>
     </el-tab-pane>
     <el-tab-pane label="我的文章">
-      <articles :articles="articles_of_user"></articles>
-      <el-pagination
-        @current-change="handleCurrentChange"
-        background
-        layout="prev, pager, next"
-        :page-size="articlePageSize"
-        :total="numOfArticles"
-        :current-page.sync="pageNo"
-      ></el-pagination>
+      <ArticleInfiniteList>
+
+      </ArticleInfiniteList>
     </el-tab-pane>
     <el-tab-pane label="我的评论">我的评论</el-tab-pane>
   </el-tabs>
@@ -65,6 +59,8 @@ import { request,fetch } from "@/api/api";
 import Pictures from "../faceWall/components/Pictures";
 import UserInfo from "./components/UserInfo";
 import articles from "../bbs/articles";
+import ArticleInfiniteList from "./components/ArticleInfiniteList";
+import WaterfallPane from "./components/WaterfallPane";
 const nameDict = {
   name: "姓名",
   tel: "邮箱",
@@ -75,7 +71,9 @@ export default {
   components: {
     UserInfo,
     Pictures,
-    articles
+    articles,
+    ArticleInfiniteList,
+    WaterfallPane
   },
   data () {
     return {
@@ -95,10 +93,11 @@ export default {
 
 
       // 文章分页相关
-      articles_of_user: [],
-      articlePageSize: 5,
-      numOfArticles: 0,
-      pageNo: 0
+      // articles_of_user: [],
+      // articlePageSize: 5,
+      // numOfArticles: 0,
+      // pageNo: 0
+      articles: []
     }
   },
   methods: {
@@ -186,6 +185,9 @@ export default {
       this.choosed = e.index;
       this.loadBabyData();
     },
+    reachBottom(){
+      articles.push()
+    }
   },
 
   mounted() {

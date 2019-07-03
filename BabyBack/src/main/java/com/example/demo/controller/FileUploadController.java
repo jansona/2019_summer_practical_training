@@ -50,7 +50,7 @@ public class FileUploadController {
                 break;
             case AS_MATCH_PICS:
                 responseBase = fileManager.saveMatchPic(file, fileName);
-                break;
+                break;  
             case AS_PROFILE:
                 responseBase = fileManager.saveProfile(file, fileName);
                 break;
