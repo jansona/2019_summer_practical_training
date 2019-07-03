@@ -6,7 +6,7 @@
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {
-		"usingComponents": true,
+        "usingComponents" : true,
         /* 5+App特有相关 */
         "modules" : {},
         /* 模块配置 */
@@ -49,10 +49,11 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "",
+        "appid" : "wx3443285ab77553f2",
         "setting" : {
-            "urlCheck" : true
+            "urlCheck" : true,
+            "minified" : true
         },
-        "usingComponents": true
+        "usingComponents" : true
     }
 }

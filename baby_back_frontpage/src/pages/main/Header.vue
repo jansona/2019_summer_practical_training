@@ -93,6 +93,12 @@ export default {
   computed: {
     activeMenuIndex() {
       console.log("/" + this.$route.path.split("/").reverse()[0])
+      let path = "/" + this.$route.path.split("/").reverse()[0];
+      if (path == '/home'){
+        this.$emit('change-container-class',true);
+      } else {
+        this.$emit('change-container-class',false);
+      }
       return "/" + this.$route.path.split("/").reverse()[0];
     }
   }

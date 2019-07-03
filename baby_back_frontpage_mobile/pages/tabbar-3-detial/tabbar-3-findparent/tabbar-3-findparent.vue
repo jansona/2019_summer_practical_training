@@ -26,8 +26,10 @@
 				<input placeholder="请输入寻亲者籍贯" v-model="findParentForm.nativePlace"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">身高</view>
-				<input name="height" placeholder="请输入寻亲者失踪时身高" v-model="findParentForm.height"></input>
+				<view class="uni-title">身高</view>
+				<view>
+					<slider value="100" style="width: 500upx;" @change="sliderChange" min="50" max="200" show-value />
+				</view>
 			</view>
 			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">失踪日期</view>
@@ -174,6 +176,10 @@
 		methods: {
 			radioChange(e) {
 				this.findParentForm.sex = e.detail.value
+			},
+			sliderChange(e) {
+				console.log('value 发生变化：' + e.detail.value);
+				this.findParentForm.height=e.detail.value
 			},
 			// radio1Change(e){
 			// 	this.isOrNo=e.detail.value

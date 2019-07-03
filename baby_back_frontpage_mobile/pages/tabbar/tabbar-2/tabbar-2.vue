@@ -6,7 +6,7 @@
 				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索帖子" confirm-type="search"></input>
 			</view>
 			<view class="margin-tb-sm text-center">
-				<button class="cu-btn round" style="margin-right: 10upx;background-color: rgba(200,140,100,0.2);">搜索</button>
+				<button class="cu-btn round bg-blue" style="margin-right: 20upx;">搜索</button>
 			</view>
 		</view>
 		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic" @click="navToDetails(item)">
@@ -23,7 +23,7 @@
 					</view>
 				</view>
 				<view class="title">
-					<view class="text-cut" style="font-weight: 700;text-align: center;">{{item.title}}</view>
+					<view class="text-cut" style="font-weight: 700;margin-left: 15upx;margin-top: 15upx;">{{item.title}}</view>
 				</view>
 				<view class="passage-content" style="margin-top: 5upx;">
 					<!-- <view class="bg-img" v-for="(item1,index1) in item.imgList" :key="index1">
