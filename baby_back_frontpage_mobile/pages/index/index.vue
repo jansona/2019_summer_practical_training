@@ -9,37 +9,33 @@
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="1">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/home' + [curPage=='1'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
+					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/find' + [curPage=='1'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='1'?'selected-color':'text-gray'">首页</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="2">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/guanzhu' + [curPage == '2'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
+					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/urgence' + [curPage == '2'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='2'?'selected-color':'text-gray'">紧急</view>
 			</view>
 			<view class="action text-gray add-action" @click="onAddClick" data-cur="plugin">
 				<button class="cu-btn cuIcon-add bg-blue shadow"></button>
-				发布
+				<!-- <image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/release.png'"></image> -->
 			</view>
 			<!-- <view class="action" @click="onAddClick" data-cur="plugin">
 				<view class='my-add-btn'>
-					<image :src="'/static/img/tabbar/add' + [curPage == '3'?'active':''] + '.png'"></image>
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/release' + [curPage == '3'?'active':''] + '.png'"></image>
 				</view>
 			</view> -->
 			<view class="action" @click="NavChange" data-cur="4">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/news' + [curPage == '4'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
+					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/bbc' + [curPage == '4'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='4'?'selected-color':'text-gray'">论坛</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="5">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/me' + [curPage == '5'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
+					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/my' + [curPage == '5'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='5'?'selected-color':'text-gray'">我</view>
 			</view>
 		</view>
 	</view>

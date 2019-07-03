@@ -1,6 +1,20 @@
 <template>
 	<view>
+		<view class="mpvue-picker">
+			<mpvue-picker
+				:themeColor="themeColor"
+				ref="mpvuePicker"
+				:mode="mode"
+				:deepLength="deepLength"
+				:pickerValueDefault="pickerValueDefault"
+				@onConfirm="onConfirm"
+				@onCancel="onCancel"
+				:pickerValueArray="pickerValueArray"
+			></mpvue-picker>
+		</view>
 		<view class="cu-bar search bg-white">
+			<view style="margin-left: 20upx;" @click="showSinglePicker">{{pickerLabel}}</view>
+			<uni-icon type="arrowdown" color="#333333" size="22" @click="showSinglePicker"></uni-icon>
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
 				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索帖子" confirm-type="search"></input>
@@ -80,7 +94,13 @@
 </template>
 
 <script>
+	import mpvuePicker from '@/components/mpvue-picker/mpvuePicker.vue';
+	import uniIcon from '@/components/uni-icon/uni-icon.vue'
 	export default {
+		components: {
+			mpvuePicker,
+			uniIcon
+		},
 		data() {
 			return {
 				article: {
@@ -101,11 +121,61 @@
 				//tittle:'用心耕耘 深情护送宝贝回家 —志愿者小梅寻亲成功案例的启示',
 				//content:"朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。他们有自己的名字，却并不知道自己真正姓甚名谁",
 				//imgList:[],
-				articleList:[{userimg:'../../../static/img/pkq.png',usernick:'hgnn',likeNum:10,replyNum:20,viewNum:5,date:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'},
-				{userimg:'../../../static/img/pkq.png',usernick:'hgnn',likeNum:10,replyNum:20,viewNum:5,date:'2019-6-28 19:00:00',title:'护送宝贝回家',content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'}]
+				articleList:[
+					{
+						userimg:'../../../static/img/pkq.png',
+						usernick:'hgnn',
+						likeNum:10,
+						replyNum:20,
+						viewNum:5,
+						date:'2019-6-28 19:00:00',
+						title:'护送宝贝回家',
+						content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'
+						},
+					{
+						userimg:'../../../static/img/pkq.png',
+						usernick:'hgnn',
+						likeNum:10,
+						replyNum:20,
+						viewNum:5,
+						date:'2019-6-28 19:00:00',
+						title:'护送宝贝回家',
+						content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'
+						},
+				],
+				themeColor: '#007AFF',
+				mode: '',
+				deepLength: 1,
+				pickerValueDefault: [0],
+				pickerLabel:'内容',
+				pickerValueArray: [
+					{
+						label: '内容',
+						value: 0
+					},
+					{
+						label: '用户',
+						value: 1
+					}
+				]
 			}
 		},
 		methods: {
+			onCancel(e) {
+				console.log(e);
+			},
+			// 单列
+			showSinglePicker() {
+				this.mode = 'selector';
+				this.deepLength = 1;
+				this.pickerValueDefault = [0];
+				this.$refs.mpvuePicker.show();
+			},
+			onConfirm(e) {
+				console.log(e.label);
+				this.pickerLabel=e.label;
+				//this.setStyle(0, e.label);
+			},
 			getArticleList(){
 				
 			},

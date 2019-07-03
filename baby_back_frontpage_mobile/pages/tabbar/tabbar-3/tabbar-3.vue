@@ -29,7 +29,10 @@
 export default {
 	data() {
 		return {
-			active: true
+			active: true,
+			URLS:{
+				imgUrl:'http://42.159.4.66:2333'
+			}
 		};
 	},
 	onLoad() {},
