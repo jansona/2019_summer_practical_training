@@ -19,7 +19,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -80,18 +82,30 @@ public class ArticleController {
         return new ResponseBase(200, "查询成功", pageResult);
     }
 
-//    @ApiOperation(value = "查找特定用户名的文章")
-//    @PostMapping("/find-by-username")
-//    public ResponseBase findByUsername(Pageable pageable, @RequestParam(value = "user_name")String userName){
-//        ResponseBase responseBase;
-//
-//        Specification<User> userSpecification = apiService.createUserSpecification("", userName, "", "");
-//        Page<User> userPage = userRepository.findAll(userSpecification, pageable);
-//
-//        List<User> userList = userPage.getContent();
-//
-//
-//    }
+    @ApiOperation(value = "查找特定用户名的文章")
+    @PostMapping("/find-by-username")
+    public ResponseBase findByUsername(Pageable pageable, @RequestParam(value = "user_name")String userName){
+        ResponseBase responseBase;
+
+        Specification<User> userSpecification = apiService.createUserSpecification("", userName, "", "");
+        Page<User> userPage = userRepository.findAll(userSpecification, pageable);
+
+        List<User> userList = userPage.getContent();
+
+        List<Article> articleList = new ArrayList<>();
+
+        for(User user : userList){
+            Set<Article> tempSet = user.getArticles();
+            for(Article article : tempSet){
+                articleList.add(article);
+            }
+        }
+
+        pageHelper.doPage(articleList, pageable);
+
+        Page<Article> pageResult = new PageImpl(articleList, pageable, articleList.size());
+        return new ResponseBase(200, "查询成功", pageResult);
+    }
 
     @ApiOperation(value = "删除一篇文章")
     @DeleteMapping("/delete")      // TODO 填写节点
