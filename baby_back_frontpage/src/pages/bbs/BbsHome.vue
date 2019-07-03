@@ -88,14 +88,20 @@ export default {
       let _this = this;
       let url = "";
       if (sort) {
-        url = URLS.articleFindUrl + "?page=" + pageNum+ "&sort=id,asc";
+        url = URLS.articleFindUrl + "?page=" + pageNum + "&sort=id,asc";
       } else {
         url = URLS.articleFindUrl + "?page=" + pageNum + "&sort=date,desc";
       }
-      if(this.select =='用户'){
-        url = URLS.articleFindByUserUrl +"?page=" + pageNum+ "&sort=id,asc&user=" +this.input;
-      }else if(this.select == '内容'){
 
+      if (this.select == "用户") {
+        url =
+          URLS.articleFindByUserNameUrl +
+          "?page=" +
+          pageNum +
+          "&sort=id,asc&user_name=" +
+          this.input;
+      } else if (this.select == "内容") {
+        url = url+'&key_word='+this.input;
       }
 
       axios
@@ -115,7 +121,7 @@ export default {
           });
         });
     },
-    search(){
+    search() {
       this.getArticles(this.pageNo - 1, this.isSort);
     }
   }

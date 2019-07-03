@@ -32,7 +32,7 @@ const articleInfiniteUrl = baseUrl + '/article/infinite-scroll'
 const commentFindByArticle = baseUrl + '/comment/find-by-article'
 const commentInsertUrl = baseUrl + '/comment/insert'
 const commentInfiniteUrl = baseUrl + "/comment/infinite-scroll"
-//查询用户信息
+const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
 const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
 
@@ -47,6 +47,7 @@ const URLS = {
   lostBabyFindUrl,
   lostBabyFindByUserUrl,
   matchBabyFindUrl,
+  matchBabyFindByUserUrl,
   sendSMSUrl,
   articleFindUrl,
   articleDeleteUrl,
@@ -59,7 +60,8 @@ const URLS = {
   commentInsertUrl,
   commentFindByArticle,
   commentInfiniteUrl,
-  userFindByIdUrl
+  userFindByIdUrl,
+  articleFindByUserNameUrl
 }
 
 export default URLS
