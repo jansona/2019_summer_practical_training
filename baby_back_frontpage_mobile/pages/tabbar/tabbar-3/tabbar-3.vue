@@ -88,12 +88,11 @@ export default {
 	}
 }
 .tabbar-box-wrap {
-	margin-bottom: 100upx;
-	position: absolute;
+	position: fixed;
 	width: 100%;
 	padding: 50upx;
 	box-sizing: border-box;
-	bottom: 0;
+	bottom: 100upx;
 	left: 0;
 	.tabbar-box {
 		position: relative;

@@ -5,7 +5,7 @@
 				<view class="box">
 					<view class="box-hd">
 						<view class="avator">
-							<img src="../../../../static/user/face.jpg">
+							<img src="../../../../static/img/qa.png"/>
 						</view>
 						<view class="phone-number">18909XXXX67</view>
 					</view>

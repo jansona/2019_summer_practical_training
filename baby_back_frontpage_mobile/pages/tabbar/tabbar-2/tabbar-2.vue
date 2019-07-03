@@ -123,7 +123,7 @@
 				//imgList:[],
 				articleList:[
 					{
-						userimg:'../../../static/img/pkq.png',
+						userimg:'../../../static/img/video.png',
 						usernick:'hgnn',
 						likeNum:10,
 						replyNum:20,
@@ -133,7 +133,7 @@
 						content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'
 						},
 					{
-						userimg:'../../../static/img/pkq.png',
+						userimg:'../../../static/img/video.png',
 						usernick:'hgnn',
 						likeNum:10,
 						replyNum:20,

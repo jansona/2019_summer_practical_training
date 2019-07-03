@@ -85,7 +85,7 @@ export default {
 			enableScroll: true,
 			InputBottom:0,
 			lostList:['../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png'],
-			findList:[this.URLS.imgUrl+'/static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png'],
+			findList:[this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png',this.URLS.imgUrl+'/static/img/pkq.png'],
 			themeColor: '#007AFF',
 			mode: '',
 			deepLength: 1,
