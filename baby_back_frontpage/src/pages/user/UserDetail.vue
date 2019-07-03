@@ -44,7 +44,15 @@
     </el-tabs>
     </el-tab-pane>
     <el-tab-pane label="我的文章">
-      <articles :articles="articles"></articles>
+      <articles :articles="articles_of_user"></articles>
+      <el-pagination
+        @current-change="handleCurrentChange"
+        background
+        layout="prev, pager, next"
+        :page-size="articlePageSize"
+        :total="numOfArticles"
+        :current-page.sync="pageNo"
+      ></el-pagination>
     </el-tab-pane>
     <el-tab-pane label="我的评论">我的评论</el-tab-pane>
   </el-tabs>
@@ -74,6 +82,7 @@ export default {
       tabPosition: 'left',
       // id: this.$route.query.id,
       id: 8,
+      // 申报信息分页相关
       tableData: [],
       picUrl: "",
       type: "",
@@ -82,9 +91,14 @@ export default {
       dataTypes: [],
       totalNum: 0,
       currentPage: 1,
-      pageSize: 4,
+      pageSize: 3,
 
-      articles_of_user: []
+
+      // 文章分页相关
+      articles_of_user: [],
+      articlePageSize: 5,
+      numOfArticles: 0,
+      pageNo: 0
     }
   },
   methods: {

@@ -83,7 +83,7 @@ public class LostBabyController {
     public ResponseBase findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<LostBaby> result = lostBabyRepository.findAllByUser(user);
 
-        pageHelper.doPage(result, page);
+        result = (List<LostBaby>) pageHelper.doPage(result, page);
 
         Page<LostBaby> pageResult = new PageImpl(result, page, result.size());
         return new ResponseBase(200, "查询成功", pageResult);
@@ -100,7 +100,7 @@ public class LostBabyController {
         List result = new ArrayList();
         result.addAll(set);
 
-        pageHelper.doPage(result, page);
+        result = pageHelper.doPage(result, page);
 
         Page<LostBaby> pageResult = new PageImpl(result, page, set.size());
         return new ResponseBase(200, "查询成功", page);

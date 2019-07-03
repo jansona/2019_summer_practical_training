@@ -51,7 +51,7 @@ public class CommentController {
     public ResponseBase findCommentByArticle(Pageable page, @RequestParam(value = "article") Article article) {
         List<Comment> result = commentRepository.findAllByArticle(article);
 
-        pageHelper.doPage(result, page);
+        result = (List<Comment>) pageHelper.doPage(result, page);
 
         Page<Comment> pageResult = new PageImpl(result, page, result.size());
         return new ResponseBase(200, "查找成功", pageResult);
@@ -62,7 +62,7 @@ public class CommentController {
     public ResponseBase findCommentByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<Comment> result = commentRepository.findAllByUser(user);
 
-        pageHelper.doPage(result, page);
+        result = (List<Comment>) pageHelper.doPage(result, page);
 
         Page<Comment> pageResult = new PageImpl(result, page, result.size());
         return new ResponseBase(200, "查找成功", pageResult);

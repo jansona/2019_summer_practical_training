@@ -54,7 +54,7 @@ public class ArticleController {
 
     @ApiOperation(value = "查找文章")
     @PostMapping("/find")    // TODO 填写节点
-    public ResponseBase findArticle(@PageableDefault(value = 5, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
+    public ResponseBase findArticle(@PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                             Pageable pageable,
                                     @RequestParam(value = "id", required = false, defaultValue = "") String id,
                                     @RequestParam(value = "key_word", required = false, defaultValue = "")String keyWord) {
@@ -76,7 +76,7 @@ public class ArticleController {
     public ResponseBase findArticleByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<Article> result = articleRepository.findAllByUser(user);
 
-        pageHelper.doPage(result, page);
+        result = (List<Article>) pageHelper.doPage(result, page);
 
         Page<Article> pageResult = new PageImpl(result, page, result.size());
         return new ResponseBase(200, "查询成功", pageResult);
@@ -101,7 +101,7 @@ public class ArticleController {
             }
         }
 
-        pageHelper.doPage(articleList, pageable);
+        articleList = (List<Article>) pageHelper.doPage(articleList, pageable);
 
         Page<Article> pageResult = new PageImpl(articleList, pageable, articleList.size());
         return new ResponseBase(200, "查询成功", pageResult);
