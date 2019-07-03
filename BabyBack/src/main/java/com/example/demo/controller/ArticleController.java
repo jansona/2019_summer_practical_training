@@ -4,6 +4,7 @@ import com.example.demo.entity.Article;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.ArticleRepository;
+import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.Api;
@@ -28,6 +29,8 @@ public class ArticleController {
     ApiService apiService;
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    UserRepository userRepository;
 
     PageHelper pageHelper = new PageHelper();
 
@@ -77,11 +80,15 @@ public class ArticleController {
         return new ResponseBase(200, "查询成功", pageResult);
     }
 
-//    @ApiOperation(value = "查找包含特定内容的文章")
-//    @PostMapping("/find-by-content")
-//    public ResponseBase findArticleByContent(Pageable page, @RequestParam(value = "key_word")String keyWord){
+//    @ApiOperation(value = "查找特定用户名的文章")
+//    @PostMapping("/find-by-username")
+//    public ResponseBase findByUsername(Pageable pageable, @RequestParam(value = "user_name")String userName){
 //        ResponseBase responseBase;
 //
+//        Specification<User> userSpecification = apiService.createUserSpecification("", userName, "", "");
+//        Page<User> userPage = userRepository.findAll(userSpecification, pageable);
+//
+//        List<User> userList = userPage.getContent();
 //
 //
 //    }

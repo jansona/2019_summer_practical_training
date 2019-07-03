@@ -170,8 +170,11 @@ public class ApiService implements InitializingBean {
                 //like示例
                 insertIDPredicate(id, "id", cb, root, predicatesList);
                 if (!keyWord.equals("")) {
-                    Predicate serviceNamePredicate = cb.like(root.get("content"), "%" + keyWord + "%");
-                    predicatesList.add(serviceNamePredicate);
+                    Predicate articleContentPredicate = cb.like(root.get("content"), "%" + keyWord + "%");
+                    Predicate articleTitlePredicate = cb.like(root.get("title"), "%" + keyWord + "%");
+                    Predicate articleKeyWordPredicate = cb.or(articleContentPredicate, articleTitlePredicate);
+
+                    predicatesList.add(articleKeyWordPredicate);
                 }
 
                 Predicate[] predicates = new Predicate[predicatesList.size()];
