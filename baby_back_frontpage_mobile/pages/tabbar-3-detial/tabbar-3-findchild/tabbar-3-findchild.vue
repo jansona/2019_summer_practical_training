@@ -138,7 +138,7 @@
 					birthday: '2018-12-25',
 					nativePlace: '', //籍贯
 					height: '',
-					date: '2019-6-25', //失踪时间
+					date: '2019-06-25', //失踪时间
 					place: '',
 					babyDescription: '', //特征描述
 					missDescription: '', //失踪经过
@@ -152,7 +152,11 @@
 					contactEmail: '',
 					contactPhone: '',
 					otherContactMethod: '',
-					imgList: []
+					imgList: [],
+					
+					user: {
+						id: 8,
+					}
 				},
 				modalName: null,
 				items: [{
@@ -283,6 +287,13 @@
 						}
 					});
 				}
+				
+				console.log(this.findChildForm)
+				this.$api.post(this.URLS.lostBabyInsertUrl,this.findChildForm).then(data => {
+					console.log(data)
+				}).catch(error => {
+					console.log(error)
+				})
 			},
 			formReset: function(e) {
 				console.log("清空数据")

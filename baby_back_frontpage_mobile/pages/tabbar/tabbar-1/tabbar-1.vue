@@ -149,7 +149,13 @@ export default {
 		},
 		searchClick(e){
 			
+		},
+		refreshData(){
+			
 		}
+	},
+	mounted: {
+		
 	}
 };
 </script>
