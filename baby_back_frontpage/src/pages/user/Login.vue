@@ -104,7 +104,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loginingLoading = true;
-          axios.post(URLS.loginUrl, this.loginForm)
+          let params = JSON.parse(JSON.stringify(this.loginForm))
+          params.grant_type = 'password'
+          axios.post(URLS.loginUrl, params)
             .then(data => {
               console.log(data);
               if (data.data.rtnCode == 200) {
@@ -139,7 +141,7 @@ export default {
     }
   },
   mounted() {
-    console.log("mouted",this.$refs.leftPart.clientHeight)
+    // console.log("mouted",this.$refs.leftPart.clientHeight)
   }
 };
 </script>

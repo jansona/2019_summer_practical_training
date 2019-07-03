@@ -44,7 +44,10 @@ export default {
   },
   watch: {},
   mounted() {
-    // console.log("main mounted")
+    // console.log("main mounted",this.$route.path)
+    // if(this.$route.path == '/') {
+    //   this.$router.push('home');
+    // }
   },
   computed: {
   }

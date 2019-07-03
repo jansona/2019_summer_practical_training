@@ -144,10 +144,8 @@ Axios.interceptors.response.use(
 Axios.interceptors.request.use(
   config => {
     if (store.state.oauth) {
-      if (localStorage.getItem('access_token')) {
-        config.headers['Authorization'] =
-          'Bearer ' + localStorage.getItem('access_token')
-      } else {
+      if(store.state.token){
+        config.headers.common['Authorization']=store.state.token.token
       }
     }
     return config

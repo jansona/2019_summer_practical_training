@@ -6,12 +6,13 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     mode: 'running',
-    oauth: false,
+    oauth: true,
     status: 'offline',
     hasLoadedRouter: false,
     userID: localStorage.getItem('userID') || -1,
     hasLogin: localStorage.getItem('hasLogin') === 'true' || false,
     imageId: -1,
+    token: localStorage.getItem('token') || '',
   },
   modules: {
     //sys,
@@ -40,7 +41,15 @@ export const store = new Vuex.Store({
     },
     setImageId(state,id){
       state.imageId = id;
-    }
+    },
+    setToken (state,token) {
+			state.token =token;
+			localStorage.setItem("token",token.token);
+		},
+		delToken (state) {
+			state.token = '';
+			localStorage.removeItem("token");
+		}
   }
 })
 
