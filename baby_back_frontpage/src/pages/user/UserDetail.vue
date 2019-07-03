@@ -97,7 +97,8 @@ export default {
       // articlePageSize: 5,
       // numOfArticles: 0,
       // pageNo: 0
-      articles: []
+      articles: [],
+      articleIndex: 0
     }
   },
   methods: {

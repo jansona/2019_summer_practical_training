@@ -28,6 +28,7 @@ const articleDeleteUrl = baseUrl + '/article/delete'
 const articleFindByUserUrl = baseUrl + '/article/find-by-user'
 const articleInsertUrl = baseUrl + '/article/insert'
 const articleLike = baseUrl + '/article/like'
+const articleInfiniteUrl = baseUrl + '/article/infinite-scroll'
 const commentFindByArticle = baseUrl + '/comment/find-by-article'
 const commentInsertUrl = baseUrl + '/comment/insert'
 //查询用户信息
@@ -51,6 +52,7 @@ const URLS = {
   articleFindByUserUrl,
   articleInsertUrl,
   articleLike,
+  articleInfiniteUrl,
   userFindUrl,
   commentFindByArticle,
   commentInsertUrl,

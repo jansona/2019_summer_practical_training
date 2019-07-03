@@ -109,6 +109,14 @@ public class ArticleController {
         return new ResponseBase(200, "查询成功", pageResult);
     }
 
+    @ApiOperation(value = "查询特定用户的特定索引的文章(为无限滚动提供数据)")
+    @PostMapping("/infinite-scroll")
+    public ResponseBase getArticleInfinite(@RequestParam(value = "user") User user, @RequestParam(value = "index") Integer index){
+        ResponseBase responseBase;
+        List<Article> articleList = articleRepository.findAllByUser(user);
+        return new ResponseBase(200, "成功返回无限滚动所需数据", articleList.get(index));
+    }
+
     @ApiOperation(value = "删除一篇文章")
     @DeleteMapping("/delete")      // TODO 填写节点
     public ResponseBase deleteArticle(@RequestParam(value = "id") Integer id) {
