@@ -45,7 +45,7 @@
         <el-row>
           <el-col :span="4" style="text-align: left;">
             <span>
-              <strong>{{comments.length}}条回帖</strong>
+              <strong>{{numOfElements}}条回帖</strong>
             </span>
           </el-col>
           <el-col :span="4" :offset="16">
@@ -78,7 +78,14 @@
             style="margin-top: 15px;margin-right: 0px;margin-bottom: 15px;margin-left: 0px;"
           ></el-divider>
         </div>
-
+<el-pagination
+        @current-change="handleCurrentChange"
+        background
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        :total="numOfElements"
+        :current-page.sync="pageNo"
+      ></el-pagination>
         <br />
         <el-input id="comment" type="textarea" :rows="5" placeholder="请输入内容" v-model="myComment"></el-input>
         <br />
@@ -124,7 +131,6 @@ export default {
     this.getArticles(this.$route.query.id);
     this.getComment(this.$route.query.id);
     this.getLikeArticle();
-    //this.getArticles(1);
   },
   watch: {
     $route(to, from) {
@@ -134,7 +140,9 @@ export default {
   },
   data() {
     return {
-      isRouterAlive : true,
+      numOfElements: 0,
+      pageSize: 0,
+      pageNo: 1,
       article: {},
       likeArticle: [],
       islike: "el-icon-star-off",
@@ -206,13 +214,15 @@ export default {
         axios.post(url);
       }
     },
-    getComment(id) {
-      let url = URLS.commentFindByArticle + "?article=" + id;
+    getComment(id,pageNum) {
+      let url = URLS.commentFindByArticle + "?article=" + id+'&page='+pageNum+'&size=2';
       let _this = this;
       axios
         .post(url)
         .then(function(response) {
-          _this.comments = response.data.content;
+          _this.comments = response.data.data.content;
+          _this.pageSize = response.data.data.size;
+          _this.numOfElements = response.data.data.totalElements;
         })
         .catch(function(error) {
           console.log(error);
@@ -300,7 +310,10 @@ export default {
     },
     gotoArticle(id) {
       this.$router.push({name:"showArticle",query:{id:id}});
-    }
+    },
+    handleCurrentChange(val) {
+      this.getComment(this.$route.query.id , this.pageNo - 1);
+    },
   }
 };
 </script>

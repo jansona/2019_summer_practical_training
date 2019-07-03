@@ -30,6 +30,7 @@ const articleInsertUrl = baseUrl + '/article/insert'
 const articleLike = baseUrl + '/article/like'
 const commentFindByArticle = baseUrl + '/comment/find-by-article'
 const commentInsertUrl = baseUrl + '/comment/insert'
+const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
@@ -55,7 +56,8 @@ const URLS = {
   commentFindByArticle,
   commentInsertUrl,
   commentFindByArticle,
-  userFindByIdUrl
+  userFindByIdUrl,
+  articleFindByUserNameUrl
 }
 
 export default URLS
