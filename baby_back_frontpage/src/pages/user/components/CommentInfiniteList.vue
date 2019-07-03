@@ -4,14 +4,14 @@
       class="list"
       v-infinite-scroll="load"
       infinite-scroll-disabled="disabled">
-      <li v-for="i in comments" class="list-item" v-bind:key='i'>
+      <li v-for="(c,i) in comments" class="list-item" v-bind:key='i'>
         <a class="a-style">
-          <p style="font-size:15px">{{i.article.title}}</p>
+          <p style="font-size:15px">{{c.article.title}}</p>
         </a>
         <p>
-            {{i.content}}
+            {{c.content}}
         </p>
-        <p class="date">发布于{{dateFormat(i.date)}}</p>
+        <p class="date">发布于{{dateFormat(c.date)}}</p>
         <el-divider
           style="margin-top: 15px;margin-right: 0px;margin-bottom: 15px;margin-left: 0px;"
         ></el-divider>
