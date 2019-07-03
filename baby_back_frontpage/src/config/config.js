@@ -1,4 +1,4 @@
-let mode = 'test'
+let mode = 'dev'
 let baseUrl = ''
 if (mode === 'dev') {
   baseUrl = 'http://127.0.0.1:18080'
