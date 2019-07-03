@@ -44,11 +44,16 @@
     </el-tabs>
     </el-tab-pane>
     <el-tab-pane label="我的文章">
-      <ArticleInfiniteList>
-
+      <ArticleInfiniteList
+      :user="this.id"
+      >
       </ArticleInfiniteList>
     </el-tab-pane>
-    <el-tab-pane label="我的评论">我的评论</el-tab-pane>
+    <el-tab-pane label="我的评论">
+      <CommentInfiniteList
+      :user="this.id"
+      ></CommentInfiniteList>
+    </el-tab-pane>
   </el-tabs>
 </el-card>
 </template>
@@ -60,7 +65,7 @@ import Pictures from "../faceWall/components/Pictures";
 import UserInfo from "./components/UserInfo";
 import articles from "../bbs/articles";
 import ArticleInfiniteList from "./components/ArticleInfiniteList";
-import WaterfallPane from "./components/WaterfallPane";
+import CommentInfiniteList from "./components/CommentInfiniteList";
 const nameDict = {
   name: "姓名",
   tel: "邮箱",
@@ -73,7 +78,7 @@ export default {
     Pictures,
     articles,
     ArticleInfiniteList,
-    WaterfallPane
+    CommentInfiniteList
   },
   data () {
     return {

@@ -4,10 +4,13 @@
       class="list"
       v-infinite-scroll="load"
       infinite-scroll-disabled="disabled">
-      <li v-for="i in articles" class="list-item" v-bind:key='i'>
+      <li v-for="i in comments" class="list-item" v-bind:key='i'>
         <a class="a-style">
-          <p style="font-size:15px" @click="gotoArticle(i.id)">{{i.title}}</p>
+          <p style="font-size:15px">{{i.article.title}}</p>
         </a>
+        <p>
+            {{i.content}}
+        </p>
         <p class="date">发布于{{dateFormat(i.date)}}</p>
         <el-divider
           style="margin-top: 15px;margin-right: 0px;margin-bottom: 15px;margin-left: 0px;"
@@ -24,7 +27,7 @@ import URLS from '@/config/config'
 import { request,fetch } from "@/api/api";
 
 export default {
-  name: "ArticleInfiniteList",
+  name: "CommentInfiniteList",
   props:{
     // articles: Array
     user: Number
@@ -33,7 +36,7 @@ export default {
     return {
       loading: false,
       noMore: false,
-      articles: [],
+      comments: [],
       index: 0
     }
   },
@@ -45,13 +48,13 @@ export default {
   methods: {
     load () {
       this.loading = true
-      request(URLS.articleInfiniteUrl, {user: this.user, index: this.index})
+      request(URLS.commentInfiniteUrl, {user: this.user, index: this.index})
       .then(
         data => {
           console.log(data);
           if(data.rtnCode === 200){
             if(data.data !== null){
-              this.articles.push(data.data);
+              this.comments.push(data.data);
               this.index += 1;
             }else{
               this.noMore = true;

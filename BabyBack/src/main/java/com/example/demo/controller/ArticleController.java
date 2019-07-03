@@ -114,7 +114,12 @@ public class ArticleController {
     public ResponseBase getArticleInfinite(@RequestParam(value = "user") User user, @RequestParam(value = "index") Integer index){
         ResponseBase responseBase;
         List<Article> articleList = articleRepository.findAllByUser(user);
-        return new ResponseBase(200, "成功返回无限滚动所需数据", articleList.get(index));
+        if(index >= articleList.size()){
+            return new ResponseBase(200, "无更多文章", null);
+        }
+        Article article = articleList.get(index);
+        article.setUser(null);
+        return new ResponseBase(200, "成功返回无限滚动所需数据", article);
     }
 
     @ApiOperation(value = "删除一篇文章")

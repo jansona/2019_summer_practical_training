@@ -31,6 +31,7 @@ const articleLike = baseUrl + '/article/like'
 const articleInfiniteUrl = baseUrl + '/article/infinite-scroll'
 const commentFindByArticle = baseUrl + '/comment/find-by-article'
 const commentInsertUrl = baseUrl + '/comment/insert'
+const commentInfiniteUrl = baseUrl + "/comment/infinite-scroll"
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
@@ -57,6 +58,7 @@ const URLS = {
   commentFindByArticle,
   commentInsertUrl,
   commentFindByArticle,
+  commentInfiniteUrl,
   userFindByIdUrl
 }
 
