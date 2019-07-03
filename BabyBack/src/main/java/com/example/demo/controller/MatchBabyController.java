@@ -50,9 +50,10 @@ public class MatchBabyController {
     public ResponseBase findMatchBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<MatchBaby> result = matchBabyRepository.findAllByUser(user);
 
-        pageHelper.doPage(result, page);
+        int totalNum = result.size();
+        result = (List<MatchBaby>) pageHelper.doPage(result, page);
 
-        Page<MatchBaby> pageResult = new PageImpl(result, page, result.size());
+        Page<MatchBaby> pageResult = new PageImpl(result, page, totalNum);
         return new ResponseBase(200, "查询成功", pageResult);
     }
 
