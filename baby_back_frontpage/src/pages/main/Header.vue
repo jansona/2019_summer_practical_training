@@ -75,7 +75,9 @@ export default {
     },
     personalHome(){
       console.log("enter personal home");
-      this.$router.push('userDetail')
+      this.$router.push({path: 'userDetail', 
+      query: {id: this.$store.state.userID}
+      })
     },
     logout() {
       console.log("logout");

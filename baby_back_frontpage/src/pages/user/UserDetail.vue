@@ -83,8 +83,8 @@ export default {
   data () {
     return {
       tabPosition: 'left',
-      // id: this.$route.query.id,
-      id: 8,
+      id: this.$route.query.id,
+      // id: 8,
       // 申报信息分页相关
       tableData: [],
       picUrl: "",
