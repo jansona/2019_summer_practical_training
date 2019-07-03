@@ -4,25 +4,20 @@
 		<scroll-view class="scroll" scroll-y>
 			<view class="scroll-content">
 				<view class="introduce-section">
-					<text class="title">{{detailData.title}}</text>
+					<text class="title">{{article.title}}</text>
 					<view class="introduce">
-						<text>{{detailData.author}}</text>
-						<text>{{detailData.time}}</text>
+						<text>{{article.author}}</text>
+						<text>{{article.time}}</text>
 					</view>
 
 					<!-- <rich-text :nodes="detailData.flow"></rich-text> -->
-					<view class="content"><text space="emsp">{{detailData.content}}</text></view>
+					<view class="content"><text space="emsp">{{article.content}}</text></view>
 					
-					<!-- <view class="actions" v-show="loading === false">
-						<view class="action-item">
-							<text class="yticon icon-fenxiang2"></text>
-							<text>分享</text>
-						</view>
-						<view class="action-item">
-							<text class="yticon icon-shoucang active"></text>
-							<text>收藏</text>
-						</view>
-					</view> -->
+					<view class="text-gray text-lg text-center padding">
+						<text class="cuIcon-attentionfill margin-lr-xs"></text> {{article.viewNum}}
+						<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{article.likeNum}}
+						<text class="cuIcon-messagefill margin-lr-xs"></text> {{article.replyNum}}
+					</view>
 				</view>
 				<!-- <view class="container" v-show="loading === false">	 -->
 					<!-- 评论 -->
@@ -46,17 +41,17 @@
 				<!-- </view> -->
 				<!-- 加载图标 -->
 				<!-- <mixLoading class="mix-loading" v-if="loading"></mixLoading> -->
-				<view class="uni-comment" v-for="(item, index) in evaList" :key="index">
-					<view class="uni-comment-list" style="background-color: #FFFFFF;">
-						<view class="uni-comment-face"><image :src="item.src" mode="widthFix"></image></view>
+				<view class="uni-comment" style="margin-bottom: 100upx;">
+					<view class="uni-comment-list" v-for="(item, index) in commentList" :key="index" style="background-color: #FFFFFF;">
+						<view class="uni-comment-face" style="margin-left: 15upx;"><image :src="item.userimg" mode="widthFix"></image></view>
 						<view class="uni-comment-body">
-							<view class="uni-comment-top">
-								<text>{{item.nickname}}</text>
+							<view class="uni-comment-top" style="text-align: left">
+								<text>{{item.usernick}}</text>
 							</view>
 							<view class="uni-comment-date">
-								<text>{{item.time}}</text>
+								<text>{{item.date}}</text>
 							</view>
-							<view class="uni-comment-content">{{item.content}}</view>
+							<view class="uni-comment-content" style="text-align: left;">{{item.content}}</view>
 						</view>
 					</view>
 				</view>
@@ -94,9 +89,25 @@
 		data() {
 			return {
 				loading: true,
-				detailData: {title:'用心耕耘 深情护送宝贝回家 志愿者小梅寻亲成功案例的启示',content:'  朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。\n  他们有自己的名字，却并不知道自己真正姓甚名谁。和小梅一样，米楼妈妈也是一位热心的志愿者。她曾在去年12月份接到过一位寻亲人的登记信息，这是一位来自云南宣威龙潭乡大坡村的求助者，想请志愿者帮助寻找与自己母亲一同被拐卖的妹妹朱粉莲。当米楼妈妈转头联系求助人时，信息中唯一留下的手机号却总是无人接听，发出的短信也收不到回复，随后手机便停机了。接下来的几个月，米楼妈妈一直不断的联系这个号码，最终竟变成了一个空号。她一度想要放弃这个任务，然而作为志愿者，大家都清楚每一个求助背后必然都有寻亲人痛苦的经历，既然母亲和妹妹被一起拐卖，为什么寻亲人却只找妹妹？想到这些，米楼妈妈最终没有忍心放弃。在云南志愿者群里，米楼妈妈向大伙求助，希望有人能认识宣威龙潭乡大坡村的人，看看当地是否有这么一家人。很快，志愿者维C通过自己在当地一所学校工作的同学打听到了朱粉莲哥哥的电话。\n  此刻，没有语言可以描绘我们的心情，只是祝福和期待，祝福风雨不再，期待永世安康！',author:'hg爹',time:'2019-6-28 19:0:0'},
-				evaList: [{nickname:'小明',time:'2019-6-28 19:10:20',content:'人贩子千刀万剐！',src:'../../static/user/face.jpg'},{nickname:'小李',time:'2019-6-28 19:10:20',content:'心疼！',src:"../../static/user/face.jpg"},{nickname:'小花',time:'2019-6-28 19:10:20',content:'希望孩子们能早日找到！',src:"../../static/user/face.jpg"},{nickname:'小桃',time:'2019-6-28 19:10:20',content:'人贩子千刀万剐！',src:"../../static/user/face.jpg"}],
-				InputBottom:0
+				article: {
+					id:0,
+					title:'用心耕耘 深情护送宝贝回家 志愿者小梅寻亲成功案例的启示',
+					content:'  朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。\n  他们有自己的名字，却并不知道自己真正姓甚名谁。和小梅一样，米楼妈妈也是一位热心的志愿者。她曾在去年12月份接到过一位寻亲人的登记信息，这是一位来自云南宣威龙潭乡大坡村的求助者，想请志愿者帮助寻找与自己母亲一同被拐卖的妹妹朱粉莲。当米楼妈妈转头联系求助人时，信息中唯一留下的手机号却总是无人接听，发出的短信也收不到回复，随后手机便停机了。接下来的几个月，米楼妈妈一直不断的联系这个号码，最终竟变成了一个空号。她一度想要放弃这个任务，然而作为志愿者，大家都清楚每一个求助背后必然都有寻亲人痛苦的经历，既然母亲和妹妹被一起拐卖，为什么寻亲人却只找妹妹？想到这些，米楼妈妈最终没有忍心放弃。在云南志愿者群里，米楼妈妈向大伙求助，希望有人能认识宣威龙潭乡大坡村的人，看看当地是否有这么一家人。很快，志愿者维C通过自己在当地一所学校工作的同学打听到了朱粉莲哥哥的电话。\n  此刻，没有语言可以描绘我们的心情，只是祝福和期待，祝福风雨不再，期待永世安康！',
+					author:'hg爹',
+					time:'2019-6-28 19:0:0',
+					likeNum:19,
+					viewNum:100,
+					replyNum:4},
+				commentList: [{usernick:'小明',date:'2019-6-28 19:10:20',content:'人贩子千刀万剐！',userimg:'../../static/user/face.jpg'},{usernick:'小李',date:'2019-6-28 19:10:20',content:'心疼！',userimg:"../../static/user/face.jpg"},{usernick:'小花',date:'2019-6-28 19:10:20',content:'希望孩子们能早日找到！',userimg:"../../static/user/face.jpg"},{usernick:'小桃',date:'2019-6-28 19:10:20',content:'人贩子千刀万剐！人贩子千刀万剐！人贩子千刀万剐！人贩子千刀万剐！',userimg:"../../static/user/face.jpg"}],
+				InputBottom:0,
+				comment:{
+					id:0,
+					userimg:'',
+					usernick:'',
+					article:'',
+					content:'',
+					date:''
+				}
 			}
 		},
 		onLoad(options){
@@ -109,6 +120,9 @@
 			},
 			InputBlur(e) {
 				this.InputBottom = 0
+			},
+			getCommentList(){
+				
 			}
 		}
 	}

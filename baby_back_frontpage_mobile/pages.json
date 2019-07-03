@@ -28,10 +28,6 @@
 			"style": {}
 		},
 		{
-			"path": "pages/tabbar/tabbar-5/skin-change/skin-change",
-			"style": {}
-		},
-		{
 			"path": "pages/tabbar-2-detail/passage-detail",
 			"style": {}
 		},
@@ -61,10 +57,6 @@
 		},
 		{
 			"path": "pages/tabbar-4-detail/releaseurgence",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-5-detail/tabbar-5-regionselect/tabbar-5-regionselect",
 			"style": {}
 		}
     ],

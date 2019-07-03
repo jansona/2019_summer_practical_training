@@ -14,24 +14,22 @@
 		<view class="cu-bar search bg-white">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索帖子" confirm-type="search"></input>
+				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索宝贝" confirm-type="search"></input>
 			</view>
 			<view class="margin-tb-sm text-center">
-				<button class="cu-btn round" style="margin-right: 10upx;background-color: rgba(200,140,100,0.2);">搜索</button>
+				<button class="cu-btn round bg-blue" style="margin-right: 20upx;">搜索</button>
 			</view>
 		</view>
 		
 		<!--图片布局-->
-		<view class="grid col-3 grid-square">
+		<view class="grid col-2 grid-square">
 			<!-- <view class="cu-card" v-for="(item,index) in findList" :key="index">
 				<view class="bg-img" :style="[{ backgroundImage:'url(' + findList[index] + ')' }]" style="border-radius: 20upx;overflow: hidden;"></view>
 			</view> -->
-			<!-- <view class="bg-img" v-for="(item,index) in findList" :key="index" :style="[{ backgroundImage:'url(' + findList[index] + ')' }]" style="margin-top: 15upx;border-radius: 10upx;overflow: hidden;"></view> -->
+			<!-- <view class="bg-img" v-for="(item,index) in findList" :key="index" :style="[{ backgroundImage:'url(' + findList[index] + ')' }]" style="width: 330upx;height: 330upx;margin-top: 15upx;margin-left: 20upx;margin-right: 20upx;border-radius: 10upx;overflow: hidden;"></view> -->
 			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;" v-for="(item,index) in findList" :key="index">
 				<image :src="findList[index]" mode="aspectFill" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></image>
 					<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">2019-5-20</text></view>
-				
-				
 			</view>
 		</view>
 	
@@ -50,6 +48,7 @@
 
 <script>
 export default {
+	
 	data() {
 		return {
 			title: 'Hello',
@@ -58,7 +57,7 @@ export default {
 			enableScroll: true,
 			InputBottom:0,
 			lostList:['../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png','../../../static/img/release.png'],
-			findList:['../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png']
+			findList:[this.URLS.imgUrl+'/static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png','../../../static/img/pkq.png']
 		};
 	},
 	onLoad() {},

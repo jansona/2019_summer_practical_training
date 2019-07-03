@@ -3,12 +3,12 @@
     <div v-for="(article,index) in articles" :key="index">
       <el-row>
         <el-col :span="2">
-          <img :src="require('@/assets/house.jpg')" class="round_icon" />
+          <el-avatar :src="require('@/assets/house.jpg')" />
         </el-col>
-        <el-col :span="18" :offset="1">
+        <el-col :span="18">
           <p style="margin-bottom: 5px">
             <a class="a-style">
-              <span @click="gotoArticle">{{article.title}}</span>
+              <span @click="gotoArticle(article.id)">{{article.title}}</span>
             </a>
           </p>
           <p class="name">
@@ -40,8 +40,8 @@ export default {
     return {};
   },
   methods: {
-    gotoArticle(e) {
-      console.log(e);
+    gotoArticle(id) {
+      this.$router.push({name:"showArticle",query:{id:id}});
     },
     gotoAuthorInfo(e){
       
@@ -97,6 +97,8 @@ p {
   text-align: left;
   margin-block-start: 0em;
   margin-block-end: 0em;
+  margin-bottom: 5px;
+  margin-left:10px
 }
 .el-divider--horizontal {
   margin-top: 15px;

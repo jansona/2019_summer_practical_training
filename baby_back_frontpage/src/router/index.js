@@ -51,6 +51,12 @@ export default new Router({
           component: () => import('@/pages/bbs/InsertArticle')
         },
         {
+          path: 'showArticle',
+          name: 'showArticle',
+          component: () => import('@/pages/bbs/ShowArticle')
+        }
+        ,
+        {
           path: 'userDetail',
           name: 'UserDetail',
           component: () => import('@/pages/user/UserDetail')
