@@ -28,7 +28,7 @@
 			</view> -->
 			<!-- <view class="bg-img" v-for="(item,index) in findList" :key="index" :style="[{ backgroundImage:'url(' + findList[index] + ')' }]" style="width: 330upx;height: 330upx;margin-top: 15upx;margin-left: 20upx;margin-right: 20upx;border-radius: 10upx;overflow: hidden;"></view> -->
 			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;" v-for="(item,index) in findList" :key="index">
-				<image :src="findList[index]" mode="aspectFill" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></image>
+				<img :src="findList[index]" mode="aspectFill" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
 					<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">2019-5-20</text></view>
 			</view>
 		</view>

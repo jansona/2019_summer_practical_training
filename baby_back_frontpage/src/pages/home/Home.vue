@@ -15,7 +15,10 @@
           <div class="image-container image1" style></div>
           <span class="text1">登记信息</span>
           <span class="text2">adfdfgsdfgjkdshgsdjhfjasgdhfahjsdgfjhaghdfasgdfgasdgfjagsdjh</span>
-           <el-button plain class="btn">&nbsp了解更多<i class="el-icon-right"></i>&nbsp&nbsp</el-button>
+          <el-button plain class="btn" @click="gotoFindChild">
+            &nbsp了解更多
+            <i class="el-icon-right"></i>&nbsp&nbsp
+          </el-button>
         </div>
       </el-col>
       <el-col :span="8">
@@ -23,7 +26,10 @@
           <div class="image-container image2" style></div>
           <span class="text1">人脸识别</span>
           <span class="text2">adfdfgsdfgjkdshgsdjhfjasgdhfahjsdgfjhaghdfasgdfgasdgfjagsdjh</span>
-           <el-button plain class="btn">&nbsp了解更多<i class="el-icon-right"></i>&nbsp&nbsp</el-button>
+          <el-button plain class="btn" @click="gotoFastMatch">
+            &nbsp了解更多
+            <i class="el-icon-right"></i>&nbsp&nbsp
+          </el-button>
         </div>
       </el-col>
       <el-col :span="8">
@@ -31,11 +37,31 @@
           <div class="image-container image3" style></div>
           <span class="text1">大数据匹配</span>
           <span class="text2">adfdfgsdfgjkdshgsdjhfjasgdhfahjsdgfjhaghdfasgdfgasdgfjagsdjh</span>
-           <el-button plain class="btn">&nbsp了解更多<i class="el-icon-right"></i>&nbsp&nbsp</el-button>
+          <el-button plain class="btn">
+            &nbsp了解更多
+            <i class="el-icon-right"></i>&nbsp&nbsp
+          </el-button>
         </div>
       </el-col>
     </el-row>
     <!-- </div> -->
+    <el-row class="bottom-text">
+      <el-col :span="8">
+        <span class="bottom-text1">{{data1}}&nbsp+</span>
+        <br />
+        <span class="bottom-text2">走失登记</span>
+      </el-col>
+      <el-col :span="8">
+        <span class="bottom-text1">{{data2}}&nbsp+</span>
+        <br />
+        <span class="bottom-text2">寻家登记</span>
+      </el-col>
+      <el-col :span="8">
+        <span class="bottom-text1">{{data3}}&nbsp+</span>
+        <br />
+        <span class="bottom-text2">成功匹配</span>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -44,7 +70,9 @@ export default {
   name: "ParentFindChildren",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      data1: 123,
+      data2: 456,
+      data3: 78
     };
   },
   methods: {
@@ -57,6 +85,15 @@ export default {
       console.log(ss == "false");
 
       this.$router.push({ name: "FaceDetail", query: { type: 1, id: 1 } });
+    },
+    gotoFindChild(){
+      this.$router.push('FindRegist');
+    },
+    gotoFastMatch(){
+      this.$router.push('FastMatch');
+    },
+    gotoMore(){
+
     }
   }
 };
@@ -86,7 +123,6 @@ export default {
   position: absolute;
   left: 15%;
   top: 17%;
-  
 }
 
 .title3 {
@@ -96,13 +132,13 @@ export default {
   left: 14%;
   top: 25%;
   width: 20%;
-    word-wrap:break-word ;
+  word-wrap: break-word;
   text-align: left;
 }
 
 .box-container {
   width: 72%;
-  left: 14%;
+  left: 15%;
   position: absolute;
   top: 53%;
 }
@@ -165,7 +201,7 @@ export default {
 .box:hover .image2 {
   background-image: url(../../assets/home/icon_2_selected.png);
   background-color: transparent;
-} 
+}
 
 .image3 {
   background-image: url(../../assets/home/icon_3.png);
@@ -183,7 +219,7 @@ export default {
   font-size: 1.5em;
   top: 30%;
   left: 10%;
-  color: #4B4B4B
+  color: #4b4b4b;
 }
 .text2 {
   position: absolute;
@@ -191,14 +227,32 @@ export default {
   top: 45%;
   left: 10%;
   width: 80%;
-  word-wrap:break-word ;
+  word-wrap: break-word;
   text-align: left;
-  color: #AEAEAE
+  color: #aeaeae;
 }
 
 .btn {
   position: absolute;
   left: 10%;
   top: 80%;
+}
+
+.bottom-text {
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  position: absolute;
+  top: 82%;
+}
+
+.bottom-text1 {
+  color: rgba(43, 30, 205, 1);
+  font-size: 3em;
+}
+
+.bottom-text2 {
+  color: rgba(43, 30, 205, 1);
+  font-size: 1.5em;
 }
 </style>
