@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { Notification } from 'element-ui'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
       name: 'Main',
       component: () => import('@/pages/main/Main'),
+      redirect: 'home',
       children: [
         {
           path: 'home',
@@ -65,3 +67,27 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/loginOrRegist' || to.path === '/home') {
+    next();
+  } else {
+    let token = localStorage.getItem('token');
+    console.log(token)
+    if (token === null || token === '') {
+
+      setTimeout(() => {
+        Notification.info({
+          title: "请登录后再操作",
+          offset: 50,
+          duration: 1500,
+        })
+        next('/loginOrRegist');
+      }, 200);
+    } else {
+      next();
+    }
+  }
+});
+
+export default router

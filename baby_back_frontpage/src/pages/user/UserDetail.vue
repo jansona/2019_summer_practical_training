@@ -1,4 +1,5 @@
 <template>
+<div>
 <el-card>
   <el-tabs :tab-position="tabPosition" @tab-click="handleTabClick">
     <el-tab-pane label="基本信息">
@@ -56,6 +57,7 @@
     </el-tab-pane>
   </el-tabs>
 </el-card>
+</div>
 </template>
 
 <script>
