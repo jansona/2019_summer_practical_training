@@ -76,9 +76,10 @@ public class ArticleController {
     public ResponseBase findArticleByUser(Pageable page, @RequestParam(value = "user") User user) {
         List<Article> result = articleRepository.findAllByUser(user);
 
+        int totalNum = result.size();
         result = (List<Article>) pageHelper.doPage(result, page);
 
-        Page<Article> pageResult = new PageImpl(result, page, result.size());
+        Page<Article> pageResult = new PageImpl(result, page, totalNum);
         return new ResponseBase(200, "查询成功", pageResult);
     }
 
@@ -101,9 +102,10 @@ public class ArticleController {
             }
         }
 
+        int totalNum = articleList.size();
         articleList = (List<Article>) pageHelper.doPage(articleList, pageable);
 
-        Page<Article> pageResult = new PageImpl(articleList, pageable, articleList.size());
+        Page<Article> pageResult = new PageImpl(articleList, pageable, totalNum);
         return new ResponseBase(200, "查询成功", pageResult);
     }
 
