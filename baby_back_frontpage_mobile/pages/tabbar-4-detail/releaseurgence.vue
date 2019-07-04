@@ -108,13 +108,13 @@
 		},
 		methods: {
 			radioChange: function(e) {
-				this.findChildForm.sex = e.detail.value;
+				this.releaseUrgenceForm.sex = e.detail.value;
 			},
 			BirthDateChange(e) {
-				this.findChildForm.birthday = e.detail.value
+				this.releaseUrgenceForm.birthday = e.detail.value
 			},
 			LostDateChange(e) {
-				this.findChildForm.date = e.detail.value
+				this.releaseUrgenceForm.date = e.detail.value
 			},
 			ChooseImage() {
 				uni.chooseImage({
@@ -199,10 +199,10 @@
 					});
 				}
 	
-				if (this.findChildForm.imgList != null && this.findChildForm.imgList.length > 0) {
+				if (this.releaseUrgenceForm.imgList != null && this.releaseUrgenceForm.imgList.length > 0) {
 					uni.uploadFile({
 						url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS", //仅为示例，非真实的接口地址
-						filePath: this.findChildForm.imgList[0],
+						filePath: this.releaseUrgenceForm.imgList[0],
 						name: 'file',
 						formData: {
 							'id': '6'

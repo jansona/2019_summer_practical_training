@@ -28,7 +28,7 @@
 			<view class="cu-form-group">
 				<view class="uni-title">身高</view>
 				<view>
-					<slider value="100" style="width: 500upx;" @change="sliderChange" min="50" max="200" show-value />
+					<slider name="height" value="100" style="width: 500upx;" @change="sliderChange" min="50" max="200" show-value />
 				</view>
 			</view>
 			<view class="cu-form-group" style="margin-top: 30upx;">
@@ -109,18 +109,18 @@
 					图片上传
 				</view>
 				<view class="action">
-					{{findParentForm.imgList.length}}/1
+					{{imgList.length}}/1
 				</view>
 			</view>
 			<view class="cu-form-group">
 				<view class="grid col-4 grid-square flex-sub">
-					<view class="bg-img" v-for="(item,index) in findParentForm.imgList" :key="index" @tap="ViewImage" :data-url="findParentForm.imgList[index]">
-						<image :src="findParentForm.imgList[index]" mode="aspectFill"></image>
+					<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
+						<image :src="imgList[index]" mode="aspectFill"></image>
 						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 							<text class='cuIcon-close'></text>
 						</view>
 					</view>
-					<view class="solids" @tap="ChooseImage" v-if="findParentForm.imgList.length<1">
+					<view class="solids" @tap="ChooseImage" v-if="imgList.length<1">
 						<text class='cuIcon-cameraadd'></text>
 					</view>
 				</view>
@@ -130,14 +130,35 @@
 				<button class="cu-btn bg-blue margin-tb-sm lg" form-type="reset" style="width:300upx;margin: 0 auto;">清空数据</button>
 			</view>
 		</form>
+		<!--模态框提示-->
+		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">发布提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					{{modalContent}}
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	var  graceChecker = require("../../../common/graceChecker.js");
 	export default {
+		onReady: function() {
+			//let userId=this.$store.state.userId
+			let userId = 2
+			this.getUser(userId)
+		},
 		data() {
 			return {
+				matchbabyid:-1,
+				imgList:[],
 				findParentForm: {
 					id: '',
 					name: '',
@@ -145,7 +166,7 @@
 					birthday: '2018-12-25',
 					nativePlace: '', //籍贯
 					height: '',
-					date: '2019-6-25', //失踪时间
+					date: '2019-06-25', //失踪时间
 					place: '',
 					babyDescription: '', //特征描述
 					missDescription: '', //失踪经过
@@ -159,7 +180,9 @@
 					contactEmail: '',
 					contactPhone: '',
 					otherContactMethod: '',
-					imgList: []
+					user: {
+						id: 2,
+					}
 				},
 				items: [{
 					name: 'man',
@@ -167,13 +190,19 @@
 				}, {
 					name: 'woman',
 					value: '女'
-				}]
+				}],
+				modalName: null,
+				modalContent:null,
+				user:{}
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
 			radioChange(e) {
 				this.findParentForm.sex = e.detail.value
 			},
@@ -190,17 +219,17 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
-						if (this.findParentForm.imgList.length != 0) {
-							this.findParentForm.imgList = this.findParentForm.imgList.concat(res.tempFilePaths)
+						if (this.imgList.length != 0) {
+							this.imgList = this.imgList.concat(res.tempFilePaths)
 						} else {
-							this.findParentForm.imgList = res.tempFilePaths
+							this.imgList = res.tempFilePaths
 						}
 					}
 				});
 			},
 			ViewImage(e) {
 				uni.previewImage({
-					urls: this.findParentForm.imgList,
+					urls: this.imgList,
 					current: e.currentTarget.dataset.url
 				});
 			},
@@ -212,7 +241,7 @@
 					confirmText: '再见',
 					success: res => {
 						if (res.confirm) {
-							this.findParentForm.imgList.splice(e.currentTarget.dataset.index, 1)
+							this.imgList.splice(e.currentTarget.dataset.index, 1)
 						}
 					}
 				})
@@ -226,6 +255,7 @@
 			formSubmit: function (e) {
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
+				let _this=this;
 				var rule = [
 					{name:"name", checkType : "string", checkRule:"2,15",  errorMsg:"姓名应为2-15个字符"},
 					{name:"sex", checkType : "in", checkRule:"男,女",  errorMsg:"请选择性别"},
@@ -239,10 +269,47 @@
 				var formData = e.detail.value;
 				var checkRes = graceChecker.check(formData, rule);
 				if(checkRes){
-					uni.showToast({title:"验证通过!", icon:"none"});
+					//uni.showToast({title:"验证通过!", icon:"none"});
 				}else{
-					uni.showToast({ title: graceChecker.error, icon: "none" });
+					//uni.showToast({ title: graceChecker.error, icon: "none" });
+					_this.modalName='Modal';
+					_this.modalContent=graceChecker.error;
+					return;
 				}
+				//上传表单信息
+				this.$api.put(this.URLS.matchBabyInsertUrl,this.findParentForm).then(data => {
+					//console.log(data)
+					_this.matchbabyid=data.data.id;
+					console.log(_this.matchbabyid);
+					//上传图片
+					if (_this.imgList != null && _this.imgList.length > 0) {
+						console.log('开始上传图片...');
+						uni.uploadFile({
+							url: this.URLS.uploadPictureUrl + "?action=AS_MATCH_PICS", 
+							filePath: _this.imgList[0],
+							name: 'file',
+							formData: {
+								'id': _this.matchbabyid
+							},
+							success: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.modalName='Modal';
+								_this.modalContent='发布成功！';
+							},
+							fail: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.modalName='Modal';
+								_this.modalContent='图片上传失败！';
+								return;
+							}
+						});
+					}
+				}).catch(error => {
+					console.log(error)
+					_this.modalName='Modal';
+					_this.modalContent='发布失败！';
+				})
+				
 			},
 			formReset: function (e) {
 				console.log("清空数据")
@@ -253,9 +320,5 @@
 </script>
 
 <style>
-	.content {
-		text-align: center;
-		height: 400upx;
-		margin-top: 200upx;
-	}
+
 </style>
