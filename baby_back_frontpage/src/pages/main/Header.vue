@@ -1,5 +1,5 @@
 <template>
-  <div class="head-container">
+  <div class="head-container" :style="style">
     <el-col :span="3">
       <img
         style="width: 199px;height:64px;float:left"
@@ -58,11 +58,18 @@
 export default {
   name: "Header",
   inject: ['reload'],
+  created () {
+            this.$nextTick(() => {
+                this._initBody();
+            });
+        },
   data() {
     return {
       activeIndex: "1",
       hasMessage: true,
-      hasLogin: this.$store.state.hasLogin
+      hasLogin: this.$store.state.hasLogin,
+       style: {},
+      opacity: 0
     };
   },
   methods: {
@@ -90,7 +97,14 @@ export default {
     },
     gotoLoginOrRegist(){
       this.$router.push('loginOrRegist')
-    }
+    },
+    _initBody () {
+               
+                window.onscroll = () => {
+                    this.opacity = window.pageYOffset / 250;
+                    this.style = {background: `rgba(255,255,255,${this.opacity})`,'box-shadow': `0px 0px 5px 5px rgba(0,0,0,${this.opacity*0.05})`};
+                };
+            }
   },
   computed: {
     activeMenuIndex() {
