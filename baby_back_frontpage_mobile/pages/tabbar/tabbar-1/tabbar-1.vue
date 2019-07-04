@@ -93,9 +93,6 @@
 				]
 			};
 		},
-		onLoad(){
-			alert("hah");
-		},
 		methods: {
 			onCancel(e) {
 				console.log(e);
