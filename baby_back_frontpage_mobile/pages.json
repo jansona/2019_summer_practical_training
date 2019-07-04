@@ -8,7 +8,9 @@
 		{
 			"path": "pages/tabbar/tabbar-1/tabbar-1",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "uni-app",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 0
 			}
 		},
 		{
@@ -62,7 +64,7 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "hahahah",
+		"navigationBarTitleText": "HEHE",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}
