@@ -266,6 +266,11 @@
 					//{name:"img", checkType : "notnull", checkRule:"",  errorMsg:"请上传照片"}
 				];
 				//进行表单检查
+				if(this.imgList.length<=0){
+					this.modalName='Modal';
+					this.modalContent='请上传照片';
+					return;
+				}
 				var formData = e.detail.value;
 				var checkRes = graceChecker.check(formData, rule);
 				if(checkRes){
