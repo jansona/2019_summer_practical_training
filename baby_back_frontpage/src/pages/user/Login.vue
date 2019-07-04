@@ -121,6 +121,7 @@ export default {
                   id: data.data.data.id,
                   flag: this.rememberLogin
                 });
+                this.$store.commit('setToken','login');
                 this.$router.push("home");
                 this.reload();
               } else {

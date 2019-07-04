@@ -9,6 +9,10 @@ spring:
       ddl-auto: update
     #  在控制台显示数据表
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
 
 #redis
 redis:

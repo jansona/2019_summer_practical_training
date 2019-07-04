@@ -49,6 +49,15 @@
 				showNewPop: false,
 			}
 		},
+		onPullDownRefresh() {
+			
+		},
+		onReachBottom() {
+			
+		},
+		onLoad(){
+			
+		},
 		methods: {
 			NavChange: function(e) {
 				this.curPage = e.currentTarget.dataset.cur
@@ -67,7 +76,8 @@
                 console.log(e)
                 this.showNewPop = false;
             }
-		}
+		},
+		
 	}
 </script>
 
