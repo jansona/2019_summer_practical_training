@@ -8,7 +8,7 @@
 		{
 			"path": "pages/tabbar/tabbar-1/tabbar-1",
 			"style": {
-				"navigationBarTitleText": "uni-app",
+				"navigationBarTitleText": "asdf",
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 0
 			}

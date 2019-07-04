@@ -93,7 +93,7 @@
 				]
 			};
 		},
-		onLoad:function(){
+		onLoad(){
 			alert("hah");
 		},
 		methods: {
@@ -143,7 +143,6 @@
 					}).catch(error => {
 						console.log(error)
 					})
-
 			},
 			searchClick(e) {
 				this.refreshData()
@@ -151,12 +150,6 @@
 			yieldPicUrl(id) {
 				return this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg"
 			}
-		},
-		onPullDownRefresh() {
-			console.log("Fuck Yourself");
-		},
-		onReachBottom() {
-			console.log("Fuck Yourself");
 		}
 	};
 </script>
