@@ -156,7 +156,10 @@ export default {
 	},
 	mounted: {
 		
-	}
+	},
+	onReachBottom() {
+	    console.log('reach bottom')
+	},
 };
 </script>
 	
