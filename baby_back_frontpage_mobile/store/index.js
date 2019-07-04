@@ -7,7 +7,8 @@ const store = new Vuex.Store({
 	state: {
 		hasLogin: false,
 		loginProvider: "",
-		openid: null
+		openid: null,
+		userId: uni.getStorageSync('userId') || -1,
 	},
 	mutations: {
 		login(state, provider) {
@@ -20,6 +21,12 @@ const store = new Vuex.Store({
 		},
 		setOpenid(state, openid) {
 			state.openid = openid
+		},
+		setUserId(state,data){  // 传入类型为{id:xxx,flag:xxxx}
+			state.userId = data.id
+			if(data.flag){
+				uni.setStorageSync('userId',data.id)
+			}
 		}
 	},
 	actions: {
