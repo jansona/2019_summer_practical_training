@@ -1,0 +1,54 @@
+server:
+  port: 4100
+
+spring:
+  application:
+    name: springcloud-admin-biz
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/babyback?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+
+
+
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: secret
+      access-token-uri: http://springcloud-OAuth:4000/oauth/token
+      user-authorization-uri: http://springcloud-OAuth:4000/oauth/authorize
+    resource:
+      token-info-uri: http://springcloud-OAuth:4000/oauth/check_token
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://springcloud-eureka:8761/eureka/
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.entity.api.admin.api.entity
+
+#mybaatis分页插件pagehelper设置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+
+# 打印sql
+logging:
+  level:
+    com.babyback.api.admin.biz.mapper: DEBUG
