@@ -29,6 +29,8 @@ public class LostBaby {
     private String otherExplain;//其他说明
     private String relationship;//和报备人关系
 
+    private String picUrl;
+
     // 联系人信息
     private String contactName;
     private String contactRel;
@@ -157,6 +159,14 @@ public class LostBaby {
 
     public void setRelationship(String relationship) {
         this.relationship = relationship;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public User getUser() {

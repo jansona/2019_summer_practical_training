@@ -1,7 +1,7 @@
 <template>
 	<view>
         <view class="content-container">
-		<tabbar_1 v-if="curPage == '1'"></tabbar_1>
+		<tabbar_1 v-if="curPage == '1'" ref="tab1"></tabbar_1>
 		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
 		<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
 		<tabbar_2 v-if="curPage == '4'"></tabbar_2>
@@ -9,13 +9,13 @@
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="1">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/find' + [curPage=='1'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/find' + [curPage=='1'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="2">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/urgence' + [curPage == '2'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/urgence' + [curPage == '2'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 			<view class="action text-gray add-action" @click="onAddClick" data-cur="plugin">
@@ -28,13 +28,13 @@
 				</view>
 			</view> -->
 			<view class="action" @click="NavChange" data-cur="4">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/bbc' + [curPage == '4'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/bbc' + [curPage == '4'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="5">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/my' + [curPage == '5'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/my' + [curPage == '5'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 		</view>
@@ -43,6 +43,9 @@
 
 <script>
 	export default {
+		onReady:function () {
+			this.$refs.tab1.refreshData();
+		},
 		data() {
 			return {
 				curPage: "1",
@@ -50,10 +53,16 @@
 			}
 		},
 		onPullDownRefresh() {
-			
+			console.log('funcker')
+			this.$refs.tab1.resetData()
+			setTimeout(() => {
+            uni.stopPullDownRefresh();
+        }, 2000);
+
 		},
 		onReachBottom() {
-			
+			console.log('me')
+			this.$refs.tab1.refreshData()
 		},
 		onLoad(){
 			

@@ -96,6 +96,7 @@
             <!-- <i class="el-icon-edit el-icon--right"></i> -->
           </el-button>
         </el-col>
+        <br /><br/>
       </el-card>
     </el-col>
     <el-col :span="8" :offset="1">

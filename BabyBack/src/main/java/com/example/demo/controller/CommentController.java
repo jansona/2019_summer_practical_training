@@ -5,6 +5,7 @@ import com.example.demo.entity.Comment;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.CommentRepository;
+import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,8 @@ public class CommentController {
     ApiService apiService;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    UserRepository userRepository;
 
     PageHelper pageHelper = new PageHelper();
 
@@ -72,8 +75,9 @@ public class CommentController {
 
     @ApiOperation(value = "查询特定用户的特定索引的评论(为无限滚动提供数据)")
     @PostMapping("/infinite-scroll")
-    public ResponseBase getArticleInfinite(@RequestParam(value = "user") User user, @RequestParam(value = "index") Integer index){
+    public ResponseBase getArticleInfinite(@RequestParam(value = "user") String user_id, @RequestParam(value = "index") Integer index){
         ResponseBase responseBase;
+        User user = userRepository.findById(Integer.valueOf(user_id)).get();
         List<Comment> commentList = commentRepository.findAllByUser(user);
         if(index >= commentList.size()){
             return new ResponseBase(200, "无更多评论", null);

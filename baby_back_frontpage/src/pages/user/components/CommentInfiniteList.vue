@@ -51,7 +51,7 @@ export default {
       request(URLS.commentInfiniteUrl, {user: this.user, index: this.index})
       .then(
         data => {
-          console.log(data);
+          // console.log(data);
           if(data.rtnCode === 200){
             if(data.data !== null){
               this.comments.push(data.data);

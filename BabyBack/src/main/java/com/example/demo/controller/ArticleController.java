@@ -111,8 +111,9 @@ public class ArticleController {
 
     @ApiOperation(value = "查询特定用户的特定索引的文章(为无限滚动提供数据)")
     @PostMapping("/infinite-scroll")
-    public ResponseBase getArticleInfinite(@RequestParam(value = "user") User user, @RequestParam(value = "index") Integer index){
+    public ResponseBase getArticleInfinite(@RequestParam(value = "user") String user_id, @RequestParam(value = "index") Integer index){
         ResponseBase responseBase;
+        User user = userRepository.findById(Integer.valueOf(user_id)).get();
         List<Article> articleList = articleRepository.findAllByUser(user);
         if(index >= articleList.size()){
             return new ResponseBase(200, "无更多文章", null);

@@ -40,6 +40,10 @@
 				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
 			</view>
 		</view>
+		<view class="uni-center" v-if="isBottom">
+			<text style="color:#AAAAAA;">已经到底了</text>
+		</view>
+		
 		<view class="cu-tabbar-height"></view>
 	</view>
 </template>
@@ -52,8 +56,14 @@
 			mpvuePicker,
 			uniIcon
 		},
+		onReady:function () {
+			this.refreshData();
+		},
 		data() {
 			return {
+				isBottom : false,
+				pageNo :0,
+				totalPageNum:2,
 				findShow: false,
 				lostShow: true,
 				title: 'Hello',
@@ -61,14 +71,14 @@
 				scrollLeft: 0, //顶部选项卡左滑距离
 				enableScroll: true,
 				InputBottom: 0,
-				lostList: ['../../../static/img/release.png', '../../../static/img/release.png', '../../../static/img/release.png',
-					'../../../static/img/release.png'
-				],
+				lostList: [],
 				lostPicUrls: [],
-				findList: [this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl +
-					'/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS
-					.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png'
-				],
+				// findList: [this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl +
+				// 	'/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS
+				// 	.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png'
+				// ],
+				findList : [],
+				findPicUrls:[],
 				themeColor: '#007AFF',
 				mode: '',
 				deepLength: 1,
@@ -111,6 +121,11 @@
 			},
 			tabSelect(e) {
 				this.tabCurrentIndex = e.currentTarget.dataset.id;
+				this.pageNo=0
+				this.lostPicUrls=[]
+				this.lostList=[]
+				this.findPicUrls=[]
+				this.findList=[]
 				if (this.tabCurrentIndex == 0) {
 					this.lostShow = true;
 					this.findShow = false
@@ -118,6 +133,7 @@
 					this.findShow = true;
 					this.lostShow = false
 				}
+				this.refreshData();
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			InputFocus(e) {
@@ -126,26 +142,74 @@
 			InputBlur(e) {
 				this.InputBottom = 0
 			},
+			resetData(){
+				this.pageNo=0
+				this.lostPicUrls=[]
+				this.lostList=[]
+				this.findPicUrls=[]
+				this.findList=[]
+				this.refreshData();
+			},
+			/**
+			 * @param {Object} pageNUm
+			 * size需要更改成为正确的大小
+			 */
 			refreshData() {
-				this.$api.post(this.URLS.lostBabyFindUrl, {
-						page: 0
-					})
-					.then(data => {
-						this.lostList = data.data.data.content;
-						for (let i = 0; i < this.lostList.length; i++) {
-							let id = this.lostList[i].id;
-							console.log(this.lostList[i]);
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
+				
+				if(this.totalPageNum<=this.pageNo){
+					this.isBottom=true
+					console.log('已经到底了')
+					let _this = this
+					setTimeout(function(){ _this.isBottom=false; }, 1000);
+					return;
+					
+				}
+				if(this.lostShow){
+					let url =this.URLS.lostBabyFindUrl +'?size=7&page='+this.pageNo
+					this.pageNo +=1
+					this.$api.post(url)
+						.then(data => {
+							this.totalPageNum = data.data.data.totalPages
+							
+							let appendList = data.data.data.content
+							for (let i = 0; i < appendList.length; i++) {
+								let id = appendList[i].id;
+								this.lostPicUrls.push(this.yieldPicUrl(id));
+							}
+							this.lostList = this.lostList.concat(appendList);
+						}).catch(error => {
+							console.log(error)
+						})
+				}else{
+					let url =this.URLS.matchBabyFindUrl +'?size=7&page='+this.pageNo
+					this.pageNo +=1
+					this.$api.post(url)
+						.then(data => {
+							this.totalPageNum = data.data.data.totalPages
+							
+							let appendList = data.data.data.content
+							for (let i = 0; i < appendList.length; i++) {
+								let id = appendList[i].id;
+								this.findPicUrls.push(this.yieldPicUrl(id));
+							}
+							this.findList = this.findList.concat(appendList);
+						}).catch(error => {
+							console.log(error)
+						})
+				}
+				
+				
 			},
 			searchClick(e) {
 				this.refreshData()
 			},
 			yieldPicUrl(id) {
-				return this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg"
+				if(this.lostShow){
+					return this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg"
+				}else{
+					return this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg"
+				}
+				
 			}
 		}
 	};
