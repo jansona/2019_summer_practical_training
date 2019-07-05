@@ -17,7 +17,7 @@
 			</view>
 		</view>
 		<!-- 选项卡 -->
-		<scroll-view scroll-x class="bg-white nav text-center" :scroll-left="scrollLeft">
+		<scroll-view id="nav-bar" scroll-x="true" class="bg-white nav text-center" scroll-left="0" @scroll="scroll">
 			<view class="cu-item" :class="0==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="0">
 				走失
 			</view>
@@ -56,7 +56,7 @@
 			mpvuePicker,
 			uniIcon
 		},
-		onReady:function () {
+		mounted:function () {
 			this.refreshData();
 		},
 		data() {
@@ -198,7 +198,7 @@
 							console.log(error)
 						})
 				}
-				
+
 			},
 			searchClick(e) {
 				let _this=this;
@@ -212,7 +212,7 @@
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
 						}
-								
+
 					}).catch(error => {
 						console.log(error)
 					});
@@ -229,7 +229,7 @@
 						console.log(error)
 					})
 				}else if(this.pickerLabel=='姓名'){
-					
+
 					let url=this.URLS.lostBabyFindUrl+'?name='+_this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
@@ -239,7 +239,7 @@
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
 						}
-								
+
 					}).catch(error => {
 						console.log(error)
 					});
@@ -265,7 +265,7 @@
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
 						}
-								
+
 					}).catch(error => {
 						console.log(error)
 					});
@@ -281,7 +281,7 @@
 					}).catch(error => {
 						console.log(error)
 					})
-					
+
 				}else if(this.pickerLabel=='失踪地点'){
 					let url=this.URLS.lostBabyFindUrl+'?place='+_this.searchInput;
 					this.$api.post(url).then(data => {
@@ -292,7 +292,7 @@
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
 						}
-			
+
 					}).catch(error => {
 						console.log(error)
 					});

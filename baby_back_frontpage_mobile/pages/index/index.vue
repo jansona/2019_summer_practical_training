@@ -58,12 +58,12 @@
 			}else if(this.curPage==4){
 				this.$refs.tab4.resetData();
 			}
-			
-			
-			
+
+
+
 			setTimeout(() => {
             uni.stopPullDownRefresh();
-        }, 2000);
+        }, 1000);
 
 		},
 		onReachBottom() {
