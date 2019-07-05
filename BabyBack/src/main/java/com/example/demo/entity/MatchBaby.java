@@ -23,6 +23,8 @@ public class MatchBaby {
     private String otherDescription;//其他信息描述
     private String otherExplain;//其他说明
 
+    private String picUrl;
+
     // 联系人信息
     private String contactName;
     private String contactRel;
@@ -149,6 +151,14 @@ public class MatchBaby {
 
     public void setOtherExplain(String otherExplain) {
         this.otherExplain = otherExplain;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public String getContactName() {

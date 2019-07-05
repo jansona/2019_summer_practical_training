@@ -32,8 +32,8 @@ public class MatchBabyController {
 
     @ApiOperation(value = "新增孤儿")
     @PutMapping("/insert")     // TODO 填写节点
-    public MatchBaby insertMatchBaby(@RequestBody MatchBaby matchBaby) {
-        return matchBabyRepository.save(matchBaby);
+    public ResponseBase insertMatchBaby(@RequestBody MatchBaby matchBaby) {
+        return new ResponseBase(2000, "成功插入", matchBabyRepository.save(matchBaby));
     }
 
     @ApiOperation(value = "查找孤儿")

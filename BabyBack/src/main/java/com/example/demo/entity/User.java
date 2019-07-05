@@ -33,6 +33,8 @@ public class User {
     @JsonIgnore
     private Set<Comment> comments;//发布的可能匹配的儿童信息
 
+    private String profileUrl;
+
     public User() {
     }
 
@@ -114,5 +116,13 @@ public class User {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 }
