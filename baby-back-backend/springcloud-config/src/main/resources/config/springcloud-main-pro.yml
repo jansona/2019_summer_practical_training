@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:mysql://hahahoho.mysql.database.chinacloudapi.cn:3306/baby_back?useSSL=true&requireSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: ENC(f5BNh1AUMlCACAZVZUmHT4WnyuFALwx8XzZqR5MG03g=)
+    password: ENC(vEJKeKNvw2YZvXSmCo+JR6HNJ7kLg6Mc)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    #  在控制台显示数据表
+    show-sql: true
+
+  redis:
+    host: hahahoho.redis.cache.chinacloudapi.cn
+    port: 6379
+    password: f9cgqnL0L0UwndMo+zLhBsT2Dx6s90gkQ2IyIntOExY=
+
+jasypt:
+  encryptor:
+    password: hahahohohehe

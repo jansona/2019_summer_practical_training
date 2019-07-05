@@ -6,14 +6,23 @@ spring:
     name: springcloud-config
   main:
     allow-bean-definition-overriding: true
-
-  profiles:
-    active: native
+#
+#  profiles:
+#    active: dev
   cloud:
     config:
+      discovery:
+        enabled: true
       server:
         native:
           search-locations: classpath:/config/
+        encrypt:
+          enabled: false
+        git:
+          uri: https://github.com/2939858564/babyback_config.git
+          search-paths: /
+          username: 2939858564
+          password: zxc123asd456
 
 eureka:
   instance:

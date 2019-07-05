@@ -7,20 +7,18 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    jdbc-url: jdbc:mysql://127.0.0.1:3306/babyback?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
-
-
-#  profiles:
-#    active: dev
-#  cloud:
-#    config:
-#      name: ${spring.application.name}
-#      profile: ${spring.profiles.active}
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    jdbc-url: jdbc:mysql://127.0.0.1:3306/babyback?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+  profiles:
+    active: pro
+  cloud:
+    config:
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
 
 # feign 配置
 feign:

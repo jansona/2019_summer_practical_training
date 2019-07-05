@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS `sct`;
-
-CREATE DATABASE  `sct` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -110,27 +107,5 @@ CREATE TABLE `oauth_refresh_token` (
   `authentication` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for sys_user
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(255) NOT NULL COMMENT '用户名',
-  `password` varchar(255) NOT NULL COMMENT '密码',
-  `phone` varchar(255) DEFAULT NULL COMMENT '手机号',
-  `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_user
--- ----------------------------
-BEGIN;
-INSERT INTO `sys_user` VALUES (1, 'tycoding', '$2a$10$akcNI/pr9l0kS7JAXFSsNeJpodmdCq2aaNBohjbxXhF1StVtmWTEu', '12311111', 'http://cdn.tycoding.cn/author.png', '2019-05-22 17:37:22');
-INSERT INTO `sys_user` VALUES (2, 'admin', '$2a$10$zVAf02ng.YxGK14F8Riq/uLsNLA.tUYbv5QTPpQNnxDfnEEXW0upK', '12311111', 'http://cdn.tycoding.cn/author.png', '2019-05-24 13:07:45');
-INSERT INTO `sys_user` VALUES (5, 'test', '$2a$10$Rh//mbhIE6df8eUnR99gYuEKodd9.400uKMUhSCKnFMvy2pW/lSjy', '12', 'http://cdn.tycoding.cn/author.png', '2019-05-29 16:52:50');
-COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -5,12 +5,12 @@ spring:
   application:
     name: springcloud-Zuul
 
-#  profiles:
-#    active: dev
-#  cloud:
-#    config:
-#      name: ${spring.application.name}
-#      profile: ${spring.profiles.active}
+  profiles:
+    active: pro
+  cloud:
+    config:
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
 
 eureka:
   instance:
@@ -26,13 +26,13 @@ zuul:
   sensitive-headers: Access-Control-Allow-Origin
   ignored-headers: Access-Control-Allow-Origin,H-APP-Id,Token,APPToken
 
-  routes:
-    springcloud-OAuth:
-      path: /api/auth/**
-      serviceId: springcloud-OAuth
-    springcloud-admin:
-      path: /api/admin/**
-      serviceId: springcloud-admin-biz
-    springcloud-main:
-      path: /api/main/**
-      serviceId: springcloud-main
+#  routes:
+#    springcloud-OAuth:
+#      path: /api/auth/**
+#      serviceId: springcloud-OAuth
+#    springcloud-admin:
+#      path: /api/admin/**
+#      serviceId: springcloud-admin-biz
+#    springcloud-main:
+#      path: /api/main/**
+#      serviceId: springcloud-main
