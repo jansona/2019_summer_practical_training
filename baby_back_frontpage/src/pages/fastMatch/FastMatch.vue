@@ -48,6 +48,7 @@ export default {
         this.$nextTick(function() {
           this.choosed = saved;
         });
+
       }
     }
   }
