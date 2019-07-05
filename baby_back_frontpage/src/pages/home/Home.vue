@@ -62,10 +62,14 @@
         <span class="bottom-text2">成功匹配</span>
       </el-col>
     </el-row>
+    <el-button @click="show" style="margin-top:50px;">test</el-button>
   </div>
 </template>
 
 <script>
+import URLS from "@/config/config";
+import { request, fetch } from "@/api/api";
+import axios from 'axios';
 export default {
   name: "ParentFindChildren",
   data() {
@@ -77,24 +81,33 @@ export default {
   },
   methods: {
     show() {
-      let id = localStorage.getItem("userID");
-      let flag = localStorage.getItem("hasLogin");
-      let f2 = this.$store.state.hasLogin;
-      console.log(id, flag, typeof flag, f2, typeof f2);
-      let ss = "false";
-      console.log(ss == "false");
-
-      this.$router.push({ name: "FaceDetail", query: { type: 1, id: 1 } });
+      // request('http://127.0.0.1:9999/api/auth/oauth/token',{
+      //   username:'13212341234',password:'tycoding',grant_type:'password'
+      // }).then(data => {
+      //   console.log(data)
+      // }).catch(error => {
+      //   console.log(error)
+      // })
+      let state = this.$store.state;
+      if (state.token) {
+        console.log("enter");
+      }
+      console.log("state:", state.userID, state.hasLogin, state.token);
+      fetch({url:URLS.logoutUrl})
+        .then(data => {
+          console.log("已经登陆成功 ", data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
-    gotoFindChild(){
-      this.$router.push('FindRegist');
+    gotoFindChild() {
+      this.$router.push("FindRegist");
     },
-    gotoFastMatch(){
-      this.$router.push('FastMatch');
+    gotoFastMatch() {
+      this.$router.push("FastMatch");
     },
-    gotoMore(){
-
-    }
+    gotoMore() {}
   }
 };
 </script>

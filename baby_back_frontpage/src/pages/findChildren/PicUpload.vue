@@ -1,5 +1,7 @@
 <template>
-  <div class="upload-container">
+  <div class="upload-container"
+    v-loading="loading"
+    element-loading-spinner="el-icon-loading">
     <el-upload
       class="upload-demo"
       drag
@@ -55,7 +57,8 @@ export default {
   data() {
     return {
       uploadUrl: "",
-      uploadFile: null
+      uploadFile: null,
+      loading: false
     };
   },
   mounted() {
@@ -130,9 +133,11 @@ export default {
             this.$emit('return-data',data)
           }
         }
+        this.loading = false;
       });
     },
     uploadAndRecog(){
+      this.loading = true;
       this.$refs.uploader.submit();
     },
     beforeImgUpload(file) {
