@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import URLS from '@/config/config'
+import URLS from '@/config/config';
 import { request,fetch } from "@/api/api";
 import Pictures from "../faceWall/components/Pictures";
 import UserInfo from "./components/UserInfo";

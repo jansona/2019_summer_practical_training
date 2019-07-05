@@ -70,25 +70,26 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/loginOrRegist' || to.path === '/home') {
-    next();
-  } else {
-    let token = store.state.token
-    // console.log("token：",token)
-    if (token === null || token === '' || token == 'undefined') {
-
-      setTimeout(() => {
-        Notification.info({
-          title: "请登录后再操作",
-          offset: 50,
-          duration: 1500,
-        })
-        next('/loginOrRegist');
-      }, 200);
-    } else {
+    if (to.path === '/loginOrRegist' || to.path === '/home' || !store.state.oauth ) {
       next();
+    } else {
+      let token = store.state.token
+      // console.log("token：",token)
+      if (token === null || token === '' || token == 'undefined') {
+
+        setTimeout(() => {
+          Notification.info({
+            title: "请登录后再操作",
+            offset: 50,
+            duration: 1500,
+          })
+          next('/loginOrRegist');
+        }, 200);
+      } else {
+        next();
+      }
     }
-  }
+  
 });
 
 export default router

@@ -1,4 +1,4 @@
-let mode = 'test'
+let mode = 'dev'
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
@@ -20,6 +20,7 @@ const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
 const matchBabyFindUrl = baseUrl + "/match-baby/find"
 const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
 const uploadPictureUrl = baseUrl + "/file/upload"
+const uploadTxtAndRecogUrl = baseUrl + "/file/analyze-txt"
 
 // 登录注册部分
 const loginUrl = baseUrl2 + "/api/auth/oauth/token"
@@ -47,6 +48,7 @@ const URLS = {
   baseUrl,
   lostBabyInsertUrl,
   uploadPictureUrl,
+  uploadTxtAndRecogUrl,
   loginUrl,
   registUrl,
   matchBabyInsertUrl,

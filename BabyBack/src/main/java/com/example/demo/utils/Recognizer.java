@@ -2,7 +2,9 @@ package com.example.demo.utils;
 
 import com.example.demo.entity.LostBaby;
 import com.example.demo.entity.ResponseBase;
+import com.example.demo.entity.User;
 import com.example.demo.reposity.LostBabyRepository;
+import io.swagger.models.auth.In;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +109,9 @@ public class Recognizer {
         ArrayList<LostBaby> matchedBabies = new ArrayList<>();
         for(String id : ids){
             try{
-                matchedBabies.add(recognizer.lostBabyRepository.findById(Integer.valueOf(id)).get());
+                LostBaby lostBaby = lostBabyRepository.findById(Integer.valueOf(id)).get();
+                lostBaby.setUser(null);
+                matchedBabies.add(lostBaby);
             }catch (Exception e){
                 e.printStackTrace();
                 log.warn("存在无效图片：" + id);
