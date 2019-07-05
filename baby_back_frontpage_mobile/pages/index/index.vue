@@ -53,15 +53,16 @@
 			}
 		},
 		onPullDownRefresh() {
-			console.log('funcker')
-			this.$refs.tab1.resetData()
+			if(this.curPage == '1'){
+				this.$refs.tab1.resetData()
+			}
+			//this.$refs.tab1.resetData()
 			setTimeout(() => {
             uni.stopPullDownRefresh();
-        }, 2000);
+        }, 1000);
 
 		},
 		onReachBottom() {
-			console.log('me')
 			this.$refs.tab1.refreshData()
 		},
 		onLoad(){

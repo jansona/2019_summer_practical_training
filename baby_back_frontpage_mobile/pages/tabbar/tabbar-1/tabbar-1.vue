@@ -17,7 +17,7 @@
 			</view>
 		</view>
 		<!-- 选项卡 -->
-		<scroll-view scroll-x class="bg-white nav text-center" :scroll-left="scrollLeft">
+		<scroll-view id="nav-bar" scroll-x="true" class="bg-white nav text-center" scroll-left="0" @scroll="scroll">
 			<view class="cu-item" :class="0==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="0">
 				走失
 			</view>
@@ -56,7 +56,7 @@
 			mpvuePicker,
 			uniIcon
 		},
-		onReady:function () {
+		mounted:function () {
 			this.refreshData();
 		},
 		data() {
@@ -68,7 +68,7 @@
 				lostShow: true,
 				title: 'Hello',
 				tabCurrentIndex: 0, //当前选项卡索引
-				scrollLeft: 0, //顶部选项卡左滑距离
+				scrollLeft: 2, //顶部选项卡左滑距离
 				enableScroll: true,
 				InputBottom: 0,
 				lostList: [],
@@ -210,7 +210,11 @@
 					return this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg"
 				}
 				
-			}
+			},
+			scroll: function(e) {
+            console.log(e)
+            this.old.scrollTop = e.detail.scrollTop
+        },
 		}
 	};
 </script>
