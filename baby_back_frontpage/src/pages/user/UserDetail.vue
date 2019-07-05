@@ -1,15 +1,15 @@
 <template>
 <div>
 <el-card>
-  <el-tabs :tab-position="tabPosition" @tab-click="handleTabClick">
-    <el-tab-pane label="基本信息">
+  <el-tabs :tab-position="tabPosition" @tab-click="handleTabClick" v-model="activeName">
+    <el-tab-pane label="基本信息" name="user_info">
       <UserInfo
       :picUrl='this.picUrl'
       :tableData='this.tableData'>
       </UserInfo>
     </el-tab-pane>
-    <el-tab-pane label="我的失踪者申报">
-      <el-tabs @tab-click="subTabClick" style="margin-top:10px;">
+    <el-tab-pane label="我的失踪者申报" name="baby_aply">
+      <el-tabs @tab-click="subTabClick" style="margin-top:10px;" v-if='mark===1'>
       <el-tab-pane class="tab-container">
         <div slot="label">
           &nbsp&nbsp
@@ -44,15 +44,15 @@
       </el-tab-pane>
     </el-tabs>
     </el-tab-pane>
-    <el-tab-pane label="我的文章">
+    <el-tab-pane label="我的文章" name="article">
       <ArticleInfiniteList
-      :user="this.id"
+      :user="this.id" v-if="mark===2"
       >
       </ArticleInfiniteList>
     </el-tab-pane>
-    <el-tab-pane label="我的评论">
+    <el-tab-pane label="我的评论" name="comment">
       <CommentInfiniteList
-      :user="this.id"
+      :user="this.id" v-if="mark===3"
       ></CommentInfiniteList>
     </el-tab-pane>
   </el-tabs>
@@ -84,8 +84,12 @@ export default {
   },
   data () {
     return {
+
+      mark: 0,
+      activeName: 'user_info',
+
       tabPosition: 'left',
-      id: this.$route.query.id,
+      id: parseInt(this.$route.query.id),
       // id: 8,
       // 申报信息分页相关
       tableData: [],
@@ -141,8 +145,8 @@ export default {
     },
     loadBabyData() {
       request(
-        this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl,
-        { size: this.pageSize, page: this.currentPage - 1 }
+        this.choosed != 1 ? URLS.lostBabyFindByUserUrl : URLS.matchBabyFindByUserUrl,
+        { size: this.pageSize, page: this.currentPage - 1, user: this.id }
       )
         .then(data => {
           console.log(data);
@@ -172,12 +176,20 @@ export default {
       this.loadBabyData();
     },
     handleTabClick(e){
-      switch(e.label){
-        case '基本信息':
+      switch(e.name){
+        case 'user_info':
+          this.mark = 0;
           this.loadUserInfo();
           break;
-        case '我的失踪者申报':
+        case 'baby_aply':
+          this.mark = 1;
           this.loadBabyData();
+          break;
+        case 'article':
+          this.mark = 2;
+          break;
+        case 'comment':
+          this.mark = 3;
           break;
         default:
           break;

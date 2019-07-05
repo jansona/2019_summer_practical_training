@@ -48,7 +48,7 @@ export default {
       request(URLS.articleInfiniteUrl, {user: this.user, index: this.index})
       .then(
         data => {
-          console.log(data);
+          // console.log(data);
           if(data.rtnCode === 200){
             if(data.data !== null){
               this.articles.push(data.data);

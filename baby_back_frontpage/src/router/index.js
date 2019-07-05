@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { Notification } from 'element-ui'
+import store from '../store/store'
 
 Vue.use(Router)
 
@@ -72,9 +73,9 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/loginOrRegist' || to.path === '/home') {
     next();
   } else {
-    let token = localStorage.getItem('token');
-    console.log(token)
-    if (token === null || token === '') {
+    let token = store.state.token
+    // console.log("token：",token)
+    if (token === null || token === '' || token == 'undefined') {
 
       setTimeout(() => {
         Notification.info({

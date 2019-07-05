@@ -1,5 +1,6 @@
-let mode = 'dev'
+let mode = 'test'
 let baseUrl = ''
+let baseUrl2 = ''
 if (mode === 'dev') {
   baseUrl = 'http://127.0.0.1:18080'
 } else if (mode == 'hbj'){
@@ -8,6 +9,7 @@ if (mode === 'dev') {
   baseUrl = 'http://42.159.4.66:18080'
 } else if (mode == 'test') {
   baseUrl = 'http://127.0.0.1:9999/api/main'
+  baseUrl2 = 'http://127.0.0.1:9999'
 }
 
 // 填写信息部分
@@ -20,9 +22,11 @@ const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
 // 登录注册部分
-const loginUrl = baseUrl + "/login"
+const loginUrl = baseUrl2 + "/api/auth/oauth/token"
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
+const userInfoUrl = baseUrl2 + '/api/admin/user/infoTel'
+const logoutUrl = baseUrl2+ '/api/auth/token/logout'
 
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'
@@ -63,7 +67,9 @@ const URLS = {
   commentFindByArticle,
   commentInfiniteUrl,
   userFindByIdUrl,
-  articleFindByUserNameUrl
+  articleFindByUserNameUrl,
+  userInfoUrl,
+  logoutUrl
 }
 
 export default URLS
