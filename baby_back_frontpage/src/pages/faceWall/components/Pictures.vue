@@ -42,7 +42,7 @@ export default {
         this.$set(
           this.picUrls,
           i,
-          URLS.baseUrl + "/resource/photo/" + urlType + "/" + id + ".jpg"
+          "http://127.0.0.1:9999" + "/resource/photo/" + urlType + "/" + id + ".jpg"
         );
       }
     },

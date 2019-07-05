@@ -32,12 +32,12 @@
       <el-badge
         :is-dot=true
         :hidden="!hasMessage"
-        v-if="hasLogin"
+        v-if="this.$store.state.hasLogin"
         class="message-style"
       >
         <el-button icon="el-icon-message" circle @click="openMessage"></el-button>
       </el-badge>
-      <template v-if="hasLogin">
+      <template v-if="this.$store.state.hasLogin">
         <el-popover placement="bottom" trigger="hover" width="50" style="text-aligin:right">
           <a class="a-style"><i class="el-icon-user-solid" @click="personalHome">个人主页</i></a><br>
           <a class="a-style"><i class="el-icon-switch-button" @click="logout">退出登录</i></a>
@@ -55,6 +55,9 @@
   </div>
 </template>
 <script>
+import URLS from '@/config/config';
+import {fetch} from '@/api/api'
+import axios from 'axios';
 export default {
   name: "Header",
   inject: ['reload'],
@@ -87,8 +90,14 @@ export default {
       })
     },
     logout() {
+      axios.delete(URLS.logoutUrl).then(data => {
+        console.log("登出成功!",data)
+      }).catch(error => {
+        console.log(error)
+      })
       console.log("logout");
       this.$store.commit('setUserID', {id:-1,flag:true});
+      this.$store.commit('delToken');
       this.$router.push('home');
       this.reload();
     },

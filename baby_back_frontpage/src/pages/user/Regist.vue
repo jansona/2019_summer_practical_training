@@ -7,8 +7,8 @@
       :rules="rules"
       ref="registForm"
     >
-      <el-form-item label="用户名" prop="name">
-        <el-input v-model="registForm.name" placeholder="请输入用户名"></el-input>
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="registForm.username" placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item label="手机号码" prop="tel">
         <el-input v-model="registForm.tel" placeholder="请输入手机号码"></el-input>
@@ -22,8 +22,8 @@
           <el-button slot="append" @click="sendSMS" :disabled="disabled">{{btnTitle}}</el-button>
         </el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="passWord">
-        <el-input v-model="registForm.passWord" placeholder="请输入密码" type="password"></el-input>
+      <el-form-item label="密码" prop="password">
+        <el-input v-model="registForm.password" placeholder="请输入密码" type="password"></el-input>
       </el-form-item>
       <el-form-item label="确认密码" prop="password2">
         <el-input v-model="registForm.password2" placeholder="请输入重复密码" type="password"></el-input>
@@ -65,7 +65,7 @@ export default {
     let validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.registForm.passWord) {
+      } else if (value !== this.registForm.password) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -77,19 +77,19 @@ export default {
       countdown: 60,
       registingLoading: false,
       registForm: {
-        name: "",
+        username: "",
         tel: "",
         verifacationCode: "",
-        passWord: "",
+        password: "",
         password2: ""
       },
       rules: {
-        name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         tel: [{ required: true, validator: checkPhone, trigger: "blur" }],
         verifacationCode: [
           { required: true, message: "请输入手机验证码", trigger: "blur" }
         ],
-        passWord: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
         password2: [
           { required: true, validator: validatePass2, trigger: "blur" }
         ]
