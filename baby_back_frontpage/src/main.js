@@ -45,5 +45,6 @@ new Vue({
   store,
   i18n_zh,
   components: { App },
+  axios,
   template: '<App/>'
 })

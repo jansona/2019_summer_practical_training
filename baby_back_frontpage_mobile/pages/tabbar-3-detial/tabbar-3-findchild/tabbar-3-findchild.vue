@@ -102,18 +102,18 @@
 					图片上传
 				</view>
 				<view class="action">
-					{{findChildForm.imgList.length}}/1
+					{{imgList.length}}/1
 				</view>
 			</view>
 			<view class="cu-form-group">
 				<view class="grid col-4 grid-square flex-sub">
-					<view class="bg-img" v-for="(item,index) in findChildForm.imgList" :key="index" @tap="ViewImage" :data-url="findChildForm.imgList[index]">
-						<image :src="findChildForm.imgList[index]" mode="aspectFill"></image>
+					<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
+						<image :src="imgList[index]" mode="aspectFill"></image>
 						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 							<text class='cuIcon-close'></text>
 						</view>
 					</view>
-					<view class="solids" @tap="ChooseImage" v-if="findChildForm.imgList.length<1">
+					<view class="solids" @tap="ChooseImage" v-if="imgList.length<1">
 						<text class='cuIcon-cameraadd'></text>
 					</view>
 				</view>
@@ -122,6 +122,20 @@
 				<button class="cu-btn bg-blue margin-tb-sm lg" form-type="submit" style="width:300upx;margin: 0 auto;">提交</button>
 				<button class="cu-btn bg-blue margin-tb-sm lg" form-type="reset" style="width:300upx;margin: 0 auto;">清空数据</button>
 			</view>
+			<!--模态框提示-->
+			<view class="cu-modal" :class="modalName=='Modal'?'show':''">
+				<view class="cu-dialog">
+					<view class="cu-bar bg-white justify-end">
+						<view class="content">发布提示</view>
+						<view class="action" @tap="hideModal">
+							<text class="cuIcon-close text-red"></text>
+						</view>
+					</view>
+					<view class="padding-xl">
+						{{modalContent}}
+					</view>
+				</view>
+			</view>
 		</form>
 	</view>
 </template>
@@ -129,8 +143,15 @@
 <script>
 	var graceChecker = require("../../../common/graceChecker.js");
 	export default {
+		onReady: function() {
+			//let userId=this.$store.state.userId
+			let userId = 2
+			this.getUser(userId)
+		},
 		data() {
 			return {
+				lostbabyid:-1,
+				imgList:[],
 				findChildForm: {
 					id: '',
 					name: '',
@@ -138,7 +159,7 @@
 					birthday: '2018-12-25',
 					nativePlace: '', //籍贯
 					height: '',
-					date: '2019-6-25', //失踪时间
+					date: '2019-06-25', //失踪时间
 					place: '',
 					babyDescription: '', //特征描述
 					missDescription: '', //失踪经过
@@ -152,22 +173,27 @@
 					contactEmail: '',
 					contactPhone: '',
 					otherContactMethod: '',
-					imgList: []
+					
+					user: {
+						id: 2,
+					}
 				},
 				modalName: null,
+				modalContent:null,
 				items: [{
 					name: 'man',
 					value: '男'
 				}, {
 					name: 'woman',
 					value: '女'
-				}]
+				}],
+				user:{}
 			}
 		},
-		onLoad() {
-
-		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
 			radioChange: function(e) {
 				this.findChildForm.sex = e.detail.value;
 			},
@@ -187,17 +213,17 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
-						if (this.findChildForm.imgList.length != 0) {
-							this.findChildForm.imgList = this.findChildForm.imgList.concat(res.tempFilePaths)
+						if (this.imgList.length != 0) {
+							this.imgList = this.imgList.concat(res.tempFilePaths)
 						} else {
-							this.findChildForm.imgList = res.tempFilePaths
+							this.imgList = res.tempFilePaths
 						}
 					}
 				});
 			},
 			ViewImage(e) {
 				uni.previewImage({
-					urls: this.findChildForm.imgList,
+					urls: this.imgList,
 					current: e.currentTarget.dataset.url
 				});
 			},
@@ -209,7 +235,7 @@
 					confirmText: '再见',
 					success: res => {
 						if (res.confirm) {
-							this.findChildForm.imgList.splice(e.currentTarget.dataset.index, 1)
+							this.imgList.splice(e.currentTarget.dataset.index, 1)
 						}
 					}
 				})
@@ -256,37 +282,77 @@
 					//{name:"img", checkType : "notnull", checkRule:"",  errorMsg:"请上传照片"}
 				];
 				//进行表单检查
+				if(this.imgList.length<=0){
+					this.modalName='Modal';
+					this.modalContent='请上传照片';
+					return;
+				}
 				var formData = e.detail.value;
 				var checkRes = graceChecker.check(formData, rule);
+				let _this=this;
 				if (checkRes) {
-					uni.showToast({
-						title: "验证通过!",
-						icon: "none"
-					});
+					// uni.showToast({
+					// 	title: "验证通过!",
+					// 	icon: "none"
+					// });
 				} else {
-					uni.showToast({
-						title: graceChecker.error,
-						icon: "none"
-					});
+					// uni.showToast({
+					// 	title: graceChecker.error,
+					// 	icon: "none"
+					// });
+					_this.modalName='Modal';
+					_this.modalContent=graceChecker.error;
+					return;
 				}
 				
-				if (this.findChildForm.imgList != null && this.findChildForm.imgList.length > 0) {
-					uni.uploadFile({
-						url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS", //仅为示例，非真实的接口地址
-						filePath: this.findChildForm.imgList[0],
-						name: 'file',
-						formData: {
-							'id': '6'
-						},
-						success: (uploadFileRes) => {
-							console.log(uploadFileRes);
-						}
-					});
-				}
+				//上传表单信息
+				//console.log(this.findChildForm)
+				this.$api.post(this.URLS.lostBabyInsertUrl,this.findChildForm).then(data => {
+					//console.log(data)
+					_this.lostbabyid=data.data.data.id;
+					console.log(_this.lostbabyid);
+					//上传图片
+					if (_this.imgList != null && _this.imgList.length > 0) {
+						console.log('开始上传图片...');
+						uni.uploadFile({
+							url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS", 
+							filePath: _this.imgList[0],
+							name: 'file',
+							formData: {
+								'id': _this.lostbabyid
+							},
+							success: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.modalName='Modal';
+								_this.modalContent='发布成功！';
+							},
+							fail: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.modalName='Modal';
+								_this.modalContent='图片上传失败！';
+								return;
+							}
+						});
+					}
+				}).catch(error => {
+					console.log(error)
+					_this.modalName='Modal';
+					_this.modalContent='发布失败！';
+				})
+				
 			},
 			formReset: function(e) {
 				console.log("清空数据")
 				this.chosen = ''
+			},
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.user = data.data.data
+				}).catch(error => {
+					console.log(error)
+				})
 			}
 		}
 
@@ -294,9 +360,5 @@
 </script>
 
 <style>
-	.content {
-		text-align: center;
-		height: 400upx;
-		margin-top: 200upx;
-	}
+
 </style>

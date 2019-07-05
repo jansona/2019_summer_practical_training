@@ -2,9 +2,11 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Article;
 import com.example.demo.entity.Comment;
-import com.example.demo.entity.ResponseBase;
+
 import com.example.demo.entity.User;
 import com.example.demo.reposity.CommentRepository;
+import com.example.demo.reposity.UserRepository;
+import com.example.demo.response.ResponseBase;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +29,8 @@ public class CommentController {
     ApiService apiService;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    UserRepository userRepository;
 
     PageHelper pageHelper = new PageHelper();
 
@@ -68,6 +72,20 @@ public class CommentController {
 
         Page<Comment> pageResult = new PageImpl(result, page, totalNum);
         return new ResponseBase(200, "查找成功", pageResult);
+    }
+
+    @ApiOperation(value = "查询特定用户的特定索引的评论(为无限滚动提供数据)")
+    @PostMapping("/infinite-scroll")
+    public ResponseBase getArticleInfinite(@RequestParam(value = "user") Long user, @RequestParam(value = "index") Integer index){
+        ResponseBase responseBase;
+        List<Comment> commentList = commentRepository.findAllByUser(userRepository.findById(user).get());
+        if(index >= commentList.size()){
+            return new ResponseBase(200, "无更多评论", null);
+        }
+        Comment comment = commentList.get(index);
+        comment.setUser(null);
+        comment.getArticle().setUser(null);
+        return new ResponseBase(200, "成功返回无限滚动所需数据", comment);
     }
 
     @ApiOperation(value = "删除一篇评论")

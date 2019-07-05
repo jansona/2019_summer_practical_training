@@ -106,16 +106,17 @@ Axios.interceptors.response.use(
           case 400:
             // error.message = '错误请求，用户名或密码错误'
             // console.log(error.response)
-            Notification.error({
-              title:'error',
-              message: error.response.data.message,
-            })
+            // Notification.error({
+            //   offset:50,
+            //   title:'账号或密码错误',
+            //   duration:1500,
+            // })
             break
           case 401:
             error.message = '认证超时，重新登录'
-            router.replace({
-              path: '/login',
-            })
+            // router.replace({
+            //   path: '/login',
+            // })
             break
           case 504:
             error.message = '网络超时'
@@ -144,10 +145,9 @@ Axios.interceptors.response.use(
 Axios.interceptors.request.use(
   config => {
     if (store.state.oauth) {
-      if (localStorage.getItem('access_token')) {
-        config.headers['Authorization'] =
-          'Bearer ' + localStorage.getItem('access_token')
-      } else {
+      if(store.state.token != undefined && store.state.token != '' && store.state.token != 'undefined'){
+        console.log("获取token",store.state.token);
+        config.headers['Authorization']='Bearer '+store.state.token
       }
     }
     return config
@@ -156,6 +156,10 @@ Axios.interceptors.request.use(
     console.log(error)
   }
 )
+
+// 设置权限请求头
+Axios.defaults.headers.post['Authorization'] = 'Basic Y2xpZW50OnNlY3JldA==';
+
 //时间格式化函数，此处仅针对yyyy-MM-dd hh:mm:ss 的格式进行格式化
 export const dateFormat = function(time) {
   var date = new Date(time);

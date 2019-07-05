@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
+
 @CrossOrigin
 @RestController
 public class RegisterController {
+
+    final String sendMarkPrefix = "SEND:";
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -21,17 +25,23 @@ public class RegisterController {
 
     @ApiOperation(value = "发送验证码")
     @GetMapping("/sms-verify")
-    public ResponseBase logout(@RequestParam String tel) {
+    public ResponseBase sendRegisterSMS(@RequestParam String tel) {
         ResponseBase responseBase;
 
         if(userRepository.findByTel(tel) != null){
             return new ResponseBase(50004, "短信验证电话已被占用", null);
         }
 
+        if(stringRedisTemplate.hasKey(sendMarkPrefix + tel)){
+            return new ResponseBase(50005, "短信验证过于频繁", null);
+        }else{
+            stringRedisTemplate.opsForValue().set(sendMarkPrefix + tel, tel, 1L, TimeUnit.MINUTES);
+        }
+
         try {
             String code = SMSSender.sendSMS(tel);
             stringRedisTemplate.delete(tel);
-            stringRedisTemplate.opsForValue().set(tel, code);
+            stringRedisTemplate.opsForValue().set(tel, code, 10L, TimeUnit.MINUTES);
             responseBase = new ResponseBase(200, "验证码短信发送成功", null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,12 +52,14 @@ public class RegisterController {
 
     @ApiOperation(value = "验证并注册一个用户")
     @PostMapping("/register")
-    public ResponseBase insertUser(@RequestBody User user, @RequestParam String code) {
+    public ResponseBase registerUser(@RequestBody User user, @RequestParam String code) {
         ResponseBase responseBase;
         try {
             String realCode = stringRedisTemplate.opsForValue().get(user.getTel());
 
             if (realCode != null && realCode.equals(code)) {
+//                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 User user_saved = userRepository.save(user);
                 stringRedisTemplate.delete(user.getTel());
                 responseBase = new ResponseBase(200, "短信验证成功", user_saved);

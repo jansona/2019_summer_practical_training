@@ -5,9 +5,9 @@
 				<view class="box">
 					<view class="box-hd">
 						<view class="avator">
-							<img src="../../../../static/user/face.jpg">
+							<img :src="avator"/>
 						</view>
-						<view class="phone-number">18909XXXX67</view>
+						<view class="nickname">{{nickname}}</view>
 					</view>
 					<view class="box-bd">
 						<view class="item">
@@ -66,7 +66,8 @@
 	export default {
 		data() {
 			return {
-
+				avator:'',
+				nickname:''
 			};
 		},
 		onLoad() {
@@ -142,7 +143,7 @@ page{
 				height: 100%;
 			}
 		}
-		.phone-number{
+		.nickname{
 			width: 100%;
 			text-align: center;
 		}

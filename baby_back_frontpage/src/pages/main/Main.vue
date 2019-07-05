@@ -18,6 +18,8 @@
 <script>
 import HomeHeader from "@/pages/main/Header";
 import HomeContent from "@/pages/main/Content";
+import { fetch } from "@/api/api";
+import URLS from "@/config/config";
 export default {
   name: "Home",
   components: {
@@ -44,7 +46,24 @@ export default {
   },
   watch: {},
   mounted() {
-    // console.log("main mounted")
+    console.log("main mounted",this.$route.path)
+    let state = this.$store.state;
+    // if(this.$route.path == '/') {
+    //   this.$router.push('home');
+    // }
+    if(state.token && state.token != 'undefined') {
+      fetch(URLS.userInfoUrl)
+        .then(data => {
+          console.log("已经登陆成功 ", data);
+          this.$store.commit("setUserID", {
+            id: data.data.data.id,
+            flag: this.rememberLogin
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   },
   computed: {
   }

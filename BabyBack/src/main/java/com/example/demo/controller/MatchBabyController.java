@@ -31,9 +31,9 @@ public class MatchBabyController {
     PageHelper pageHelper = new PageHelper();
 
     @ApiOperation(value = "新增孤儿")
-    @PutMapping("/insert")     // TODO 填写节点
-    public MatchBaby insertMatchBaby(@RequestBody MatchBaby matchBaby) {
-        return matchBabyRepository.save(matchBaby);
+    @PostMapping("/insert")     // TODO 填写节点
+    public ResponseBase insertMatchBaby(@RequestBody MatchBaby matchBaby) {
+        return new ResponseBase(200,"查询成功",matchBabyRepository.save(matchBaby));
     }
 
     @ApiOperation(value = "查找孤儿")

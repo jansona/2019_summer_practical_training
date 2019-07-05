@@ -140,7 +140,7 @@ public class ApiService implements InitializingBean {
                     predicatesList.add(contactPredicate);
                 }
                 if (!name.equals("")) {
-                    Predicate titlePredicate = cb.like(root.get("name"), "%" + name + "%");
+                    Predicate titlePredicate = cb.like(root.get("username"), "%" + name + "%");
                     predicatesList.add(titlePredicate);
                 }
                 if (!tel.equals("")) {

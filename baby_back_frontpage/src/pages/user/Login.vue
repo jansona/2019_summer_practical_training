@@ -10,8 +10,8 @@
             :rules="rules"
             ref="loginForm"
           >
-            <el-form-item label="邮箱/手机" prop="account">
-              <el-input v-model="loginForm.account" placeholder="请输入邮箱或者手机号"></el-input>
+            <el-form-item label="邮箱/手机" prop="username">
+              <el-input v-model="loginForm.username" placeholder="请输入邮箱或者手机号"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
               <el-input v-model="loginForm.password" type="password" placeholder="请输入密码"></el-input>
@@ -58,7 +58,7 @@
 <script>
 import { request } from "@/api/api";
 import URLS from "@/config/config";
-import axios from 'axios'
+import axios from "axios";
 export default {
   name: "Login",
   inject: ["reload"],
@@ -86,11 +86,11 @@ export default {
     return {
       wrongPass: false,
       loginForm: {
-        account: "",
+        username: "",
         password: ""
       },
       rules: {
-        account: [
+        username: [
           { required: true, validator: checkPhoneOrEmail, trigger: "blur" }
         ],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
@@ -100,46 +100,68 @@ export default {
     };
   },
   methods: {
+    getUserInfo() {
+      axios
+        .get(URLS.userInfoUrl)
+        .then(data => {
+          console.log("已经登陆成功 ", data);
+          this.$store.commit("setUserID", {
+            id: data.data.data.id,
+            flag: this.rememberLogin
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     login() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loginingLoading = true;
-          axios.post(URLS.loginUrl, this.loginForm)
-            .then(data => {
-              console.log(data);
-              if (data.data.rtnCode == 200) {
+          let params = JSON.parse(JSON.stringify(this.loginForm));
+          params.grant_type = "password";
+          if (
+            this.$store.state.token &&
+            this.$store.state.token != "undefined"
+          ) {
+            this.getUserInfo();
+            this.loginingLoading = false;
+            this.$router.push("home");
+          } else {
+            request(URLS.loginUrl, params)
+              .then(data => {
+                console.log(data);
+                // if (data.data.rtnCode == 200) {
                 this.$notify({
                   title: "登陆成功！",
-                  type: "succcess",
-                  duration: 1500,
+                  type: "success",
+                  duration: 1000,
                   offset: 50
                 });
+                this.$store.commit("setToken", {token:data.access_token,flag:this.rememberLogin});
                 this.loginingLoading = false;
-                this.$store.commit("setUserID", {
-                  id: data.data.data.id,
-                  flag: this.rememberLogin
-                });
+                this.getUserInfo();
+                // this.$store.commit("setUserID", {
+                //   id: data.data.data.id,
+                //   flag: this.rememberLogin
+                // });
+
                 this.$router.push("home");
-                this.reload();
-              } else {
+              })
+              .catch(error => {
                 this.wrongPass = true;
                 this.loginingLoading = false;
-                this.$refs.loginForm.validateField("account", error => {
-
-                })
-              }
-            })
-            .catch(error => {
-              this.loginingLoading = false;
-              this.$message.error("服务器错误");
-              console.log(error);
-            });
+                this.$refs.loginForm.validateField("username", error => {});
+                // this.$message.error("服务器错误");
+                console.log(error);
+              });
+          }
         }
       });
     }
   },
   mounted() {
-    console.log("mouted",this.$refs.leftPart.clientHeight)
+    // console.log("mouted",this.$refs.leftPart.clientHeight)
   }
 };
 </script>

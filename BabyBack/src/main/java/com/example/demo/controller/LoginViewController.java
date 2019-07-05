@@ -49,7 +49,7 @@ public class LoginViewController {
             user = userRepository.findByTel(account);
         }
         if (user != null) {
-            rightPassword = user.getPassWord();
+            rightPassword = user.getPassword();
         } else {
             return new ResponseBase(20001, "账号或密码错误", null);
         }

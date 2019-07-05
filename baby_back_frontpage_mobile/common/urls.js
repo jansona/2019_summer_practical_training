@@ -29,6 +29,7 @@ const articleInsertUrl = baseUrl + '/article/insert'
 
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
+const userFindByIdUrl = baseUrl + '/user/find-by-id'
 
 const URLS = {
 	imgUrl,
@@ -45,7 +46,8 @@ const URLS = {
   articleDeleteUrl,
   articleFindByUserUrl,
   articleInsertUrl,
-  userFindUrl
+  userFindUrl,
+	userFindByIdUrl
 }
 
 module.exports = URLS

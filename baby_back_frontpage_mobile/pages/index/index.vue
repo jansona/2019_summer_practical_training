@@ -1,7 +1,7 @@
 <template>
 	<view>
         <view class="content-container">
-		<tabbar_1 v-if="curPage == '1'"></tabbar_1>
+		<tabbar_1 v-if="curPage == '1'" ref="tab1"></tabbar_1>
 		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
 		<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
 		<tabbar_2 v-if="curPage == '4'"></tabbar_2>
@@ -9,37 +9,33 @@
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="1">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/home' + [curPage=='1'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/find' + [curPage=='1'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='1'?'selected-color':'text-gray'">首页</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="2">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/guanzhu' + [curPage == '2'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/urgence' + [curPage == '2'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='2'?'selected-color':'text-gray'">紧急</view>
 			</view>
 			<view class="action text-gray add-action" @click="onAddClick" data-cur="plugin">
 				<button class="cu-btn cuIcon-add bg-blue shadow"></button>
-				发布
+				<!-- <image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/release.png'"></image> -->
 			</view>
 			<!-- <view class="action" @click="onAddClick" data-cur="plugin">
 				<view class='my-add-btn'>
-					<image :src="'/static/img/tabbar/add' + [curPage == '3'?'active':''] + '.png'"></image>
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/release' + [curPage == '3'?'active':''] + '.png'"></image>
 				</view>
 			</view> -->
 			<view class="action" @click="NavChange" data-cur="4">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/news' + [curPage == '4'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/bbc' + [curPage == '4'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='4'?'selected-color':'text-gray'">论坛</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="5">
-				<view class='cuIcon-cu-image'>
-					<image :src="'/static/img/tabbar/me' + [curPage == '5'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/my' + [curPage == '5'?'active':''] + '.png'"></image>
 				</view>
-				<view class="index-bar-text" :class="curPage=='5'?'selected-color':'text-gray'">我</view>
 			</view>
 		</view>
 	</view>
@@ -47,11 +43,29 @@
 
 <script>
 	export default {
+		onReady:function () {
+			this.$refs.tab1.refreshData();
+		},
 		data() {
 			return {
 				curPage: "1",
 				showNewPop: false,
 			}
+		},
+		onPullDownRefresh() {
+			console.log('funcker')
+			this.$refs.tab1.resetData()
+			setTimeout(() => {
+            uni.stopPullDownRefresh();
+        }, 2000);
+
+		},
+		onReachBottom() {
+			console.log('me')
+			this.$refs.tab1.refreshData()
+		},
+		onLoad(){
+			
 		},
 		methods: {
 			NavChange: function(e) {
@@ -71,7 +85,8 @@
                 console.log(e)
                 this.showNewPop = false;
             }
-		}
+		},
+		
 	}
 </script>
 
