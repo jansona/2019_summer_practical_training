@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class Recognizer {
     public ResponseBase recognition(MultipartFile file, String fileName) {
         ResponseBase responseBase;
         ArrayList<String> matches = new ArrayList<>();
-        ArrayList<LostBaby> matchedBabies = new ArrayList<>();
+        ArrayList<LostBaby> matchedBabies;
         try {
             file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
             String[] cmd = {"docker", "exec", "fr", "face_recognition", "/photo/lost", "/photo/temp/" + fileName};
@@ -52,14 +53,7 @@ public class Recognizer {
             input.close();
             ir.close();
 
-            for(String id : matches){
-                try{
-                    matchedBabies.add(recognizer.lostBabyRepository.findById(Integer.valueOf(id)).get());
-                }catch (Exception e){
-                    e.printStackTrace();
-                    log.warn("存在无效图片：" + id);
-                }
-            }
+            matchedBabies = babyId2Baby(matches);
 
             responseBase = new ResponseBase(200, "待识别照片上传成功", matchedBabies);
         } catch (Exception e) {
@@ -68,6 +62,58 @@ public class Recognizer {
         }
 
         return responseBase;
+    }
+
+    public ResponseBase analyze(String txt){
+
+        ResponseBase responseBase;
+        ArrayList<String> matches = new ArrayList<>();
+        ArrayList<LostBaby> matchedBaby;
+
+        String[] cmd = {"py", "ldf.py", txt};
+        try {
+            Process p = Runtime.getRuntime().exec(cmd);
+            InputStreamReader ir = new InputStreamReader(p.getInputStream());
+            LineNumberReader input = new LineNumberReader(ir);
+            String tempStr = input.readLine();
+            if(tempStr == null){
+                responseBase = new ResponseBase(50006, "自然语言分析异常", null);
+            }else{
+                for(int i=0; i<4; i++) {
+                    String id = tempStr;
+                    tempStr = input.readLine();
+                }
+                while(tempStr != null){
+                    String id = tempStr;
+                    matches.add(id);
+                    tempStr = input.readLine();
+                }
+                input.close();
+                ir.close();
+
+                matchedBaby = babyId2Baby(matches);
+                responseBase = new ResponseBase(200, "自然语言分析成功", matchedBaby);
+            }
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+            responseBase = new ResponseBase(50006, "自然语言分析异常", null);
+        }
+
+        return responseBase;
+    }
+
+
+    private ArrayList<LostBaby> babyId2Baby(ArrayList<String> ids){
+        ArrayList<LostBaby> matchedBabies = new ArrayList<>();
+        for(String id : ids){
+            try{
+                matchedBabies.add(recognizer.lostBabyRepository.findById(Integer.valueOf(id)).get());
+            }catch (Exception e){
+                e.printStackTrace();
+                log.warn("存在无效图片：" + id);
+            }
+        }
+        return matchedBabies;
     }
 
 }
