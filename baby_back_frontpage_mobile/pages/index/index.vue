@@ -1,7 +1,7 @@
 <template>
 	<view>
         <view class="content-container">
-		<tabbar_1 v-if="curPage == '1'"></tabbar_1>
+		<tabbar_1 v-if="curPage == '1'" ref="tab1"></tabbar_1>
 		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
 		<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
 		<tabbar_2 v-if="curPage == '4'"></tabbar_2>
@@ -43,6 +43,9 @@
 
 <script>
 	export default {
+		onReady:function () {
+			this.$refs.tab1.refreshData();
+		},
 		data() {
 			return {
 				curPage: "1",
@@ -50,10 +53,16 @@
 			}
 		},
 		onPullDownRefresh() {
-			
+			console.log('funcker')
+			this.$refs.tab1.resetData()
+			setTimeout(() => {
+            uni.stopPullDownRefresh();
+        }, 2000);
+
 		},
 		onReachBottom() {
-			
+			console.log('me')
+			this.$refs.tab1.refreshData()
 		},
 		onLoad(){
 			
