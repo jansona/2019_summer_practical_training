@@ -33,6 +33,10 @@
 			"style": {}
 		},
 		{
+			"path": "pages/tabbar-1-detail/baby-detail",
+			"style": {}
+		},
+		{
 			"path": "pages/tabbar-2-detail/passage-detail",
 			"style": {}
 		},

@@ -10,10 +10,10 @@
 			<uni-icon type="arrowdown" color="#333333" size="22" @click="showSinglePicker"></uni-icon>
 			<view class="search-form round" style="margin-left: 8upx;">
 				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索宝贝" confirm-type="search"></input>
+				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" v-model="searchInput" type="text" placeholder="搜索宝贝" confirm-type="search"></input>
 			</view>
 			<view class="margin-tb-sm text-center">
-				<button class="cu-btn round bg-blue" style="margin-right: 20upx;" @click="searchClick()">搜索</button>
+				<button class="cu-btn round bg-blue" style="margin-right: 20upx;" @click="searchClick">搜索</button>
 			</view>
 		</view>
 		<!-- 选项卡 -->
@@ -29,14 +29,14 @@
 		<view class="grid col-2 grid-square" v-show="findShow">
 			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 			 v-for="(item,index) in findList" :key="index">
-				<img :src="findList[index]" mode="aspectFill" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+				<img :src="findList[index]" mode="aspectFill" @click="goToDetail(item,index,0)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
 				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">2019-5-20</text></view>
 			</view>
 		</view>
 		<view class="grid col-2 grid-square" v-show="lostShow">
 			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 			 v-for="(item,index) in lostList" :key="index">
-				<img :src="lostPicUrls[index]" mode="aspectFill" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+				<img :src="lostPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
 				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
 			</view>
 		</view>
@@ -63,6 +63,7 @@
 			return {
 				isBottom : false,
 				pageNo :0,
+				searchInput:'',
 				totalPageNum:2,
 				findShow: false,
 				lostShow: true,
@@ -85,15 +86,15 @@
 				pickerValueDefault: [0],
 				pickerLabel: '全部',
 				pickerValueArray: [{
-						label: '全部',
+						label: '姓名',
 						value: 0
 					},
 					{
-						label: '姓名',
+						label: '身高',
 						value: 1
 					},
 					{
-						label: '特征',
+						label: '籍贯',
 						value: 2
 					},
 					{
@@ -198,10 +199,116 @@
 						})
 				}
 				
-				
 			},
 			searchClick(e) {
-				this.refreshData()
+				let _this=this;
+				if(this.pickerLabel=='身高'){
+					let url=this.URLS.lostBabyFindUrl+'?height='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.lostList=data.data.data.content;
+						_this.lostPicUrls=[];
+						for (let i = 0; i < _this.lostList.length; i++) {
+							let id = _this.lostList[i].id;
+							this.lostPicUrls.push(this.yieldPicUrl(id));
+						}
+								
+					}).catch(error => {
+						console.log(error)
+					});
+					url=his.URLS.matchBabyFindUrl+'?height='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.findList=data.data.data.content;
+						_this.findPicUrls=[];
+						for (let i = 0; i < _this.findList.length; i++) {
+							let id = _this.findList[i].id;
+							this.findPicUrls.push(this.yieldPicUrl(id));
+						}
+					}).catch(error => {
+						console.log(error)
+					})
+				}else if(this.pickerLabel=='姓名'){
+					
+					let url=this.URLS.lostBabyFindUrl+'?name='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.lostList=data.data.data.content;
+						_this.lostPicUrls=[];
+						for (let i = 0; i < _this.lostList.length; i++) {
+							let id = _this.lostList[i].id;
+							this.lostPicUrls.push(this.yieldPicUrl(id));
+						}
+								
+					}).catch(error => {
+						console.log(error)
+					});
+					url=his.URLS.matchBabyFindUrl+'?name='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.findList=data.data.data.content;
+						_this.findPicUrls=[];
+						for (let i = 0; i < _this.findList.length; i++) {
+							let id = _this.findList[i].id;
+							this.findPicUrls.push(this.yieldPicUrl(id));
+						}
+					}).catch(error => {
+						console.log(error)
+					})
+				}else if(this.pickerLabel=='籍贯'){
+					let url=this.URLS.lostBabyFindUrl+'?nativePlace='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.lostList=data.data.data.content;
+						_this.lostPicUrls=[];
+						for (let i = 0; i < _this.lostList.length; i++) {
+							let id = _this.lostList[i].id;
+							this.lostPicUrls.push(this.yieldPicUrl(id));
+						}
+								
+					}).catch(error => {
+						console.log(error)
+					});
+					url=his.URLS.matchBabyFindUrl+'?nativePlace='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.findList=data.data.data.content;
+						_this.findPicUrls=[];
+						for (let i = 0; i < _this.findList.length; i++) {
+							let id = _this.findList[i].id;
+							this.findPicUrls.push(this.yieldPicUrl(id));
+						}
+					}).catch(error => {
+						console.log(error)
+					})
+					
+				}else if(this.pickerLabel=='失踪地点'){
+					let url=this.URLS.lostBabyFindUrl+'?place='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.lostList=data.data.data.content;
+						_this.lostPicUrls=[];
+						for (let i = 0; i < _this.lostList.length; i++) {
+							let id = _this.lostList[i].id;
+							this.lostPicUrls.push(this.yieldPicUrl(id));
+						}
+			
+					}).catch(error => {
+						console.log(error)
+					});
+					url=this.URLS.matchBabyFindUrl+'?place='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.findList=data.data.data.content;
+						_this.findPicUrls=[];
+						for (let i = 0; i < _this.findList.length; i++) {
+							let id = _this.findList[i].id;
+							this.findPicUrls.push(this.yieldPicUrl(id));
+						}
+					}).catch(error => {
+						console.log(error)
+					})
+				}
 			},
 			yieldPicUrl(id) {
 				if(this.lostShow){
@@ -210,6 +317,17 @@
 					return this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg"
 				}
 				
+			},
+			goToDetail(item,index,flag){
+				if(flag==0){
+					uni.navigateTo({
+						url:'/pages/tabbar-1-detail/baby-detail?data='+JSON.stringify(item)+'&src='+this.URLS.baseUrl + "/resource/photo/match/" + this.findList[index].id + ".jpg"
+					})
+				}else if(flag==1){
+					uni.navigateTo({
+						url:'/pages/tabbar-1-detail/baby-detail?data='+JSON.stringify(item)+'&src='+this.URLS.baseUrl + "/resource/photo/lost/" + this.lostList[index].id + ".jpg"
+					})
+				}
 			}
 		}
 	};
