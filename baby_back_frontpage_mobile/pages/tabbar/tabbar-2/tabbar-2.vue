@@ -1,5 +1,19 @@
 <template>
 	<view>
+		<!--模态框提示-->
+		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">发布提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					{{modalContent}}
+				</view>
+			</view>
+		</view>
 		<view class="mpvue-picker">
 			<mpvue-picker
 				:themeColor="themeColor"
@@ -17,19 +31,19 @@
 			<uni-icon type="arrowdown" color="#333333" size="22" @click="showSinglePicker"></uni-icon>
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text" placeholder="搜索帖子" confirm-type="search"></input>
+				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" v-model="searchInput" type="text" placeholder="搜索帖子" confirm-type="search"></input>
 			</view>
 			<view class="margin-tb-sm text-center">
-				<button class="cu-btn round bg-blue" style="margin-right: 20upx;">搜索</button>
+				<button class="cu-btn round bg-blue" style="margin-right: 20upx;" @click="searchClick">搜索</button>
 			</view>
 		</view>
 		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic" @click="navToDetails(item)">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
 					<view class="cu-item" @click="navToDetails(item)">
-						<view class="cu-avatar round lg" :style="{backgroundImage:'url(' + item.userimg + ')'}"></view>
+						<view class="cu-avatar round lg"></view>
 						<view class="content flex-sub">
-							<view>{{item.usernick}}</view>
+							<view>{{item.user.name}}</view>
 							<view class="text-gray text-sm flex justify-between">
 								{{item.date}}
 							</view>
@@ -101,48 +115,27 @@
 			mpvuePicker,
 			uniIcon
 		},
+		mounted:function () {
+			if(this.articleList.length<1)
+			{
+				this.refreshData();
+			}
+		},
 		data() {
 			return {
-				article: {
-					id:0,
-					title:'',
-					usernick:'',
-					userimg:'',
-					content:'',
-					date:'',
-					comments:[],
-					likeNum:0,
-					viewNum:0,
-					replyNum:0
-				},
+				isBottom:false,
+				searchInput:'',
+				pageNo :0,//当前页面数
+				totalPageNum:2,
+				modalName:null,
+				modalContent:null,
 				InputBottom:0,
 				//author:'贺谷牛牛',
 				//date:'2019-6-27',
 				//tittle:'用心耕耘 深情护送宝贝回家 —志愿者小梅寻亲成功案例的启示',
 				//content:"朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。他们有自己的名字，却并不知道自己真正姓甚名谁",
 				//imgList:[],
-				articleList:[
-					{
-						userimg:'../../../static/img/video.png',
-						usernick:'hgnn',
-						likeNum:10,
-						replyNum:20,
-						viewNum:5,
-						date:'2019-6-28 19:00:00',
-						title:'护送宝贝回家',
-						content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'
-						},
-					{
-						userimg:'../../../static/img/video.png',
-						usernick:'hgnn',
-						likeNum:10,
-						replyNum:20,
-						viewNum:5,
-						date:'2019-6-28 19:00:00',
-						title:'护送宝贝回家',
-						content:'朋友，当大家合家团圆、安享幸福的生活的时候，你有没有想到，这个世界上还有这样的一个群体。他们像浮萍一样漂浮地生活在这个世界上，脑海中残留的是童年心酸的灰色回忆，过的是度日如年的思亲生活。'
-						},
-				],
+				articleList:[],
 				themeColor: '#007AFF',
 				mode: '',
 				deepLength: 1,
@@ -161,6 +154,9 @@
 			}
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
 			onCancel(e) {
 				console.log(e);
 			},
@@ -176,8 +172,36 @@
 				this.pickerLabel=e.label;
 				//this.setStyle(0, e.label);
 			},
-			getArticleList(){
-				
+			resetData(){
+				console.log('RESET...')
+				this.pageNo=0;
+				this.articleList=[];
+				this.refreshData();
+			},
+			/**
+			 * @param {Object} pageNUm
+			 * size需要更改成为正确的大小
+			 */
+			refreshData() {
+				console.log('REFRESH...')
+				if(this.totalPageNum<=this.pageNo){
+					this.isBottom=true
+					console.log('已经到底了')
+					let _this = this
+					setTimeout(function(){ _this.isBottom=false; }, 1000);
+					return;
+					
+				}
+				let url =this.URLS.articleFindUrl +'?size=5&page='+this.pageNo;
+				this.pageNo +=1;
+				this.$api.post(url)
+					.then(data => {
+						this.totalPageNum = data.data.data.totalPages;
+						let appendList = data.data.data.content
+						this.articleList = this.articleList.concat(appendList);
+					}).catch(error => {
+						console.log(error)
+					})
 			},
 			InputFocus(e) {
 				this.InputBottom = e.detail.height
@@ -186,7 +210,24 @@
 				this.InputBottom = 0
 			},
 			searchClick(e){
-				
+				let _this=this;
+				if(this.pickerLabel=='用户'){
+					let url=this.URLS.articleFindByUserNameUrl+'?user_name='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.articleList=data.data.data.content;
+					}).catch(error => {
+						console.log(error)
+					})
+				}else if(this.pickerLabel=='内容'){
+					let url=this.URLS.articleFindUrl+'?key_word='+_this.searchInput;
+					this.$api.post(url).then(data => {
+						console.log(data);
+						_this.articleList=data.data.data.content;
+					}).catch(error => {
+						console.log(error)
+					})
+				}
 			},
 			ViewImage(e) {
 				uni.previewImage({
@@ -195,12 +236,20 @@
 				});
 			},
 			navToDetails(item){
-				let data = {
-					id: item.id,
-				}
+				console.log(item);
+				let data = item;
 				uni.navigateTo({
-					//url: '/pages/tabbar-2-detail/passage-detail?data=JSON.stringify(data)'
-					url: '/pages/tabbar-2-detail/passage-detail'
+					url: '/pages/tabbar-2-detail/passage-detail?data='+JSON.stringify(data)
+				})
+			},
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.user = data.data.data;
+					console.log(_this.user)
+				}).catch(error => {
+					console.log(error)
 				})
 			}
 		}

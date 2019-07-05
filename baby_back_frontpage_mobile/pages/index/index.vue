@@ -4,7 +4,7 @@
 		<tabbar_1 v-if="curPage == '1'" ref="tab1"></tabbar_1>
 		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
 		<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
-		<tabbar_2 v-if="curPage == '4'"></tabbar_2>
+		<tabbar_2 v-if="curPage == '4'" ref="tab4"></tabbar_2>
 		<tabbar_5 v-if="curPage == '5'"></tabbar_5>
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
@@ -53,8 +53,14 @@
 			}
 		},
 		onPullDownRefresh() {
-			console.log('funcker')
-			this.$refs.tab1.resetData()
+			if(this.curPage==1){
+				this.$refs.tab1.resetData();
+			}else if(this.curPage==4){
+				this.$refs.tab4.resetData();
+			}
+			
+			
+			
 			setTimeout(() => {
             uni.stopPullDownRefresh();
         }, 2000);
@@ -62,7 +68,11 @@
 		},
 		onReachBottom() {
 			console.log('me')
-			this.$refs.tab1.refreshData()
+			if(this.curPage==1){
+				this.$refs.tab1.refreshData();
+			}else if(this.curPage==4){
+				this.$refs.tab4.refreshData();
+			}
 		},
 		onLoad(){
 			

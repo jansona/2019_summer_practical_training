@@ -59,12 +59,14 @@
 	export default {
 		onReady: function() {
 			//let userId=this.$store.state.userId
-			let userId = 2
+			console.log('ON READY...');
+			let userId = 2;
 			this.getUser(userId)
 		},
 		data() {
 			return {
 				modalName:null,
+				modalContent:null,
 				imgList: [],
 				content: '',
 				title: '',

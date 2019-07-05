@@ -319,6 +319,15 @@
 			formReset: function (e) {
 				console.log("清空数据")
 				this.chosen = ''
+			},
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.user = data.data.data
+				}).catch(error => {
+					console.log(error)
+				})
 			}
 		}
 	}
