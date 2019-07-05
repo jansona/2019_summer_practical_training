@@ -9,13 +9,13 @@
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="1">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/find' + [curPage=='1'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/find' + [curPage=='1'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="2">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/urgence' + [curPage == '2'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/urgence' + [curPage == '2'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 			<view class="action text-gray add-action" @click="onAddClick" data-cur="plugin">
@@ -28,13 +28,13 @@
 				</view>
 			</view> -->
 			<view class="action" @click="NavChange" data-cur="4">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/bbc' + [curPage == '4'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/bbc' + [curPage == '4'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="5">
-				<view style="margin:0 auto;margin-top: 5upx;margin-bottom: -20upx;">
-					<image style="width: 90upx;height: 90upx;" :src="'/static/img/tabbar/my' + [curPage == '5'?'active':''] + '.png'"></image>
+				<view style="margin:0 auto;margin-bottom: -20upx;">
+					<image style="width: 100upx;height: 100upx;" :src="'/static/img/tabbar/my' + [curPage == '5'?'active':''] + '.png'"></image>
 				</view>
 			</view>
 		</view>
