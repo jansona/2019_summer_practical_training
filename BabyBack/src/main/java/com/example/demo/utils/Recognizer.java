@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 @Service(value = "RecognizeService")
@@ -82,7 +83,6 @@ public class Recognizer {
                 responseBase = new ResponseBase(50006, "自然语言分析异常", null);
             }else{
                 for(int i=0; i<4; i++) {
-                    String id = tempStr;
                     tempStr = input.readLine();
                 }
                 while(tempStr != null){
@@ -109,7 +109,7 @@ public class Recognizer {
         ArrayList<LostBaby> matchedBabies = new ArrayList<>();
         for(String id : ids){
             try{
-                LostBaby lostBaby = lostBabyRepository.findById(Integer.valueOf(id)).get();
+                LostBaby lostBaby = recognizer.lostBabyRepository.findById(Integer.valueOf(id)).get();
                 lostBaby.setUser(null);
                 matchedBabies.add(lostBaby);
             }catch (Exception e){
