@@ -26,6 +26,10 @@
 					<input disabled="true" :placeholder="item.sex"></input>
 				</view>
 				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">出生日期</view>
+					<input disabled="true" :placeholder="item.birthday"></input>
+				</view>
+				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">籍贯</view>
 					<input disabled="true" :placeholder="item.nativePlace"></input>
 				</view>
@@ -36,6 +40,80 @@
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">特征</view>
 					<input disabled="true" :placeholder="item.babyDescription"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">失踪日期</view>
+					<input disabled="true" :placeholder="item.date"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">失踪地点</view>
+					<input disabled="true" :placeholder="item.place"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">失踪过程</view>
+					<input disabled="true" :placeholder="item.missDescription"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">其他描述</view>
+					<input disabled="true" :placeholder="item.otherDescription"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">其他说明</view>
+					<input disabled="true" :placeholder="item.otherExplain"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">联系人</view>
+					<input disabled="true" :placeholder="item.contactName"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">手机号</view>
+					<input disabled="true" :placeholder="item.contactPhone"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">邮箱</view>
+					<input disabled="true" :placeholder="item.contactEmail"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">其他方式</view>
+					<input disabled="true" :placeholder="item.otherContactMethod"></input>
+				</view>
+			</form>
+		</view>
+		<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;" v-show="findShow" v-for="(item,index) in findList" :key=index>
+			<view class="padding bg-white">
+				<view class="avatar">
+					<image :src="findPicUrls[index]" mode="aspectFit">
+					</image>
+				</view>
+			</view>
+			<form>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">姓名</view>
+					<input disabled="true" :placeholder="item.name"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">性别</view>
+					<input disabled="true" :placeholder="item.sex"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">出生日期</view>
+					<input disabled="true" :placeholder="item.birthday"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">籍贯</view>
+					<input disabled="true" :placeholder="item.nativePlace"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">身高</view>
+					<input disabled="true" :placeholder="item.height"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">特征</view>
+					<input disabled="true" :placeholder="item.babyDescription"></input>
+				</view>
+				<view class="cu-form-group">
+					<view class="title" style="width: 150upx;">失踪日期</view>
+					<input disabled="true" :placeholder="item.date"></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪地点</view>
@@ -77,9 +155,9 @@
 <script>
 	export default {
 		mounted:function() {
-			let userid=2;
-			this.getUser(userid);
-			console.log(this.user);
+			uni.setNavigationBarTitle({
+				title: '我的发布'
+			});
 			this.getData();
 		},
 		data() {
@@ -87,10 +165,10 @@
 				tabCurrentIndex: 0, //当前选项卡索引
 				scrollLeft: 0, //顶部选项卡左滑距离
 				lostList:[],
-				lostPicUrls:{},
+				lostPicUrls:[],
 				findList:[],
-				findPicUrls:{},
-				user:{},
+				findPicUrls:[],
+				userid:2,
 				lostShow:true,
 				findShow:false
 			}
@@ -114,32 +192,33 @@
 			 */
 			getData() {
 				let _this=this;
-				if(this.lostShow){
-					let url =this.URLS.lostBabyFindByUserUrl +'?user='+this.user;
-					console.log(url);
-					this.$api.post(url)
+				
+					let losturl =this.URLS.lostBabyFindByUserUrl+'?user='+this.userid;
+					this.$api.post(losturl)
 						.then(data => {
-							_this.lostList = data.data.data.content
+							console.log(data);
+							_this.lostList = data.data.data.content;
+							console.log(_this.lostList);
 							for (let i = 0; i < _this.lostList.length; i++) {
 								let id = _this.lostList[i].id;
-								_this.lostPicUrls.push(_this.yieldPicUrl(id));
+								_this.lostPicUrls.push(this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg");
 							}
 						}).catch(error => {
 							console.log(error)
 						})
-				}else{
-					let url =this.URLS.matchBabyFindByUserUrl +'?user='+this.user
-					this.$api.post(url)
+				
+					let findurl =this.URLS.matchBabyFindByUserUrl +'?user='+this.userid
+					this.$api.post(findurl)
 						.then(data => {
 							_this.findList = data.data.data.content;
 							for (let i = 0; i < _this.findList.length; i++) {
 								let id = _this.findList[i].id;
-								_this.findPicUrls.push(_this.yieldPicUrl(id));
+								_this.findPicUrls.push(this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg")
 							}
 						}).catch(error => {
 							console.log(error)
 						})
-				}
+				
 			
 			},
 			getUser(userId) {

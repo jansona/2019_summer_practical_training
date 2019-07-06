@@ -159,6 +159,7 @@
 			return {
 				matchbabyid:-1,
 				imgList:[],
+				isSend:false,
 				findParentForm: {
 					id: '',
 					name: '',
@@ -253,6 +254,11 @@
 				this.findParentForm.date = e.detail.value
 			},
 			formSubmit: function (e) {
+				if(this.isSend==true){
+					_this.modalName='Modal';
+					_this.modalContent='已经发布过了~';
+					return;
+				}
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
 				let _this=this;
@@ -284,7 +290,7 @@
 				//上传表单信息
 				this.$api.post(this.URLS.matchBabyInsertUrl,this.findParentForm).then(data => {
 					//console.log(data)
-					_this.matchbabyid=data.data.id;
+					_this.matchbabyid=data.data.data.id;
 					console.log(_this.matchbabyid);
 					//上传图片
 					if (_this.imgList != null && _this.imgList.length > 0) {
@@ -298,6 +304,7 @@
 							},
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes);
+								_this.isSend=true;
 								_this.modalName='Modal';
 								_this.modalContent='发布成功！';
 							},

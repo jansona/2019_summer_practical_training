@@ -4,7 +4,7 @@
 		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">发布提示</view>
+					<view class="content">查找提示</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
@@ -42,8 +42,8 @@
 				<view class="cu-list menu-avatar">
 					<view class="cu-item">
 						<view class="cu-avatar round lg"></view>
-						<view class="content flex-sub" style="margin-top:30upx;">
-							<view>{{item.user.name}}</view>
+						<view class="content flex-sub" style="margin-top:5upx;">
+							<view>{{item.user.username}}</view>
 							<view class="text-gray text-sm flex justify-between">
 								{{item.date}}
 							</view>
@@ -61,49 +61,11 @@
 				</view>
 				<view class="text-gray text-sm text-right padding">
 					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
-					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
+					<text class="cuIcon-appreciatefill margin-lr-xs" @click="articleLike(item)"></text> {{item.likeNum}}
 					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
 				</view>
 			</view>
-        <!-- <view class="cu-tabbar-height"></view> -->
 		</view>
-		<!-- <view class="cu-card dynamic">
-			<view class="cu-item shadow">
-				<view class="cu-list menu-avatar">
-					<view class="cu-item">
-						<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
-						<view class="content flex-sub">
-							<view>{{author}}</view>
-							<view class="text-gray text-sm flex justify-between">
-								{{date}}
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="title">
-					<view class="text-cut" style="font-weight: 700;padding-left: 10upx;">{{tittle}}</view>
-				</view>
-				<view class="passage-content" style="margin-top: 5upx;">
-					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
-					<image src="../../../static/logo.png" style="max-height:200upx;max-width: 200upx;"></image>
-					<view class="desc"><view class="text-content">{{content}}</view></view>
-				</view>
-			</view>
-		</view> -->
-		<!-- <view class="cu-card article">
-			<view class="cu-item shadow">
-				<view class="title"><view class="text-cut">{{tittle}}</view></view>
-				<view class="text-content">
-					<view class="desc">
-						<view>
-							<view class="cu-tag bg-red light sm round">{{author}}</view>
-							<view class="cu-tag bg-green light sm round">{{date}}</view>
-						</view>
-						<view class="text-content">{{content}}</view>
-					</view>
-				</view>
-			</view>
-		</view> -->
 	</view>
 </template>
 
@@ -248,6 +210,16 @@
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data;
 					console.log(_this.user)
+				}).catch(error => {
+					console.log(error)
+				})
+			},
+			articleLike(item){
+				console.log('点赞...');
+				let url=this.URLS.articleLikeUrl+'?article_id='+item.id;
+				this.$api.post(url).then(data => {
+					item.likeNum+=1;
+					console.log(data)
 				}).catch(error => {
 					console.log(error)
 				})

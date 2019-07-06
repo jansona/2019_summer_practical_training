@@ -9,26 +9,59 @@
 				我的评论
 			</view>
 		</scroll-view>
+
+		<!--帖子列表-->
+		<view v-show="articleShow" v-for="(item, index) in articleList" :key="index" class="cu-card dynamic">
+			<view class="cu-item shadow">
+				<view class="cu-list menu-avatar">
+					<view class="cu-item">
+						<view class="cu-avatar round lg"></view>
+						<view class="content flex-sub" style="margin-top:5upx;">
+							<view>{{item.user.username}}</view>
+							<view class="text-gray text-sm flex justify-between">
+								{{item.date}}
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="title" @click="navToDetails(item)">
+					<view class="text-cut" style="font-weight: 700;margin-left: 15upx;margin-top: 15upx;">{{item.title}}</view>
+				</view>
+				<view class="passage-content" style="margin-top: 5upx;" @click="navToDetails(item)">
+					<!-- <view class="bg-img" v-for="(item1,index1) in item.imgList" :key="index1">
+						<image :src="item1.value" style="max-height:200upx;max-width: 200upx;"></image>
+					</view> -->
+					<view class="desc">
+						<view class="text-content">{{item.content}}</view>
+					</view>
+				</view>
+				<view class="text-gray text-sm text-right padding">
+					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
+					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
+					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	export default {
-		mounted:function() {
-			let userid=2;
-			this.getUser(userid);
-			console.log(this.user);
+		mounted: function() {
+			uni.setNavigationBarTitle({
+				title: '我的帖子'
+			});
 			this.getData();
 		},
 		data() {
 			return {
 				tabCurrentIndex: 0, //当前选项卡索引
 				scrollLeft: 0, //顶部选项卡左滑距离
-				articlList:[],
-				commentList:[],
-				user:{},
-				articleShow:true,
-				commentShow:false
+				articlList: [],
+				commentList: [],
+				userid: 2,
+				articleShow: true,
+				commentShow: false
 			}
 		},
 		methods: {
@@ -49,34 +82,28 @@
 			 * size需要更改成为正确的大小
 			 */
 			getData() {
-				let _this=this;
-				if(this.lostShow){
-					let url =this.URLS.lostBabyFindByUserUrl +'?user='+this.user;
-					console.log(url);
-					this.$api.post(url)
-						.then(data => {
-							_this.lostList = data.data.data.content
-							for (let i = 0; i < _this.lostList.length; i++) {
-								let id = _this.lostList[i].id;
-								_this.lostPicUrls.push(_this.yieldPicUrl(id));
-							}
-						}).catch(error => {
-							console.log(error)
-						})
-				}else{
-					let url =this.URLS.matchBabyFindByUserUrl +'?user='+this.user
-					this.$api.post(url)
-						.then(data => {
-							_this.findList = data.data.data.content;
-							for (let i = 0; i < _this.findList.length; i++) {
-								let id = _this.findList[i].id;
-								_this.findPicUrls.push(_this.yieldPicUrl(id));
-							}
-						}).catch(error => {
-							console.log(error)
-						})
-				}
-			
+				let _this = this;
+
+				let articleurl = this.URLS.articleFindByUserUrl + '?user=' + this.userid;
+				console.log(articleurl);
+				this.$api.post(articleurl)
+					.then(data => {
+						console.log(data);
+						_this.articleList = data.data.data.content;
+						console.log(_this.articlList)
+					}).catch(error => {
+						console.log(error)
+					})
+
+				// let commenturl =this.URLS.commentFindByUserUrl +'?user='+this.user
+				// this.$api.post(url)
+				// 	.then(data => {
+				// 		_this.commentList = data.data.data.content;
+				// 	}).catch(error => {
+				// 		console.log(error)
+				// 	})
+
+
 			},
 			getUser(userId) {
 				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
@@ -86,10 +113,36 @@
 				}).catch(error => {
 					console.log(error)
 				})
-			}
+			},
+			navToDetails(item){
+				console.log(item);
+				let data = item;
+				uni.navigateTo({
+					url: '/pages/tabbar-2-detail/passage-detail?data='+JSON.stringify(data)
+				})
+			},
 		},
 	}
 </script>
 
 <style>
+	.content {
+		text-align: center;
+		margin-top: 150upx;
+	},
+	.passage-content {
+		text-align: center;
+		height: 30upx;
+		margin-top: 0;
+	},
+	.text-content{
+		text-align: center;
+		padding-left: 5upx;
+		padding-right: 5upx;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		display:-webkit-box;
+		-webkit-line-clamp:1;
+		-webkit-box-orient:vertical;
+	}
 </style>

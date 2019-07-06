@@ -18,7 +18,7 @@
 							<view class="icon"><img src="../../../../static/user/favorite.png"></view>
 							<view class="text">我的发布</view>
 						</view>
-						<view class="item">
+						<view class="item" @click="goToPage('../tabbar-5-detail/my-card')">
 							<view class="icon"><img src="../../../../static/user/service.png"></view>
 							<view class="text">我的帖子</view>
 						</view>

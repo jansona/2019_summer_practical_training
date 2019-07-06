@@ -6,7 +6,7 @@
 				<view class="introduce-section">
 					<text class="title">{{article.title}}</text>
 					<view class="introduce">
-						<text>{{article.user.name}}</text>
+						<text>{{article.user.username}}</text>
 						<text>{{article.date}}</text>
 					</view>
 
@@ -15,7 +15,7 @@
 
 					<view class="text-gray text-lg text-center padding">
 						<text class="cuIcon-attentionfill margin-lr-xs"></text> {{article.viewNum}}
-						<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{article.likeNum}}
+						<text class="cuIcon-appreciatefill margin-lr-xs" @click="articleLike"></text> {{article.likeNum}}
 						<text class="cuIcon-messagefill margin-lr-xs"></text> {{article.replyNum}}
 					</view>
 				</view>
@@ -48,7 +48,7 @@
 						</view>
 						<view class="uni-comment-body">
 							<view class="uni-comment-top" style="text-align: left">
-								<text>{{item.user.name}}</text>
+								<text>{{item.user.username}}</text>
 							</view>
 							<view class="uni-comment-date">
 								<text>{{item.date}}</text>
@@ -157,6 +157,16 @@
 						title:'发送成功'
 					})
 					_this.comment.content=''
+				}).catch(error => {
+					console.log(error)
+				})
+			},
+			articleLike(){
+				console.log('点赞...');
+				let url=this.URLS.articleLikeUrl+'?article_id='+this.article.id;
+				this.$api.post(url).then(data => {
+					this.article.likeNum+=1;
+					console.log(data)
 				}).catch(error => {
 					console.log(error)
 				})
