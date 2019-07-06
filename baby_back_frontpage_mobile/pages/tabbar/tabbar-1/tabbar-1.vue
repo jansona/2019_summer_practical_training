@@ -57,7 +57,12 @@
 			uniIcon
 		},
 		mounted:function () {
-			this.refreshData();
+			if(this.searchInput!=''){
+				
+			}else{
+				this.refreshData();
+			}
+			
 		},
 		data() {
 			return {
@@ -245,7 +250,7 @@
 					}).catch(error => {
 						console.log(error)
 					});
-					url=his.URLS.matchBabyFindUrl+'?name='+_this.searchInput;
+					url=this.URLS.matchBabyFindUrl+'?name='+_this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
 						_this.findList=data.data.data.content;

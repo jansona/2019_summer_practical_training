@@ -8,23 +8,23 @@
 		</view>
 		<view class="cu-form-group">
 			<view class="title">姓名</view>
-			<input disabled="true" :placeholder="babyDetail.name"></input>
+			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.name"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">性别</view>
-			<input disabled="true" :placeholder="babyDetail.sex"></input>
+			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.sex"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">籍贯</view>
-			<input disabled="true" :placeholder="babyDetail.nativePlace"></input>
+			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.nativePlace"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">身高</view>
-			<input disabled="true" :placeholder="babyDetail.height"></input>
+			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.height"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">特征</view>
-			<input disabled="true" :placeholder="babyDetail.babyDescription"></input>
+			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.babyDescription"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">失踪地点</view>

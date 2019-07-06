@@ -282,7 +282,7 @@
 					return;
 				}
 				//上传表单信息
-				this.$api.put(this.URLS.matchBabyInsertUrl,this.findParentForm).then(data => {
+				this.$api.post(this.URLS.matchBabyInsertUrl,this.findParentForm).then(data => {
 					//console.log(data)
 					_this.matchbabyid=data.data.id;
 					console.log(_this.matchbabyid);

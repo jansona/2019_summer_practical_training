@@ -100,9 +100,7 @@ function dateFormat(time) {
  	}
  };
 
- module.exports = {
- 	dateFormat: dateFormat,
- 	formatTime: formatTime,
- 	formatLocation: formatLocation,
- 	dateUtils: dateUtils
+ const DATEFORMAT = {
+	 dateFormat: dateFormat
  }
+module.exports = DATEFORMAT
