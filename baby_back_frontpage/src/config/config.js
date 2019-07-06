@@ -3,6 +3,7 @@ let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
   baseUrl = 'http://127.0.0.1:18080'
+  baseUrl2 = 'http://127.0.0.1:18080'
 } else if (mode == 'hbj'){
   baseUrl = 'http://192.168.137.1:18080'
 } else if (mode == 'prod'){
@@ -24,11 +25,14 @@ const uploadPictureUrl = baseUrl + "/file/upload"
 const uploadTxtAndRecogUrl = baseUrl + "/file/analyze-txt"
 
 // 登录注册部分
-const loginUrl = baseUrl2 + "/api/auth/oauth/token"
+// const loginUrl = baseUrl2 + "/api/auth/oauth/token"
+const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
-const userInfoUrl = baseUrl2 + '/api/admin/user/infoTel'
-const logoutUrl = baseUrl2+ '/api/auth/token/logout'
+// const userInfoUrl = baseUrl2 + '/api/admin/user/infoTel'
+const userInfoUrl = baseUrl + '/user/infoTel'
+// const logoutUrl = baseUrl2+ '/api/auth/token/logout'
+const logoutUrl = baseUrl + '/logout'
 
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'

@@ -3,7 +3,7 @@
     <div v-for="(article,index) in articles" :key="index">
       <el-row>
         <el-col :span="2">
-          <el-avatar :src="require('@/assets/house.jpg')" />
+          <el-avatar :src="yieldPicUrl(article.user.profileUrl)" />
         </el-col>
         <el-col :span="18">
           <p style="margin-bottom: 5px">
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import URLS from "@/config/config";
 export default {
   name: "articles",
   props: {
@@ -79,6 +80,9 @@ export default {
         seconds
       );
     },
+    yieldPicUrl(partialUrl){
+      return URLS.baseUrl + partialUrl;
+    }
   }
 };
 </script>

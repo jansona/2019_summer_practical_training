@@ -69,7 +69,7 @@ import articles from "../bbs/articles";
 import ArticleInfiniteList from "./components/ArticleInfiniteList";
 import CommentInfiniteList from "./components/CommentInfiniteList";
 const nameDict = {
-  name: "姓名",
+  username: "姓名",
   tel: "邮箱",
   email: "联系地址"
 };
