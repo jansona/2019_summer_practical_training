@@ -176,7 +176,7 @@
 					otherContactMethod: '',
 					
 					user: {
-						id: 2,
+						id: this.$store.state.userId,
 					}
 				},
 				modalName: null,
@@ -326,6 +326,9 @@
 							name: 'file',
 							formData: {
 								'id': _this.lostbabyid
+							},
+							header: {
+								'Authorization': 'Bearer '+ this.$store.state.token
 							},
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes);

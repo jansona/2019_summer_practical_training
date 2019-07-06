@@ -87,27 +87,28 @@
 				//           });
 				//           return;
 				//       }
-				// this.$api.request({
-				// 		url: this.URLS.loginUrl,
-				// 		data: JSON.parse(JSON.stringify({
-				// 			'username': 123,
-				// 			'password': 123,
-				// 			'grant_type': 'password'
-				// 		})),
-				// 		method: "POST",
-				// 		header: {
-				// 			'Content-Type':'application/x-www-form-urlencoded',
-				// 			// 'Content-Type':'application/x-www-form-urlencoded',
-				// 			'Access-Control-Allow-Origin': '*',
-				// 			'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
-				// 		}}
 				
-				this.$store.commit('setToken','')
-				this.$api.post( this.URLS.loginUrl,{
-							'username': this.phoneData,
-							'password': this.passData,
+				// this.$store.commit('setToken','')
+				// this.$api.post( this.URLS.loginUrl,{
+				// 			'username': this.phoneData,
+				// 			'password': this.passData,
+				// 			'grant_type': 'password'
+				// 		}
+				
+				this.$api.request({
+						url: this.URLS.loginUrl,
+						data: JSON.parse(JSON.stringify({
+							'username': 123,
+							'password': 123,
 							'grant_type': 'password'
-						}
+						})),
+						method: "POST",
+						header: {
+							'Content-Type':'application/x-www-form-urlencoded',
+							// 'Content-Type':'application/x-www-form-urlencoded',
+							'Access-Control-Allow-Origin': '*',
+							'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
+						}}
 					).then(data => {
 						console.log("login:", data);
 						this.$store.commit('setToken', data.data.access_token)
