@@ -42,7 +42,7 @@
 				<view class="cu-list menu-avatar">
 					<view class="cu-item">
 						<view class="cu-avatar round lg"></view>
-						<view class="content flex-sub">
+						<view class="content flex-sub" style="margin-top:30upx;">
 							<view>{{item.user.name}}</view>
 							<view class="text-gray text-sm flex justify-between">
 								{{item.date}}
@@ -263,17 +263,17 @@
 	},
 	.passage-content {
 		text-align: center;
-		height: 110upx;
+		height: 30upx;
 		margin-top: 0;
 	},
 	.text-content{
 		text-align: center;
-		padding-left: 3upx;
-		padding-right: 3upx;
+		padding-left: 5upx;
+		padding-right: 5upx;
 		overflow:hidden;
 		text-overflow:ellipsis;
 		display:-webkit-box;
-		-webkit-line-clamp:3;
+		-webkit-line-clamp:1;
 		-webkit-box-orient:vertical;
 	}
 	
