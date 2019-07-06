@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;">
 		<view class="padding bg-white">
 			<view class="avatar">
 				<image :src="imgsrc" mode="aspectFit">
@@ -29,7 +29,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">失踪地点</view>
-				<input disabled="true" :placeholder="babyDetail.sex"></input>
+				<input disabled="true" :placeholder="babyDetail.place"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">失踪过程</view>

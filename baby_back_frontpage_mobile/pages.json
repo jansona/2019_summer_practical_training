@@ -67,6 +67,14 @@
 		{
 			"path": "pages/tabbar-4-detail/releaseurgence",
 			"style": {}
+		},
+		{
+			"path": "pages/tabbar-5-detail/my-card",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-5-detail/my-release",
+			"style": {}
 		}
     ],
 	"globalStyle": {
