@@ -6,58 +6,61 @@
 				</image>
 			</view>
 		</view>
-		<view class="cu-form-group">
-			<view class="title">姓名</view>
-			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.name"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">性别</view>
-			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.sex"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">籍贯</view>
-			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.nativePlace"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">身高</view>
-			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.height"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">特征</view>
-			<input disabled="true" style="margin-left: 58upx;" :placeholder="babyDetail.babyDescription"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">失踪地点</view>
-			<input disabled="true" :placeholder="babyDetail.sex"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">失踪过程</view>
-			<input disabled="true" :placeholder="babyDetail.missDescription"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">其他描述</view>
-			<input disabled="true" :placeholder="babyDetail.otherDescription"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">其他说明</view>
-			<input disabled="true" :placeholder="babyDetail.otherExplain"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">联系人</view>
-			<input disabled="true" :placeholder="babyDetail.contactName"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">手机号</view>
-			<input disabled="true" :placeholder="babyDetail.contactPhone"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">邮箱</view>
-			<input disabled="true" :placeholder="babyDetail.contactEmail"></input>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">其他联系方式</view>
-			<input disabled="true" :placeholder="babyDetail.otherContactMethod"></input>
-		</view>
+		<form>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">姓名</view>
+				<input disabled="true" :placeholder="babyDetail.name"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">性别</view>
+				<input disabled="true" :placeholder="babyDetail.sex"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">籍贯</view>
+				<input disabled="true" :placeholder="babyDetail.nativePlace"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">身高</view>
+				<input disabled="true" :placeholder="babyDetail.height"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">特征</view>
+				<input disabled="true" :placeholder="babyDetail.babyDescription"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">失踪地点</view>
+				<input disabled="true" :placeholder="babyDetail.sex"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">失踪过程</view>
+				<input disabled="true" :placeholder="babyDetail.missDescription"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">其他描述</view>
+				<input disabled="true" :placeholder="babyDetail.otherDescription"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">其他说明</view>
+				<input disabled="true" :placeholder="babyDetail.otherExplain"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">联系人</view>
+				<input disabled="true" :placeholder="babyDetail.contactName"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">手机号</view>
+				<input disabled="true" :placeholder="babyDetail.contactPhone"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">邮箱</view>
+				<input disabled="true" :placeholder="babyDetail.contactEmail"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">其他方式</view>
+				<input disabled="true" :placeholder="babyDetail.otherContactMethod"></input>
+			</view>
+		</form>
+		
 	</view>
 </template>
 
