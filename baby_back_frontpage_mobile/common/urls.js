@@ -16,6 +16,10 @@ const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
 const matchBabyFindUrl = baseUrl + "/match-baby/find"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
+//查找lost,find
+const lostBabyFindByUserUrl = baseUrl + "/lost-baby/find-by-user"
+const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
+
 // 登录注册部分
 const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/register"
@@ -60,7 +64,9 @@ const URLS = {
 	commentFindByUserUrl,
 	commentInsertUrl,
   userFindUrl,
-	userFindByIdUrl
+	userFindByIdUrl,
+	lostBabyFindByUserUrl,
+	matchBabyFindByUserUrl
 }
 
 module.exports = URLS

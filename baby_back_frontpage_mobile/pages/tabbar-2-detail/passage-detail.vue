@@ -99,8 +99,8 @@
 				user: {},
 				comment: {
 					"article": {},
-					"content": "好吃",
-					"date": "2019-07-05T03:34:34.444Z",
+					"content": "",
+					"date": "",
 					"id": 0,
 					"user": {}
 				}

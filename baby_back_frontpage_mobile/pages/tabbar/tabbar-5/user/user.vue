@@ -14,7 +14,7 @@
 							<view class="icon"><img src="../../../../static/user/message.png"></view>
 							<view class="text">我的关注</view>
 						</view>
-						<view class="item">
+						<view class="item" @click="goToPage('../tabbar-5-detail/my-release')">
 							<view class="icon"><img src="../../../../static/user/favorite.png"></view>
 							<view class="text">我的发布</view>
 						</view>
