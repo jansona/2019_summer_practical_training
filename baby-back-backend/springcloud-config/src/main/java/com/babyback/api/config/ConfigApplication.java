@@ -8,8 +8,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 /**
  * 分布式配置中心  Config
  *
- * @author tycoyyding
- * @date 2019-05-21
  */
 @EnableConfigServer
 @EnableEurekaClient

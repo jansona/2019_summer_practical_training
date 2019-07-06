@@ -3,9 +3,12 @@ package com.example.demo.utils;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Console;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +16,8 @@ import java.net.*;
 import java.util.Enumeration;
 
 public class FileManager<RequestMapping> {
+    @Value("${server.ip}")
+    private String IP;
 
     enum Path {
         BASE,
@@ -69,7 +74,8 @@ public class FileManager<RequestMapping> {
                 System.out.println(String.format("文件种类：%d,路径：%s", i,files[i].getAbsolutePath()));
             }
             String ip = getFirstNonLoopbackAddress(true,false).getHostAddress();
-            System.out.println(String.format("IP:%s",ip));
+            String hostName = getFirstNonLoopbackAddress(true,false).getHostName();
+            System.out.println(String.format("IP:%s,hostName:%s",ip,hostName));
         } catch (Exception e){
             e.printStackTrace();
         }

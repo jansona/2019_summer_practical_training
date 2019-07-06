@@ -6,7 +6,7 @@ spring:
     name: springcloud-admin-biz
 
   profiles:
-    active: pro
+    active: dev
   cloud:
     config:
       name: ${spring.application.name}
