@@ -3,17 +3,10 @@ package com.example.demo.utils;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
-import java.net.*;
-import java.util.Enumeration;
 
 public class FileManager<RequestMapping> {
 
@@ -41,7 +34,6 @@ public class FileManager<RequestMapping> {
         for (int i = 0; i < files.length; i++) {
             files[i] = new File(paths[i]);
         }
-        System.out.println("文件0路径为："+files[0].getAbsolutePath());
     }
 
     public ResponseBase saveLostPic(MultipartFile file, String fileName) {

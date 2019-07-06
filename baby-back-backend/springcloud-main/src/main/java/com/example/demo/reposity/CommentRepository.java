@@ -3,7 +3,7 @@ package com.example.demo.reposity;
 import com.example.demo.entity.Article;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.User;
-import lombok.Value;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

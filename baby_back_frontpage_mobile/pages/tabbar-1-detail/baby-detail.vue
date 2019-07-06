@@ -95,7 +95,7 @@
 		overflow: hidden;
 		display: inline-flex;
 		align-items: center;
-		background-color: #ccc;
+		background-color: #FFFFFF;
 		color: #ffffff;
 		width: 100%;
 		height: 400upx;

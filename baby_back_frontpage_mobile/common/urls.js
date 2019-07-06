@@ -41,6 +41,8 @@ const articleDeleteUrl = baseUrl + '/article/delete'
 const articleFindByUserUrl = baseUrl + '/article/find-by-user'
 const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
 const articleInsertUrl = baseUrl + '/article/insert'
+const articleLikeUrl = baseUrl + '/article/like'
+
 //评论部份
 const commentFindUrl = baseUrl + '/comment/find'
 const commentDeleteUrl = baseUrl + '/comment/delete'
@@ -70,6 +72,7 @@ const URLS = {
   articleFindByUserUrl,
 	articleFindByUserNameUrl,
   articleInsertUrl,
+	articleLikeUrl,
 	commentFindUrl,
 	commentDeleteUrl,
 	commentFindByArticleUrl,

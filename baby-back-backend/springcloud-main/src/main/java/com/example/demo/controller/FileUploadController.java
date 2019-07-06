@@ -16,12 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.Random;
-import java.util.logging.ConsoleHandler;
 
 @CrossOrigin
 @RestController
@@ -40,6 +37,7 @@ public class FileUploadController {
         System.out.println("FileUploadController:"+IP+":"+port);
     }
 
+
     public static enum Action {
         AS_PROFILE,
         AS_LOST_PICS,
@@ -57,8 +55,6 @@ public class FileUploadController {
     @Autowired
     MatchBabyRepository matchBabyRepository;
 
-    @Autowired
-    RemoteUploadService remoteUploadService;
 
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
@@ -76,7 +72,6 @@ public class FileUploadController {
         ResponseBase responseBase;
         String postfix = "";
         ArrayList<String> matches = null;
-        show();
 
         String fileName;
         try {
@@ -111,6 +106,11 @@ public class FileUploadController {
         return responseBase;
     }
 
+    @ApiOperation("自然语言分析接口")
+    @PostMapping("/analyze-txt")
+    public ResponseBase getTextAndRecog(@RequestBody String txt){
+        return recognizer.analyze(txt);
+    }
 
     public String generateRandomFilename() {
         String RandomFilename;
@@ -138,7 +138,6 @@ public class FileUploadController {
         } catch (Exception e){
             e.printStackTrace();
         }
-
 
         switch (action){
             case AS_PROFILE:

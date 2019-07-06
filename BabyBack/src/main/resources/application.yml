@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/babyBack?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 959959
+  jpa:
+    hibernate:
+      ddl-auto: update
+    #  在控制台显示数据表
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    timeout: 10000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 18080
+

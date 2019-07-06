@@ -255,8 +255,8 @@
 			},
 			formSubmit: function (e) {
 				if(this.isSend==true){
-					_this.modalName='Modal';
-					_this.modalContent='已经发布过了~';
+					this.modalName='Modal';
+					this.modalContent='已经发布过了~';
 					return;
 				}
 				//将下列代码加入到对应的检查位置
