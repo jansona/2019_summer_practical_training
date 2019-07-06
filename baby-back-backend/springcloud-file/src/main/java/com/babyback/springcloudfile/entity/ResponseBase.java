@@ -1,12 +1,8 @@
 package com.babyback.springcloudfile.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+
 public class ResponseBase {
     public Integer rtnCode;
     private String msg;
@@ -23,6 +19,40 @@ public class ResponseBase {
 
     public ResponseBase error(String e) {
         return new ResponseBase(500, e, null);
+    }
+
+    public Integer getRtnCode() {
+        return rtnCode;
+    }
+
+    public void setRtnCode(Integer rtnCode) {
+        this.rtnCode = rtnCode;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public ResponseBase() {
+    }
+
+    public ResponseBase(Integer rtnCode, String msg, Object data) {
+
+        this.rtnCode = rtnCode;
+        this.msg = msg;
+        this.data = data;
     }
 }
 
