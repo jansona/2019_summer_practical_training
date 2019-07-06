@@ -31,7 +31,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.babyback.api.gateway.GatewayApplication</mainClass>
+                    <mainClass>com.babyback.api.gateway.ZuulApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

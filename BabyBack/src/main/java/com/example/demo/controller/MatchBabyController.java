@@ -40,8 +40,14 @@ public class MatchBabyController {
     @PostMapping("/find")    // TODO 填写节点
     public ResponseBase findMatchBaby(@PageableDefault(value = 20, sort = {"id"}, direction = Sort.Direction.DESC) @ApiParam(value = "分页信息")
                                                  Pageable pageable,
-                                      @RequestParam(value = "id", required = false, defaultValue = "") String id) {
-        Specification<MatchBaby> matchBabySpecification = apiService.createMatchBabySpecification(id);
+                                      @RequestParam(value = "id", required = false, defaultValue = "") String id,
+                                      @RequestParam(value = "place", required = false, defaultValue = "") String place,
+                                      @RequestParam(value = "name", required = false, defaultValue = "") String name,
+                                      @RequestParam(value = "height", required = false, defaultValue = "") String height,
+                                      @RequestParam(value = "nativePlace", required = false, defaultValue = "") String nativePlace,
+                                      @RequestParam(value = "date", required = false, defaultValue = "") String date
+    ) {
+        Specification<MatchBaby> matchBabySpecification = apiService.createMatchBabySpecification(id, place, name, height, nativePlace, date);
         return new ResponseBase(200,"查询成功", matchBabyRepository.findAll(matchBabySpecification, pageable));
     }
 

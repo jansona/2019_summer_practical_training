@@ -39,6 +39,7 @@ public class LostBabyController {
     @ApiOperation(value = "新增一个丢失儿童信息")
     @PostMapping("/insert")
     public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
+        System.out.println("insert lostbaby");
         lostBabyRepository.save(lostBaby);
         lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
 

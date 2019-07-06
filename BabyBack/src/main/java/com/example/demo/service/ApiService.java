@@ -73,47 +73,39 @@ public class ApiService implements InitializingBean {
                 List<Predicate> predicatesList = new ArrayList<>();
 
                 //like示例
-                if (!id.equals("")) {
-                    Predicate contactPredicate = cb.equal(root.get("id"), Integer.valueOf(id));
-                    predicatesList.add(contactPredicate);
-                }
-                if (!place.equals("")) {
-                    Predicate descriptionPredicate = cb.like(root.get("place"), "%" + place + "%");
-                    predicatesList.add(descriptionPredicate);
-                }
-                if (!name.equals("")) {
-                    Predicate titlePredicate = cb.like(root.get("name"), "%" + name + "%");
-                    predicatesList.add(titlePredicate);
-                }
-                if (!height.equals("")) {
-                    Predicate serviceNamePredicate = cb.equal(root.get("height"), Double.valueOf(height));
-                    predicatesList.add(serviceNamePredicate);
-                }
-                if (!nativePlace.equals("")) {
-                    Predicate serviceNamePredicate = cb.like(root.get("email"), "%" + nativePlace + "%");
-                    predicatesList.add(serviceNamePredicate);
-                }
-                if (!date.equals("")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-
-                        Predicate serviceNamePredicate = cb.equal(root.get("date"), sdf.parse(date));
-                        predicatesList.add(serviceNamePredicate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-//                if(!keyWord.equals("")){
-
-                // CriteriaBuilder.In<String> in=cb.in(root.get("babyDescription"));
-//                    for (String s:initKeyWord(keyWord)) {
-//                        Predicate kWPredicate = cb.like(root.get("name"), "%" + s + "%");
-//                        predicatesList.add(kWPredicate);
+//                if (!id.equals("")) {
+//                    Predicate contactPredicate = cb.equal(root.get("id"), Integer.valueOf(id));
+//                    predicatesList.add(contactPredicate);
+//                }
+//                if (!place.equals("")) {
+//                    Predicate descriptionPredicate = cb.like(root.get("place"), "%" + place + "%");
+//                    predicatesList.add(descriptionPredicate);
+//                }
+//                if (!name.equals("")) {
+//                    Predicate titlePredicate = cb.like(root.get("name"), "%" + name + "%");
+//                    predicatesList.add(titlePredicate);
+//                }
+//                if (!height.equals("")) {
+//                    Predicate serviceNamePredicate = cb.equal(root.get("height"), Double.valueOf(height));
+//                    predicatesList.add(serviceNamePredicate);
+//                }
+//                if (!nativePlace.equals("")) {
+//                    Predicate serviceNamePredicate = cb.like(root.get("email"), "%" + nativePlace + "%");
+//                    predicatesList.add(serviceNamePredicate);
+//                }
+//                if (!date.equals("")) {
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//                    try {
+//
+//                        Predicate serviceNamePredicate = cb.equal(root.get("date"), sdf.parse(date));
+//                        predicatesList.add(serviceNamePredicate);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
 //                    }
-                //predicatesList.add(in);
+//
 //                }
 
+                insertBasicInfoPredicate(id, place, name, height, nativePlace, date, cb, root, predicatesList);
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));
 
@@ -205,7 +197,7 @@ public class ApiService implements InitializingBean {
         };
     }
 
-    public Specification<MatchBaby> createMatchBabySpecification(String id) {
+    public Specification<MatchBaby> createMatchBabySpecification(String id, String place, String name, String height, String nativePlace, String date) {
 
         return new Specification<MatchBaby>() {
 
@@ -214,10 +206,36 @@ public class ApiService implements InitializingBean {
                 //用于暂时存放查询条件的集合
                 List<Predicate> predicatesList = new ArrayList<>();
 
-                //like示例
-                insertIDPredicate(id, "id", cb, root, predicatesList);
-//                insertIDPredicate(user_id, "user_id", cb, root, predicatesList);
+//                insertIDPredicate(id, "id", cb, root, predicatesList);
+//                if (!place.equals("")) {
+//                    Predicate descriptionPredicate = cb.like(root.get("place"), "%" + place + "%");
+//                    predicatesList.add(descriptionPredicate);
+//                }
+//                if (!name.equals("")) {
+//                    Predicate titlePredicate = cb.like(root.get("name"), "%" + name + "%");
+//                    predicatesList.add(titlePredicate);
+//                }
+//                if (!height.equals("")) {
+//                    Predicate serviceNamePredicate = cb.equal(root.get("height"), Double.valueOf(height));
+//                    predicatesList.add(serviceNamePredicate);
+//                }
+//                if (!nativePlace.equals("")) {
+//                    Predicate serviceNamePredicate = cb.like(root.get("email"), "%" + nativePlace + "%");
+//                    predicatesList.add(serviceNamePredicate);
+//                }
+//                if (!date.equals("")) {
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//                    try {
+//
+//                        Predicate serviceNamePredicate = cb.equal(root.get("date"), sdf.parse(date));
+//                        predicatesList.add(serviceNamePredicate);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
 
+                insertBasicInfoPredicate(id, place, name, height, nativePlace, date, cb, root, predicatesList);
                 Predicate[] predicates = new Predicate[predicatesList.size()];
                 return cb.and(predicatesList.toArray(predicates));
             }
@@ -230,5 +248,42 @@ public class ApiService implements InitializingBean {
             Predicate predicate = cb.equal(root.get(key), Integer.valueOf(value));
             predicatesList.add(predicate);
         }
+    }
+
+    void insertBasicInfoPredicate(String id, String place, String name, String height, String nativePlace, String date,
+                                  CriteriaBuilder cb, Root<?> root, List<Predicate> predicatesList
+    ){
+        if (!id.equals("")) {
+            Predicate contactPredicate = cb.equal(root.get("id"), Integer.valueOf(id));
+            predicatesList.add(contactPredicate);
+        }
+        if (!place.equals("")) {
+            Predicate descriptionPredicate = cb.like(root.get("place"), "%" + place + "%");
+            predicatesList.add(descriptionPredicate);
+        }
+        if (!name.equals("")) {
+            Predicate titlePredicate = cb.like(root.get("name"), "%" + name + "%");
+            predicatesList.add(titlePredicate);
+        }
+        if (!height.equals("")) {
+            Predicate serviceNamePredicate = cb.equal(root.get("height"), Double.valueOf(height));
+            predicatesList.add(serviceNamePredicate);
+        }
+        if (!nativePlace.equals("")) {
+            Predicate serviceNamePredicate = cb.like(root.get("email"), "%" + nativePlace + "%");
+            predicatesList.add(serviceNamePredicate);
+        }
+        if (!date.equals("")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+
+                Predicate serviceNamePredicate = cb.equal(root.get("date"), sdf.parse(date));
+                predicatesList.add(serviceNamePredicate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }

@@ -114,8 +114,7 @@ export default {
       request(url, { id: this.id })
         .then(data => {
           if (data.rtnCode == 200) {
-            this.picUrl =
-              URLS.baseUrl + "/resource/photo/lost/" + this.id + ".jpg";
+            this.picUrl = data.data.content[0].picUrl
 
             let content = data.data.content[0];
             for (var key in nameDict1) {
