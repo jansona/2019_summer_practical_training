@@ -16,6 +16,10 @@ const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
 const matchBabyFindUrl = baseUrl + "/match-baby/find"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
+//查找lost,find
+const lostBabyFindByUserUrl = baseUrl + "/lost-baby/find-by-user"
+const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
+
 // 登录注册部分
 const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/register"
@@ -25,7 +29,14 @@ const sendSMSUrl = baseUrl + "/sms-verify"
 const articleFindUrl = baseUrl + '/article/find'
 const articleDeleteUrl = baseUrl + '/article/delete'
 const articleFindByUserUrl = baseUrl + '/article/find-by-user'
+const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
 const articleInsertUrl = baseUrl + '/article/insert'
+//评论部份
+const commentFindUrl = baseUrl + '/comment/find'
+const commentDeleteUrl = baseUrl + '/comment/delete'
+const commentFindByArticleUrl = baseUrl + '/comment/find-by-article'
+const commentFindByUserUrl = baseUrl + '/comment/find-by-user'
+const commentInsertUrl = baseUrl + '/comment/insert'
 
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
@@ -45,9 +56,17 @@ const URLS = {
   articleFindUrl,
   articleDeleteUrl,
   articleFindByUserUrl,
+	articleFindByUserNameUrl,
   articleInsertUrl,
+	commentFindUrl,
+	commentDeleteUrl,
+	commentFindByArticleUrl,
+	commentFindByUserUrl,
+	commentInsertUrl,
   userFindUrl,
-	userFindByIdUrl
+	userFindByIdUrl,
+	lostBabyFindByUserUrl,
+	matchBabyFindByUserUrl
 }
 
 module.exports = URLS

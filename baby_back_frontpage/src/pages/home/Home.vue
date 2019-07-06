@@ -88,18 +88,19 @@ export default {
       // }).catch(error => {
       //   console.log(error)
       // })
-      let state = this.$store.state;
-      if (state.token) {
-        console.log("enter");
-      }
-      console.log("state:", state.userID, state.hasLogin, state.token);
-      fetch({url:URLS.logoutUrl})
-        .then(data => {
-          console.log("已经登陆成功 ", data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      // let state = this.$store.state;
+      // if (state.token) {
+      //   console.log("enter");
+      // }
+      // console.log("state:", state.userID, state.hasLogin, state.token);
+      // fetch({url:URLS.logoutUrl})
+      //   .then(data => {
+      //     console.log("已经登陆成功 ", data);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
+      this.$store.commit('setUserID',{id:1,flag:true})
     },
     gotoFindChild() {
       this.$router.push("FindRegist");

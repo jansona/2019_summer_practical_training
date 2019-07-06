@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import URLS from '@/config/config'
+import URLS from '@/config/config';
 import { request,fetch } from "@/api/api";
 import Pictures from "../faceWall/components/Pictures";
 import UserInfo from "./components/UserInfo";
@@ -69,7 +69,7 @@ import articles from "../bbs/articles";
 import ArticleInfiniteList from "./components/ArticleInfiniteList";
 import CommentInfiniteList from "./components/CommentInfiniteList";
 const nameDict = {
-  name: "姓名",
+  username: "姓名",
   tel: "邮箱",
   email: "联系地址"
 };
@@ -202,6 +202,7 @@ export default {
       this.loadBabyData(URLS.matchBabyFindByUserUrl);
     },
     subTabClick(e) {
+      this.currentPage = 1;
       this.choosed = e.index;
       this.loadBabyData();
     },

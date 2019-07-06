@@ -10,12 +10,12 @@
         <br />
         <el-row>
           <el-col :span="2">
-            <el-avatar :src="require('@/assets/house.jpg')" />
+            <el-avatar :src="yieldPicUrl(article.user.profileUrl)" />
           </el-col>
           <el-col :span="18">
             <p class="name" style="margin-bottom: 10px;font-size:12px">
               <a class="a-style">
-                <span @click="gotoAuthorInfo">&nbsp{{article.user.name}}</span>
+                <span @click="gotoAuthorInfo">&nbsp{{article.user.username}}</span>
               </a>
             </p>
             <p class="name">
@@ -60,7 +60,7 @@
         <div v-for="(comment,index) in comments" :key="index">
           <el-row>
             <el-col :span="2">
-              <el-avatar :src="require('@/assets/house.jpg')" />
+              <el-avatar :src="yieldPicUrl(comment.user.profileUrl)" />
             </el-col>
             <el-col :span="18">
               <p style="margin-bottom: 5px" class="name">
@@ -315,6 +315,9 @@ export default {
     handleCurrentChange(val) {
       this.getComment(this.$route.query.id , this.pageNo - 1);
     },
+    yieldPicUrl(partialUrl){
+      return URLS.baseUrl + partialUrl;
+    }
   }
 };
 </script>

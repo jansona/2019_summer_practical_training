@@ -282,7 +282,7 @@
 					return;
 				}
 				//上传表单信息
-				this.$api.put(this.URLS.matchBabyInsertUrl,this.findParentForm).then(data => {
+				this.$api.post(this.URLS.matchBabyInsertUrl,this.findParentForm).then(data => {
 					//console.log(data)
 					_this.matchbabyid=data.data.id;
 					console.log(_this.matchbabyid);
@@ -319,6 +319,15 @@
 			formReset: function (e) {
 				console.log("清空数据")
 				this.chosen = ''
+			},
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.user = data.data.data
+				}).catch(error => {
+					console.log(error)
+				})
 			}
 		}
 	}
