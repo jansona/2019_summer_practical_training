@@ -48,7 +48,12 @@ public class Recognizer {
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
             String tempStr = input.readLine();
+
             while (tempStr != null) {
+                if(tempStr.contains("WARNING")){
+                    tempStr = input.readLine();
+                    continue;
+                }
                 String id = tempStr.split(",")[1];
                 matches.add(id);
                 tempStr = input.readLine();

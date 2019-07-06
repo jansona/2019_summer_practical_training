@@ -11,15 +11,15 @@
 					</view>
 					<view class="box-bd">
 						<view class="item">
-							<view class="icon"><img src="../../../../static/user/message.png"></view>
-							<view class="text">我的关注</view>
+							<view class="icon"><img src="../../../../static/user/mycomment.png"></view>
+							<view class="text">我的评论</view>
 						</view>
-						<view class="item">
-							<view class="icon"><img src="../../../../static/user/favorite.png"></view>
+						<view class="item" @click="goToPage('../tabbar-5-detail/my-release')">
+							<view class="icon"><img src="../../../../static/user/myrelease.png"></view>
 							<view class="text">我的发布</view>
 						</view>
-						<view class="item">
-							<view class="icon"><img src="../../../../static/user/service.png"></view>
+						<view class="item" @click="goToPage('../tabbar-5-detail/my-card')">
+							<view class="icon"><img src="../../../../static/user/mycard.png"></view>
 							<view class="text">我的帖子</view>
 						</view>
 					</view>
@@ -29,34 +29,34 @@
 		<view class="list-content" style="margin-top: 100upx;">
 			<view class="list" @click="SetArea">
 				<view class="li noborder" >
-					<view class="icon"><image src="../../../../static/user/card.png" mode="aspectFit"></image></view>
+					<view class="icon"><image src="../../static/user/setarea.png" mode="aspectFit"></image></view>
 					<view class="text">设置活动范围</view>
-					<image class="to" src="../../../../static/user/to.png"></image>
+					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 			</view>
 			
 			<view class="list">
 				<view class="li " >
-					<view class="icon"><image src="../../../../static/user/help.png"></image></view>
+					<view class="icon"><image src="../../static/user/help.png"></image></view>
 					<view class="text">帮助中心</view>
-					<image class="to" src="../../../../static/user/to.png"></image>
+					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 				<view class="li " >
-					<view class="icon"><image src="../../../../static/user/about.png"></image></view>
+					<view class="icon"><image src="../../static/user/aboutus.png"></image></view>
 					<view class="text">关于我们</view>
-					<image class="to" src="../../../../static/user/to.png"></image>
+					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 				<view class="li " >
-					<view class="icon"><image src="../../../../static/user/opinion.png"></image></view>
-					<view class="text">意见反馈</view>
-					<image class="to" src="../../../../static/user/to.png"></image>
+					<view class="icon"><image src="../../static/user/contactus.png"></image></view>
+					<view class="text">联系我们</view>
+					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 			</view>
 			<view class="list">
 				<view class="li noborder" >
-					<view class="icon"><image src="../../../../static/user/set.png"></image></view>
+					<view class="icon"><image src="../../static/user/set.png"></image></view>
 					<view class="text">系统设置</view>
-					<image class="to" src="../../../../static/user/to.png"></image>
+					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 			</view>
 		</view>

@@ -2,10 +2,33 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/login",
+		    "style" : {
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 0,
+				"app-plus": {  
+					"titleNView": false //禁用原生导航栏  
+				}  
+			}
+		},
+		{
+		    "path" : "pages/register",
+		    "style" : {
+			}
+		},
+		{
+		    "path" : "pages/forget",
+		    "style" : {
+			}
+		},
+		{
 		    "path" : "pages/index/index",
 		    "style" : {
 				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 0
+				"onReachBottomDistance": 0,
+				"app-plus": {  
+					"titleNView": false //禁用原生导航栏  
+				} 
 			}
 		},
 		{
@@ -67,11 +90,19 @@
 		{
 			"path": "pages/tabbar-4-detail/releaseurgence",
 			"style": {}
+		},
+		{
+			"path": "pages/tabbar-5-detail/my-card",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-5-detail/my-release",
+			"style": {}
 		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "HEHE",
+		"navigationBarTitleText": "宝贝回家",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}

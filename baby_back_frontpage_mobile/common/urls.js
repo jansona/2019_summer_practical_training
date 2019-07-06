@@ -16,6 +16,10 @@ const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
 const matchBabyFindUrl = baseUrl + "/match-baby/find"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
+//查找lost,find
+const lostBabyFindByUserUrl = baseUrl + "/lost-baby/find-by-user"
+const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
+
 // 登录注册部分
 const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/register"
@@ -27,6 +31,8 @@ const articleDeleteUrl = baseUrl + '/article/delete'
 const articleFindByUserUrl = baseUrl + '/article/find-by-user'
 const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
 const articleInsertUrl = baseUrl + '/article/insert'
+const articleLikeUrl = baseUrl + '/article/like'
+
 //评论部份
 const commentFindUrl = baseUrl + '/comment/find'
 const commentDeleteUrl = baseUrl + '/comment/delete'
@@ -54,13 +60,16 @@ const URLS = {
   articleFindByUserUrl,
 	articleFindByUserNameUrl,
   articleInsertUrl,
+	articleLikeUrl,
 	commentFindUrl,
 	commentDeleteUrl,
 	commentFindByArticleUrl,
 	commentFindByUserUrl,
 	commentInsertUrl,
   userFindUrl,
-	userFindByIdUrl
+	userFindByIdUrl,
+	lostBabyFindByUserUrl,
+	matchBabyFindByUserUrl
 }
 
 module.exports = URLS

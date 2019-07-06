@@ -5,11 +5,7 @@
     </div>
     <div>
       <el-card :body-style="{ padding: '3px'}" style="float: left; padding: 1px" class="pic-container">
-      <el-image :src="showImg(picUrl)">
-        <div slot="error" class="image-slot">
-        <i class="el-icon-picture-outline"></i>
-        </div>
-      </el-image>
+        <el-avatar shape="square" :size="100" :fit="contain" :src="showImg(picUrl)"></el-avatar>
       </el-card>
       <el-table
       :data="tableData"

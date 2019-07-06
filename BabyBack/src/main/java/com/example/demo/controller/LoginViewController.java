@@ -57,11 +57,6 @@ public class LoginViewController {
             return new ResponseBase(20001, "账号或密码错误", null);
         }
 
-//        User user = userRepository.findByAccount(account);
-//        rightUserName = user.getAccount();
-//        rightPassword = user.getPassWord();
-//        String md5info = rightUserName.toLowerCase() + rightPassword.toLowerCase();
-//        String realPassword = DigestUtils.md5DigestAsHex(md5info.getBytes());
         String realPassword = rightPassword;
 
         if (!password.equals(realPassword)) {

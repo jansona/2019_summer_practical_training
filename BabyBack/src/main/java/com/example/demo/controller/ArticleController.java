@@ -60,6 +60,11 @@ public class ArticleController {
                                     @RequestParam(value = "key_word", required = false, defaultValue = "")String keyWord) {
 
         ResponseBase responseBase;
+        if(!id.equals("")){
+            Article article = articleRepository.findById(Integer.valueOf(id)).get();
+            article.setViewNum(article.getViewNum() + 1);
+            articleRepository.save(article);
+        }
         try {
             Specification<Article> articleSpecification = apiService.createArticleSpecification(id, keyWord);
             Page<Article> page = articleRepository.findAll(articleSpecification, pageable);
@@ -74,6 +79,7 @@ public class ArticleController {
     @ApiOperation(value = "查找特定用户的文章")
     @PostMapping("/find-by-user")   // TODO 待填
     public ResponseBase findArticleByUser(Pageable page, @RequestParam(value = "user") User user) {
+
         List<Article> result = articleRepository.findAllByUser(user);
 
         int totalNum = result.size();
@@ -111,9 +117,9 @@ public class ArticleController {
 
     @ApiOperation(value = "查询特定用户的特定索引的文章(为无限滚动提供数据)")
     @PostMapping("/infinite-scroll")
-    public ResponseBase getArticleInfinite(@RequestParam(value = "user") Long user, @RequestParam(value = "index") Integer index){
+    public ResponseBase getArticleInfinite(@RequestParam(value = "user") User user, @RequestParam(value = "index") Integer index){
         ResponseBase responseBase;
-        List<Article> articleList = articleRepository.findAllByUser(userRepository.findById(user).get());
+        List<Article> articleList = articleRepository.findAllByUser(user);
         if(index >= articleList.size()){
             return new ResponseBase(200, "无更多文章", null);
         }
