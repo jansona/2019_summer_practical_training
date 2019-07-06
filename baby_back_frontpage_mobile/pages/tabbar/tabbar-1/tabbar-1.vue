@@ -135,7 +135,7 @@
 				} else {
 					this.findShow = true;
 					this.lostShow = false
-					if(this.isFirst){
+					if(this.isFirst &&  this.findList.length==0){
 						this.pageNo=0
 						this.refreshData();
 					}
