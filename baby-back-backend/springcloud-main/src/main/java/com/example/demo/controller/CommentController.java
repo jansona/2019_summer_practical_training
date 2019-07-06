@@ -64,6 +64,7 @@ public class CommentController {
     @ApiOperation(value = "查询特定用户的评论")
     @PostMapping("/find-by-user")   // TODO 待填
     public ResponseBase findCommentByUser(Pageable page, @RequestParam(value = "user") User user) {
+
         List<Comment> result = commentRepository.findAllByUser(user);
 
         int totalNum = result.size();
@@ -75,9 +76,9 @@ public class CommentController {
 
     @ApiOperation(value = "查询特定用户的特定索引的评论(为无限滚动提供数据)")
     @PostMapping("/infinite-scroll")
-    public ResponseBase getArticleInfinite(@RequestParam(value = "user") Long user, @RequestParam(value = "index") Integer index){
+    public ResponseBase getArticleInfinite(@RequestParam(value = "user") User user, @RequestParam(value = "index") Integer index){
         ResponseBase responseBase;
-        List<Comment> commentList = commentRepository.findAllByUser(userRepository.findById(user).get());
+        List<Comment> commentList = commentRepository.findAllByUser(user);
         if(index >= commentList.size()){
             return new ResponseBase(200, "无更多评论", null);
         }

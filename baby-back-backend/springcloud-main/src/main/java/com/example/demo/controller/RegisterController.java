@@ -5,10 +5,8 @@ import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.utils.SMSSender;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -61,8 +59,8 @@ public class RegisterController {
             String realCode = stringRedisTemplate.opsForValue().get(user.getTel());
 
             if (realCode != null && realCode.equals(code)) {
-                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 User user_saved = userRepository.save(user);
                 stringRedisTemplate.delete(user.getTel());
                 responseBase = new ResponseBase(200, "短信验证成功", user_saved);

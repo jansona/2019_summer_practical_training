@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.*;
 import com.example.demo.reposity.KeyWordRepository;
 import com.example.demo.reposity.LostBabyRepository;
+import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +32,8 @@ public class LostBabyController {
     @Autowired
     LostBabyRepository lostBabyRepository;
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     KeyWordRepository keyWordRepository;
 
     PageHelper pageHelper = new PageHelper();
@@ -39,7 +42,6 @@ public class LostBabyController {
     @ApiOperation(value = "新增一个丢失儿童信息")
     @PostMapping("/insert")
     public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
-        System.out.println("insert lostbaby");
         lostBabyRepository.save(lostBaby);
         lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
 
@@ -82,6 +84,7 @@ public class LostBabyController {
     @ApiOperation(value = "查找特定用户上传的失踪者")
     @PostMapping("/find-by-user")   // TODO 待填
     public ResponseBase findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
+
         List<LostBaby> result = lostBabyRepository.findAllByUser(user);
 
         int totalNum = result.size();

@@ -60,6 +60,11 @@ public class ArticleController {
                                     @RequestParam(value = "key_word", required = false, defaultValue = "")String keyWord) {
 
         ResponseBase responseBase;
+        if(!id.equals("")){
+            Article article = articleRepository.findById(Integer.valueOf(id)).get();
+            article.setViewNum(article.getViewNum() + 1);
+            articleRepository.save(article);
+        }
         try {
             Specification<Article> articleSpecification = apiService.createArticleSpecification(id, keyWord);
             Page<Article> page = articleRepository.findAll(articleSpecification, pageable);

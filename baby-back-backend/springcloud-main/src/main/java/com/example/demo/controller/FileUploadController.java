@@ -11,33 +11,19 @@ import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.Random;
-import java.util.logging.ConsoleHandler;
 
 @CrossOrigin
 @RestController
 @RequestMapping(value = "file")
 public class FileUploadController {
 
-    private String photoBaseUrl = "/resource/photo/";
-
-    @Value("${server.port}")
-    private String port;
-
-    @Value("${server.ip}")
-    private String IP;
-
-    public void show( ) {
-        System.out.println("FileUploadController:"+IP+":"+port);
-    }
+    final String photoBaseUrl = "/resource/photo/";
 
     enum Action {
         AS_PROFILE,
@@ -62,7 +48,6 @@ public class FileUploadController {
         ResponseBase responseBase;
         String postfix = "";
         ArrayList<String> matches = null;
-        show();
 
         String fileName;
         try {
@@ -97,6 +82,11 @@ public class FileUploadController {
         return responseBase;
     }
 
+    @ApiOperation("自然语言分析接口")
+    @PostMapping("/analyze-txt")
+    public ResponseBase getTextAndRecog(@RequestBody String txt){
+        return recognizer.analyze(txt);
+    }
 
     public String generateRandomFilename() {
         String RandomFilename;
@@ -118,13 +108,6 @@ public class FileUploadController {
     private void updateEntity(String id, Action action, String suffix){
 
         int nId = Integer.valueOf(id);
-        try {
-            photoBaseUrl = "http://"+IP + ":"+ port+"/photo/";
-            System.out.println(photoBaseUrl);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
 
         switch (action){
             case AS_PROFILE:
@@ -143,31 +126,6 @@ public class FileUploadController {
                 matchBabyRepository.save(matchBaby);
                 break;
         }
-    }
-
-    public InetAddress getFirstNonLoopbackAddress(boolean preferIpv4, boolean preferIPv6) throws SocketException {
-        Enumeration en = NetworkInterface.getNetworkInterfaces();
-        while (en.hasMoreElements()) {
-            NetworkInterface i = (NetworkInterface) en.nextElement();
-            for (Enumeration en2 = i.getInetAddresses(); en2.hasMoreElements();) {
-                InetAddress addr = (InetAddress) en2.nextElement();
-                if (!addr.isLoopbackAddress()) {
-                    if (addr instanceof Inet4Address) {
-                        if (preferIPv6) {
-                            continue;
-                        }
-                        return addr;
-                    }
-                    if (addr instanceof Inet6Address) {
-                        if (preferIpv4) {
-                            continue;
-                        }
-                        return addr;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
 }
