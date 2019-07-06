@@ -61,7 +61,7 @@
 				</view>
 				<view class="text-gray text-sm text-right padding">
 					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
-					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
+					<text class="cuIcon-appreciatefill margin-lr-xs" @click="articleLike(item)"></text> {{item.likeNum}}
 					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
 				</view>
 			</view>
@@ -210,6 +210,16 @@
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data;
 					console.log(_this.user)
+				}).catch(error => {
+					console.log(error)
+				})
+			},
+			articleLike(item){
+				console.log('点赞...');
+				let url=this.URLS.articleLikeUrl+'?article_id='+item.id;
+				this.$api.post(url).then(data => {
+					item.likeNum+=1;
+					console.log(data)
 				}).catch(error => {
 					console.log(error)
 				})

@@ -10,14 +10,6 @@
 				<textarea style="height: 930upx;" name="content" maxlength="-1" v-model="content" placeholder="请输入具体的内容"></textarea>
 			</view>
 			<view class="cu-form-group">
-				<view class="action">
-					图片上传
-				</view>
-				<view class="action">
-					{{imgList.length}}/4
-				</view>
-			</view>
-			<view class="cu-form-group">
 				<button class="cu-btn round" style="width:250upx;margin: 0 auto;background-image: 'url('../../../static/img/pkq.png')';"
 				 form-type="submit">发布</button>
 			</view>
@@ -54,6 +46,7 @@
 			return {
 				modalName:null,
 				modalContent:null,
+				isSend:false,
 				imgList: [],
 				content: '',
 				title: '',
@@ -78,6 +71,11 @@
 				this.content = e.detail.value
 			},
 			formSubmit: function(e) {
+				if(this.isSend==true){
+					this.modalName='Modal';
+					this.modalContent='已经发布过了哦~';
+					return;
+				}
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
 				var rule = [{
@@ -116,6 +114,7 @@
 				let url=this.URLS.articleInsertUrl;
 				this.$api.put(url,this.article).then(data => {
 					console.log(data);
+					_this.isSend=true;
 					_this.modalName='Modal'
 					_this.modalContent='发布成功！'
 				}).catch(error => {
