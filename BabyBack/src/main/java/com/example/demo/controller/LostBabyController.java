@@ -83,9 +83,8 @@ public class LostBabyController {
 
     @ApiOperation(value = "查找特定用户上传的失踪者")
     @PostMapping("/find-by-user")   // TODO 待填
-    public ResponseBase findLostBabyByUser(Pageable page, @RequestParam(value = "user") Long user_id) {
+    public ResponseBase findLostBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
 
-        User user = userRepository.findById(user_id).get();
         List<LostBaby> result = lostBabyRepository.findAllByUser(user);
 
         int totalNum = result.size();

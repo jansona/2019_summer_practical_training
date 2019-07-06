@@ -57,7 +57,7 @@ public class UserController {
 
     @ApiOperation(value = "查找单个特定用户")
     @PostMapping("/find-by-id")
-    public ResponseBase findById(@RequestParam(value = "id") Long id) {
+    public ResponseBase findById(@RequestParam(value = "id") Integer id) {
         User user = userRepository.findById(id).get();
         user.setPassword("");   // 防止密码泄露
         return new ResponseBase(200, "获取用户信息成功", user);
