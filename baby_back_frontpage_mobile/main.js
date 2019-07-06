@@ -26,6 +26,8 @@ Vue.prototype.$store = store;
 import URLS from './common/urls.js'
 Vue.prototype.URLS = URLS
 
+import DATEFORMAT from './common/util.js'
+Vue.prototype.DATEFORMAT=DATEFORMAT
 App.mpType = 'app'
 
 const app = new Vue({

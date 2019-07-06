@@ -153,6 +153,9 @@
 				this.$api.put(this.URLS.commentInsertUrl,this.comment).then(data => {
 					console.log(data);
 					_this.commentList=_this.commentList.concat(data.data.data);
+					uni.showToast({
+						title:'发送成功'
+					})
 					_this.comment.content=''
 				}).catch(error => {
 					console.log(error)
