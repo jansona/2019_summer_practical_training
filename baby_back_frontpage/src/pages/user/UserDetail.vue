@@ -202,6 +202,7 @@ export default {
       this.loadBabyData(URLS.matchBabyFindByUserUrl);
     },
     subTabClick(e) {
+      this.currentPage = 1;
       this.choosed = e.index;
       this.loadBabyData();
     },

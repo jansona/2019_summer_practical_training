@@ -4,6 +4,7 @@ import com.example.demo.entity.MatchBaby;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.MatchBabyRepository;
+import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,8 @@ public class MatchBabyController {
     ApiService apiService;
     @Autowired
     MatchBabyRepository matchBabyRepository;
+    @Autowired
+    UserRepository userRepository;
 
     PageHelper pageHelper = new PageHelper();
 
@@ -53,7 +56,9 @@ public class MatchBabyController {
 
     @ApiOperation(value = "查找特定用户上传的孤儿")
     @PostMapping("/find-by-user")
-    public ResponseBase findMatchBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
+    public ResponseBase findMatchBabyByUser(Pageable page, @RequestParam(value = "user") Long user_id) {
+
+        User user = userRepository.findById(user_id).get();
         List<MatchBaby> result = matchBabyRepository.findAllByUser(user);
 
         int totalNum = result.size();

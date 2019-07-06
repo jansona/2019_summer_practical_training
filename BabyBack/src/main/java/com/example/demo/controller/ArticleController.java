@@ -73,7 +73,8 @@ public class ArticleController {
 
     @ApiOperation(value = "查找特定用户的文章")
     @PostMapping("/find-by-user")   // TODO 待填
-    public ResponseBase findArticleByUser(Pageable page, @RequestParam(value = "user") User user) {
+    public ResponseBase findArticleByUser(Pageable page, @RequestParam(value = "user") String user_id) {
+        User user = userRepository.findById(Long.valueOf(user_id)).get();
         List<Article> result = articleRepository.findAllByUser(user);
 
         int totalNum = result.size();
