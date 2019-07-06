@@ -9,15 +9,46 @@
 				我的评论
 			</view>
 		</scroll-view>
+		
+		<!--帖子列表-->
+		<view v-show="articleShow" v-for="(item, index) in articleList" :key="index" class="cu-card dynamic">
+			<view class="cu-item shadow">
+				<view class="cu-list menu-avatar">
+					<view class="cu-item">
+						<view class="cu-avatar round lg"></view>
+						<view class="content flex-sub" style="margin-top:30upx;">
+							<view>{{item.user.name}}</view>
+							<view class="text-gray text-sm flex justify-between">
+								{{item.date}}
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="title" @click="navToDetails(item)">
+					<view class="text-cut" style="font-weight: 700;margin-left: 15upx;margin-top: 15upx;">{{item.title}}</view>
+				</view>
+				<view class="passage-content" style="margin-top: 5upx;" @click="navToDetails(item)">
+					<!-- <view class="bg-img" v-for="(item1,index1) in item.imgList" :key="index1">
+						<image :src="item1.value" style="max-height:200upx;max-width: 200upx;"></image>
+					</view> -->
+					<view class="desc"><view class="text-content">{{item.content}}</view></view>
+				</view>
+				<view class="text-gray text-sm text-right padding">
+					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
+					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
+					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	export default {
 		mounted:function() {
-			let userid=2;
-			this.getUser(userid);
-			console.log(this.user);
+			uni.setNavigationBarTitle({
+				title: '我的帖子'
+			});
 			this.getData();
 		},
 		data() {
@@ -50,8 +81,8 @@
 			 */
 			getData() {
 				let _this=this;
-				if(this.lostShow){
-					let url =this.URLS.lostBabyFindByUserUrl +'?user='+this.user;
+				
+					let articleurl =this.URLS.lostBabyFindByUserUrl +'?user='+this.user;
 					console.log(url);
 					this.$api.post(url)
 						.then(data => {
@@ -63,8 +94,8 @@
 						}).catch(error => {
 							console.log(error)
 						})
-				}else{
-					let url =this.URLS.matchBabyFindByUserUrl +'?user='+this.user
+				
+					let commenturl =this.URLS.matchBabyFindByUserUrl +'?user='+this.user
 					this.$api.post(url)
 						.then(data => {
 							_this.findList = data.data.data.content;
@@ -75,7 +106,7 @@
 						}).catch(error => {
 							console.log(error)
 						})
-				}
+				
 			
 			},
 			getUser(userId) {

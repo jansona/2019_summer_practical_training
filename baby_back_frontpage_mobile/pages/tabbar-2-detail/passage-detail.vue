@@ -6,7 +6,7 @@
 				<view class="introduce-section">
 					<text class="title">{{article.title}}</text>
 					<view class="introduce">
-						<text>{{article.user.name}}</text>
+						<text>{{article.user.username}}</text>
 						<text>{{article.date}}</text>
 					</view>
 
@@ -48,7 +48,7 @@
 						</view>
 						<view class="uni-comment-body">
 							<view class="uni-comment-top" style="text-align: left">
-								<text>{{item.user.name}}</text>
+								<text>{{item.user.username}}</text>
 							</view>
 							<view class="uni-comment-date">
 								<text>{{item.date}}</text>
