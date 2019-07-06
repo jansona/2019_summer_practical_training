@@ -61,6 +61,7 @@
 		},
 		data() {
 			return {
+				isFirst : true,
 				isBottom : false,
 				pageNo :0,
 				totalPageNum:2,
@@ -125,17 +126,14 @@
 				if (this.tabCurrentIndex == 0) {
 					this.lostShow = true;
 					this.findShow = false
-					if(this.lostList.length==0){
-						this.pageNo=0
-						this.refreshData();
-					}
 				} else {
 					this.findShow = true;
 					this.lostShow = false
-					if(this.findList.length==0){
+					if(this.isFirst){
 						this.pageNo=0
 						this.refreshData();
 					}
+					this.isFirst=false
 				}
 				// this.refreshData();
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
