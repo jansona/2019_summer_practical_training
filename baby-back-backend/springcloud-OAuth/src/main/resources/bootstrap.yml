@@ -14,11 +14,15 @@ spring:
 #    username: root
 #    password: 123456
   profiles:
-    active: dev
+    active: pro
   cloud:
     config:
       name: ${spring.application.name}
       profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: springcloud-config
+
 
 # feign 配置
 feign:

@@ -32,7 +32,7 @@ public class FileUploadController {
     @Value("${server.port}")
     private String port;
 
-    @Value("${server.ip}")
+    @Value("${eureka.instance.ip-address}")
     private String IP;
 
     public void show( ) {

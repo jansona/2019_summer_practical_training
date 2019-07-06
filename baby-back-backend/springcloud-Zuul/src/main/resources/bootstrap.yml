@@ -6,11 +6,14 @@ spring:
     name: springcloud-Zuul
 
   profiles:
-    active: dev
+    active: pro
   cloud:
     config:
       name: ${spring.application.name}
       profile: ${spring.profiles.active}
+      discovery:
+        service-id: springcloud-config
+        enabled: true
 
 eureka:
   instance:

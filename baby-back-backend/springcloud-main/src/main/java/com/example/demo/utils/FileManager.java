@@ -73,9 +73,9 @@ public class FileManager<RequestMapping> {
                 files[i] = new File(basePath.getAbsolutePath(),"static"+paths[i]);
                 System.out.println(String.format("文件种类：%d,路径：%s", i,files[i].getAbsolutePath()));
             }
-            String ip = getFirstNonLoopbackAddress(true,false).getHostAddress();
-            String hostName = getFirstNonLoopbackAddress(true,false).getHostName();
-            System.out.println(String.format("IP:%s,hostName:%s",ip,hostName));
+//            String ip = getFirstNonLoopbackAddress(true,false).getHostAddress();
+//            String hostName = getFirstNonLoopbackAddress(true,false).getHostName();
+//            System.out.println(String.format("IP:%s,hostName:%s",ip,hostName));
         } catch (Exception e){
             e.printStackTrace();
         }

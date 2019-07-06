@@ -13,12 +13,13 @@ spring:
     name: springcloud-main
 
   profiles:
-    active: dev
+    active: pro
   cloud:
     config:
-      name: ${spring.application.name}
       profile: ${spring.profiles.active}
-
+      discovery:
+        service-id: springcloud-config
+        enabled: true
 security:
   oauth2:
     client:
@@ -32,9 +33,11 @@ security:
 eureka:
   instance:
     prefer-ip-address: true
+    ip-address: 127.0.0.1
   client:
     service-url:
       defaultZone: http://springcloud-eureka:8761/eureka/
+
 
 
 
@@ -51,3 +54,4 @@ eureka:
 
 server:
   port: 18080
+
