@@ -56,9 +56,8 @@ public class MatchBabyController {
 
     @ApiOperation(value = "查找特定用户上传的孤儿")
     @PostMapping("/find-by-user")
-    public ResponseBase findMatchBabyByUser(Pageable page, @RequestParam(value = "user") Long user_id) {
+    public ResponseBase findMatchBabyByUser(Pageable page, @RequestParam(value = "user") User user) {
 
-        User user = userRepository.findById(user_id).get();
         List<MatchBaby> result = matchBabyRepository.findAllByUser(user);
 
         int totalNum = result.size();
