@@ -152,6 +152,7 @@
 			return {
 				lostbabyid:-1,
 				imgList:[],
+				isSend:false,
 				findChildForm: {
 					id: '',
 					name: '',
@@ -241,6 +242,11 @@
 				})
 			},
 			formSubmit: function(e) {
+				if(this.isSend==true){
+					_this.modalName='Modal';
+					_this.modalContent='已经发布过了~';
+					return;
+				}
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
 				var rule = [{
@@ -325,6 +331,7 @@
 								console.log(uploadFileRes);
 								_this.modalName='Modal';
 								_this.modalContent='发布成功！';
+								_this.isSend=true;
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);
