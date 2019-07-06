@@ -1,4 +1,5 @@
 import http from './interface'
+import store from '@/store'
 
 /**
  * 将业务所有接口统一起来便于维护
@@ -8,13 +9,14 @@ import http from './interface'
 
 // 单独导出(测试接口) import {test} from '@/common/vmeitime-http/'
 export const test = (data) => {
-	/* http.config.baseUrl = "http://localhost:8080/api/"
+	/* http.config.baseUrl = "http://localhost:8080/api/" */
 	//设置请求前拦截器
 	http.interceptor.request = (config) => {
-		config.header = {
-			"token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		console.log("请求拦截器：",store.state.token)
+		if(store.state.token != '') {
+			config.header.Authorization = store.state.token
 		}
-	} */
+	} 
 	//设置请求结束后拦截器
 	http.interceptor.response = (response) => {
 		console.log('个性化response....')
@@ -54,6 +56,10 @@ export const put = (url,data) => {
     return http.put(url,data)
 }
 
+export const request = (config) => {
+	return http.request(config)
+}
+
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
 	test,
@@ -61,4 +67,5 @@ export default {
     get,
     post,
     put,
+	request
 }

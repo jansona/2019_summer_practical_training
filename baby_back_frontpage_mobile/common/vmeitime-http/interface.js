@@ -1,3 +1,4 @@
+import store from '@/store'
 /**
  * 通用uni-app网络请求
  * 基于 Promise 对象实现更简单的 request 使用方式，支持请求和响应拦截
@@ -33,20 +34,27 @@ export default {
 	config: {
 		baseUrl: "",
 		header: {
-			'Content-Type':'application/json;charset=UTF-8',
-			// 'Content-Type':'application/x-www-form-urlencoded',
-            'Access-Control-Allow-Origin': '*',
-		},  
+			// 'Content-Type':'application/json;charset=UTF-8',
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Access-Control-Allow-Origin': '*',
+			'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
+		},
 		data: {},
 		method: "GET",
-		dataType: "json",  /* 如设为json，会对返回的数据做一次 JSON.parse */
+		dataType: "json",
+		/* 如设为json，会对返回的数据做一次 JSON.parse */
 		responseType: "text",
 		success() {},
 		fail() {},
 		complete() {}
 	},
 	interceptor: {
-		request: null,
+		request: (config) => {
+			console.log("请求拦截器：", store.state.token)
+			if (store.state.token != '') {
+				config.header.Authorization ='Bearer '+ store.state.token
+			}
+		},
 		response: null
 	},
 	request(options) {
@@ -59,17 +67,17 @@ export default {
 		options.data = options.data || {}
 		options.method = options.method || this.config.method
 		//TODO 加密数据
-		
+
 		//TODO 数据签名
 		/* 
 		_token = {'token': getStorage(STOREKEY_LOGIN).token || 'undefined'},
 		_sign = {'sign': sign(JSON.stringify(options.data))}
 		options.header = Object.assign({}, options.header, _token,_sign) 
 		*/
-	   
+
 		return new Promise((resolve, reject) => {
 			let _config = null
-			
+
 			options.complete = (response) => {
 				let statusCode = response.statusCode
 				response.config = _config
@@ -99,7 +107,7 @@ export default {
 			if (this.interceptor.request) {
 				this.interceptor.request(_config)
 			}
-			
+
 			// 统一的请求日志记录
 			_reqlog(_config)
 
@@ -119,7 +127,7 @@ export default {
 		}
 		options.url = url
 		options.data = data
-		options.method = 'GET'  
+		options.method = 'GET'
 		return this.request(options)
 	},
 	post(url, data, options) {
@@ -178,7 +186,7 @@ function _reslog(res) {
 		// console.log("【" + res.config.requestId + "】 响应结果：" + JSON.stringify(res))
 	}
 	//TODO 除了接口服务错误外，其他日志调接口异步写入日志数据库
-	switch(_statusCode){
+	switch (_statusCode) {
 		case 200:
 			break;
 		case 401:
@@ -189,4 +197,3 @@ function _reslog(res) {
 			break;
 	}
 }
-

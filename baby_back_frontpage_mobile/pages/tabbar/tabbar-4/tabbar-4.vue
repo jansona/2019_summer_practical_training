@@ -31,6 +31,7 @@
 		methods: {
 			ReleaseUrgence(){
 				// this.$store.commit('setUserId',{id:123,flag:true})
+				console.log(this.$store.state.userId)
 				uni.navigateTo({
 					url:'/pages/tabbar-4-detail/releaseurgence'
 				})

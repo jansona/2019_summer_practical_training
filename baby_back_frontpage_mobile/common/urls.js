@@ -1,11 +1,18 @@
-let model = 'dev'
-let baseUrl = 'http://localhost:18080'
-if (model === 'dev') {
-  baseUrl = 'http://localhost:18080'
-} else if (model == 'hbj'){
+let mode = 'prod'
+let baseUrl = ''
+let baseUrl2 = ''
+if (mode === 'dev') {
+  baseUrl = 'http://127.0.0.1:18080'
+  baseUrl2 = 'http://127.0.0.1:18080'
+} else if (mode == 'hbj'){
   baseUrl = 'http://192.168.137.1:18080'
-} else {
-}
+} else if (mode == 'prod'){
+  baseUrl = 'http://42.159.4.66:9999/api/main'
+  baseUrl2 = 'http://42.159.4.66:9999'
+} else if (mode == 'test') {
+  baseUrl = 'http://127.0.0.1:9999/api/main'
+  baseUrl2 = 'http://127.0.0.1:9999'
+} 
 
 let imgUrl = 'http://42.159.4.66:2333'
 
@@ -21,7 +28,10 @@ const lostBabyFindByUserUrl = baseUrl + "/lost-baby/find-by-user"
 const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
 
 // 登录注册部分
-const loginUrl = baseUrl + "/login"
+const loginUrl = baseUrl2 + "/api/auth/oauth/token"
+const userInfoUrl = baseUrl2 + '/api/admin/user/infoTel'
+const logoutUrl = baseUrl2+ '/api/auth/token/logout'
+// const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
 
@@ -43,6 +53,8 @@ const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
 
 const URLS = {
+	userInfoUrl,
+	logoutUrl,
 	imgUrl,
   baseUrl,
   lostBabyInsertUrl,

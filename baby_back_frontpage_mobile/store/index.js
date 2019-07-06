@@ -5,10 +5,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		hasLogin: false,
+		hasLogin: uni.getStorageSync('token') != undefined && uni.getStorageSync('token') != null && uni.getStorageSync('token') != '',
 		loginProvider: "",
 		openid: null,
 		userId: uni.getStorageSync('userId') || -1,
+		token: uni.getStorageSync('token')
 	},
 	mutations: {
 		login(state, provider) {
@@ -22,11 +23,15 @@ const store = new Vuex.Store({
 		setOpenid(state, openid) {
 			state.openid = openid
 		},
-		setUserId(state,data){  // 传入类型为{id:xxx,flag:xxxx}
-			state.userId = data.id
-			if(data.flag){
-				uni.setStorageSync('userId',data.id)
-			}
+		setUserId(state,id){  // 传入类型为{id:xxx,flag:xxxx}
+			state.userId = id
+			state.hasLogin = true
+			uni.setStorageSync('userId',id)
+		},
+		setToken(state,token) {
+			state.token = token
+			state.hasLogin = true
+			uni.setStorageSync('token',token)
 		}
 	},
 	actions: {
