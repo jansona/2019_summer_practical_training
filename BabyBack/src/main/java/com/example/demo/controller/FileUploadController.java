@@ -82,6 +82,11 @@ public class FileUploadController {
         return responseBase;
     }
 
+    @ApiOperation("自然语言分析接口")
+    @PostMapping("/analyze-txt")
+    public ResponseBase getTextAndRecog(@RequestBody String txt){
+        return recognizer.analyze(txt);
+    }
 
     public String generateRandomFilename() {
         String RandomFilename;

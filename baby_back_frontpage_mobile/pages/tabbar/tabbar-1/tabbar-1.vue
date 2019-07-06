@@ -61,6 +61,7 @@
 		},
 		data() {
 			return {
+				isFirst : true,
 				isBottom : false,
 				pageNo :0,
 				searchInput:'',
@@ -74,10 +75,6 @@
 				InputBottom: 0,
 				lostList: [],
 				lostPicUrls: [],
-				// findList: [this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl +
-				// 	'/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png', this.URLS
-				// 	.imgUrl + '/static/img/pkq.png', this.URLS.imgUrl + '/static/img/pkq.png'
-				// ],
 				findList : [],
 				findPicUrls:[],
 				themeColor: '#007AFF',
@@ -122,19 +119,24 @@
 			},
 			tabSelect(e) {
 				this.tabCurrentIndex = e.currentTarget.dataset.id;
-				this.pageNo=0
-				this.lostPicUrls=[]
-				this.lostList=[]
-				this.findPicUrls=[]
-				this.findList=[]
+				// this.pageNo=0
+				// this.lostPicUrls=[]
+				// this.lostList=[]
+				// this.findPicUrls=[]
+				// this.findList=[]
 				if (this.tabCurrentIndex == 0) {
 					this.lostShow = true;
 					this.findShow = false
 				} else {
 					this.findShow = true;
 					this.lostShow = false
+					if(this.isFirst){
+						this.pageNo=0
+						this.refreshData();
+					}
+					this.isFirst=false
 				}
-				this.refreshData();
+				// this.refreshData();
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			InputFocus(e) {

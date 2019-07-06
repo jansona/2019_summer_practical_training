@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     mode: 'running',
-    oauth: true,
+    oauth: false,
     status: 'offline',
     hasLoadedRouter: false,
     userID: localStorage.getItem('userID') || -1,
