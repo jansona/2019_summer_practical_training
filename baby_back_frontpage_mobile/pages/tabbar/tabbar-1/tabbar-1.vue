@@ -86,7 +86,7 @@
 				mode: '',
 				deepLength: 1,
 				pickerValueDefault: [0],
-				pickerLabel: '全部',
+				pickerLabel: '姓名',
 				pickerValueArray: [{
 						label: '姓名',
 						value: 0
