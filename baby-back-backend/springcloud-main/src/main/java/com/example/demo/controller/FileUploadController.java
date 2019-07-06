@@ -4,6 +4,7 @@ import com.example.demo.entity.LostBaby;
 import com.example.demo.entity.MatchBaby;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
+import com.example.demo.feign.RemoteUploadService;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.MatchBabyRepository;
 import com.example.demo.reposity.UserRepository;
@@ -39,7 +40,7 @@ public class FileUploadController {
         System.out.println("FileUploadController:"+IP+":"+port);
     }
 
-    enum Action {
+    public static enum Action {
         AS_PROFILE,
         AS_LOST_PICS,
         AS_MATCH_PICS,
@@ -56,9 +57,22 @@ public class FileUploadController {
     @Autowired
     MatchBabyRepository matchBabyRepository;
 
+    @Autowired
+    RemoteUploadService remoteUploadService;
+
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
     public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id") String id, Action action) {
+//        ResponseBase responseBase;
+//        String postfix = "";
+//        postfix = file.getOriginalFilename().split("\\.")[1];
+//        if(action == Action.RECOGNITION){
+//            responseBase = recognizer.recognition(file, String.format("%s.%s", generateRandomFilename(), postfix));
+//        }else {
+//            responseBase = remoteUploadService.upload(file,id,action.toString());
+//            photoBaseUrl = (String) responseBase.getData();
+//        }
+
         ResponseBase responseBase;
         String postfix = "";
         ArrayList<String> matches = null;
@@ -119,7 +133,7 @@ public class FileUploadController {
 
         int nId = Integer.valueOf(id);
         try {
-            photoBaseUrl = "http://"+IP + ":"+ port+"/photo/";
+            photoBaseUrl = "http://"+IP + ":"+ port+"/resource/photo/";
             System.out.println(photoBaseUrl);
         } catch (Exception e){
             e.printStackTrace();
@@ -143,31 +157,6 @@ public class FileUploadController {
                 matchBabyRepository.save(matchBaby);
                 break;
         }
-    }
-
-    public InetAddress getFirstNonLoopbackAddress(boolean preferIpv4, boolean preferIPv6) throws SocketException {
-        Enumeration en = NetworkInterface.getNetworkInterfaces();
-        while (en.hasMoreElements()) {
-            NetworkInterface i = (NetworkInterface) en.nextElement();
-            for (Enumeration en2 = i.getInetAddresses(); en2.hasMoreElements();) {
-                InetAddress addr = (InetAddress) en2.nextElement();
-                if (!addr.isLoopbackAddress()) {
-                    if (addr instanceof Inet4Address) {
-                        if (preferIPv6) {
-                            continue;
-                        }
-                        return addr;
-                    }
-                    if (addr instanceof Inet6Address) {
-                        if (preferIpv4) {
-                            continue;
-                        }
-                        return addr;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
 }

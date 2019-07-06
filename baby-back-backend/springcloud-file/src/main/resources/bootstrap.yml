@@ -1,0 +1,20 @@
+server:
+  port: 8765
+
+spring:
+  application:
+    name: springcloud-file
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    service-url:
+      defaultZone: http://springcloud-eureka:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

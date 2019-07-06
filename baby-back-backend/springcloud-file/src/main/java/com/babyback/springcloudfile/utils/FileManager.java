@@ -1,19 +1,10 @@
-package com.example.demo.utils;
+package com.babyback.springcloudfile.utils;
 
-import com.example.demo.entity.ResponseBase;
-import com.example.demo.reposity.LostBabyRepository;
-import com.example.demo.reposity.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ResourceUtils;
+import com.babyback.springcloudfile.entity.ResponseBase;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
-import java.net.*;
-import java.util.Enumeration;
 
 public class FileManager<RequestMapping> {
 

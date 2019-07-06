@@ -41,19 +41,19 @@ public class LostBabyController {
     public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
         System.out.println("insert lostbaby");
         lostBabyRepository.save(lostBaby);
-        lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
+//        lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
 
-        for (String str : apiService.initKeyWord(apiService.initDescription(lostBaby))) {
-            if (keyWordRepository.existsByName(str)) {
-                KeyWord existK = keyWordRepository.findByName(str);
-                existK.getLostBabies().add(lostBaby);
-                keyWordRepository.save(existK);
-            } else {
-                KeyWord kw = new KeyWord(str);
-                kw.getLostBabies().add(lostBaby);
-                keyWordRepository.save(kw);
-            }
-        }
+//        for (String str : apiService.initKeyWord(apiService.initDescription(lostBaby))) {
+//            if (keyWordRepository.existsByName(str)) {
+//                KeyWord existK = keyWordRepository.findByName(str);
+//                existK.getLostBabies().add(lostBaby);
+//                keyWordRepository.save(existK);
+//            } else {
+//                KeyWord kw = new KeyWord(str);
+//                kw.getLostBabies().add(lostBaby);
+//                keyWordRepository.save(kw);
+//            }
+//        }
 
         return new ResponseBase(200, "插入成功", lostBaby);
     }
