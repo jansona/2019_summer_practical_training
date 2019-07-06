@@ -98,8 +98,8 @@
 				this.$api.request({
 						url: this.URLS.loginUrl,
 						data: JSON.parse(JSON.stringify({
-							'username': 123,
-							'password': 123,
+							'username': this.phoneData,
+							'password': this.passData,
 							'grant_type': 'password'
 						})),
 						method: "POST",
