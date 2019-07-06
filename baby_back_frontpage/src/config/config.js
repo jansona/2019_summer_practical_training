@@ -1,4 +1,4 @@
-let mode = 'dev'
+let mode = 'pro'
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
@@ -25,14 +25,14 @@ const uploadPictureUrl = baseUrl + "/file/upload"
 const uploadTxtAndRecogUrl = baseUrl + "/file/analyze-txt"
 
 // 登录注册部分
-// const loginUrl = baseUrl2 + "/api/auth/oauth/token"
-const loginUrl = baseUrl + "/login"
+const loginUrl = baseUrl2 + "/api/auth/oauth/token"
+const userInfoUrl = baseUrl2 + '/api/admin/user/infoTel'
+const logoutUrl = baseUrl2+ '/api/auth/token/logout'
+// const loginUrl = baseUrl + "/login"
+// const userInfoUrl = baseUrl + '/user/infoTel'
+// const logoutUrl = baseUrl + '/logout'
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
-// const userInfoUrl = baseUrl2 + '/api/admin/user/infoTel'
-const userInfoUrl = baseUrl + '/user/infoTel'
-// const logoutUrl = baseUrl2+ '/api/auth/token/logout'
-const logoutUrl = baseUrl + '/logout'
 
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'
