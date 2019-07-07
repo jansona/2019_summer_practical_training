@@ -14,9 +14,9 @@
 					<input class="main-input" v-model="passData" type="text" maxlength="32" placeholder="密码" password="true" />
 				</view>
 			</view>
-			<view>
+			<!-- <view class="btn"> -->
 				<button class="dlbutton buttonBorder" @tap="startLogin()">登 陆</button>
-			</view>
+			<!-- </view> -->
 			<!-- 底部信息 -->
 			<view class="footer">
 				<navigator url="forget" open-type="navigate">找回密码</navigator>
@@ -59,6 +59,7 @@
 							});
 						}).catch(error => {
 							console.log(error)
+							this.$store.commit('setToken','');
 							uni.showToast({
 								title: "登录过期",
 								position: 'bottom'
@@ -98,8 +99,8 @@
 				this.$api.request({
 						url: this.URLS.loginUrl,
 						data: JSON.parse(JSON.stringify({
-							'username': 123,
-							'password': 123,
+							'username': this.phoneData,
+							'password': this.passData,
 							'grant_type': 'password'
 						})),
 						method: "POST",
@@ -127,6 +128,9 @@
 </script>
 
 <style>
+	.btn {
+		display: flex;
+	}
 	.content {
 		display: flex;
 		flex-direction: column;
