@@ -99,7 +99,7 @@ public class SysUserController extends BaseController {
     @GetMapping("/{id}")
     @ApiOperation(value = "查询详细用户信息", notes = "id存在且大于0")
     @ApiImplicitParam(name = "id", value = "用户编号", required = true, dataType = "Long")
-    public Result<SysUser> findById(@PathVariable Long id) {
+    public Result<SysUser> findById(@PathVariable Integer id) {
         if (id == null || id == 0) {
             return new Result<>();
         } else {

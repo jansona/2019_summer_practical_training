@@ -6,6 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "hbj": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js && cross-env NODE_ENV=hbj",
+    "pro": "webpack-dev-server --inline --progress --config build/webpack.pro.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
@@ -25,6 +27,7 @@
     "vuex": "^3.1.0"
   },
   "devDependencies": {
+    "vue-cli-service": "^3.9.2",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",

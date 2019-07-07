@@ -151,9 +151,7 @@ body {
   padding: 100px 0;
   text-align: center;
   color: #fff;
-  background: url(../../assets/bg_cloud.jpg) 0 bottom repeat-x #049ec4;
-  -webkit-animation: animate-cloud 20s linear infinite;
-  animation: animate-cloud 20s linear infinite;
+  background: url(../../assets/bg_13.png) 0 bottom ;
   background-color: #000;
   background-size: cover;
   position: fixed;

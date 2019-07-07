@@ -4,9 +4,7 @@
     <span class="title1">What we do</span>
     <span class="title2">宝贝回家</span>
     <span class="title3">
-      将人脸识别技术哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-      哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-      哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+      将人脸识别技术整合到寻人服务中。。。
     </span>
     <!-- <div class="box-container"> -->
     <el-row :gutter="50" class="box-container">
@@ -14,7 +12,7 @@
         <div class="box">
           <div class="image-container image1" style></div>
           <span class="text1">登记信息</span>
-          <span class="text2">adfdfgsdfgjkdshgsdjhfjasgdhfahjsdgfjhaghdfasgdfgasdgfjagsdjh</span>
+          <span class="text2">So what you blow a fuse? Well, that happens to us all.</span>
           <el-button plain class="btn" @click="gotoFindChild">
             &nbsp了解更多
             <i class="el-icon-right"></i>&nbsp&nbsp
@@ -25,7 +23,7 @@
         <div class="box">
           <div class="image-container image2" style></div>
           <span class="text1">人脸识别</span>
-          <span class="text2">adfdfgsdfgjkdshgsdjhfjasgdhfahjsdgfjhaghdfasgdfgasdgfjagsdjh</span>
+          <span class="text2">So what you blow a fuse? Well, that happens to us all.</span>
           <el-button plain class="btn" @click="gotoFastMatch">
             &nbsp了解更多
             <i class="el-icon-right"></i>&nbsp&nbsp
@@ -36,7 +34,7 @@
         <div class="box">
           <div class="image-container image3" style></div>
           <span class="text1">大数据匹配</span>
-          <span class="text2">adfdfgsdfgjkdshgsdjhfjasgdhfahjsdgfjhaghdfasgdfgasdgfjagsdjh</span>
+          <span class="text2">So what you blow a fuse? Well, that happens to us all.</span>
           <el-button plain class="btn">
             &nbsp了解更多
             <i class="el-icon-right"></i>&nbsp&nbsp
@@ -100,7 +98,8 @@ export default {
       //   .catch(error => {
       //     console.log(error);
       //   });
-      this.$store.commit('setUserID',{id:1,flag:true})
+      console.log(this.$store.state.token)
+      this.$store.commit('setToken',"")
     },
     gotoFindChild() {
       this.$router.push("FindRegist");
