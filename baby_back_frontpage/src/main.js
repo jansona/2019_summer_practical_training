@@ -8,6 +8,7 @@ import router from './router'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 import VueI18n from 'vue-i18n'
+
 Vue.use(VueI18n)
 Vue.config.lang = 'zh-cn'
 const i18n_zh = new VueI18n({
@@ -37,6 +38,13 @@ import '@/assets/icons/iconfont.css'
 import { store } from '@/store/store'
 import axios from 'axios'
 Vue.config.productionTip = false
+
+import VueNativeSock from 'vue-native-websocket'
+Vue.use(VueNativeSock, 'ws://localhost:18080/websocket', {
+  reconnection: true, // (Boolean) whether to reconnect automatically (false)
+  reconnectionAttempts: 5, // (Number) number of reconnection attempts before giving up (Infinity),
+  reconnectionDelay: 3000, // (Number) how long to initially wait before attempting a new (1000)
+})
 
 /* eslint-disable no-new */
 new Vue({

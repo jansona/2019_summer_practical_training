@@ -30,4 +30,13 @@ public class TestController {
     public void sendMessageToUser(@RequestParam Integer user_id, @RequestParam String message){
         CustomWebSocket.sendMessageToUser(user_id, message);
     }
+
+    @GetMapping(value = "/websocket/send-all")
+    public void sendAll(){
+        try {
+            CustomWebSocket.sendInfo("test");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
