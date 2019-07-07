@@ -4,7 +4,7 @@
 		<view class="content">
 			<!-- 头部logo -->
 			<view class="header">
-				<image :src="logoImage"></image>
+				<image src="../static/logo.png"></image>
 			</view>
 			<!-- 主体 -->
 			<view class="main">
@@ -180,7 +180,6 @@
 		height:161upx;
 		box-shadow:0upx 0upx 60upx 0upx rgba(0,0,0,0.1);
 		border-radius:50%;
-		background-color: #000000; 
 		margin-top: 128upx;
 		margin-bottom: 48upx;
 		margin-left: auto;
@@ -241,7 +240,7 @@
 		font-size: 30upx;
 		width:601upx;
 		height:100upx;
-		background:linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
+		background:#0081FF;
 		box-shadow:0upx 0upx 13upx 0upx rgba(164,217,228,0.4);
 		border-radius:2.5rem;
 		line-height: 100upx;

@@ -3,7 +3,7 @@
 		<view class="content">
 			<!-- 头部logo -->
 			<view class="header">
-				<image :src="logoImage"></image>
+				<image src="../static/logo.png"></image>
 			</view>
 			<!-- 主体表单 -->
 			<view class="main">
@@ -142,9 +142,8 @@
 	.header {
 		width: 161upx;
 		height: 161upx;
-		box-shadow: 0upx 0upx 60upx 0upx rgba(0, 0, 0, 0.1);
+		box-shadow: 0upx 0upx 60upx 0upx rgba(0, 129, 255, 0.1);
 		border-radius: 50%;
-		background-color: #000000;
 		margin-top: 128upx;
 		margin-bottom: 48upx;
 		margin-left: auto;
@@ -213,8 +212,7 @@
 		font-size: 30upx;
 		width: 601upx;
 		height: 100upx;
-		background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6));
-		box-shadow: 0upx 0upx 13upx 0upx rgba(164, 217, 228, 0.4);
+		background: #0081FF;
 		border-radius: 2.5rem;
 		line-height: 100upx;
 		text-align: center;
@@ -231,7 +229,7 @@
 		align-items: center;
 		font-size: 28upx;
 		margin-top: 80upx;
-		color: rgba(0, 0, 0, 0.7);
+		color: rgba(51,51,51, 0.7);
 		text-align: center;
 		height: 40upx;
 		line-height: 40upx;
