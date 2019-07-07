@@ -5,9 +5,9 @@
 				<view class="box">
 					<view class="box-hd">
 						<view class="avator">
-							<img :src="avator"/>
+							<img src="../../../../static/logo.png"/>
 						</view>
-						<view class="nickname">{{nickname}}</view>
+						<view class="nickname">咕咕咕</view>
 					</view>
 					<view class="box-bd">
 						<view class="item">

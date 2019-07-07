@@ -168,7 +168,7 @@
 				lostPicUrls:[],
 				findList:[],
 				findPicUrls:[],
-				userid:2,
+				userid:1,
 				lostShow:true,
 				findShow:false
 			}

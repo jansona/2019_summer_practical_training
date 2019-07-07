@@ -59,24 +59,12 @@
 				scrollLeft: 0, //顶部选项卡左滑距离
 				articlList: [],
 				commentList: [],
-				userid: 2,
+				userid: 1,
 				articleShow: true,
 				commentShow: false
 			}
 		},
 		methods: {
-			tabSelect(e) {
-				this.tabCurrentIndex = e.currentTarget.dataset.id;
-				if (this.tabCurrentIndex == 0) {
-					this.lostShow = true;
-					this.findShow = false
-				} else {
-					this.findShow = true;
-					this.lostShow = false
-				}
-				// this.refreshData();
-				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
-			},
 			/**
 			 * @param {Object} pageNUm
 			 * size需要更改成为正确的大小
