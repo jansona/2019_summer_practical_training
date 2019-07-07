@@ -25,10 +25,11 @@ export default {
     
   },
   mounted(){
-    this.initWebSocket();
+    // this.initWebSocket();
+    this.$options.sockets.onmessage = this.onMessage;
   },
   destroyed(){
-    this.websocketclose();
+    // this.websocketclose();
   },
   methods: {
     reload() {
@@ -37,38 +38,37 @@ export default {
         this.isRouterAlive = true;
       });
     },
-    initWebSocket(){ //初始化weosocket 
-      const wsuri = "ws://localhost:18080/websocket";//ws地址
-      this.websock = new WebSocket(wsuri);
-      this.websocket.onopen = this.websocketonopen;
-      this.websocket.onerror = this.websocketonerror;
-      this.websock.onmessage = this.websocketonmessage; 
-      this.websock.onclose = this.websocketclose;
-    }, 
-    websocketonopen() {
-      console.log("WebSocket连接成功");
-      this.websocket.send(this.$store.state.userID);
-    },
-    websocketonerror(e) { //错误
-      console.log("WebSocket连接发生错误");
-    },
-    websocketonmessage(e){ //数据接收 
-      const redata = JSON.parse(e.data);
-      console.log(redata.value); 
-    }, 
-    websocketsend(agentData){//数据发送 
-      this.websock.send(agentData);   
-    }, 
-    websocketclose(e){ //关闭 
-      console.log("connection closed (" + e.code + ")"); 
-    }
-  },
-  socket: {
-    events: {
-      connect(){
-        console.log("succeed")
+    onMessage(data){
+      console.log(data);
+      if(data.data === "Who are you?"){
+        this.$socket.send(this.$store.state.userID);
       }
     }
+    // initWebSocket(){ //初始化weosocket 
+    //   const wsuri = "ws://localhost:18080/websocket";//ws地址
+    //   this.websock = new WebSocket(wsuri);
+    //   this.websocket.onopen = this.websocketonopen;
+    //   this.websocket.onerror = this.websocketonerror;
+    //   this.websock.onmessage = this.websocketonmessage; 
+    //   this.websock.onclose = this.websocketclose;
+    // }, 
+    // websocketonopen() {
+    //   console.log("WebSocket连接成功");
+    //   this.websocket.send(this.$store.state.userID);
+    // },
+    // websocketonerror(e) { //错误
+    //   console.log("WebSocket连接发生错误");
+    // },
+    // websocketonmessage(e){ //数据接收 
+    //   const redata = JSON.parse(e.data);
+    //   console.log(redata.value); 
+    // }, 
+    // websocketsend(agentData){//数据发送 
+    //   this.websock.send(agentData);   
+    // }, 
+    // websocketclose(e){ //关闭 
+    //   console.log("connection closed (" + e.code + ")"); 
+    // }
   }
 };
 </script>

@@ -48,6 +48,11 @@ public class CustomWebSocket {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
+        try {
+            session.getBasicRemote().sendText("Who are you?");
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+        }
         Set<String> keys = session.getUserProperties().keySet();    // TODO 这一步有望得到用户ID
         for(String key : keys){
             System.out.println(key);
@@ -79,16 +84,16 @@ public class CustomWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println(message);
+        System.out.println("来自前端的消息体" + message);
         if(!message.contains("message:")){
             try {
-                System.out.println(session.getId());
                 this.id = Integer.valueOf(message);
+                System.out.println("用户id:" + this.id);
             }catch (Exception e){
                 e.printStackTrace();
             }
         }else{
-            System.out.println("客户端发送的消息：" + message);
+            System.out.println("其他消息：" + message);
         }
     }
 
