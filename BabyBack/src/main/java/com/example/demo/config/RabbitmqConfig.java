@@ -3,8 +3,7 @@ package com.example.demo.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AcknowledgeMode;
-import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -81,5 +80,25 @@ public class RabbitmqConfig {
             }
         });
         return rabbitTemplate;
-    }}
+    }
+
+    @Bean(name = "messageQueue")
+    public Queue messageQueue(){
+        return new Queue(env.getProperty("message.queue.name"), true);
+    }
+
+    @Bean
+    public DirectExchange messageExchange(){
+        return new DirectExchange(env.getProperty("message.exchange.name"), true, false);
+    }
+
+    @Bean
+    public Binding messageBinding(){
+        return BindingBuilder
+                .bind(messageQueue())
+                .to(messageExchange())
+                .with(env.getProperty("message.routing.key.name"));
+    }
+
+}
 

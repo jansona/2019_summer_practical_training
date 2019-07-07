@@ -25,6 +25,20 @@ public class CustomWebSocket {
      * 与某个客户端的连接会话，需要通过它来给客户端发送数据
      */
     private Session session;
+    private Integer id;
+
+    public static void sendMessageToUser(Integer id, String message){
+        for(CustomWebSocket socket : webSocketSet){
+            try {
+                if (socket.id == id) {
+                    socket.sendMessage(message);
+                    break;
+                }
+            }catch (IOException ioe){
+                ioe.printStackTrace();
+            }
+        }
+    }
 
     /**
      * 连接建立成功调用的方法
@@ -34,7 +48,7 @@ public class CustomWebSocket {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        Set<String> keys = session.getUserProperties().keySet();
+        Set<String> keys = session.getUserProperties().keySet();    // TODO 这一步有望得到用户ID
         for(String key : keys){
             System.out.println(key);
         }
@@ -65,9 +79,16 @@ public class CustomWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("客户端发送的消息：" + message);
-        if(!message.contains("message")){
-
+        System.out.println(message);
+        if(!message.contains("message:")){
+            try {
+                System.out.println(session.getId());
+                this.id = Integer.valueOf(message);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("客户端发送的消息：" + message);
         }
     }
 
