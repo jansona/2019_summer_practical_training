@@ -1,14 +1,14 @@
 <template>
 	<view>
 		<!-- 选项卡 -->
-		<scroll-view id="nav-bar" scroll-x="true" class="bg-white nav text-center" scroll-left="0" @scroll="scroll">
+		<!-- <scroll-view id="nav-bar" scroll-x="true" class="bg-white nav text-center" scroll-left="0" @scroll="scroll">
 			<view class="cu-item" :class="0==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="0">
 				我的帖子
 			</view>
 			<view class="cu-item" :class="1==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="1">
 				我的评论
 			</view>
-		</scroll-view>
+		</scroll-view> -->
 
 		<!--帖子列表-->
 		<view v-show="articleShow" v-for="(item, index) in articleList" :key="index" class="cu-card dynamic">
