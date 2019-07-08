@@ -98,6 +98,10 @@
 		{
 			"path": "pages/tabbar-5-detail/my-release",
 			"style": {}
+		},
+		{
+			"path": "pages/author-detail/author-detail",
+			"style": {}
 		}
     ],
 	"globalStyle": {

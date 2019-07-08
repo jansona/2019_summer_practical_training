@@ -21,26 +21,26 @@
 					<view class="title" style="width: 150upx;">姓名</view>
 					<input disabled="true" :placeholder="item.name"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">性别</view>
 					<input disabled="true" :placeholder="item.sex"></input>
-				</view>
+				</view> -->
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">出生日期</view>
 					<input disabled="true" :placeholder="item.birthday"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">籍贯</view>
 					<input disabled="true" :placeholder="item.nativePlace"></input>
-				</view>
+				</view> -->
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">身高</view>
 					<input disabled="true" :placeholder="item.height"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">特征</view>
 					<input disabled="true" :placeholder="item.babyDescription"></input>
-				</view>
+				</view> -->
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪日期</view>
 					<input disabled="true" :placeholder="item.date"></input>
@@ -49,7 +49,7 @@
 					<view class="title" style="width: 150upx;">失踪地点</view>
 					<input disabled="true" :placeholder="item.place"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪过程</view>
 					<input disabled="true" :placeholder="item.missDescription"></input>
 				</view>
@@ -76,7 +76,7 @@
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">其他方式</view>
 					<input disabled="true" :placeholder="item.otherContactMethod"></input>
-				</view>
+				</view> -->
 			</form>
 		</view>
 		<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;" v-show="findShow" v-for="(item,index) in findList" :key=index>
@@ -91,26 +91,26 @@
 					<view class="title" style="width: 150upx;">姓名</view>
 					<input disabled="true" :placeholder="item.name"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">性别</view>
 					<input disabled="true" :placeholder="item.sex"></input>
-				</view>
+				</view> -->
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">出生日期</view>
 					<input disabled="true" :placeholder="item.birthday"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">籍贯</view>
 					<input disabled="true" :placeholder="item.nativePlace"></input>
-				</view>
+				</view> -->
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">身高</view>
 					<input disabled="true" :placeholder="item.height"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">特征</view>
 					<input disabled="true" :placeholder="item.babyDescription"></input>
-				</view>
+				</view> -->
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪日期</view>
 					<input disabled="true" :placeholder="item.date"></input>
@@ -119,7 +119,7 @@
 					<view class="title" style="width: 150upx;">失踪地点</view>
 					<input disabled="true" :placeholder="item.place"></input>
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪过程</view>
 					<input disabled="true" :placeholder="item.missDescription"></input>
 				</view>
@@ -146,7 +146,7 @@
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">其他方式</view>
 					<input disabled="true" :placeholder="item.otherContactMethod"></input>
-				</view>
+				</view> -->
 			</form>
 		</view>
 	</view>

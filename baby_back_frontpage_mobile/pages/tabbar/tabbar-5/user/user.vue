@@ -5,8 +5,13 @@
 			<view class="bg">
 				<view class="box">
 					<view class="box-hd">
+<<<<<<< Updated upstream
 						<view class="avator">
 							<img src="../../../../static/logo.png" />
+=======
+						<view class="avator" @click="goToPage('../author-detail/author-detail')">
+							<img src="../../../../static/logo.png"/>
+>>>>>>> Stashed changes
 						</view>
 						<view class="nickname">咕咕咕</view>
 					</view>
@@ -14,7 +19,7 @@
 						<view class="item">
 							<view class="icon"><img src="../../../../static/user/mycomment.png"></view>
 							<view class="text">我的评论</view>
-						</view>
+						</view> 
 						<view class="item" @click="goToPage('../tabbar-5-detail/my-release')">
 							<view class="icon"><img src="../../../../static/user/myrelease.png"></view>
 							<view class="text">我的发布</view>
