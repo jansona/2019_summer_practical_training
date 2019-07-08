@@ -1,31 +1,53 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.PendingMessage;
+import com.example.demo.entity.User;
+import com.example.demo.reposity.PendingMessageRepository;
+import com.example.demo.reposity.UserRepository;
+import com.example.demo.utils.Recognizer;
+import io.swagger.models.auth.In;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.rmi.MarshalException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint(value = "/websocket")
 @Component
 public class CustomWebSocket {
-    /**
-     * 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
-     */
+
     private static int onlineCount = 0;
     /**
      * concurrent包的线程安全Set，用来存放每个客户端对应的CumWebSocket对象。
      */
     private static CopyOnWriteArraySet<CustomWebSocket> webSocketSet = new CopyOnWriteArraySet<CustomWebSocket>();
-    /**
-     * 与某个客户端的连接会话，需要通过它来给客户端发送数据
-     */
+
     private Session session;
     private Integer id;
+
+    @Autowired
+    PendingMessageRepository pendingMessageRepository;
+    @Autowired
+    UserRepository userRepository;
+
+
+    private static CustomWebSocket customWebSocket;
+    //我也很绝望啊，LostBabyRepository自动注入为null，只有这样解决
+    @PostConstruct
+    public void init() {
+        customWebSocket = this;
+        customWebSocket.pendingMessageRepository = this.pendingMessageRepository;
+        customWebSocket.userRepository = this.userRepository;
+    }
 
     public static void sendMessageToUser(Integer id, String message){
         for(CustomWebSocket socket : webSocketSet){
@@ -40,11 +62,6 @@ public class CustomWebSocket {
         }
     }
 
-    /**
-     * 连接建立成功调用的方法
-     *
-     * @param session
-     */
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
@@ -64,9 +81,6 @@ public class CustomWebSocket {
         System.out.println("新连接接入。当前在线人数为：" + getOnlineCount());
     }
 
-    /**
-     * 连接关闭调用的方法
-     */
     @OnClose
     public void onClose() {
         //从set中删除
@@ -76,19 +90,25 @@ public class CustomWebSocket {
         System.out.println("有连接关闭。当前在线人数为：" + getOnlineCount());
     }
 
-    /**
-     * 收到客户端消息后调用
-     *
-     * @param message
-     * @param session
-     */
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("来自前端的消息体" + message);
         if(!message.contains("message:")){
             try {
+                // 前端发来id说明是刚建立连接，此时有两个工作：
+                // 1.为CusWebSocket对象初始化id；2.发送对应该用户的PendingMessage。
                 this.id = Integer.valueOf(message);
                 System.out.println("用户id:" + this.id);
+                User user = customWebSocket.userRepository.findById(this.id).get();
+                List<PendingMessage> pendingMessageList = customWebSocket.pendingMessageRepository.findByUser(user);
+                // TODO 暂时只返回lostbaby的ID
+                ArrayList<Integer> arrayList = new ArrayList<>();
+                for(PendingMessage pendingMessage : pendingMessageList){
+                    if(pendingMessage.getType() == PendingMessage.MessageType.LOST_NOTIFICATION){
+                        arrayList.add(Integer.valueOf(pendingMessage.getContent()));
+                        session.getBasicRemote().sendText(pendingMessage.getContent());
+                    }
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -97,21 +117,10 @@ public class CustomWebSocket {
         }
     }
 
-    /**
-     * 暴露给外部的群发
-     *
-     * @param message
-     * @throws IOException
-     */
     public static void sendInfo(String message) throws IOException {
         sendAll(message);
     }
 
-    /**
-     * 群发
-     *
-     * @param message
-     */
     private static void sendAll(String message) {
         Arrays.asList(webSocketSet.toArray()).forEach(item -> {
             CustomWebSocket customWebSocket = (CustomWebSocket) item;
@@ -124,47 +133,24 @@ public class CustomWebSocket {
         });
     }
 
-    /**
-     * 发生错误时调用
-     *
-     * @param session
-     * @param error
-     */
     @OnError
     public void onError(Session session, Throwable error) {
         System.out.println("----websocket-------有异常啦");
         error.printStackTrace();
     }
 
-    /**
-     * 减少在线人数
-     */
     private void subOnlineCount() {
         CustomWebSocket.onlineCount--;
     }
 
-    /**
-     * 添加在线人数
-     */
     private void addOnlineCount() {
         CustomWebSocket.onlineCount++;
     }
 
-    /**
-     * 当前在线人数
-     *
-     * @return
-     */
     public static synchronized int getOnlineCount() {
         return onlineCount;
     }
 
-    /**
-     * 发送信息
-     *
-     * @param message
-     * @throws IOException
-     */
     public void sendMessage(String message) throws IOException {
         //获取session远程基本连接发送文本消息
         this.session.getBasicRemote().sendText(message);

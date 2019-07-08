@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class PendingMessage {
 
-    enum MessageType{
+    public enum MessageType{
         LOST_NOTIFICATION
     }
 

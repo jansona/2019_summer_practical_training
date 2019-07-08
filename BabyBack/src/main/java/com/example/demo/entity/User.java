@@ -34,6 +34,7 @@ public class User {
     private Set<Comment> comments;//发布的可能匹配的儿童信息
 
     private String profileUrl;
+    private String location;
 
     public User() {
     }
@@ -124,5 +125,13 @@ public class User {
 
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

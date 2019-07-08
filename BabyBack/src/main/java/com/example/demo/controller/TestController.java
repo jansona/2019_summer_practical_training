@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
+
 @RestController
 public class TestController {
     @Autowired
@@ -13,6 +15,11 @@ public class TestController {
     @GetMapping(value = "/redisAdd")
     public void saveRedis(@RequestParam String key, @RequestParam String value) {
         stringRedisTemplate.opsForValue().set(key, value);
+    }
+
+    @PostMapping(value = "/redisAddWithDuration")
+    public void addRedisWithDuration(@RequestParam String key, @RequestParam String value, @RequestParam Long dura){
+        stringRedisTemplate.opsForValue().set(key, value, dura, TimeUnit.SECONDS);
     }
 
     //获取
