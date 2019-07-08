@@ -13,7 +13,7 @@ spring:
     name: springcloud-main
 
   profiles:
-    active: pro
+    active: dev
   cloud:
     config:
       profile: ${spring.profiles.active}

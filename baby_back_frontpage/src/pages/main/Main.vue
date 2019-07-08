@@ -61,6 +61,8 @@ export default {
           });
         })
         .catch(error => {
+					this.$store.commit('setToken',{token:'',flag:true})
+					this.$store.commit('setUserID',{id:-1,flag:true})
           console.log(error);
         });
     }

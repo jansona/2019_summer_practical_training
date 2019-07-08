@@ -72,7 +72,7 @@ export default {
 		/* 
 		_token = {'token': getStorage(STOREKEY_LOGIN).token || 'undefined'},
 		_sign = {'sign': sign(JSON.stringify(options.data))}*/
-		options.header = Object.assign({}, options.header, this.config.header) 
+		// options.header = Object.assign({}, options.header, this.config.header) 
 		
 
 		return new Promise((resolve, reject) => {
