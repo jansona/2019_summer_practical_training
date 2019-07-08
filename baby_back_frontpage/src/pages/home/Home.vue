@@ -60,7 +60,7 @@
         <span class="bottom-text2">成功匹配</span>
       </el-col>
     </el-row>
-    <el-button @click="show" style="margin-top:50px;">test</el-button>
+    <!-- <el-button @click="show" style="margin-top:50px;">test</el-button> -->
   </div>
 </template>
 

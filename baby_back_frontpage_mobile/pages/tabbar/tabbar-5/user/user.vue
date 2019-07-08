@@ -13,7 +13,7 @@
 						<view class="item" @click="goToPage('../tabbar-5-detail/mycomment')">
 							<view class="icon"><img src="../../../../static/user/mycomment.png"></view>
 							<view class="text">我的评论</view>
-						</view> 
+						</view>
 						<view class="item" @click="goToPage('../tabbar-5-detail/my-release')">
 							<view class="icon"><img src="../../../../static/user/myrelease.png"></view>
 							<view class="text">我的发布</view>

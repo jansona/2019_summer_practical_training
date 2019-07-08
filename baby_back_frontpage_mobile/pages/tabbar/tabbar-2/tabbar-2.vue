@@ -62,6 +62,7 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-tabbar-height"></view>
 	</view>
 </template>
 
@@ -248,6 +249,7 @@
 		-webkit-line-clamp: 1;
 		-webkit-box-orient: vertical;
 	}
+
 	.topView {
 		width: 100%;
 		height: var(--status-bar-height);
