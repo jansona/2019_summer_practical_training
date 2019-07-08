@@ -34,6 +34,8 @@ const userInfoUrl = baseUrl + '/user/infoTel'
 // const logoutUrl = baseUrl2+ '/api/auth/token/logout'
 const logoutUrl = baseUrl + '/logout'
 
+const userUpdateUrl = baseUrl + '/user/update'
+
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'
 const articleDeleteUrl = baseUrl + '/article/delete'
@@ -80,7 +82,8 @@ const URLS = {
   articleFindByUserNameUrl,
   userInfoUrl,
   logoutUrl,
-  websocketUrl
+  websocketUrl,
+  userUpdateUrl
 }
 
 export default URLS
