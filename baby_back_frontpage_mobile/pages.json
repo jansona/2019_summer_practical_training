@@ -104,6 +104,14 @@
 			"style": {}
 		},
 		{
+			"path": "pages/tabbar-5-detail/about-us",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-5-detail/feedback",
+			"style": {}
+		},
+		{
 			"path": "pages/author-detail/author-detail",
 			"style": {}
 		}
