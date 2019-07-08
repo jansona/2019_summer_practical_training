@@ -1,5 +1,25 @@
 <template>
 	<view>
+		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">Modal标题</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					Modal 内容。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-blue text-blue" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-blue margin-left" @tap="deleteConfirm">确定</button>
+		
+					</view>
+				</view>
+			</view>
+		</view>
 		<!-- 选项卡 -->
 		<!-- <scroll-view id="nav-bar" scroll-x="true" class="bg-white nav text-center" scroll-left="0" @scroll="scroll">
 			<view class="cu-item" :class="0==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="0">
@@ -39,7 +59,7 @@
 					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
 					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
 					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
-					<text class="cuIcon-deletefill bg-red margin-lr-xs" @click="deleteArticle(item)"></text> 删除
+					<text class="cuIcon-deletefill margin-lr-xs" @click="deleteArticle(item)"></text> 删除
 				</view>
 			</view>
 		</view>
@@ -62,7 +82,9 @@
 				commentList: [],
 				userid: this.$store.state.userId,
 				articleShow: true,
-				commentShow: false
+				commentShow: false,
+				modalName:null,
+				deleteid:-1
 			}
 		},
 		methods: {
@@ -94,6 +116,9 @@
 
 
 			},
+			hideModal(e) {
+				this.modalName = null
+			},
 			getUser(userId) {
 				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
 				let _this = this
@@ -111,7 +136,19 @@
 				})
 			},
 			deleteArticle(item){
-				
+				this.modalName='Modal';
+				this.deleteid=item.id
+			},
+			deleteConfirm(){
+				let url = this.URLS.articleDeleteUrl + '?id=' + this.deleteid;
+				let _this = this
+				this.$api.delete(url).then(data => {
+					uni.showToast({
+						title:'删除成功'
+					})
+				}).catch(error => {
+					console.log(error)
+				})
 			}
 		},
 	}
