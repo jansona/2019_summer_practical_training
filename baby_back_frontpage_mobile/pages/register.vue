@@ -36,7 +36,7 @@
 						class="main-input" 
 						v-model="verCode" 
 						type="number" 
-						maxlength="4" 
+						maxlength="6" 
 						placeholder="验证码" 
 					/>
 					<view 
@@ -102,14 +102,33 @@
 				if(_this.second>0){
 					return false;
 				}
-				_this.second = 60;
-				countDown = setInterval(function(){
-					_this.second--;
-					if(_this.second==0){
-						clearInterval(countDown)
-					}
-				},1000)
+				
 				console.log("获取验证码")
+				this.$api.get(this.URLS.sendSMSUrl+"?tel="+_this.phoneData).then(data => {
+					console.log(data)
+					if(data.data.rtnCode == 50004) {
+						uni.showToast({
+							position: 'bottom',
+							title: '该电话已被占用'
+						})
+					} else if (data.data.rtnCode == 200) {
+						uni.showToast({
+							position: 'bottom',
+							title: '发送成功'
+						})
+						_this.second = 60;
+						countDown = setInterval(function(){
+							_this.second--;
+							if(_this.second==0){
+								clearInterval(countDown)
+							}
+						},1000)
+					} else {
+						this.myToast('服务器错误')
+					}
+				}).catch(error => {
+					this.myToast('网络错误')
+				})
 			},
 		    startReg() {
 				//注册
@@ -133,19 +152,23 @@
 		            uni.showToast({
 		                icon: 'none',
 						position: 'bottom',
-		                title: '密码不正确'
+		                title: '密码长度小于6位'
 		            });
 		            return false;
 		        }
-				if (this.verCode.length != 4) {
+				if (this.verCode.length != 6) {
 				    uni.showToast({
 				        icon: 'none',
 						position: 'bottom',
-				        title: '验证码不正确'
+				        title: '验证码长度不正确'
 				    });
 				    return false;
 				}
-				console.log("注册成功")
+				this.$api.post(this.URLS.registUrl+"?code="+this.verCode,{tel:this.phoneData,password:this.passData}).then(data => {
+					console.log(data)
+				}).catch(error => {
+					console.log(error)
+				})
 		    }
 		},
 		computed:{

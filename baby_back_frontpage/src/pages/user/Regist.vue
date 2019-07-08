@@ -168,7 +168,7 @@ export default {
             } else {
               this.$notify({
                   message: "发送成功",
-                  type: "succcess",
+                  type: "success",
                   duration: 1500,
                   offset: 50
                 });

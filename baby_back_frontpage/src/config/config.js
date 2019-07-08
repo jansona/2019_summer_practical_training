@@ -1,4 +1,4 @@
-let mode = "pro"
+let mode = "test"
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
@@ -7,11 +7,11 @@ if (mode === 'dev') {
 } else if (mode == 'hbj') {
   baseUrl = 'http://192.168.137.1:18080'
 } else if (mode == 'pro') {
-  baseUrl = 'http://42.159.91.0:9999'
+  baseUrl = 'http://42.159.91.0:9999/api/main'
   baseUrl2 = 'http://42.159.91.0:9999'
 } else if (mode == 'test') {
-  baseUrl = 'http://192.168.151.207:9999/api/main'
-  baseUrl2 = 'http://192.168.151.207:9999'
+  baseUrl = 'http://127.0.0.1:9999/api/main'
+  baseUrl2 = 'http://127.0.0.1:9999'
 }
 
 // 填写信息部分

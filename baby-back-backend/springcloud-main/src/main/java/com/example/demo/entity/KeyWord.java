@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 
-@Entity
+//@Entity
 public class KeyWord {
     @Id
     private String name;

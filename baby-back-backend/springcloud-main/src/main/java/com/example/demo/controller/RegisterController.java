@@ -8,6 +8,7 @@ import com.example.demo.utils.SMSSender;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -60,8 +61,8 @@ public class RegisterController {
             String realCode = stringRedisTemplate.opsForValue().get(user.getTel());
 
             if (realCode != null && realCode.equals(code)) {
-//                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 if(user.getLocation() != null && !user.getLocation().equals("")) {
                     try {
                         user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));
