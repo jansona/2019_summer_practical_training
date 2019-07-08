@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
+import com.example.demo.utils.LocationConvertor;
 import com.example.demo.utils.SMSSender;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,13 @@ public class RegisterController {
             if (realCode != null && realCode.equals(code)) {
 //                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                if(user.getLocation() != null && !user.getLocation().equals("")) {
+                    try {
+                        user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 User user_saved = userRepository.save(user);
                 stringRedisTemplate.delete(user.getTel());
                 responseBase = new ResponseBase(200, "短信验证成功", user_saved);

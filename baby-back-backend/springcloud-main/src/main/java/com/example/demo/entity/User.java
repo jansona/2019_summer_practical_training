@@ -1,10 +1,8 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-
+import javafx.util.Pair;
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 
@@ -34,6 +32,9 @@ public class User {
     private Set<Comment> comments;//发布的可能匹配的儿童信息
 
     private String profileUrl;
+
+    private String location;
+    private Pair<Float, Float> coordinate;
 
     public User() {
     }
@@ -124,5 +125,21 @@ public class User {
 
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Pair<Float, Float> getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Pair<Float, Float> coordinate) {
+        this.coordinate = coordinate;
     }
 }

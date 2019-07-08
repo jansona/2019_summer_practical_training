@@ -50,6 +50,9 @@ const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
 const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
 
+// 消息收发
+const websocketUrl = baseUrl + "/websocket"
+
 
 const URLS = {
   baseUrl,
@@ -78,7 +81,8 @@ const URLS = {
   userFindByIdUrl,
   articleFindByUserNameUrl,
   userInfoUrl,
-  logoutUrl
+  logoutUrl,
+  websocketUrl
 }
 
 export default URLS

@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.*;
-import com.example.demo.reposity.KeyWordRepository;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
+import com.example.demo.utils.LocationConvertor;
 import com.example.demo.utils.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,13 +14,16 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @CrossOrigin
 @RestController
@@ -34,7 +37,7 @@ public class LostBabyController {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    KeyWordRepository keyWordRepository;
+    private StringRedisTemplate stringRedisTemplate;
 
     PageHelper pageHelper = new PageHelper();
 
@@ -42,22 +45,20 @@ public class LostBabyController {
     @ApiOperation(value = "新增一个丢失儿童信息")
     @PostMapping("/insert")
     public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
-        lostBabyRepository.save(lostBaby);
-//        lostBaby = lostBabyRepository.findById(lostBaby.getId()).get();
 
-//        for (String str : apiService.initKeyWord(apiService.initDescription(lostBaby))) {
-//            if (keyWordRepository.existsByName(str)) {
-//                KeyWord existK = keyWordRepository.findByName(str);
-//                existK.getLostBabies().add(lostBaby);
-//                keyWordRepository.save(existK);
-//            } else {
-//                KeyWord kw = new KeyWord(str);
-//                kw.getLostBabies().add(lostBaby);
-//                keyWordRepository.save(kw);
-//            }
-//        }
+        if(lostBaby.getPlace() != null && !lostBaby.getPlace().equals("")){
+            try{
+                lostBaby.setCoordinate(LocationConvertor.getCoordinate(lostBaby.getPlace()));
+            } catch (IOException ioe){
+                ioe.printStackTrace();
+            }
+        }
+        LostBaby lostBabySaved = lostBabyRepository.save(lostBaby);
 
-        return new ResponseBase(200, "插入成功", lostBaby);
+        String compositedKey = String.format("%d-%d", lostBabySaved.getId(), 2);
+        stringRedisTemplate.opsForValue().set(compositedKey, "", 2, TimeUnit.SECONDS);
+
+        return new ResponseBase(200, "插入成功", lostBabySaved);
     }
 
     @ApiOperation(value = "查找功能")
@@ -94,22 +95,22 @@ public class LostBabyController {
         return new ResponseBase(200, "查询成功", pageResult);
     }
 
-    @ApiOperation(value = "根据关键字查找用户")
-    @GetMapping("/find-by-key/{key}")
-    public ResponseBase findLostBabyByKey(Pageable page, @PathVariable String key) {
-        Set<LostBaby> set = new HashSet<>();
-        for (String str : apiService.initKeyWord(key)) {
-            set.addAll(keyWordRepository.findByName(str).getLostBabies());
-        }
-
-        List result = new ArrayList();
-        result.addAll(set);
-
-        int totalNum = result.size();
-        result = pageHelper.doPage(result, page);
-
-        Page<LostBaby> pageResult = new PageImpl(result, page, totalNum);
-        return new ResponseBase(200, "查询成功", pageResult);
-    }
+//    @ApiOperation(value = "根据关键字查找用户")
+//    @GetMapping("/find-by-key/{key}")
+//    public ResponseBase findLostBabyByKey(Pageable page, @PathVariable String key) {
+//        Set<LostBaby> set = new HashSet<>();
+//        for (String str : apiService.initKeyWord(key)) {
+//            set.addAll(keyWordRepository.findByName(str).getLostBabies());
+//        }
+//
+//        List result = new ArrayList();
+//        result.addAll(set);
+//
+//        int totalNum = result.size();
+//        result = pageHelper.doPage(result, page);
+//
+//        Page<LostBaby> pageResult = new PageImpl(result, page, totalNum);
+//        return new ResponseBase(200, "查询成功", pageResult);
+//    }
 
 }

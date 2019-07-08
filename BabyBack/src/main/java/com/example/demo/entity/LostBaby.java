@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.util.Pair;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -42,9 +43,8 @@ public class LostBaby {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "lostBabies")
-    @JsonIgnore
-    private Set<KeyWord> keyWords = new HashSet<>();
+
+    private Pair<Float, Float> coordinate;
 
     public LostBaby() {
     }
@@ -177,14 +177,6 @@ public class LostBaby {
         this.user = user;
     }
 
-    public Set<KeyWord> getKeyWords() {
-        return keyWords;
-    }
-
-    public void setKeyWords(Set<KeyWord> keyWords) {
-        this.keyWords = keyWords;
-    }
-
     public String getContactName() {
         return contactName;
     }
@@ -231,5 +223,13 @@ public class LostBaby {
 
     public void setOtherContactMethod(String otherContactMethod) {
         this.otherContactMethod = otherContactMethod;
+    }
+
+    public Pair<Float, Float> getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Pair<Float, Float> coordinate) {
+        this.coordinate = coordinate;
     }
 }

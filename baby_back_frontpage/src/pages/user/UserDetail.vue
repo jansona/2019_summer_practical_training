@@ -70,8 +70,9 @@ import ArticleInfiniteList from "./components/ArticleInfiniteList";
 import CommentInfiniteList from "./components/CommentInfiniteList";
 const nameDict = {
   username: "姓名",
-  tel: "邮箱",
-  email: "联系地址"
+  email: "邮箱",
+  tel: "联系方式",
+  location: "地址"
 };
 export default {
   name: 'UserDetail',
