@@ -3,7 +3,6 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.util.Pair;
 
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;

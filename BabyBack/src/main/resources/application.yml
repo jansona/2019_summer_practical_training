@@ -13,10 +13,11 @@ spring:
     multipart:
       max-file-size: 10MB
   redis:
-    host: localhost
+    host: gugugu.redis.cache.chinacloudapi.cn
     port: 6379
-    password:
+    password: mTppSoYen1Rtp3RlwJBWlKK8fvcOnLH3pHr3BtxGO4E=
     timeout: 10000
+
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -30,7 +31,6 @@ spring:
 
 server:
   port: 18080
-
 
 mq:
   env: local
