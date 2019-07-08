@@ -49,17 +49,20 @@ public class CustomWebSocket {
         customWebSocket.userRepository = this.userRepository;
     }
 
-    public static void sendMessageToUser(Integer id, String message){
+    public static boolean sendMessageToUser(Integer id, String message){
+        boolean doesExist = false;
         for(CustomWebSocket socket : webSocketSet){
             try {
                 if (socket.id == id) {
                     socket.sendMessage(message);
+                    doesExist = true;
                     break;
                 }
             }catch (IOException ioe){
                 ioe.printStackTrace();
             }
         }
+        return doesExist;
     }
 
     @OnOpen
@@ -108,6 +111,7 @@ public class CustomWebSocket {
                         arrayList.add(Integer.valueOf(pendingMessage.getContent()));
                         session.getBasicRemote().sendText(pendingMessage.getContent());
                     }
+                    customWebSocket.pendingMessageRepository.delete(pendingMessage);
                 }
             }catch (Exception e){
                 e.printStackTrace();
