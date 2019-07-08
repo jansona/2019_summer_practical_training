@@ -165,9 +165,14 @@
 				    return false;
 				}
 				this.$api.post(this.URLS.registUrl+"?code="+this.verCode,{tel:this.phoneData,password:this.passData}).then(data => {
-					console.log(data)
+					if(data.data.rtnCode != 200){
+						this.myToast(data.data.msg)
+					} else {
+						this.myToast('注册成功!')
+						uni.navigateBack()
+					}
 				}).catch(error => {
-					console.log(error)
+					this.myToast('网络错误')
 				})
 		    }
 		},
