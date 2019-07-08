@@ -52,10 +52,10 @@
 					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 			</view>
-			<view class="list">
+			<view class="list" >
 				<view class="li noborder" >
-					<view class="icon"><image src="../../static/user/set.png"></image></view>
-					<view class="text">系统设置</view>
+					<view class="icon"><image src="../../static/user/quit.png"></image></view>
+					<view class="text">退出登陆</view>
 					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 			</view>

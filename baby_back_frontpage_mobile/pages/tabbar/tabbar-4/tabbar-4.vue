@@ -1,7 +1,6 @@
 <template>
 	<view>
 		<view class="topView"></view>
-<<<<<<< HEAD
 		<swiper class="card-swiper" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
 		 :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
 		 indicator-active-color="#0081ff">
@@ -12,8 +11,6 @@
 				</view>
 			</swiper-item>
 		</swiper>
-=======
->>>>>>> origin/master
 		<view style="margin-top: 50upx;">
 			<view class="padding text-center">
 				<view class="padding-lr bg-white">
@@ -42,7 +39,6 @@
 		data() {
 			return {
 				title: 'Hello',
-<<<<<<< HEAD
 				urgentHint: '正确输入必要信息并提交，系统审核后将按照2小时，8小时，24小时，大于3天等时间分布，分别向不同位置客户端推送消息，以帮助建立信息网。',
 				cardCur: 0,
 				swiperList: [{
@@ -76,10 +72,7 @@
 				}],
 				dotStyle: false,
 				towerStart: 0,
-				direction: ''
-=======
-				urgentHint: '正确输入必要信息并提交，系统审核后将按照2小时，8小时，24小时，大于3天等时间分布，分别向不同位置客户端推送消息，以帮助建立信息网。'
->>>>>>> origin/master
+				direction: '',
 			}
 		},
 		onLoad() {

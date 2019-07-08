@@ -39,7 +39,7 @@
 					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
 					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
 					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
-					<text class="cuIcon-deletefill bg-red margin-lr-xs"></text> 删除
+					<text class="cuIcon-deletefill bg-red margin-lr-xs" @click="deleteArticle(item)"></text> 删除
 				</view>
 			</view>
 		</view>
@@ -110,6 +110,9 @@
 					url: '/pages/tabbar-2-detail/passage-detail?data='+JSON.stringify(data)
 				})
 			},
+			deleteArticle(item){
+				
+			}
 		},
 	}
 </script>
