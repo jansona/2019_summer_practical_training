@@ -1,5 +1,25 @@
 <template>
 	<view>
+		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">Modal标题</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					Modal 内容。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-blue text-blue" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-blue margin-left" @tap="deleteConfirm">确定</button>
+		
+					</view>
+				</view>
+			</view>
+		</view>
 		<!-- 选项卡 -->
 		<scroll-view id="nav-bar" scroll-x="true" class="bg-white nav text-center" scroll-left="0" @scroll="scroll">
 			<view class="cu-item" :class="0==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="0">
@@ -78,6 +98,7 @@
 					<input disabled="true" :placeholder="item.otherContactMethod"></input>
 				</view> -->
 			</form>
+			<text class="cuIcon-deletefill" style="margin-left: 570upx;" @click="deleteRelease(item)">删除</text>
 		</view>
 		<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;" v-show="findShow" v-for="(item,index) in findList" :key=index>
 			<view class="padding bg-white">
@@ -147,6 +168,7 @@
 					<view class="title" style="width: 150upx;">其他方式</view>
 					<input disabled="true" :placeholder="item.otherContactMethod"></input>
 				</view> -->
+				<text class="cuIcon-deletefill" style="margin-left: 570upx;" @click="deleteRelease(item)">删除</text>
 			</form>
 		</view>
 	</view>
@@ -170,10 +192,15 @@
 				findPicUrls:[],
 				userid:this.$store.state.userId,
 				lostShow:true,
-				findShow:false
+				findShow:false,
+				modalName:null,
+				deleteid:-1
 			}
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
 			tabSelect(e) {
 				this.tabCurrentIndex = e.currentTarget.dataset.id;
 				if (this.tabCurrentIndex == 0) {
@@ -226,6 +253,25 @@
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data
+				}).catch(error => {
+					console.log(error)
+				})
+			},
+			deleteRelease(item){
+				this.modalName='Modal';
+				this.deleteid=item.id
+			},
+			deleteConfirm(){
+				if(this.lostShow==true){
+					let url = this.URLS.lostBabyDeleteUrl + '?id=' + this.deleteid;
+				}else{
+					let url = this.URLS.matchBabyDeleteUrl + '?id=' + this.deleteid;
+				}
+				let _this = this
+				this.$api.delete(url).then(data => {
+					uni.showToast({
+						title:'删除成功'
+					})
 				}).catch(error => {
 					console.log(error)
 				})

@@ -2,7 +2,7 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.util.Pair;
-import lombok.Data;
+
 
 import javax.persistence.*;
 import java.util.Date;
