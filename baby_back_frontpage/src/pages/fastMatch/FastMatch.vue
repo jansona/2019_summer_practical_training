@@ -17,7 +17,7 @@
           <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="input" @click="nlpMatch"></el-input>
           <br />
           <br />
-          <el-col offset="20" span="4">
+          <el-col :offset="20" :span="4">
             <el-button type="primary" size="small" style="float:right" @click="nlpAnalyze">开始匹配</el-button>
           </el-col>
           <br>

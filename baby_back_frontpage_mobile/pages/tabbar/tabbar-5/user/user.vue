@@ -5,7 +5,7 @@
 			<view class="bg">
 				<view class="box">
 					<view class="box-hd">
-						<view class="avator">
+						<view class="avator" @click="goToPage('../author-detail/author-detail')">
 							<img src="../../../../static/logo.png" />
 						</view>
 						<view class="nickname">咕咕咕</view>
