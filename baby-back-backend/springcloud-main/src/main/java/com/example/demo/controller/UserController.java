@@ -4,6 +4,7 @@ import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
+import com.example.demo.utils.LocationConvertor;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.models.auth.In;
@@ -32,6 +33,13 @@ public class UserController {
         if (userRepository.findByTel(user.getTel()) != null) {
             responseBase = new ResponseBase(13240, "该手机号已被使用", user);
         } else {
+            if(user.getLocation() != null && !user.getLocation().equals("")) {
+                try {
+                    user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
             responseBase = new ResponseBase(200, "注册成功", userRepository.save(user));
         }
         return responseBase;

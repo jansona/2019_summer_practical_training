@@ -4,7 +4,6 @@ import com.example.demo.entity.LostBaby;
 import com.example.demo.entity.MatchBaby;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
-import com.example.demo.feign.RemoteUploadService;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.MatchBabyRepository;
 import com.example.demo.reposity.UserRepository;
@@ -12,7 +11,6 @@ import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,20 +23,9 @@ import java.util.Random;
 @RequestMapping(value = "file")
 public class FileUploadController {
 
-    private String photoBaseUrl = "/resource/photo/";
+    final String photoBaseUrl = "/resource/photo/";
 
-    @Value("${server.port}")
-    private String port;
-
-    @Value("${eureka.instance.ip-address}")
-    private String IP;
-
-    public void show( ) {
-        System.out.println("FileUploadController:"+IP+":"+port);
-    }
-
-
-    public static enum Action {
+    enum Action {
         AS_PROFILE,
         AS_LOST_PICS,
         AS_MATCH_PICS,
@@ -55,20 +42,9 @@ public class FileUploadController {
     @Autowired
     MatchBabyRepository matchBabyRepository;
 
-
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
     public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id") String id, Action action) {
-//        ResponseBase responseBase;
-//        String postfix = "";
-//        postfix = file.getOriginalFilename().split("\\.")[1];
-//        if(action == Action.RECOGNITION){
-//            responseBase = recognizer.recognition(file, String.format("%s.%s", generateRandomFilename(), postfix));
-//        }else {
-//            responseBase = remoteUploadService.upload(file,id,action.toString());
-//            photoBaseUrl = (String) responseBase.getData();
-//        }
-
         ResponseBase responseBase;
         String postfix = "";
         ArrayList<String> matches = null;
@@ -132,12 +108,6 @@ public class FileUploadController {
     private void updateEntity(String id, Action action, String suffix){
 
         int nId = Integer.valueOf(id);
-        try {
-            photoBaseUrl = "http://"+IP + ":"+ port+"/resource/photo/";
-            System.out.println(photoBaseUrl);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
         switch (action){
             case AS_PROFILE:

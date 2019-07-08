@@ -51,7 +51,8 @@ public class CommentController {
 
     @ApiOperation(value = "查询特定文章的评论")
     @PostMapping("/find-by-article")   // TODO 待填
-    public ResponseBase findCommentByArticle(Pageable page, @RequestParam(value = "article") Article article) {
+    public ResponseBase findCommentByArticle(Pageable page,
+                                             @RequestParam(value = "article") Article article) {
         List<Comment> result = commentRepository.findAllByArticle(article);
 
         int totalNum = result.size();
