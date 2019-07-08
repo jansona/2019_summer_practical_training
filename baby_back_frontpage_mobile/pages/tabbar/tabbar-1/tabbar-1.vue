@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<view class="topView"></view>
 		<view class="mpvue-picker">
 			<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :mode="mode" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
 			 @onConfirm="onConfirm" @onCancel="onCancel" :pickerValueArray="pickerValueArray"></mpvue-picker>
@@ -10,7 +11,8 @@
 			<uni-icon type="arrowdown" color="#333333" size="22" @click="showSinglePicker"></uni-icon>
 			<view class="search-form round" style="margin-left: 8upx;">
 				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" v-model="searchInput" type="text" placeholder="搜索宝贝" confirm-type="search"></input>
+				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" v-model="searchInput" type="text" placeholder="搜索宝贝"
+				 confirm-type="search"></input>
 			</view>
 			<view class="margin-tb-sm text-center">
 				<button class="cu-btn round bg-blue" style="margin-right: 20upx;" @click="searchClick">搜索</button>
@@ -43,7 +45,7 @@
 		<view class="uni-center" v-if="isBottom">
 			<text style="color:#AAAAAA;">已经到底了</text>
 		</view>
-		
+
 		<view class="cu-tabbar-height"></view>
 	</view>
 </template>
@@ -56,21 +58,21 @@
 			mpvuePicker,
 			uniIcon
 		},
-		mounted:function () {
-			if(this.searchInput!=''){
-				
-			}else{
+		mounted: function() {
+			if (this.searchInput != '') {
+
+			} else {
 				this.refreshData();
 			}
-			
+
 		},
 		data() {
 			return {
-				isFirst : true,
-				isBottom : false,
-				pageNo :0,
-				searchInput:'',
-				totalPageNum:2,
+				isFirst: true,
+				isBottom: false,
+				pageNo: 0,
+				searchInput: '',
+				totalPageNum: 2,
 				findShow: false,
 				lostShow: true,
 				title: 'Hello',
@@ -80,8 +82,8 @@
 				InputBottom: 0,
 				lostList: [],
 				lostPicUrls: [],
-				findList : [],
-				findPicUrls:[],
+				findList: [],
+				findPicUrls: [],
 				themeColor: '#007AFF',
 				mode: '',
 				deepLength: 1,
@@ -135,11 +137,11 @@
 				} else {
 					this.findShow = true;
 					this.lostShow = false
-					if(this.isFirst &&  this.findList.length==0){
-						this.pageNo=0
+					if (this.isFirst && this.findList.length == 0) {
+						this.pageNo = 0
 						this.refreshData();
 					}
-					this.isFirst=false
+					this.isFirst = false
 				}
 				// this.refreshData();
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
@@ -150,12 +152,12 @@
 			InputBlur(e) {
 				this.InputBottom = 0
 			},
-			resetData(){
-				this.pageNo=0
-				this.lostPicUrls=[]
-				this.lostList=[]
-				this.findPicUrls=[]
-				this.findList=[]
+			resetData() {
+				this.pageNo = 0
+				this.lostPicUrls = []
+				this.lostList = []
+				this.findPicUrls = []
+				this.findList = []
 				this.refreshData();
 			},
 			/**
@@ -163,22 +165,24 @@
 			 * size需要更改成为正确的大小
 			 */
 			refreshData() {
-				
-				if(this.totalPageNum<=this.pageNo){
-					this.isBottom=true
+
+				if (this.totalPageNum <= this.pageNo) {
+					this.isBottom = true
 					console.log('已经到底了')
 					let _this = this
-					setTimeout(function(){ _this.isBottom=false; }, 1000);
+					setTimeout(function() {
+						_this.isBottom = false;
+					}, 1000);
 					return;
-					
+
 				}
-				if(this.lostShow){
-					let url =this.URLS.lostBabyFindUrl +'?size=7&page='+this.pageNo
-					this.pageNo +=1
+				if (this.lostShow) {
+					let url = this.URLS.lostBabyFindUrl + '?size=7&page=' + this.pageNo
+					this.pageNo += 1
 					this.$api.post(url)
 						.then(data => {
 							this.totalPageNum = data.data.data.totalPages
-							
+
 							let appendList = data.data.data.content
 							for (let i = 0; i < appendList.length; i++) {
 								let id = appendList[i].id;
@@ -188,13 +192,13 @@
 						}).catch(error => {
 							console.log(error)
 						})
-				}else{
-					let url =this.URLS.matchBabyFindUrl +'?size=7&page='+this.pageNo
-					this.pageNo +=1
+				} else {
+					let url = this.URLS.matchBabyFindUrl + '?size=7&page=' + this.pageNo
+					this.pageNo += 1
 					this.$api.post(url)
 						.then(data => {
 							this.totalPageNum = data.data.data.totalPages
-							
+
 							let appendList = data.data.data.content
 							for (let i = 0; i < appendList.length; i++) {
 								let id = appendList[i].id;
@@ -208,13 +212,13 @@
 
 			},
 			searchClick(e) {
-				let _this=this;
-				if(this.pickerLabel=='身高'){
-					let url=this.URLS.lostBabyFindUrl+'?height='+_this.searchInput;
+				let _this = this;
+				if (this.pickerLabel == '身高') {
+					let url = this.URLS.lostBabyFindUrl + '?height=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.lostList=data.data.data.content;
-						_this.lostPicUrls=[];
+						_this.lostList = data.data.data.content;
+						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
@@ -223,11 +227,11 @@
 					}).catch(error => {
 						console.log(error)
 					});
-					url=his.URLS.matchBabyFindUrl+'?height='+_this.searchInput;
+					url = his.URLS.matchBabyFindUrl + '?height=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.findList=data.data.data.content;
-						_this.findPicUrls=[];
+						_this.findList = data.data.data.content;
+						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
 							let id = _this.findList[i].id;
 							this.findPicUrls.push(this.yieldPicUrl(id));
@@ -235,13 +239,13 @@
 					}).catch(error => {
 						console.log(error)
 					})
-				}else if(this.pickerLabel=='姓名'){
+				} else if (this.pickerLabel == '姓名') {
 
-					let url=this.URLS.lostBabyFindUrl+'?name='+_this.searchInput;
+					let url = this.URLS.lostBabyFindUrl + '?name=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.lostList=data.data.data.content;
-						_this.lostPicUrls=[];
+						_this.lostList = data.data.data.content;
+						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
@@ -250,11 +254,11 @@
 					}).catch(error => {
 						console.log(error)
 					});
-					url=this.URLS.matchBabyFindUrl+'?name='+_this.searchInput;
+					url = this.URLS.matchBabyFindUrl + '?name=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.findList=data.data.data.content;
-						_this.findPicUrls=[];
+						_this.findList = data.data.data.content;
+						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
 							let id = _this.findList[i].id;
 							this.findPicUrls.push(this.yieldPicUrl(id));
@@ -262,12 +266,12 @@
 					}).catch(error => {
 						console.log(error)
 					})
-				}else if(this.pickerLabel=='籍贯'){
-					let url=this.URLS.lostBabyFindUrl+'?nativePlace='+_this.searchInput;
+				} else if (this.pickerLabel == '籍贯') {
+					let url = this.URLS.lostBabyFindUrl + '?nativePlace=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.lostList=data.data.data.content;
-						_this.lostPicUrls=[];
+						_this.lostList = data.data.data.content;
+						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
@@ -276,11 +280,11 @@
 					}).catch(error => {
 						console.log(error)
 					});
-					url=his.URLS.matchBabyFindUrl+'?nativePlace='+_this.searchInput;
+					url = his.URLS.matchBabyFindUrl + '?nativePlace=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.findList=data.data.data.content;
-						_this.findPicUrls=[];
+						_this.findList = data.data.data.content;
+						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
 							let id = _this.findList[i].id;
 							this.findPicUrls.push(this.yieldPicUrl(id));
@@ -289,12 +293,12 @@
 						console.log(error)
 					})
 
-				}else if(this.pickerLabel=='失踪地点'){
-					let url=this.URLS.lostBabyFindUrl+'?place='+_this.searchInput;
+				} else if (this.pickerLabel == '失踪地点') {
+					let url = this.URLS.lostBabyFindUrl + '?place=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.lostList=data.data.data.content;
-						_this.lostPicUrls=[];
+						_this.lostList = data.data.data.content;
+						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
 							this.lostPicUrls.push(this.yieldPicUrl(id));
@@ -303,11 +307,11 @@
 					}).catch(error => {
 						console.log(error)
 					});
-					url=this.URLS.matchBabyFindUrl+'?place='+_this.searchInput;
+					url = this.URLS.matchBabyFindUrl + '?place=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
-						_this.findList=data.data.data.content;
-						_this.findPicUrls=[];
+						_this.findList = data.data.data.content;
+						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
 							let id = _this.findList[i].id;
 							this.findPicUrls.push(this.yieldPicUrl(id));
@@ -318,21 +322,23 @@
 				}
 			},
 			yieldPicUrl(id) {
-				if(this.lostShow){
+				if (this.lostShow) {
 					return this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg"
-				}else{
+				} else {
 					return this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg"
 				}
-				
+
 			},
-			goToDetail(item,index,flag){
-				if(flag==0){
+			goToDetail(item, index, flag) {
+				if (flag == 0) {
 					uni.navigateTo({
-						url:'/pages/tabbar-1-detail/baby-detail?data='+JSON.stringify(item)+'&src='+this.URLS.baseUrl + "/resource/photo/match/" + this.findList[index].id + ".jpg"
+						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
+							"/resource/photo/match/" + this.findList[index].id + ".jpg"
 					})
-				}else if(flag==1){
+				} else if (flag == 1) {
 					uni.navigateTo({
-						url:'/pages/tabbar-1-detail/baby-detail?data='+JSON.stringify(item)+'&src='+this.URLS.baseUrl + "/resource/photo/lost/" + this.lostList[index].id + ".jpg"
+						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
+							"/resource/photo/lost/" + this.lostList[index].id + ".jpg"
 					})
 				}
 			}
@@ -340,7 +346,13 @@
 	};
 </script>
 
-<style>
+<style scoped>
+	.topView {
+		width: 100%;
+		height: var(--status-bar-height);
+		background-color: #FFFFFF;
+	}
+
 	.page {
 		height: auto;
 		min-height: 100%;

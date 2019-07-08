@@ -194,7 +194,9 @@
 				}],
 				modalName: null,
 				modalContent:null,
-				user:{}
+				user:{
+					id:this.$store.state.userId,
+				}
 			}
 		},
 		onLoad() {
@@ -307,6 +309,7 @@
 								_this.isSend=true;
 								_this.modalName='Modal';
 								_this.modalContent='发布成功！';
+								uni.navigateBack()
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);

@@ -58,6 +58,7 @@
 					"replyNum": 0,
 					"title": "",
 					"user": {
+						id:this.$store.state.userId,
 					},
 					"viewNum": 0
 				}
@@ -109,7 +110,7 @@
 				this.article.content=this.content;
 				this.article.title=this.title;
 				this.article.date=new Date();
-				this.article.user=this.user;
+				// this.article.user=this.user;
 				let _this=this;
 				let url=this.URLS.articleInsertUrl;
 				this.$api.put(url,this.article).then(data => {
@@ -117,6 +118,7 @@
 					_this.isSend=true;
 					_this.modalName='Modal'
 					_this.modalContent='发布成功！'
+					uni.navigateBack()
 				}).catch(error => {
 					console.log(error);
 					_this.modalName='Modal';

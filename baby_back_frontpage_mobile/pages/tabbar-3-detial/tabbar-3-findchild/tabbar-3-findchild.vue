@@ -335,6 +335,7 @@
 								_this.modalName='Modal';
 								_this.modalContent='发布成功！';
 								_this.isSend=true;
+								uni.navigateBack()
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);

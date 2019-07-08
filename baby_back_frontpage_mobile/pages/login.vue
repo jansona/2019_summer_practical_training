@@ -14,9 +14,9 @@
 					<input class="main-input" v-model="passData" type="text" maxlength="32" placeholder="密码" password="true" />
 				</view>
 			</view>
-			<!-- <view class="btn"> -->
+			<view >
 				<button class="dlbutton buttonBorder" @tap="startLogin()">登 陆</button>
-			<!-- </view> -->
+			</view>
 			<!-- 底部信息 -->
 			<view class="footer">
 				<navigator url="forget" open-type="navigate">找回密码</navigator>

@@ -1,4 +1,6 @@
 <template>
+	<view>
+		<view class="topView"></view>
 	<view style="margin-top: 50upx;">
 		<view class="padding text-center">
 		<view class="padding-lr bg-white">
@@ -14,7 +16,7 @@
 			<button class="cu-btn bg-blue margin-tb-sm lg" style="width:400upx;margin: 0 auto;margin-top: 50upx;" @click="JoinClick">加入紧急寻人志愿者</button>
 			<button class="cu-btn bg-blue margin-tb-sm lg" style="width:400upx;margin: 0 auto;margin-top: 50upx;" @click="Recognition">实名认证</button>
 		</view>
-	</view>
+	</view></view>
 </template>
 
 <script>
@@ -51,10 +53,14 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.content {
 		text-align: center;
 		height: 400upx;
 		margin-top: 200upx;
+	}
+	.topView {
+		width: 100%;
+		height: var(--status-bar-height);
 	}
 </style>

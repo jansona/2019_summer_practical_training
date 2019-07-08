@@ -168,7 +168,7 @@
 				lostPicUrls:[],
 				findList:[],
 				findPicUrls:[],
-				userid:1,
+				userid:this.$store.state.userId,
 				lostShow:true,
 				findShow:false
 			}

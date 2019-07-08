@@ -50,6 +50,13 @@ export const get = (url,params) => {
 export const post = (url,data) => {
     return http.post(url,data)
 }
+export const post2 = (url,data,headers) => {
+	let options = {}
+	options.url = url
+	options.data = data
+	options.header = headers
+	return http.request(options)
+}
 
 // put方法
 export const put = (url,data) => {
@@ -67,5 +74,6 @@ export default {
     get,
     post,
     put,
-	request
+	request,
+	post2
 }

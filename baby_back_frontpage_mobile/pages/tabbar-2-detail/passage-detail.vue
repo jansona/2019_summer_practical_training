@@ -85,7 +85,7 @@
 		onReady: function() {
 			//let userId=this.$store.state.userId
 			let userId = 2
-			this.getUser(userId)
+			// this.getUser(userId)
 		},
 		components: {
 			mixLoading
@@ -96,7 +96,9 @@
 				InputBottom: 0,
 				commentList: [],
 				article: {},
-				user: {},
+				user: {
+					id: this.$store.state.userId
+				},
 				comment: {
 					"article": {},
 					"content": "",
@@ -122,7 +124,8 @@
 			getCommentList() {
 				let _this=this;
 				let articleid=this.article.id.toString();
-				let url=this.URLS.commentFindUrl+'?article='+articleid;
+				let url=this.URLS.commentFindUrl+'?id='+articleid;
+				// let url=this.URLS.commentFindUrl;
 				console.log(articleid);
 				this.$api.post(url).then(data => {
 					console.log(data);

@@ -57,9 +57,9 @@
 			return {
 				tabCurrentIndex: 0, //当前选项卡索引
 				scrollLeft: 0, //顶部选项卡左滑距离
-				articlList: [],
+				articleList: [],
 				commentList: [],
-				userid: 1,
+				userid: this.$store.state.userId,
 				articleShow: true,
 				commentShow: false
 			}
@@ -78,7 +78,7 @@
 					.then(data => {
 						console.log(data);
 						_this.articleList = data.data.data.content;
-						console.log(_this.articlList)
+						console.log(_this.articleList)
 					}).catch(error => {
 						console.log(error)
 					})
