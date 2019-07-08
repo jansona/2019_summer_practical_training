@@ -36,6 +36,8 @@ if (mode != 'dev') {
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
 
+const userUpdateUrl = baseUrl + '/user/update'
+
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'
 const articleDeleteUrl = baseUrl + '/article/delete'
@@ -82,7 +84,8 @@ const URLS = {
   articleFindByUserNameUrl,
   userInfoUrl,
   logoutUrl,
-  websocketUrl
+  websocketUrl,
+  userUpdateUrl
 }
 
 export default URLS
