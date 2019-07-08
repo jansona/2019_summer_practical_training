@@ -100,6 +100,10 @@
 			"style": {}
 		},
 		{
+			"path": "pages/tabbar-5-detail/mycomment",
+			"style": {}
+		},
+		{
 			"path": "pages/author-detail/author-detail",
 			"style": {}
 		}
