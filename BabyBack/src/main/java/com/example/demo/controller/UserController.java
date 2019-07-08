@@ -4,6 +4,7 @@ import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
+import com.example.demo.utils.LocationConvertor;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.models.auth.In;
@@ -32,6 +33,13 @@ public class UserController {
         if (userRepository.findByTel(user.getTel()) != null) {
             responseBase = new ResponseBase(13240, "该手机号已被使用", user);
         } else {
+            if(user.getLocation() != null && !user.getLocation().equals("")) {
+                try {
+                    user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
             responseBase = new ResponseBase(200, "注册成功", userRepository.save(user));
         }
         return responseBase;
@@ -68,6 +76,19 @@ public class UserController {
     public ResponseBase deleteUser(@RequestParam(value = "id") Integer id) {
         userRepository.deleteById(id);
         return new ResponseBase(200, "删除成功", null);
+    }
+    @ApiOperation(value = "新增一个用户")
+    @PostMapping("/update")
+    public ResponseBase updateUser(@RequestBody User user) {
+        ResponseBase responseBase;
+        try{
+            responseBase = new ResponseBase(200, "更新成功", userRepository.save(user));
+        }catch (Exception e){
+            responseBase = new ResponseBase(13240, "更新失败", user);
+        }
+
+
+        return responseBase;
     }
 
 }

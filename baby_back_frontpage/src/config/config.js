@@ -36,6 +36,8 @@ if (mode != 'dev') {
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
 
+const userUpdateUrl = baseUrl + '/user/update'
+
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'
 const articleDeleteUrl = baseUrl + '/article/delete'
@@ -49,6 +51,9 @@ const commentInfiniteUrl = baseUrl + "/comment/infinite-scroll"
 const articleFindByUserNameUrl = baseUrl + '/article/find-by-username'
 const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
+
+// 消息收发
+const websocketUrl = baseUrl + "/websocket"
 
 
 const URLS = {
@@ -78,7 +83,9 @@ const URLS = {
   userFindByIdUrl,
   articleFindByUserNameUrl,
   userInfoUrl,
-  logoutUrl
+  logoutUrl,
+  websocketUrl,
+  userUpdateUrl
 }
 
 export default URLS

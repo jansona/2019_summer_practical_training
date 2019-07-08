@@ -5,7 +5,8 @@
     <el-tab-pane label="基本信息" name="user_info">
       <UserInfo
       :picUrl='this.picUrl'
-      :tableData='this.tableData'>
+      :tableData='this.tableData'
+      :user='this.user'>
       </UserInfo>
     </el-tab-pane>
     <el-tab-pane label="我的失踪者申报" name="baby_aply">
@@ -70,8 +71,9 @@ import ArticleInfiniteList from "./components/ArticleInfiniteList";
 import CommentInfiniteList from "./components/CommentInfiniteList";
 const nameDict = {
   username: "姓名",
-  tel: "邮箱",
-  email: "联系地址"
+  email: "邮箱",
+  tel: "联系方式",
+  location: "地址"
 };
 export default {
   name: 'UserDetail',
@@ -101,7 +103,7 @@ export default {
       totalNum: 0,
       currentPage: 1,
       pageSize: 3,
-
+      user:{},
 
       // 文章分页相关
       // articles_of_user: [],
@@ -121,9 +123,9 @@ export default {
           if (data.rtnCode == 200) {
             this.picUrl =
               URLS.baseUrl + "/resource/photo/profile/" + this.id + ".jpg";
-
+            console.log(data)
             let content = data.data;
-
+            this.user = content
             for (var key in nameDict) {
               if (content.hasOwnProperty(key)) {
                 this.tableData.push({

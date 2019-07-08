@@ -2,10 +2,9 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class TestController {
@@ -18,6 +17,11 @@ public class TestController {
         stringRedisTemplate.opsForValue().set(key, value);
     }
 
+    @PostMapping(value = "/redisAddWithDuration")
+    public void addRedisWithDuration(@RequestParam String key, @RequestParam String value, @RequestParam Long dura){
+        stringRedisTemplate.opsForValue().set(key, value, dura, TimeUnit.SECONDS);
+    }
+
     //获取
     @GetMapping(value = "/redisGet")
     public String getRedis(@RequestParam String key) {
@@ -27,5 +31,19 @@ public class TestController {
     @GetMapping(value = "/redisDelete")
     public void deleteRedis(@RequestParam String key){
         stringRedisTemplate.delete(key);
+    }
+
+    @PostMapping(value = "/websocket/send")
+    public void sendMessageToUser(@RequestParam Integer user_id, @RequestParam String message){
+        CustomWebSocket.sendMessageToUser(user_id, message);
+    }
+
+    @GetMapping(value = "/websocket/send-all")
+    public void sendAll(){
+        try {
+            CustomWebSocket.sendInfo("test");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

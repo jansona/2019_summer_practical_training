@@ -26,6 +26,9 @@ public class FileManager<RequestMapping> {
 
     File files[];
 
+    UserRepository userRepository;
+    LostBabyRepository lostBabyRepository;
+
 
     public FileManager() {
         String paths[] = {store_base_path, store_lost_path, store_match_path, store_temp_path, store_profile_path};

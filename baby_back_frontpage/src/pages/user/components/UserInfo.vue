@@ -1,38 +1,81 @@
 <template>
-  <el-card>
-    <div slot="header">
-      <el-button type="primary" icon="el-icon-edit" style="float: right; padding: 1px">编辑</el-button>
-    </div>
-    <div>
-      <el-card :body-style="{ padding: '3px'}" style="float: left; padding: 1px" class="pic-container">
-        <el-avatar shape="square" :size="100" :fit="contain" :src="showImg(picUrl)"></el-avatar>
-      </el-card>
-      <el-table
-      :data="tableData"
-      stripe
-      style="width: 70%; float: right; padding: 1px"
-      :show-header="false"
-      size="small">
-        <el-table-column prop="name" width="180"></el-table-column>
-        <el-table-column prop="content"></el-table-column>
-      </el-table>
-    </div>
-  </el-card>
+  <div>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <el-row>
+          <span style="float: left; font-size: 15px;margin-top: 5px;">提醒：点击头像即可上传或更新头像</span>
+          <el-button
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+            style="float: right;"
+            @click="edit"
+          >编辑</el-button>
+        </el-row>
+      </div>
+      <div>
+        <div @click="upLoadImage">
+          <el-card
+            :body-style="{ padding: '3px'}"
+            style="float: left; padding: 1px"
+            class="pic-container"
+          >
+            <el-avatar shape="square" :size="100" fit="contain" :src="showImg(picUrl)"></el-avatar>
+          </el-card>
+        </div>
+        <el-table
+          :data="tableData"
+          stripe
+          style="width: 70%; float: right; padding: 1px"
+          :show-header="false"
+          size="small"
+        >
+          <el-table-column prop="name" width="180"></el-table-column>
+          <el-table-column prop="content"></el-table-column>
+        </el-table>
+      </div>
+    </el-card>
+
+    <el-dialog title="编辑用户信息" :visible.sync="dialogFormVisible">
+      <el-form :model="user">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="user.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" :label-width="formLabelWidth">
+          <el-input v-model="user.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="联系方式" :label-width="formLabelWidth">
+          <el-input v-model="user.tel" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="家庭地址" :label-width="formLabelWidth">
+          <el-input v-model="user.location" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="commit">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
-import URLS from '@/config/config'
-import { request,fetch } from "@/api/api";
+import URLS from "@/config/config";
+import { request, fetch } from "@/api/api";
+import axios from "axios";
 export default {
-  name: 'UserInfo',
+  name: "UserInfo",
+  inject : ['reload'],
   props: {
     picUrl: String,
-    tableData: Array
+    tableData: Array,
+    user: Object
   },
-  data () {
+  data() {
     return {
-      
-    }
+      dialogFormVisible: false,
+      formLabelWidth: "120px"
+    };
   },
   methods: {
     showImg(url) {
@@ -44,10 +87,50 @@ export default {
         return url;
       }
     },
+    edit() {
+      this.dialogFormVisible = true;
+    },
+    upLoadImage(e) {
+      console.log(e);
+    },
+    commit() {
+      let _this=this
+      let url=URLS.userUpdateUrl
+      axios
+        .post(url, this.user)
+        .then(function(response) {
+          if(response.data.rtnCode==200){
+            _this.$notify({
+            message: "更新成功",
+            type: "success",
+            duration: 1500,
+            offset: 50
+          });
+          _this.reload();
+          }else{
+             _this.$notify({
+            message: "网络不稳定",
+            type: "warning",
+            duration: 1500,
+            offset: 50
+          });
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+          _this.$notify({
+            message: "网络不稳定",
+            type: "warning",
+            duration: 1500,
+            offset: 50
+          });
+        });
+        this.dialogFormVisible = false;
+    }
+    
   }
-}
+};
 </script>
 
 <style scoped>
-
 </style>
