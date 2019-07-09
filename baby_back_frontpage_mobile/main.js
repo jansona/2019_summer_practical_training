@@ -30,6 +30,14 @@ import DATEFORMAT from './common/util.js'
 Vue.prototype.DATEFORMAT=DATEFORMAT
 App.mpType = 'app'
 
+Vue.prototype.myToast = (data) => {
+	uni.showToast({
+		icon: 'none',
+		position: 'bottom',
+		title: data
+	})
+}
+
 const app = new Vue({
     ...App
 })

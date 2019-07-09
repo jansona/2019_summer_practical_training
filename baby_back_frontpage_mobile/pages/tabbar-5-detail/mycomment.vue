@@ -1,5 +1,25 @@
 <template>
 	<view>
+		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">Modal标题</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					Modal 内容。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-blue text-blue" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-blue margin-left" @tap="deleteConfirm">确定</button>
+		
+					</view>
+				</view>
+			</view>
+		</view>
 		<view class="cu-card dynamic">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
@@ -50,7 +70,9 @@
 				tabCurrentIndex: 0, //当前选项卡索引
 				scrollLeft: 0, //顶部选项卡左滑距离
 				commentList: [],
-				userid: this.$store.state.userId
+				userid: this.$store.state.userId,
+				modalName:null,
+				deleteid:-1
 			}
 		},
 		methods: {
@@ -69,6 +91,9 @@
 						console.log(error)
 					})
 			},
+			hideModal(e) {
+				this.modalName = null
+			},
 			getUser(userId) {
 				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
 				let _this = this
@@ -86,7 +111,19 @@
 				})
 			},
 			deleteComment(item){
-				
+				this.modalName='Modal';
+				this.deleteid=item.id
+			},
+			deleteConfirm(){
+				let url = this.URLS.commentDeleteUrl + '?id=' + this.deleteid;
+				let _this = this
+				this.$api.delete(url).then(data => {
+					uni.showToast({
+						title:'删除成功'
+					})
+				}).catch(error => {
+					console.log(error)
+				})
 			}
 		},
 	}

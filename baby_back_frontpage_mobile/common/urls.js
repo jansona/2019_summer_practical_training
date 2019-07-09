@@ -1,4 +1,4 @@
-let mode = 'prod'
+let mode = 'test'
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
@@ -24,9 +24,11 @@ const matchBabyInsertUrl = baseUrl + "/match-baby/insert"
 const matchBabyFindUrl = baseUrl + "/match-baby/find"
 const uploadPictureUrl = baseUrl + "/file/upload"
 
-//查找lost,find
+//查找删除lost,find
 const lostBabyFindByUserUrl = baseUrl + "/lost-baby/find-by-user"
 const matchBabyFindByUserUrl = baseUrl + "/match-baby/find-by-user"
+const lostBabyDeleteUrl = baseUrl + "/lost-baby/delete"
+const matchBabyDeleteUrl = baseUrl + "/match-baby/delete"
 
 // 登录注册部分
 const loginUrl = baseUrl2 + "/api/auth/oauth/token"
@@ -82,7 +84,9 @@ const URLS = {
   userFindUrl,
 	userFindByIdUrl,
 	lostBabyFindByUserUrl,
-	matchBabyFindByUserUrl
+	matchBabyFindByUserUrl,
+	lostBabyDeleteUrl,
+	matchBabyDeleteUrl
 }
 
 module.exports = URLS
