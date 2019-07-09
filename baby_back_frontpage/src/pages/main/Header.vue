@@ -38,7 +38,20 @@
       <el-button plain class="btn" @click="gotoMore" size='small'>
             更多...
           </el-button>
-        <el-button icon="el-icon-message" circle @click="openMessage"></el-button>
+          <el-popover
+      placement="top-start"
+    width="400"
+    trigger="hover">
+    <el-table :data="gridData">
+    
+    <el-table-column width="100" property="name" label="姓名"></el-table-column>
+    <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
+    <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
+  </el-table>
+    <el-button slot="reference" icon="el-icon-message" circle @click="openMessage"></el-button>
+    
+  </el-popover>
+        <!-- <el-button icon="el-icon-message" circle @click="openMessage"></el-button> -->
       </el-badge>
       <template v-if="this.$store.state.hasLogin">
         <el-popover placement="bottom" trigger="hover" width="50" style="text-aligin:right">
@@ -74,6 +87,23 @@ export default {
   },
   data() {
     return {
+      gridData:[{
+          date: '2016-05-02',
+          name: '王小虎',
+          place: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          place: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          place: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          place: '上海市普陀区金沙江路 1518 弄'
+        }],
       activeIndex: "1",
       hasMessage: true,
       hasLogin: this.$store.state.hasLogin,
@@ -82,6 +112,7 @@ export default {
     };
   },
   methods: {
+    
     handleSelect(key, keyPath) {
       // console.log(key, keyPath);
       this.$emit("on-navbar-click");
@@ -109,6 +140,38 @@ export default {
     },
     openMessage() {
       console.log("open message");
+    },
+    dateFormat: function(time) {
+      var date = new Date(time);
+      var year = date.getFullYear();
+      /* 在日期格式中，月份是从0开始的，因此要加0
+       * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+       * */
+      var month =
+        date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1;
+      var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+      var hours =
+        date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+      var minutes =
+        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      var seconds =
+        date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+      // 拼接
+      return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day +
+        " " +
+        hours +
+        ":" +
+        minutes +
+        ":" +
+        seconds
+      );
     },
     gotoLoginOrRegist(){
       this.$router.push('loginOrRegist')
