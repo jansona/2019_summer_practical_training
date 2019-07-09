@@ -67,6 +67,10 @@ export const request = (config) => {
 	return http.request(config)
 }
 
+export const _delete = (url,data) => {
+	return http.delete(url,data)
+}
+
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
 	test,
@@ -75,5 +79,6 @@ export default {
     post,
     put,
 	request,
-	post2
+	post2,
+	_delete
 }
