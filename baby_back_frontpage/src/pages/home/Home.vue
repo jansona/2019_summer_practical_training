@@ -4,7 +4,7 @@
     <span class="title1">What we do</span>
     <span class="title2">宝贝回家</span>
     <span class="title3">
-      将人脸识别技术整合到寻人服务中。。。
+      &nbsp &nbsp 将人脸识别技术整合到寻人服务中，自今年8月上线以来，短短几天内已找回3名走失者，识别率超过99％。
     </span>
     <!-- <div class="box-container"> -->
     <el-row :gutter="50" class="box-container">
