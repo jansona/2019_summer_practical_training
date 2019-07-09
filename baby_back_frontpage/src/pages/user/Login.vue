@@ -61,7 +61,7 @@ import URLS from "@/config/config";
 import axios from "axios";
 export default {
   name: "Login",
-  inject: ["reload"],
+  inject: ["reload","connect"],
   data() {
     var checkPhoneOrEmail = (rule, value, callback) => {
       const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
@@ -111,6 +111,7 @@ export default {
           });
           this.$store.commit("setUserInfo", data.data.data);
           this.$store.commit("setUserID",{id:data.data.data.id,flag:true})
+          this.connect();
           console.log("userInfo", this.$store.state.userInfo);
         })
         .catch(error => {
