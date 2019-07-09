@@ -22,6 +22,7 @@ import { fetch } from "@/api/api";
 import URLS from "@/config/config";
 export default {
   name: "Home",
+  inject: ['connect'],
   components: {
     HomeHeader,
     HomeContent
@@ -29,7 +30,22 @@ export default {
   data() {
     return {
       isHomePage: false,
+      websocket: null
     };
+  },
+  computed:{
+    listenedUserID() {
+        return this.$store.state.userID;
+    }
+  },
+  watch:{
+    listenedUserID: function(ov,nv){
+      console.log('watch start……');
+      if(this.$store.state.userID){
+        const wsuri = "ws://localhost:18080/websocket";
+        this.websocket = new WebSocket(wsuri);
+      }
+    }
   },
   methods: {
     handleSelect(indexPath) {
@@ -56,16 +72,23 @@ export default {
         .then(data => {
           console.log("已经登陆成功 ", data);
           this.$store.commit("setUserID", {
-            id: data.data.data.id,
-            flag: this.rememberLogin
+            'id': data.data.id,
+            flag: false
           });
-          this.$store.commit('setUserInfo',data.data.data)
+          this.$store.commit('setUserInfo',data.data)
+          this.connect()
           console.log("userInfo",this.$store.state.userInfo)
         })
         .catch(error => {
 					this.$store.commit('setToken',{token:'',flag:true})
 					this.$store.commit('setUserID',{id:-1,flag:true})
           console.log(error);
+          this.$notify({
+            title: "登录超时",
+            offset: 50,
+            type: "info",
+            duration: 1500,
+          })
         });
     }
   },

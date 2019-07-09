@@ -17,6 +17,8 @@
     "better-scroll": "^1.15.2",
     "element-ui": "^2.9.2",
     "qs": "^6.7.0",
+    "sockjs-client": "^1.3.0",
+    "stompjs": "^2.3.3",
     "stylus": "^0.54.5",
     "vue": "^2.5.2",
     "vue-axios": "^2.1.4",

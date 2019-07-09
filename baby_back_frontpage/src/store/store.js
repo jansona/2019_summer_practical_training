@@ -14,12 +14,17 @@ export const store = new Vuex.Store({
     imageId: -1,
     token: localStorage.getItem('token') || '',
     userInfo: {},
+    messageList : [],
   },
   modules: {
     //sys,
     //global
   },
   mutations: {
+    setMessageList(state,content){
+      state.messageList=state.messageList.concat(content)
+
+    },
     setStatus(state, status) {
       state.status = status
     },

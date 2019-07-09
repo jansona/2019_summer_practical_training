@@ -32,7 +32,7 @@ public class CustomWebSocket {
     private static CopyOnWriteArraySet<CustomWebSocket> webSocketSet = new CopyOnWriteArraySet<CustomWebSocket>();
 
     private Session session;
-    private Integer id;
+    private int id;
 
     @Autowired
     PendingMessageRepository pendingMessageRepository;
@@ -49,10 +49,11 @@ public class CustomWebSocket {
         customWebSocket.userRepository = this.userRepository;
     }
 
-    public static boolean sendMessageToUser(Integer id, String message){
+    public static boolean sendMessageToUser(int id, String message){
         boolean doesExist = false;
         for(CustomWebSocket socket : webSocketSet){
             try {
+                System.out.println(String.format("SocketUserID: %d, UserID: %d", socket.id, id));
                 if (socket.id == id) {
                     socket.sendMessage(message);
                     doesExist = true;

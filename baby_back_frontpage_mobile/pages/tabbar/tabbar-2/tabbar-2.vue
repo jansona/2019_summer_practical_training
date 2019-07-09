@@ -34,8 +34,10 @@
 		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
-					<view class="cu-item" @click="navToAuthorDetail(item)">
-						<view class="cu-avatar round lg"></view>
+					<view class="cu-item">
+						<view class="cu-avatar round lg" style="overflow: hidden;">
+							<image :src="item.user.profileUrl" mode="aspectFit"></image>
+						</view>
 						<view class="content flex-sub" style="margin-top:5upx;">
 							<view>{{item.user.username}}</view>
 							<view class="text-gray text-sm flex justify-between">
@@ -197,13 +199,10 @@
 				});
 			},
 			navToDetails(item) {
+				console.log(item);
+				let data = item;
 				uni.navigateTo({
-					url: '/pages/tabbar-2-detail/passage-detail?data=' + JSON.stringify(item)
-				})
-			},
-			navToAuthorDetail(item){
-				uni.navigateTo({
-					url: '/pages/author-detail/author-detail?id=' + item.user.id
+					url: '/pages/tabbar-2-detail/passage-detail?data=' + JSON.stringify(data)
 				})
 			},
 			getUser(userId) {
@@ -232,18 +231,22 @@
 
 <style scoped>
 	.content {
+		text-align: center;
 		margin-top: 150upx;
 	}
 
 	,
 	.passage-content {
+		text-align: center;
 		height: 30upx;
 		margin-top: 0;
 	}
 
 	,
 	.text-content {
-		padding-left: 10upx;
+		text-align: center;
+		padding-left: 5upx;
+		padding-right: 5upx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;

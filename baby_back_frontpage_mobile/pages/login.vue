@@ -14,7 +14,7 @@
 					<input class="main-input" v-model="passData" type="text" maxlength="32" placeholder="密码" password="true" />
 				</view>
 			</view>
-			<view >
+			<view>
 				<button class="dlbutton buttonBorder" @tap="startLogin()">登 陆</button>
 			</view>
 			<!-- 底部信息 -->
@@ -45,15 +45,16 @@
 		methods: {
 			isLogin() {
 				//判断缓存中是否登陆过，直接登陆
-				console.log(this.$store.state.hasLogin, this.$store.state.userId, this.$store.state.token )
+				console.log(this.$store.state.hasLogin, this.$store.state.userId, this.$store.state.token)
 				try {
 					const value = uni.getStorageSync('token');
 					if (value) {
 						//有登陆信息
 						console.log("已登录用户：", value);
 						this.$api.get(this.URLS.userInfoUrl).then(data => {
-							console.log('userInfo:', data)
 							this.$store.commit('setUserId', data.data.data.id)
+							this.$store.commit('setUserInfo', data.data.data)
+							console.log('userInfo:', data)
 							uni.reLaunch({
 								url: './index/index',
 							});
@@ -88,49 +89,50 @@
 				//           });
 				//           return;
 				//       }
-				
+
 				// this.$store.commit('setToken','')
 				// this.$api.post( this.URLS.loginUrl,{
 				// 			'username': this.phoneData,
 				// 			'password': this.passData,
 				// 			'grant_type': 'password'
 				// 		}
-				
-				this.$api.request({
-						url: this.URLS.loginUrl,
-						data: JSON.parse(JSON.stringify({
-							'username': this.phoneData,
-							'password': this.passData,
-							'grant_type': 'password'
-						})),
-						method: "POST",
-						header: {
-							'Content-Type':'application/x-www-form-urlencoded',
-							// 'Content-Type':'application/x-www-form-urlencoded',
-							'Access-Control-Allow-Origin': '*',
-							'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
-						}}
-					).then(data => {
-						console.log("login:", data);
-						this.$store.commit('setToken', data.data.access_token)
-						this.isLogin()
-					}).catch(error => {
-						console.log(error)
-						uni.showToast({
-							title: "登录失败",
-							position: 'bottom'
-						})
-					})
 
-				}
+				this.$api.request({
+					url: this.URLS.loginUrl,
+					data: JSON.parse(JSON.stringify({
+						'username': this.phoneData,
+						'password': this.passData,
+						'grant_type': 'password'
+					})),
+					method: "POST",
+					header: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+						// 'Content-Type':'application/x-www-form-urlencoded',
+						'Access-Control-Allow-Origin': '*',
+						'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
+					}
+				}).then(data => {
+					console.log("login:", data);
+					this.$store.commit('setToken', data.data.access_token)
+					this.isLogin()
+				}).catch(error => {
+					console.log(error)
+					uni.showToast({
+						title: "登录失败",
+						position: 'bottom'
+					})
+				})
+
 			}
 		}
+	}
 </script>
 
 <style>
 	.btn {
 		display: flex;
 	}
+
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -229,7 +231,7 @@
 		align-items: center;
 		font-size: 28upx;
 		margin-top: 80upx;
-		color: rgba(51,51,51, 0.7);
+		color: rgba(51, 51, 51, 0.7);
 		text-align: center;
 		height: 40upx;
 		line-height: 40upx;

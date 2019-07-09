@@ -1,12 +1,12 @@
-let mode = 'prod'
+let mode = 'hbj'
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
   baseUrl = 'http://127.0.0.1:18080'
   baseUrl2 = 'http://127.0.0.1:18080'
 } else if (mode === 'hbj'){
-	  baseUrl = 'http://127.0.0.1:9999/api/main'
-	baseUrl2 = 'http://127.0.0.1:9999'
+	  baseUrl = 'http://192.168.151.207:9999/api/main'
+	baseUrl2 = 'http://192.168.151.207:9999'
 } else if (mode === 'prod'){
   baseUrl = 'http://42.159.91.0:9999/api/main'
   baseUrl2 = 'http://42.159.91.0:9999'

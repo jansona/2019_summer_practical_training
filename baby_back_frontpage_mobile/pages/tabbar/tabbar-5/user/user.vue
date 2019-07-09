@@ -5,10 +5,10 @@
 			<view class="bg">
 				<view class="box">
 					<view class="box-hd">
-						<view class="avator" @click="setInfo">
-							<img :src="user.profileUrl"/>
+						<view class="avator" @click="goToPage('../author-detail/author-detail')">
+							<img :src="userInfo.profileUrl" />
 						</view>
-						<view class="nickname">{{user.username}}</view>
+						<view class="nickname">{{userInfo.username}}</view>
 					</view>
 					<view class="box-bd">
 						<view class="item" @click="goToPage('../tabbar-5-detail/mycomment')">
@@ -82,11 +82,15 @@
 		data() {
 			return {
 				avator: '',
+				nickname: 'asd',
+				userInfo: this.$store.state.userInfo
 				nickname: '',
 				user:{}
 			};
 		},
-		onLoad() {},
+		onReady() {
+			console.log("ready")
+		},
 		methods: {
 			getUser(userId) {
 				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
@@ -119,7 +123,7 @@
 				})
 			},
 			logout() {
-				this.$store.commit('logout','')
+				this.$store.commit('logout', '')
 				uni.reLaunch({
 					url: '../login'
 				})

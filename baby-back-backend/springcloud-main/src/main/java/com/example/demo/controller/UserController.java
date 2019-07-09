@@ -77,11 +77,14 @@ public class UserController {
         userRepository.deleteById(id);
         return new ResponseBase(200, "删除成功", null);
     }
-    @ApiOperation(value = "新增一个用户")
+    @ApiOperation(value = "更新一个用户")
     @PostMapping("/update")
     public ResponseBase updateUser(@RequestBody User user) {
         ResponseBase responseBase;
         try{
+            User oldUser = userRepository.findById(user.getId()).get();
+            user.setPassword(oldUser.getPassword());    // 防止密码被置空
+            user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));    // 根据新地址设置坐标
             responseBase = new ResponseBase(200, "更新成功", userRepository.save(user));
         }catch (Exception e){
             responseBase = new ResponseBase(13240, "更新失败", user);
