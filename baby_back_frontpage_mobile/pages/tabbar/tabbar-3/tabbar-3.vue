@@ -88,6 +88,7 @@ export default {
 	}
 }
 .tabbar-box-wrap {
+	z-index: 100;
 	position: fixed;
 	width: 100%;
 	padding: 50upx;

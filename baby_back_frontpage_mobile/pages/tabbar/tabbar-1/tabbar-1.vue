@@ -1,386 +1,233 @@
 <template>
 	<view>
-		<view class="topView"></view>
-		<view class="mpvue-picker">
-			<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :mode="mode" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
-			 @onConfirm="onConfirm" @onCancel="onCancel" :pickerValueArray="pickerValueArray"></mpvue-picker>
-		</view>
-		<!--搜索框-->
-		<view class="cu-bar search bg-white">
-			<view style="margin-left: 20upx;" @click="showSinglePicker">{{pickerLabel}}</view>
-			<uni-icon type="arrowdown" color="#333333" size="22" @click="showSinglePicker"></uni-icon>
-			<view class="search-form round" style="margin-left: 8upx;">
-				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" v-model="searchInput" type="text" placeholder="搜索宝贝"
-				 confirm-type="search"></input>
-			</view>
-			<view class="margin-tb-sm text-center">
-				<button class="cu-btn round bg-blue" style="margin-right: 20upx;" @click="searchClick">搜索</button>
-			</view>
-		</view>
-		<!-- 选项卡 -->
-		<scroll-view id="nav-bar" scroll-x="true" class="bg-white nav text-center" scroll-left="0" @scroll="scroll">
-			<view class="cu-item" :class="0==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="0">
-				走失
-			</view>
-			<view class="cu-item" :class="1==tabCurrentIndex?'text-blue cur':''" @click="tabSelect" data-id="1">
-				发现
-			</view>
+		<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="scrollLeft">
+			<view v-for="(tab,index) in tabBars" :key="tab.id" class="swiper-tab-list" :class="tabIndex==index ? 'active' : ''"
+			 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
 		</scroll-view>
-		<!--图片布局-->
-		<view class="grid col-2 grid-square" v-show="findShow">
-			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
-			 v-for="(item,index) in findList" :key="index">
-				<img :src="findPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,0)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
-				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
-			</view>
-		</view>
-		<view class="grid col-2 grid-square" v-show="lostShow">
-			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
-			 v-for="(item,index) in lostList" :key="index">
-				<img :src="lostPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
-				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
-			</view>
-		</view>
-		<view class="uni-center" v-if="isBottom">
-			<text style="color:#AAAAAA;">已经到底了</text>
-		</view>
-
-		<view class="cu-tabbar-height"></view>
+		<swiper :current="tabIndex" class="swiper-box" :duration="300" @change="changeTab">
+			<swiper-item v-for="(tab,index1) in newsitems" :key="index1">
+				<scroll-view class="list" scroll-y @scrolltolower="loadMore(index1)">
+					<block v-for="(newsitem,index2) in tab.data" :key="index2">
+						<media-list :options="newsitem" @close="close(index1,index2)" @click="goDetail(newsitem)"></media-list>
+					</block>
+					<view class="uni-tab-bar-loading">
+						{{tab.loadingText}}
+					</view>
+				</scroll-view>
+			</swiper-item>
+		</swiper>
 	</view>
 </template>
 
 <script>
-	import mpvuePicker from '@/components/mpvue-picker/mpvuePicker.vue';
-	import uniIcon from '@/components/uni-icon/uni-icon.vue'
+	import mediaList from '@/pages/tabbar/tabbar-1/mediaList.vue';
+	const tpl = {
+		data0: {
+			"datetime": "40分钟前",
+			"article_type": 0,
+			"title": "uni-app行业峰会频频亮相，开发者反响热烈!",
+			"source": "DCloud",
+			"comment_count": 639
+		},
+		data1: {
+			"datetime": "一天前",
+			"article_type": 1,
+			"title": "DCloud完成B2轮融资，uni-app震撼发布!",
+			"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
+			"source": "DCloud",
+			"comment_count": 11395
+		},
+		data2: {
+			"datetime": "一天前",
+			"article_type": 2,
+			"title": "中国技术界小奇迹：HBuilder开发者突破200万",
+			"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg?imageView2/3/w/200/h/100/q/90",
+			"source": "DCloud",
+			"comment_count": 11395
+		},
+		data3: {
+			"article_type": 3,
+			"image_list": [{
+				"url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg?imageView2/3/w/200/h/100/q/90",
+				"width": 563,
+				"height": 316
+			}, {
+				"url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg?imageView2/3/w/200/h/100/q/90",
+				"width": 641,
+				"height": 360
+			}, {
+				"url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
+				"width": 640,
+				"height": 360
+			}],
+			"datetime": "5分钟前",
+			"title": "uni-app 支持使用 npm 安装第三方包，生态更趋丰富",
+			"source": "DCloud",
+			"comment_count": 11
+		},
+		data4: {
+			"datetime": "2小时前",
+			"article_type": 4,
+			"title": "uni-app 支持原生小程序自定义组件，更开放、更自由",
+			"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg?imageView2/3/w/200/h/100/q/90",
+			"source": "DCloud",
+			"comment_count": 69
+		}
+	};
+	
 	export default {
 		components: {
-			mpvuePicker,
-			uniIcon
-		},
-		mounted: function() {
-			if (this.searchInput != '') {
-
-			} else {
-				this.refreshData();
-			}
-
+			mediaList
 		},
 		data() {
 			return {
-				isFirst: true,
-				isBottom: false,
-				pageNo: 0,
-				searchInput: '',
-				totalPageNum: 2,
-				findShow: false,
-				lostShow: true,
-				title: 'Hello',
-				tabCurrentIndex: 0, //当前选项卡索引
-				scrollLeft: 0, //顶部选项卡左滑距离
-				enableScroll: true,
-				InputBottom: 0,
-				lostList: [],
-				lostPicUrls: [],
-				findList: [],
-				findPicUrls: [],
-				themeColor: '#007AFF',
-				mode: '',
-				deepLength: 1,
-				pickerValueDefault: [0],
-				pickerLabel: '姓名',
-				pickerValueArray: [{
-						label: '姓名',
-						value: 0
-					},
-					{
-						label: '身高',
-						value: 1
-					},
-					{
-						label: '籍贯',
-						value: 2
-					},
-					{
-						label: '失踪地点',
-						value: 3
-					}
-				]
-			};
+				scrollLeft: 0,
+				isClickChange: false,
+				tabIndex: 0,
+				newsitems: [],
+				tabBars: [{
+					name: '关注',
+					id: 'guanzhu'
+				}, {
+					name: '推荐',
+					id: 'tuijian'
+				}, {
+					name: '体育',
+					id: 'tiyu'
+				}, {
+					name: '热点',
+					id: 'redian'
+				}, {
+					name: '财经',
+					id: 'caijing'
+				}, {
+					name: '娱乐',
+					id: 'yule'
+				}, {
+					name: '军事',
+					id: 'junshi'
+				}, {
+					name: '历史',
+					id: 'lishi'
+				}, {
+					name: '本地',
+					id: 'bendi'
+				}]
+			}
+		},
+		mounted() {
+			this.newsitems = this.randomfn()
 		},
 		methods: {
-			onCancel(e) {
-				console.log(e);
+			goDetail(e) {
+				uni.navigateTo({
+					url: '/pages/template/tabbar/detail/detail?title=' + e.title
+				});
 			},
-			// 单列
-			showSinglePicker() {
-				this.mode = 'selector';
-				this.deepLength = 1;
-				this.pickerValueDefault = [0];
-				this.$refs.mpvuePicker.show();
-			},
-			onConfirm(e) {
-				console.log(e.label);
-				this.pickerLabel = e.label;
-				//this.setStyle(0, e.label);
-			},
-			tabSelect(e) {
-				this.tabCurrentIndex = e.currentTarget.dataset.id;
-				// this.pageNo=0
-				// this.lostPicUrls=[]
-				// this.lostList=[]
-				// this.findPicUrls=[]
-				// this.findList=[]
-				if (this.tabCurrentIndex == 0) {
-					this.lostShow = true;
-					this.findShow = false
-				} else {
-					this.findShow = true;
-					this.lostShow = false
-					if (this.isFirst && this.findList.length == 0) {
-						this.pageNo = 0
-						this.refreshData();
+			close(index1, index2) {
+				uni.showModal({
+					content: '是否删除本条信息？',
+					success: (res) => {
+						if (res.confirm) {
+							this.newsitems[index1].data.splice(index2, 1);
+						}
 					}
-					this.isFirst = false
-				}
-				// this.refreshData();
-				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
+				})
 			},
-			InputFocus(e) {
-				this.InputBottom = e.detail.height
+			loadMore(e) {
+				setTimeout(() => {
+					this.addData(e);
+				}, 1200);
 			},
-			InputBlur(e) {
-				this.InputBottom = 0
-			},
-			resetData() {
-				this.pageNo = 0
-				this.lostPicUrls = []
-				this.lostList = []
-				this.findPicUrls = []
-				this.findList = []
-				this.refreshData();
-			},
-			/**
-			 * @param {Object} pageNUm
-			 * size需要更改成为正确的大小
-			 */
-			refreshData() {
-
-				if (this.totalPageNum <= this.pageNo) {
-					this.isBottom = true
-					console.log('已经到底了')
-					let _this = this
-					setTimeout(function() {
-						_this.isBottom = false;
-					}, 1000);
+			addData(e) {
+				if (this.newsitems[e].data.length > 30) {
+					this.newsitems[e].loadingText = '没有更多了';
 					return;
-
 				}
-				if (this.lostShow) {
-					let url = this.URLS.lostBabyFindUrl + '?size=7&page=' + this.pageNo
-					this.pageNo += 1
-					this.$api.post(url)
-						.then(data => {
-							this.totalPageNum = data.data.data.totalPages
-
-							let appendList = data.data.data.content
-							for (let i = 0; i < appendList.length; i++) {
-								let id = appendList[i].id;
-								this.lostPicUrls.push(this.yieldPicUrl(id));
-							}
-							this.lostList = this.lostList.concat(appendList);
-						}).catch(error => {
-							console.log(error)
-						})
+				for (let i = 1; i <= 10; i++) {
+					this.newsitems[e].data.push(tpl['data' + Math.floor(Math.random() * 5)]);
+				}
+			},
+			async changeTab(e) {
+				let index = e.target.current;
+				if (this.newsitems[index].data.length === 0) {
+					this.addData(index)
+				}
+				if (this.isClickChange) {
+					this.tabIndex = index;
+					this.isClickChange = false;
+					return;
+				}
+				let tabBar = await this.getElSize("tab-bar"),
+					tabBarScrollLeft = tabBar.scrollLeft;
+				let width = 0;
+	
+				for (let i = 0; i < index; i++) {
+					let result = await this.getElSize(this.tabBars[i].id);
+					width += result.width;
+				}
+				let winWidth = uni.getSystemInfoSync().windowWidth,
+					nowElement = await this.getElSize(this.tabBars[index].id),
+					nowWidth = nowElement.width;
+				if (width + nowWidth - tabBarScrollLeft > winWidth) {
+					this.scrollLeft = width + nowWidth - winWidth;
+				}
+				if (width < tabBarScrollLeft) {
+					this.scrollLeft = width;
+				}
+				this.isClickChange = false;
+				this.tabIndex = index; //一旦访问data就会出问题
+			},
+			getElSize(id) { //得到元素的size
+				return new Promise((res, rej) => {
+					uni.createSelectorQuery().select("#" + id).fields({
+						size: true,
+						scrollOffset: true
+					}, (data) => {
+						res(data);
+					}).exec();
+				})
+			},
+			async tapTab(e) { //点击tab-bar
+				let tabIndex = e.target.dataset.current;
+				console.log("index:",tabIndex)
+				if (this.newsitems[tabIndex].data.length === 0) {
+					this.addData(tabIndex)
+				}
+				if (this.tabIndex === tabIndex) {
+					return false;
 				} else {
-					let url = this.URLS.matchBabyFindUrl + '?size=7&page=' + this.pageNo
-					this.pageNo += 1
-					this.$api.post(url)
-						.then(data => {
-							this.totalPageNum = data.data.data.totalPages
-
-							let appendList = data.data.data.content
-							for (let i = 0; i < appendList.length; i++) {
-								let id = appendList[i].id;
-								this.findPicUrls.push(this.yieldPicUrl(id));
-							}
-							this.findList = this.findList.concat(appendList);
-						}).catch(error => {
-							console.log(error)
-						})
-				}
-
-			},
-			searchClick(e) {
-				let _this = this;
-				if (this.pickerLabel == '身高') {
-					let url = this.URLS.lostBabyFindUrl + '?height=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = his.URLS.matchBabyFindUrl + '?height=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
-				} else if (this.pickerLabel == '姓名') {
-
-					let url = this.URLS.lostBabyFindUrl + '?name=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = this.URLS.matchBabyFindUrl + '?name=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
-				} else if (this.pickerLabel == '籍贯') {
-					let url = this.URLS.lostBabyFindUrl + '?nativePlace=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = his.URLS.matchBabyFindUrl + '?nativePlace=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
-
-				} else if (this.pickerLabel == '失踪地点') {
-					let url = this.URLS.lostBabyFindUrl + '?place=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = this.URLS.matchBabyFindUrl + '?place=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
+					let tabBar = await this.getElSize("tab-bar"),
+						tabBarScrollLeft = tabBar.scrollLeft; //点击的时候记录并设置scrollLeft
+					this.scrollLeft = tabBarScrollLeft;
+					this.isClickChange = true;
+					this.tabIndex = tabIndex;
 				}
 			},
-			yieldPicUrl(id) {
-				if (this.lostShow) {
-					return this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg"
-				} else {
-					return this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg"
+			randomfn() {
+				let ary = [];
+				for (let i = 0, length = this.tabBars.length; i < length; i++) {
+					let aryItem = {
+						loadingText: '加载更多...',
+						data: []
+					};
+					if (i < 1) {
+						for (let j = 1; j <= 10; j++) {
+							aryItem.data.push(tpl['data' + Math.floor(Math.random() * 5)]);
+						}
+					}
+					ary.push(aryItem);
 				}
-
-			},
-			goToDetail(item, index, flag) {
-				if (flag == 0) {
-					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
-							"/resource/photo/match/" + this.findList[index].id + ".jpg"
-					})
-				} else if (flag == 1) {
-					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
-							"/resource/photo/lost/" + this.lostList[index].id + ".jpg"
-					})
-				}
+				return ary;
 			}
 		}
-	};
+	}
 </script>
 
 <style scoped>
-	.topView {
-		width: 100%;
-		height: var(--status-bar-height);
-		background-color: #FFFFFF;
-	}
-
-	.page {
-		height: auto;
-		min-height: 100%;
-	}
-
-	.content {
+	.uni-tab-bar-loading {
 		text-align: center;
-		height: 400upx;
-		margin-top: 200upx;
-	}
-
-	.my-tag {
-		margin-left: 100upx;
-		vertical-align: middle;
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		box-sizing: border-box;
-		padding: 0upx 16upx;
-		height: 35upx;
-		font-family: Helvetica Neue, Helvetica, sans-serif;
-		white-space: nowrap;
-		opacity: 0.3;
-		max-width: 150upx;
-		max-height: 35upx;
-		border-radius: 20upx;
-		overflow: hidden;
-		background-color: #0D9FFF;
+		font-size: 28upx;
+		color: #999;
 	}
 </style>
