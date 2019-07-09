@@ -22,7 +22,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setMessageList(state,content){
-      state.messageList.concat(content)
+      state.messageList=state.messageList.concat(content)
 
     },
     setStatus(state, status) {
