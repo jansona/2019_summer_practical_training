@@ -161,6 +161,7 @@
 					_this.comment.content=''
 				}).catch(error => {
 					console.log(error)
+					this.myToast("发送失败")
 				})
 			},
 			articleLike(){
