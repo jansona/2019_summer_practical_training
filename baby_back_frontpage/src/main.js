@@ -39,12 +39,12 @@ import { store } from '@/store/store'
 import axios from 'axios'
 Vue.config.productionTip = false
 
-import VueNativeSock from 'vue-native-websocket'
-Vue.use(VueNativeSock, 'ws://localhost:18080/websocket', {
-  reconnection: true, // (Boolean) whether to reconnect automatically (false)
-  reconnectionAttempts: 5, // (Number) number of reconnection attempts before giving up (Infinity),
-  reconnectionDelay: 3000, // (Number) how long to initially wait before attempting a new (1000)
-})
+// import VueNativeSock from 'vue-native-websocket'
+// Vue.use(VueNativeSock, 'ws://localhost:18080/websocket', {
+//   reconnection: true, // (Boolean) whether to reconnect automatically (false)
+//   reconnectionAttempts: 5, // (Number) number of reconnection attempts before giving up (Infinity),
+//   reconnectionDelay: 3000, // (Number) how long to initially wait before attempting a new (1000)
+// })
 
 /* eslint-disable no-new */
 new Vue({

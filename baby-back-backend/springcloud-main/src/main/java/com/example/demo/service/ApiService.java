@@ -57,13 +57,6 @@ public class ApiService implements InitializingBean {
 
     }
 
-    public Set<String> initKeyWord(String keyWord) {
-        JiebaSegmenter segmenter = new JiebaSegmenter();
-        List<String> Tags = segmenter.sentenceProcess(keyWord);
-        HashSet<String> h = new HashSet<>(Tags);
-        return h;
-    }
-
 
     public Specification<LostBaby> createLostBabySpecification(String id, String place, String name, String height, String nativePlace, String date) {
         return new Specification<LostBaby>() {
