@@ -72,7 +72,8 @@ export default {
     dialogVisible: false
     };
   },
-  methods: {},
+  methods: {
+  },
   mounted() {
     // console.log("mouted",this.$refs.leftPart.clientHeight)
   }
