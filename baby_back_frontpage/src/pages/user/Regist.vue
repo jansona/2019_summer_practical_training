@@ -113,11 +113,12 @@ export default {
                   duration: 1500,
                   offset: 50
                 });
-                this.$store.commit("setUserID", {
-                  id: data.data.data.id,
-                  flag: true
-                });
-                this.$router.push("home");
+                // this.$store.commit("setUserID", {
+                //   id: data.data.data.id,
+                //   flag: true
+                // });
+                
+                this.$router.push("loginOrRegist");
                 this.reload();
               } else  {
                 this.$message({

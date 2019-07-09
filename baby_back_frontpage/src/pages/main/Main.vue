@@ -22,6 +22,7 @@ import { fetch } from "@/api/api";
 import URLS from "@/config/config";
 export default {
   name: "Home",
+  inject: ['connect'],
   components: {
     HomeHeader,
     HomeContent
@@ -75,6 +76,7 @@ export default {
             flag: false
           });
           this.$store.commit('setUserInfo',data.data)
+          this.connect()
           console.log("userInfo",this.$store.state.userInfo)
         })
         .catch(error => {
