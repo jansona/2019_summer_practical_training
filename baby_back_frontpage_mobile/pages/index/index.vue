@@ -1,11 +1,11 @@
 <template>
-	<view>
-        <view class="content-container">
-		<tabbar_1 v-if="curPage == '1'" ref="tab1"></tabbar_1>
-		<tabbar_4 v-if="curPage == '2'"></tabbar_4>
-		<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
-		<tabbar_2 v-if="curPage == '4'" ref="tab4"></tabbar_2>
-		<tabbar_5 v-if="curPage == '5'"></tabbar_5>
+	<view style="height: 100%;">
+		<view class="content-container">
+			<tabbar_1 v-if="curPage == '1'" ref="tab1"></tabbar_1>
+			<tabbar_4 v-if="curPage == '2'"></tabbar_4>
+			<tabbar_3 v-if="showNewPop" @onAddClick="closeAddNav"></tabbar_3>
+			<tabbar_2 v-if="curPage == '4'" ref="tab4"></tabbar_2>
+			<tabbar_5 v-if="curPage == '5'"></tabbar_5>
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="1">
@@ -43,7 +43,7 @@
 
 <script>
 	export default {
-		onReady:function () {
+		onReady: function() {
 			this.$refs.tab1.refreshData();
 		},
 		data() {
@@ -53,28 +53,26 @@
 			}
 		},
 		onPullDownRefresh() {
-			if(this.curPage==1){
+			if (this.curPage == 1) {
 				this.$refs.tab1.resetData();
-			}else if(this.curPage==4){
+			} else if (this.curPage == 4) {
 				this.$refs.tab4.resetData();
 			}
-
-
-
+			
 			setTimeout(() => {
-            uni.stopPullDownRefresh();
-        }, 1000);
+				uni.stopPullDownRefresh();
+			}, 1000);
 
 		},
 		onReachBottom() {
 			console.log('me')
-			if(this.curPage==1){
+			if (this.curPage == 1) {
 				this.$refs.tab1.refreshData();
-			}else if(this.curPage==4){
+			} else if (this.curPage == 4) {
 				this.$refs.tab4.refreshData();
 			}
 		},
-		onLoad(){
+		onLoad() {
 			console.log("load")
 		},
 		methods: {
@@ -85,43 +83,46 @@
 			onAddClick: function(message) {
 				console.log(message)
 				// this.curPage = "asd"
-				if(!this.showNewPop){
+				if (!this.showNewPop) {
 					this.showNewPop = true
 				} else {
 					this.showNewPop = false
 				}
 			},
-            closeAddNav(e){
-                console.log(e)
-                this.showNewPop = false;
-            }
+			closeAddNav(e) {
+				console.log(e)
+				this.showNewPop = false;
+			}
 		},
-		
+
 	}
 </script>
 
 <style>
-
 	.bg-grey-index {
 		background-color: #333;
 	}
+
 	.selected-color {
 		color: #f33e54;
 	}
+
 	.my-add-btn {
 		margin: 0 auto;
 		padding: 18upx 0 19upx 0;
 	}
-	
+
 	.my-add-btn image {
 		width: 70upx;
 		height: 70upx;
 		/* display: inline-block; */
 	}
+
 	.index-bar-text {
 		margin-bottom: 10upx;
 	}
-    .content-container {
-        
-    }
+
+	.content-container {
+		height: 100%;
+	}
 </style>

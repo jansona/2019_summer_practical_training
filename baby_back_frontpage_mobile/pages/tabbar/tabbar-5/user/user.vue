@@ -83,7 +83,7 @@
 			return {
 				avator: '',
 				nickname: 'asd',
-				userInfo: this.$store.state.userInfo
+				userInfo: this.$store.state.userInfo,
 				nickname: '',
 				user:{}
 			};
