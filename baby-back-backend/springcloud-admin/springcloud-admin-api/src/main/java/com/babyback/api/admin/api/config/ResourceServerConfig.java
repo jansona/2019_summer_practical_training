@@ -35,7 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
                 .antMatchers("/actuator/**", "/user/info/*", "/storage/local/upload","/user/infoTel/*")
                 .permitAll()
-                .antMatchers("/sms-verify","/register","/**/*.jpg","/**/*.png")
+                .antMatchers("/sms-verify","/register","/**/*.jpg","/**/*.png","/websocket/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

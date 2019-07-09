@@ -45,12 +45,14 @@ public class LostBabyController {
     @ApiOperation(value = "新增一个丢失儿童信息")
     @PostMapping("/insert")
     public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
+        ResponseBase responseBase;
 
         if(lostBaby.getPlace() != null && !lostBaby.getPlace().equals("")){
             try{
                 lostBaby.setCoordinate(LocationConvertor.getCoordinate(lostBaby.getPlace()));
-            } catch (IOException ioe){
-                ioe.printStackTrace();
+            } catch (Exception e){
+                e.printStackTrace();
+                return new ResponseBase(60002, "无效地址", null);
             }
         }
         LostBaby lostBabySaved = lostBabyRepository.save(lostBaby);

@@ -158,7 +158,7 @@ export default {
 		options.data = data
 		options.method = 'DELETE'
 		return this.request(options)
-	}
+	}	
 }
 
 

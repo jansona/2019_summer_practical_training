@@ -122,7 +122,7 @@ export default {
         .then(data => {
           if (data.rtnCode == 200) {
             this.picUrl =
-              URLS.baseUrl + "/resource/photo/profile/" + this.id + ".jpg";
+              data.data.profileUrl
             console.log(data)
             let content = data.data;
             this.user = content;

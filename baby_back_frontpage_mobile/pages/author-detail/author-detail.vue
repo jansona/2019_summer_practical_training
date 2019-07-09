@@ -163,7 +163,7 @@
 				</view>
 			</form>
 		</view>
-		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic">
+		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic" v-show="articleShow">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
 					<view class="cu-item">
@@ -198,10 +198,12 @@
 
 <script>
 	export default{
-		mounted:function () {
+		onLoad(options) {
+			//把JSON字符串转换为对象
+			this.user.id = JSON.parse(options.id);
 			this.getArticleList();
-			this.getLostList();
 			this.getFindList();
+			this.getLostList();
 		},
 		data(){
 			return{
@@ -250,7 +252,7 @@
 				})
 			},
 			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let url = this.URLS.userFindByIdUrl + '?id=' + this.user.Id;
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data;
@@ -272,7 +274,7 @@
 			getArticleList(){
 				let _this = this;
 				
-				let articleurl = this.URLS.articleFindByUserUrl + '?user=1'
+				let articleurl = this.URLS.articleFindByUserUrl + '?user='+this.user.id
 				console.log(articleurl);
 				this.$api.post(articleurl)
 					.then(data => {
@@ -393,5 +395,24 @@
 				}
 			}
 		}
+	},
+	.content {
+		margin-top: 150upx;
+	}
+	
+	,
+	.passage-content {
+		height: 30upx;
+		margin-top: 0;
+	}
+	
+	,
+	.text-content {
+		padding-left: 10upx;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
 	}
 </style>

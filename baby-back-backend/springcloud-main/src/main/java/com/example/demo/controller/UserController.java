@@ -82,6 +82,9 @@ public class UserController {
     public ResponseBase updateUser(@RequestBody User user) {
         ResponseBase responseBase;
         try{
+            User oldUser = userRepository.findById(user.getId()).get();
+            user.setPassword(oldUser.getPassword());    // 防止密码被置空
+            user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));    // 根据新地址设置坐标
             responseBase = new ResponseBase(200, "更新成功", userRepository.save(user));
         }catch (Exception e){
             responseBase = new ResponseBase(13240, "更新失败", user);

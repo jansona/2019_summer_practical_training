@@ -16,6 +16,10 @@
 				<input disabled="true" :placeholder="babyDetail.sex"></input>
 			</view>
 			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">出生日期</view>
+				<input disabled="true" :placeholder="babyDetail.birthday"></input>
+			</view>
+			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">籍贯</view>
 				<input disabled="true" :placeholder="babyDetail.nativePlace"></input>
 			</view>
@@ -26,6 +30,10 @@
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">特征</view>
 				<input disabled="true" :placeholder="babyDetail.babyDescription"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">失踪日期</view>
+				<input disabled="true" :placeholder="babyDetail.date"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">失踪地点</view>

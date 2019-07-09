@@ -20,7 +20,7 @@
             style="float: left; padding: 1px"
             class="pic-container"
           >
-            <el-avatar shape="square" :size="100" fit="contain" :src="showImg(picUrl)"></el-avatar>
+            <el-avatar shape="square" :size="100" fit="contain" :src="picUrl"></el-avatar>
           </el-card>
         </div>
         <el-table
@@ -111,6 +111,9 @@ export default {
     };
   },
   methods: {
+    cropSuccess() {
+      console.log("success")
+    },
     showImg(url) {
       if (url === null || url === "") {
         // console.log('待加载的图片地址为:' + url)
