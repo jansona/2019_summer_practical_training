@@ -1,10 +1,7 @@
 <template>
   <div class="head-container" :style="style">
     <el-col :span="3">
-      <img
-        style="width: 199px;height:64px;float:left"
-        :src="require('@/assets/logo_2.png')"
-      >
+      <img style="width: 199px;height:64px;float:left" :src="require('@/assets/logo_2.png')" />
     </el-col>
     <el-col :span="12" :offset="2">
       <el-menu
@@ -12,7 +9,7 @@
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
-        router=""
+        router
         background-color="transparent"
       >
         <el-menu-item index="/home">首页</el-menu-item>
@@ -21,7 +18,7 @@
           <el-menu-item index="2-1">家寻宝贝</el-menu-item>
           <el-menu-item index="2-2">宝贝寻家</el-menu-item>
           <el-menu-item index="2-3">选项3</el-menu-item>
-        </el-submenu> -->
+        </el-submenu>-->
         <el-menu-item index="/findRegist">寻亲登记</el-menu-item>
         <el-menu-item index="/fastMatch">快速匹配</el-menu-item>
         <el-menu-item index="/faceWall">面孔墙</el-menu-item>
@@ -31,30 +28,30 @@
     </el-col>
     <el-col :span="7" class="person-container">
       <el-badge
-        :is-dot=true
+        :is-dot="true"
         :hidden="!hasMessage"
         v-if="this.$store.state.hasLogin"
         class="message-style"
       >
-          <el-popover
-      placement="top-start"
-    width="400"
-    trigger="hover">
-    <el-table :data="gridData">
-    
-    <el-table-column width="100" property="name" label="姓名"></el-table-column>
-    <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
-    <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
-  </el-table>
-    <el-button slot="reference" icon="el-icon-message" circle @click="openMessage"></el-button>
-    
-  </el-popover>
+        <el-popover placement="top-start" width="400" trigger="hover">
+          <el-table :data="gridData">
+            <el-table-column width="100" property="name" label="姓名"></el-table-column>
+            <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
+            <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
+          </el-table>
+          <el-button slot="reference" icon="el-icon-message" circle @click="openMessage"></el-button>
+        </el-popover>
         <!-- <el-button icon="el-icon-message" circle @click="openMessage"></el-button> -->
       </el-badge>
       <template v-if="this.$store.state.hasLogin">
         <el-popover placement="bottom" trigger="hover" width="50" style="text-aligin:right">
-          <a class="a-style"><i class="el-icon-user-solid" @click="personalHome">个人主页</i></a><br>
-          <a class="a-style"><i class="el-icon-switch-button" @click="logout">退出登录</i></a>
+          <a class="a-style">
+            <i class="el-icon-user-solid" @click="personalHome">个人主页</i>
+          </a>
+          <br />
+          <a class="a-style">
+            <i class="el-icon-switch-button" @click="logout">退出登录</i>
+          </a>
           <el-image :src="$store.state.userInfo.profileUrl" slot="reference" class="head-icon">
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline"></i>
@@ -69,71 +66,164 @@
   </div>
 </template>
 <script>
-import URLS from '@/config/config';
-import {fetch} from '@/api/api'
-import axios from 'axios';
+import URLS from "@/config/config";
+import { fetch } from "@/api/api";
+import axios from "axios";
 export default {
   name: "Header",
-  inject: ['reload'],
-  created () {
-            this.$nextTick(() => {
-                this._initBody();
-            });
-        },
+  inject: ["reload"],
+  created() {
+    this.$nextTick(() => {
+      this._initBody();
+    });
+    // const wsuri = "ws://localhost:18080/websocket";
+    // this.websock = new WebSocket(wsuri, ["91b04edd-70b8-4a4d-8570-05cc5cb8f96d"]);
+    // this.websocket = new WebSocket(wsuri);
+    // this.websocket.onopen = this.websocketonopen;
+  },
+  mounted(){
+    // this.initWebSocket();
+    // this.$options.sockets.onmessage = this.onMessage;
+  },
+  destroyed(){
+    // this.websocketclose();
+  },
   props: {
-    imgUrl: String,
+    imgUrl: String
   },
   data() {
     return {
-      gridData:[{
-          date: '2016-05-02',
-          name: '王小虎',
-          place: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          place: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          place: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          place: '上海市普陀区金沙江路 1518 弄'
-        }],
+      gridData: [
+        // {
+        //   date: "2016-05-02",
+        //   name: "王小虎",
+        //   place: "上海市普陀区金沙江路 1518 弄"
+        // },
+        // {
+        //   date: "2016-05-04",
+        //   name: "王小虎",
+        //   place: "上海市普陀区金沙江路 1518 弄"
+        // },
+        // {
+        //   date: "2016-05-01",
+        //   name: "王小虎",
+        //   place: "上海市普陀区金沙江路 1518 弄"
+        // },
+        // {
+        //   date: "2016-05-03",
+        //   name: "王小虎",
+        //   place: "上海市普陀区金沙江路 1518 弄"
+        // }
+      ],
       activeIndex: "1",
       hasMessage: true,
       hasLogin: this.$store.state.hasLogin,
-       style: {},
+      style: {},
       opacity: 0
     };
   },
   methods: {
+    onMessage(data){
+      console.log(data);
+      if(data.data === "Who are you?"){
+        this.$socket.send(this.$store.state.userID);
+      }
+    },
+    initWebSocket(){ //初始化weosocket 
+      // const wsuri = "ws://localhost:18080/websocket";//ws地址
+      // this.websock = new WebSocket(wsuri);
+      // this.websocket.onopen = this.websocketonopen;
+      // this.websocket.onerror = this.websocketonerror;
+      // this.websock.onmessage = this.websocketonmessage; 
+      // this.websock.onclose = this.websocketclose;
+      var ws = null;
+     //判断当前浏览器是否支持WebSocket
+     if ('WebSocket' in window) {
+         ws = new WebSocket("ws://localhost:18080/websocket");
+     }
+     else {
+         alert('当前浏览器 Not support websocket')
+     }
+ 
+     //连接发生错误的回调方法
+     ws.onerror = this.websocketonerror;
+ 
+     //连接成功建立的回调方法
+     ws.onopen = this.websocketonopen;
+ 
+     //接收到消息的回调方法
+     ws.onmessage = this.websocketonmessage;
+ 
+     //连接关闭的回调方法
+     ws.onclose = this.websocketclose;
 
+     this.websocket = ws;
+    }, 
+    websocketonopen() {
+      console.log("WebSocket连接成功");
+      this.websocket.send(this.$store.state.userID);
+    },
+    websocketonerror(e) { //错误
+      console.log("WebSocket连接发生错误");
+    },
+    websocketonmessage(e){ //数据接收 
+      console.log(e.data);
+      this.loadData(e.data)
+    }, 
+    websocketsend(agentData){//数据发送 
+      this.websock.send(agentData);   
+    }, 
+    websocketclose(e){ //关闭 
+      console.log("connection closed (" + e.code + ")"); 
+    },
+    loadData(id) {
+      let url = URLS.lostBabyFindUrl
+      let _this= this
+      request(url, { id: id })
+        .then(data => {
+          if (data.rtnCode == 200) {
+            _this.gridData.concat(data.data.content);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    connect(){
+        console.log("connected!!!!!!!!");
+        // const wsuri = "ws://localhost:18080/websocket";
+        // this.websocket = new WebSocket(wsuri);
+        // this.websocket.onopen = this.websocketonopen;
+        // this.websock.onmessage = this.websocketonmessage; 
+        this.initWebSocket();
+    },
     handleSelect(key, keyPath) {
       // console.log(key, keyPath);
       this.$emit("on-navbar-click");
-      if(key == 2) {
-        this.$route
+      if (key == 2) {
+        this.$route;
       }
     },
-    personalHome(){
+    personalHome() {
       console.log("enter personal home");
-      this.$router.push({path: 'userDetail', 
-      query: {id: this.$store.state.userID}
-      })
+      this.$router.push({
+        path: "userDetail",
+        query: { id: this.$store.state.userID }
+      });
     },
     logout() {
-      axios.delete(URLS.logoutUrl).then(data => {
-        console.log("登出成功!",data)
-      }).catch(error => {
-        console.log(error)
-      })
+      axios
+        .delete(URLS.logoutUrl)
+        .then(data => {
+          console.log("登出成功!", data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
       console.log("logout");
-      this.$store.commit('setUserID', {id:-1,flag:true});
-      this.$store.commit('delToken');
-      this.$router.push('home');
+      this.$store.commit("setUserID", { id: -1, flag: true });
+      this.$store.commit("delToken");
+      this.$router.push("home");
       this.reload();
     },
     openMessage() {
@@ -171,28 +261,30 @@ export default {
         seconds
       );
     },
-    gotoLoginOrRegist(){
-      this.$router.push('loginOrRegist')
+    gotoLoginOrRegist() {
+      this.$router.push("loginOrRegist");
     },
-    gotoMore(){
-      this.$router.push('more')
+    gotoMore() {
+      this.$router.push("more");
     },
-    _initBody () {
-               
-                window.onscroll = () => {
-                    this.opacity = window.pageYOffset / 250;
-                    this.style = {background: `rgba(255,255,255,${this.opacity})`,'box-shadow': `0px 0px 5px 5px rgba(0,0,0,${this.opacity*0.05})`};
-                };
-            }
+    _initBody() {
+      window.onscroll = () => {
+        this.opacity = window.pageYOffset / 250;
+        this.style = {
+          background: `rgba(255,255,255,${this.opacity})`,
+          "box-shadow": `0px 0px 5px 5px rgba(0,0,0,${this.opacity * 0.05})`
+        };
+      };
+    }
   },
   computed: {
     activeMenuIndex() {
-      console.log("/" + this.$route.path.split("/").reverse()[0])
+      console.log("/" + this.$route.path.split("/").reverse()[0]);
       let path = "/" + this.$route.path.split("/").reverse()[0];
-      if (path == '/home' || path == '/more'){
-        this.$emit('change-container-class',true);
+      if (path == "/home" || path == "/more") {
+        this.$emit("change-container-class", true);
       } else {
-        this.$emit('change-container-class',false);
+        this.$emit("change-container-class", false);
       }
       return "/" + this.$route.path.split("/").reverse()[0];
     }
@@ -261,10 +353,10 @@ export default {
   margin-right: 10px;
 }
 .el-menu--horizontal {
-  border-bottom-width: 0px!important ;
+  border-bottom-width: 0px !important ;
 }
 
-.el-menu-item{
-  background-color: transparent!important
+.el-menu-item {
+  background-color: transparent !important;
 }
 </style>
