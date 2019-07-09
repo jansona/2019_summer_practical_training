@@ -35,6 +35,9 @@
         v-if="this.$store.state.hasLogin"
         class="message-style"
       >
+      <el-button plain class="btn" @click="gotoMore" size='small'>
+            更多...
+          </el-button>
         <el-button icon="el-icon-message" circle @click="openMessage"></el-button>
       </el-badge>
       <template v-if="this.$store.state.hasLogin">
@@ -107,6 +110,9 @@ export default {
     gotoLoginOrRegist(){
       this.$router.push('loginOrRegist')
     },
+    gotoMore(){
+      this.$router.push('more')
+    },
     _initBody () {
                
                 window.onscroll = () => {
@@ -119,7 +125,7 @@ export default {
     activeMenuIndex() {
       console.log("/" + this.$route.path.split("/").reverse()[0])
       let path = "/" + this.$route.path.split("/").reverse()[0];
-      if (path == '/home'){
+      if (path == '/home' || path == '/more'){
         this.$emit('change-container-class',true);
       } else {
         this.$emit('change-container-class',false);

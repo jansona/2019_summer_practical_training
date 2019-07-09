@@ -184,7 +184,8 @@ export default {
 			cropUploadSuccess(jsonData, field){
 				console.log('-------- upload success --------');
 				console.log(jsonData);
-				console.log('field: ' + field);
+        console.log('field: ' + field);
+        this.reload();
 			},
 			/**
 			 * upload fail
