@@ -11,6 +11,7 @@ import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,13 @@ import java.util.Random;
 @RequestMapping(value = "file")
 public class FileUploadController {
 
-    final String photoBaseUrl = "/resource/photo/";
+    String photoBaseUrl = "/resource/photo/";
+
+    @Value("${server.port}")
+    private String port;
+
+    @Value("${eureka.instance.ip-address}")
+    private String IP;
 
     enum Action {
         AS_PROFILE,
@@ -108,6 +115,7 @@ public class FileUploadController {
     private void updateEntity(String id, Action action, String suffix){
 
         int nId = Integer.valueOf(id);
+        photoBaseUrl = "http://"+IP + ":"+ port+"/resource/photo/";
 
         switch (action){
             case AS_PROFILE:

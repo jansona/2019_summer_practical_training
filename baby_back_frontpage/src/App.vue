@@ -23,7 +23,7 @@ export default {
   },
   created() {
     const wsuri = "ws://localhost:18080/websocket";
-    this.websock = new WebSocket(wsuri, store('token') || cookie('token'));
+    this.websocket = new WebSocket(wsuri);
     this.websocket.onopen = this.websocketonopen;
   },
   mounted(){

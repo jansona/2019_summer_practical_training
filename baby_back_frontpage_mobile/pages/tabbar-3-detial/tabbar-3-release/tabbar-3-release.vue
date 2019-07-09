@@ -37,9 +37,8 @@
 	var graceChecker = require("../../../common/graceChecker.js");
 	export default {
 		onReady: function() {
-			//let userId=this.$store.state.userId
+			let userId=this.$store.state.userId
 			console.log('ON READY...');
-			let userId = 2;
 			this.getUser(userId)
 		},
 		data() {
