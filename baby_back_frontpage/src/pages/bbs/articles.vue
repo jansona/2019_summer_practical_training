@@ -3,7 +3,7 @@
     <div v-for="(article,index) in articles" :key="index">
       <el-row>
         <el-col :span="2">
-          <el-avatar :src="yieldPicUrl(article.user.profileUrl)" />
+          <el-avatar :src="article.user.profileUrl" />
         </el-col>
         <el-col :span="18">
           <p style="margin-bottom: 5px">

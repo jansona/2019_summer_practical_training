@@ -109,7 +109,7 @@ export default {
       choosed: 0,
       totalNum: 0,
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 12,
       sexs: [
         {
           value: 0,

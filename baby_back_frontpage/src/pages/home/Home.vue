@@ -4,7 +4,7 @@
     <span class="title1">What we do</span>
     <span class="title2">宝贝回家</span>
     <span class="title3">
-      &nbsp &nbsp 将人脸识别技术整合到寻人服务中，自今年8月上线以来，短短几天内已找回3名走失者，识别率超过99％。
+      &nbsp &nbsp &nbsp &nbsp将人脸识别技术整合到寻人服务中，自今年8月上线以来，短短几天内已找回3名走失者，识别率超过99％。
     </span>
     <!-- <div class="box-container"> -->
     <el-row :gutter="50" class="box-container">
@@ -12,7 +12,7 @@
         <div class="box">
           <div class="image-container image1" style></div>
           <span class="text1">登记信息</span>
-          <span class="text2">So what you blow a fuse? Well, that happens to us all.</span>
+          <span class="text2">登记孩子信息，为回家增添一份希望</span>
           <el-button plain class="btn" @click="gotoFindChild">
             &nbsp了解更多
             <i class="el-icon-right"></i>&nbsp&nbsp
@@ -23,7 +23,7 @@
         <div class="box">
           <div class="image-container image2" style></div>
           <span class="text1">人脸识别</span>
-          <span class="text2">So what you blow a fuse? Well, that happens to us all.</span>
+          <span class="text2">对照片进行快速识别与匹配</span>
           <el-button plain class="btn" @click="gotoFastMatch">
             &nbsp了解更多
             <i class="el-icon-right"></i>&nbsp&nbsp
@@ -34,7 +34,7 @@
         <div class="box">
           <div class="image-container image3" style></div>
           <span class="text1">大数据匹配</span>
-          <span class="text2">So what you blow a fuse? Well, that happens to us all.</span>
+          <span class="text2">对孩子描述进行识别与匹配</span>
           <el-button plain class="btn">
             &nbsp了解更多
             <i class="el-icon-right"></i>&nbsp&nbsp

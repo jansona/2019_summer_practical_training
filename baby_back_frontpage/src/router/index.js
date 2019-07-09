@@ -64,6 +64,11 @@ const router = new Router({
           name: 'UserDetail',
           component: () => import('@/pages/user/UserDetail')
         },
+        {
+          path: 'more',
+          name: 'more',
+          component: () => import('@/pages/more/more')
+        },
       ]
     }
   ]
