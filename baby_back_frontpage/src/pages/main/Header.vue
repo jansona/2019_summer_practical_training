@@ -26,6 +26,7 @@
         <el-menu-item index="/fastMatch">快速匹配</el-menu-item>
         <el-menu-item index="/faceWall">面孔墙</el-menu-item>
         <el-menu-item index="/bbsHome">论坛</el-menu-item>
+        <el-menu-item index="/more">更多</el-menu-item>
       </el-menu>
     </el-col>
     <el-col :span="7" class="person-container">
@@ -35,9 +36,6 @@
         v-if="this.$store.state.hasLogin"
         class="message-style"
       >
-      <el-button plain class="btn" @click="gotoMore" size='small'>
-            更多...
-          </el-button>
           <el-popover
       placement="top-start"
     width="400"
@@ -112,7 +110,7 @@ export default {
     };
   },
   methods: {
-    
+
     handleSelect(key, keyPath) {
       // console.log(key, keyPath);
       this.$emit("on-navbar-click");
