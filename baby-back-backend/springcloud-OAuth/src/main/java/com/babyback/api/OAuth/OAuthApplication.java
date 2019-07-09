@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableEurekaClient
 @SpringBootApplication
 @EnableAuthorizationServer
-public class OAuthApplication {
+public class OAuthApplication { 
 
     public static void main(String[] args) {
         SpringApplication.run(OAuthApplication.class, args);
