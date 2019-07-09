@@ -36,7 +36,6 @@
       </template>
       <template v-else>
         <el-button type="primary" @click="uploadAndRecog">上传照片并识别</el-button>
-        <el-button type="danger" icon="el-icon-delete" circle></el-button>
       </template>
     </el-row>
   </div>
