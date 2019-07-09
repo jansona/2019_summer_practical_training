@@ -1,4 +1,4 @@
-let mode = "test"
+let mode = "lrf"
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
@@ -12,6 +12,9 @@ if (mode === 'dev') {
 } else if (mode == 'test') {
   baseUrl = 'http://127.0.0.1:9999/api/main'
   baseUrl2 = 'http://127.0.0.1:9999'
+} else if (mode == 'lrf') {
+  baseUrl = 'http://192.168.151.207:9999/api/main'
+  baseUrl2 = 'http://192.168.151.207:9999'
 }
 
 // 填写信息部分

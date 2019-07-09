@@ -34,7 +34,7 @@
 					</view>
 					<view style="margin-left: 25upx;margin-top: 15upx;">回复：啊真好啊啊啊啊啊啊真好啊啊啊啊啊啊真好啊啊啊啊啊啊真好啊啊啊啊啊啊真好啊啊啊啊啊
 					</view>
-					<text class="cuIcon-deletefill" style="margin-left: 570upx;" @click="deleteComment(item)">删除</text>
+					<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;" @click="deleteComment(item)">删除</text>
 				</view>
 				<view class="cu-card dynamic" style="margin: 20upx 20upx;background-color: #EAEAEA;border-radius: 20upx;overflow: hidden;">
 					<view class="title">

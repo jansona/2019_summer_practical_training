@@ -53,6 +53,8 @@ export default {
 			console.log("请求拦截器：", store.state.token)
 			if (store.state.token != '') {
 				config.header.Authorization ='Bearer '+ store.state.token
+			} else {
+				config.header.Authorization ='Basic Y2xpZW50OnNlY3JldA=='
 			}
 		},
 		response: null

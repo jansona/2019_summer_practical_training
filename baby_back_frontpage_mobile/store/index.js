@@ -18,7 +18,10 @@ const store = new Vuex.Store({
 		},
 		logout(state) {
 			state.hasLogin = false
-			state.openid = null
+			state.token = ''
+			state.userId = -1
+			uni.removeStorageSync('userId')
+			uni.removeStorageSync('token')
 		},
 		setOpenid(state, openid) {
 			state.openid = openid

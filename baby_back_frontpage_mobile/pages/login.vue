@@ -59,7 +59,7 @@
 							});
 						}).catch(error => {
 							console.log(error)
-							this.$store.commit('setToken','');
+							this.$store.commit('logout');
 							uni.showToast({
 								title: "登录过期",
 								position: 'bottom'

@@ -68,6 +68,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // 暴露`/OAuth/check_token`端点
         web.ignoring().mvcMatchers("/oauth/check_token", "/user/info/*","swagger-ui.html"
-            ,"/find-by-key/**","/sms-verify","/user/infoTel/*","/sms-verify","/register");
+            ,"/find-by-key/**","/sms-verify","/user/infoTel/*","/sms-verify","/register","/websocket/**");
     }
 }
