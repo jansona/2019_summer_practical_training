@@ -6,9 +6,9 @@
 				<view class="box">
 					<view class="box-hd">
 						<view class="avator" @click="goToPage('../author-detail/author-detail')">
-							<img src="../../../../static/logo.png" />
+							<img :src="userInfo.profileUrl" />
 						</view>
-						<view class="nickname">咕咕咕</view>
+						<view class="nickname">{{userInfo.username}}</view>
 					</view>
 					<view class="box-bd">
 						<view class="item">
@@ -75,13 +75,19 @@
 </template>
 <script>
 	export default {
+		props: {
+
+		},
 		data() {
 			return {
 				avator: '',
-				nickname: ''
+				nickname: 'asd',
+				userInfo: this.$store.state.userInfo
 			};
 		},
-		onLoad() {},
+		onReady() {
+			console.log("ready")
+		},
 		methods: {
 			SetArea() {
 				uni.navigateTo({
@@ -99,7 +105,7 @@
 				});
 			},
 			logout() {
-				this.$store.commit('logout','')
+				this.$store.commit('logout', '')
 				uni.reLaunch({
 					url: '../login'
 				})

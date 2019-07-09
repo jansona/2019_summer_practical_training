@@ -75,7 +75,7 @@
 			}
 		},
 		onLoad(){
-			
+			console.log("load")
 		},
 		methods: {
 			NavChange: function(e) {
