@@ -6,7 +6,7 @@
       <UserInfo
       :picUrl='this.picUrl'
       :tableData='this.tableData'
-      :user='this.user'>
+      :user='this.user' ref="userInfo">
       </UserInfo>
     </el-tab-pane>
     <el-tab-pane label="我的失踪者申报" name="baby_aply">
@@ -125,7 +125,7 @@ export default {
               data.data.profileUrl
             console.log(data)
             let content = data.data;
-            this.user = content
+            this.user = content;
             for (var key in nameDict) {
               if (content.hasOwnProperty(key)) {
                 this.tableData.push({
