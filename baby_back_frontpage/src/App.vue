@@ -18,7 +18,8 @@ export default {
   },
   provide() {
     return {
-      reload: this.reload
+      reload: this.reload,
+      connect: this.connect
     };
   },
   created() {
@@ -35,6 +36,9 @@ export default {
     // this.websocketclose();
   },
   methods: {
+    connect(){
+        console.log("connected!!!!!!!!")
+    },
     reload() {
       this.isRouterAlive = false;
       this.$nextTick(function() {
