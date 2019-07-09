@@ -14,7 +14,7 @@
         </el-row>
       </div>
       <div>
-        <div @click="upLoadImage">
+        <div @click="toggleShow">
           <el-card
             :body-style="{ padding: '3px'}"
             style="float: left; padding: 1px"
@@ -56,6 +56,21 @@
         <el-button type="primary" @click="commit">确 定</el-button>
       </div>
     </el-dialog>
+    <div id="app">
+	<my-upload field="file"
+        @crop-success="cropSuccess"
+        @crop-upload-success="cropUploadSuccess"
+        @crop-upload-fail="cropUploadFail"
+        v-model="show"
+		:width="300"
+		:height="300"
+    :noRotate="noRotate"
+    :url="url"
+		:params="params"
+		:headers="headers"
+		img-format="jpg"></my-upload>
+	<!-- <img :src="imgDataUrl"> -->
+</div>
   </div>
 </template>
 
@@ -63,6 +78,7 @@
 import URLS from "@/config/config";
 import { request, fetch } from "@/api/api";
 import axios from "axios";
+import myUpload from 'vue-image-crop-upload';
 export default {
   name: "UserInfo",
   inject : ['reload'],
@@ -71,10 +87,23 @@ export default {
     tableData: Array,
     user: Object
   },
+  components: {
+			'my-upload': myUpload
+		},
   data() {
     return {
+      noRotate:false,
+      url : URLS.uploadPictureUrl,
       dialogFormVisible: false,
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      show: false,
+			params: {
+			},
+			headers: {
+        smail: '*_~',
+        Authorization: 'Bearer '+this.$store.state.token
+			},
+			imgDataUrl: '' // the datebase64 url of created image
     };
   },
   methods: {
@@ -89,9 +118,6 @@ export default {
     },
     edit() {
       this.dialogFormVisible = true;
-    },
-    upLoadImage(e) {
-      console.log(e);
     },
     commit() {
       let _this=this
@@ -126,7 +152,43 @@ export default {
           });
         });
         this.dialogFormVisible = false;
-    }
+    },
+    toggleShow() {
+        this.show = !this.show;
+        this.url = URLS.uploadPictureUrl+'?id='+this.user.id+'&action=AS_PROFILE'
+			},
+            /**
+			 * crop success
+			 *
+			 * [param] imgDataUrl
+			 * [param] field
+			 */
+			cropSuccess(imgDataUrl, field){
+				console.log('-------- crop success --------');
+				this.imgDataUrl = imgDataUrl;
+			},
+			/**
+			 * upload success
+			 *
+			 * [param] jsonData  server api return data, already json encode
+			 * [param] field
+			 */
+			cropUploadSuccess(jsonData, field){
+				console.log('-------- upload success --------');
+				console.log(jsonData);
+				console.log('field: ' + field);
+			},
+			/**
+			 * upload fail
+			 *
+			 * [param] status    server api return error status, like 500
+			 * [param] field
+			 */
+			cropUploadFail(status, field){
+				console.log('-------- upload fail --------');
+				console.log(status);
+				console.log('field: ' + field);
+			}
     
   }
 };
