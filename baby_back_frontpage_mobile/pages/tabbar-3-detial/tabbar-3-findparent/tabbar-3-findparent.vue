@@ -151,8 +151,7 @@
 	var  graceChecker = require("../../../common/graceChecker.js");
 	export default {
 		onReady: function() {
-			//let userId=this.$store.state.userId
-			let userId = 2
+			let userId=this.$store.state.userId
 			this.getUser(userId)
 		},
 		data() {

@@ -144,8 +144,7 @@
 	var graceChecker = require("../../../common/graceChecker.js");
 	export default {
 		onReady: function() {
-			//let userId=this.$store.state.userId
-			let userId = 2
+			let userId=this.$store.state.userId
 			this.getUser(userId)
 		},
 		data() {
@@ -361,6 +360,7 @@
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data
+					console.log(_this.user)
 				}).catch(error => {
 					console.log(error)
 				})

@@ -3,13 +3,13 @@
 		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">Modal标题</view>
+					<view class="content">提示</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					Modal 内容。
+					{{modalContent}}
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
@@ -59,7 +59,7 @@
 					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
 					<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.likeNum}}
 					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
-					<text class="cuIcon-deletefill margin-lr-xs" @click="deleteArticle(item)"></text> 删除
+					<text class="cuIcon-deletefill margin-lr-xs" @click="deleteArticle(item)"></text> 
 				</view>
 			</view>
 		</view>
@@ -82,8 +82,8 @@
 				commentList: [],
 				userid: this.$store.state.userId,
 				articleShow: true,
-				commentShow: false,
 				modalName:null,
+				modalContent:null,
 				deleteid:-1
 			}
 		},
@@ -137,16 +137,19 @@
 			},
 			deleteArticle(item){
 				this.modalName='Modal';
+				this.modalContent='您确定删除这篇帖子吗？';
 				this.deleteid=item.id
 			},
 			deleteConfirm(){
 				let url = this.URLS.articleDeleteUrl + '?id=' + this.deleteid;
 				let _this = this
-				this.$api.delete(url).then(data => {
-					uni.showToast({
-						title:'删除成功'
-					})
+				this.$api._delete(url).then(data => {
+					this.modalName=null
+					this.myToast('删除成功')
+					this.getData()
 				}).catch(error => {
+					this.modalName=null
+					this.myToast('删除失败')
 					console.log(error)
 				})
 			}
@@ -157,7 +160,7 @@
 <style>
 	.content {
 		text-align: center;
-		margin-top: 150upx;
+		margin-top: 20upx;
 	},
 	.passage-content {
 		text-align: center;

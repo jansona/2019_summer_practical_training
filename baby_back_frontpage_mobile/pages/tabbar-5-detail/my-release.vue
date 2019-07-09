@@ -3,13 +3,13 @@
 		<view class="cu-modal" :class="modalName=='Modal'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">Modal标题</view>
+					<view class="content">提示</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					Modal 内容。
+					{{modalContent}}
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
@@ -31,6 +31,7 @@
 		</scroll-view>
 		<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;" v-show="lostShow" v-for="(item,index) in lostList" :key=index>
 			<view class="padding bg-white">
+				<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;margin-left: 550upx;" @click="deleteRelease(item)"></text>
 				<view class="avatar">
 					<image :src="lostPicUrls[index]" mode="aspectFit">
 					</image>
@@ -98,10 +99,10 @@
 					<input disabled="true" :placeholder="item.otherContactMethod"></input>
 				</view> -->
 			</form>
-			<text class="cuIcon-deletefill" style="margin-left: 570upx;" @click="deleteRelease(item)">删除</text>
 		</view>
 		<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;" v-show="findShow" v-for="(item,index) in findList" :key=index>
 			<view class="padding bg-white">
+				<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;margin-left: 550upx;" @click="deleteRelease(item)"></text>
 				<view class="avatar">
 					<image :src="findPicUrls[index]" mode="aspectFit">
 					</image>
@@ -194,6 +195,7 @@
 				lostShow:true,
 				findShow:false,
 				modalName:null,
+				modalContent:null,
 				deleteid:-1
 			}
 		},
@@ -259,20 +261,25 @@
 			},
 			deleteRelease(item){
 				this.modalName='Modal';
+				this.modalContent='您确定要你删除这则发布吗？'
+				console.log(item)
 				this.deleteid=item.id
 			},
 			deleteConfirm(){
+				let url=null;
 				if(this.lostShow==true){
-					let url = this.URLS.lostBabyDeleteUrl + '?id=' + this.deleteid;
+					url = this.URLS.lostBabyDeleteUrl + '?id=' + this.deleteid;
 				}else{
-					let url = this.URLS.matchBabyDeleteUrl + '?id=' + this.deleteid;
+					url = this.URLS.matchBabyDeleteUrl + '?id=' + this.deleteid;
 				}
 				let _this = this
-				this.$api.delete(url).then(data => {
-					uni.showToast({
-						title:'删除成功'
-					})
+				this.$api._delete(url).then(data => {
+					this.modalName=null;
+					this.myToast('删除成功')
+					this.getData()
 				}).catch(error => {
+					this.modalName=null;
+					this.myToast('删除失败')
 					console.log(error)
 				})
 			}

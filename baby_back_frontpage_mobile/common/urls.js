@@ -1,4 +1,4 @@
-let mode = 'hbj'
+let mode = 'prod'
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {

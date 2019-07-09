@@ -83,9 +83,8 @@
 	import mixLoading from '@/components/mix-loading/mix-loading';
 	export default {
 		onReady: function() {
-			//let userId=this.$store.state.userId
-			let userId = 2
-			// this.getUser(userId)
+			let userId=this.$store.state.userId
+			this.getUser(userId)
 		},
 		components: {
 			mixLoading
@@ -140,7 +139,7 @@
 				})
 			},
 			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let url = this.URLS.userFindByIdUrl + '?id=' + this.user.id;
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data
@@ -151,7 +150,7 @@
 			sendComment(){
 				let _this=this;
 				this.comment.date=new Date();
-				this.comment.user=this.article.user;
+				this.comment.user=this.user;
 				this.comment.article=this.article;
 				this.$api.put(this.URLS.commentInsertUrl,this.comment).then(data => {
 					console.log(data);
@@ -162,6 +161,7 @@
 					_this.comment.content=''
 				}).catch(error => {
 					console.log(error)
+					this.myToast("发送失败")
 				})
 			},
 			articleLike(){
