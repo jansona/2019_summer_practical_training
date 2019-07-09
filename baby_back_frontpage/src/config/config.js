@@ -1,4 +1,4 @@
-let mode = "pro"
+let mode = "lrf"
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {

@@ -29,7 +29,22 @@ export default {
   data() {
     return {
       isHomePage: false,
+      websocket: null
     };
+  },
+  computed:{
+    listenedUserID() {
+        return this.$store.state.userID;
+    }
+  },
+  watch:{
+    listenedUserID: function(ov,nv){
+      console.log('watch start……');
+      if(this.$store.state.userID){
+        const wsuri = "ws://localhost:18080/websocket";
+        this.websocket = new WebSocket(wsuri);
+      }
+    }
   },
   methods: {
     handleSelect(indexPath) {
