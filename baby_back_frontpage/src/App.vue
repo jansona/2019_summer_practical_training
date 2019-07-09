@@ -8,6 +8,7 @@
 
 <script>
 import URLS from "@/config/config";
+import { request, fetch } from "@/api/api";
 export default {
   name: "App",
   data() {
@@ -63,12 +64,6 @@ export default {
         this.isRouterAlive = true;
       });
     },
-    onMessage(data){
-      console.log(data);
-      if(data.data === "Who are you?"){
-        this.$socket.send(this.$store.state.userID);
-      }
-    },
     initWebSocket(){ //初始化weosocket 
       // const wsuri = "ws://localhost:18080/websocket";//ws地址
       // this.websock = new WebSocket(wsuri);
@@ -108,11 +103,12 @@ export default {
     },
     websocketonmessage(e){ //数据接收 
       console.log(e.data);
+      if(e.data === "Who are you?"){
+        this.websocket.send(this.$store.state.userID);
+        return;
+      }
       this.loadData(e.data)
 
-    }, 
-    websocketsend(agentData){//数据发送 
-      this.websock.send(agentData);   
     }, 
     websocketclose(e){ //关闭 
       console.log("connection closed (" + e.code + ")"); 
