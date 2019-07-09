@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div slot="header" class="clearfix">
-        <el-row>
+        <el-row v-if="isMe">
           <span style="float: left; font-size: 15px;margin-top: 5px;">提醒：点击头像即可上传或更新头像</span>
           <el-button
             type="primary"
@@ -20,7 +20,7 @@
             style="float: left; padding: 1px"
             class="pic-container"
           >
-            <el-avatar shape="square" :size="100" fit="contain" :src="showImg(picUrl)"></el-avatar>
+            <el-avatar shape="square" :size="100" fit="contain" :src="picUrl"></el-avatar>
           </el-card>
         </div>
         <el-table
@@ -89,11 +89,15 @@ export default {
   },
   components: {
 			'my-upload': myUpload
-		},
+    },
+    mounted:function(){
+      this.isMe=(this.$store.state.userID == parseInt(this.$route.query.id))
+    },
   data() {
     return {
+      isMe : true,
       noRotate:false,
-      url : URLS.uploadPictureUrl,
+      url : '',
       dialogFormVisible: false,
       formLabelWidth: "120px",
       show: false,
@@ -107,6 +111,9 @@ export default {
     };
   },
   methods: {
+    cropSuccess() {
+      console.log("success")
+    },
     showImg(url) {
       if (url === null || url === "") {
         // console.log('待加载的图片地址为:' + url)
@@ -154,8 +161,12 @@ export default {
         this.dialogFormVisible = false;
     },
     toggleShow() {
+      if(!this.isMe){
+        return;
+      }
         this.show = !this.show;
         this.url = URLS.uploadPictureUrl+'?id='+this.user.id+'&action=AS_PROFILE'
+       
 			},
             /**
 			 * crop success

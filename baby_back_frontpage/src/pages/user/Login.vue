@@ -109,6 +109,8 @@ export default {
             id: data.data.data.id,
             flag: this.rememberLogin
           });
+          this.$store.commit("setUserInfo", data.data.data);
+          console.log("userInfo", this.$store.state.userInfo);
         })
         .catch(error => {
           console.log(error);
@@ -138,7 +140,10 @@ export default {
                   duration: 1000,
                   offset: 50
                 });
-                this.$store.commit("setToken", {token:data.access_token,flag:this.rememberLogin});
+                this.$store.commit("setToken", {
+                  token: data.access_token,
+                  flag: this.rememberLogin
+                });
                 this.loginingLoading = false;
                 this.getUserInfo();
                 // this.$store.commit("setUserID", {

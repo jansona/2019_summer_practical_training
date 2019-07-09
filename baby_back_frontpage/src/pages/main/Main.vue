@@ -59,6 +59,8 @@ export default {
             id: data.data.data.id,
             flag: this.rememberLogin
           });
+          this.$store.commit('setUserInfo',data.data.data)
+          console.log("userInfo",this.$store.state.userInfo)
         })
         .catch(error => {
 					this.$store.commit('setToken',{token:'',flag:true})

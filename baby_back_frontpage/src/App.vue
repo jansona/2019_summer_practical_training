@@ -22,11 +22,13 @@ export default {
     };
   },
   created() {
-    
+    const wsuri = "ws://localhost:18080/websocket";
+    this.websocket = new WebSocket(wsuri);
+    this.websocket.onopen = this.websocketonopen;
   },
   mounted(){
     // this.initWebSocket();
-    this.$options.sockets.onmessage = this.onMessage;
+    // this.$options.sockets.onmessage = this.onMessage;
   },
   destroyed(){
     // this.websocketclose();
@@ -43,7 +45,7 @@ export default {
       if(data.data === "Who are you?"){
         this.$socket.send(this.$store.state.userID);
       }
-    }
+    },
     // initWebSocket(){ //初始化weosocket 
     //   const wsuri = "ws://localhost:18080/websocket";//ws地址
     //   this.websock = new WebSocket(wsuri);
@@ -52,10 +54,10 @@ export default {
     //   this.websock.onmessage = this.websocketonmessage; 
     //   this.websock.onclose = this.websocketclose;
     // }, 
-    // websocketonopen() {
-    //   console.log("WebSocket连接成功");
-    //   this.websocket.send(this.$store.state.userID);
-    // },
+    websocketonopen() {
+      console.log("WebSocket连接成功");
+      this.websocket.send(this.$store.state.userID);
+    },
     // websocketonerror(e) { //错误
     //   console.log("WebSocket连接发生错误");
     // },

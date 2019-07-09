@@ -26,6 +26,7 @@ public class RedisConfig {
         template.setConnectionFactory(redisConnectionFactory);
         return template;
     }
+
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
 
@@ -34,4 +35,6 @@ public class RedisConfig {
         //container.addMessageListener(new RedisExpiredListener(), new PatternTopic("__keyevent@0__:expired"));
         return container;
     }
+
+
 }

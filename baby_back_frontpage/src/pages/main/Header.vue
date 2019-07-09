@@ -41,7 +41,7 @@
         <el-popover placement="bottom" trigger="hover" width="50" style="text-aligin:right">
           <a class="a-style"><i class="el-icon-user-solid" @click="personalHome">个人主页</i></a><br>
           <a class="a-style"><i class="el-icon-switch-button" @click="logout">退出登录</i></a>
-          <el-image :src="require('@/assets/house.jpg')" slot="reference" class="head-icon">
+          <el-image :src="$store.state.userInfo.profileUrl" slot="reference" class="head-icon">
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline"></i>
             </div>
@@ -66,6 +66,9 @@ export default {
                 this._initBody();
             });
         },
+  props: {
+    imgUrl: String,
+  },
   data() {
     return {
       activeIndex: "1",
