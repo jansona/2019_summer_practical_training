@@ -79,6 +79,7 @@
 			this.babyDetail = JSON.parse(options.data);
 			this.imgsrc = options.src;
 			console.log(this.babyDetail);
+			console.log(this.imgsrc)
 		},
 		data(){
 			return{

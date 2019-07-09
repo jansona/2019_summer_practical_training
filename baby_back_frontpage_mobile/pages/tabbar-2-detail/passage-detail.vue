@@ -173,6 +173,11 @@
 				}).catch(error => {
 					console.log(error)
 				})
+			},
+			navToAuthorDetail(item){
+				uni.navigateTo({
+					url: '/pages/author-detail/author-detail?id=' + item.user.id
+				})
 			}
 		}
 	}

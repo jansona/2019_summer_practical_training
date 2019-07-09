@@ -10,7 +10,7 @@
 				<textarea style="height: 930upx;" name="content" maxlength="-1" v-model="content" placeholder="请输入具体的内容"></textarea>
 			</view>
 			<view class="cu-form-group">
-				<button class="cu-btn round" style="width:250upx;margin: 0 auto;background-image: 'url('../../../static/img/pkq.png')';"
+				<button class="cu-btn bg-blue round" style="width:250upx;margin: 0 auto;"
 				 form-type="submit">发布</button>
 			</view>
 			

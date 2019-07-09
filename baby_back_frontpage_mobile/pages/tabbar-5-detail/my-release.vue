@@ -169,7 +169,7 @@
 					<view class="title" style="width: 150upx;">其他方式</view>
 					<input disabled="true" :placeholder="item.otherContactMethod"></input>
 				</view> -->
-				<text class="cuIcon-deletefill" style="margin-left: 570upx;" @click="deleteRelease(item)">删除</text>
+				
 			</form>
 		</view>
 	</view>

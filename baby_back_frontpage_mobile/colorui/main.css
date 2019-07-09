@@ -2599,7 +2599,7 @@ swiper.round-dot .uni-swiper-dot.uni-swiper-dot-active {
 	width: 610upx !important;
 	left: 70upx;
 	box-sizing: border-box;
-	padding: 40upx 0upx 70upx;
+	//padding: 40upx 0upx 70upx;
 	overflow: initial;
 }
 

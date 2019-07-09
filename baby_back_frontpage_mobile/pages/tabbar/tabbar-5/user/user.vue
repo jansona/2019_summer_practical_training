@@ -75,20 +75,32 @@
 </template>
 <script>
 	export default {
-		props: {
-
+		mounted: function() {
+			this.getUser(this.$store.state.userId);
+			console.log(this.user);
 		},
 		data() {
 			return {
 				avator: '',
 				nickname: 'asd',
-				userInfo: this.$store.state.userInfo
+				userInfo: this.$store.state.userInfo,
+				user:{}
 			};
 		},
 		onReady() {
 			console.log("ready")
 		},
 		methods: {
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.user = data.data.data;
+					console.log(_this.user)
+				}).catch(error => {
+					console.log(error)
+				})
+			},
 			SetArea() {
 				uni.navigateTo({
 					url: "../tabbar-4-detail/joinvolunteer"
@@ -103,6 +115,11 @@
 				uni.navigateTo({
 					url
 				});
+			},
+			setInfo(){
+				uni.navigateTo({
+					url: '../tabbar-5-detail/update-user?data=' + JSON.stringify(this.user)
+				})
 			},
 			logout() {
 				this.$store.commit('logout', '')
