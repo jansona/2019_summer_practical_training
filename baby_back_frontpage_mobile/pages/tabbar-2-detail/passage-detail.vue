@@ -3,11 +3,13 @@
 
 		<scroll-view class="scroll" scroll-y>
 			<view class="scroll-content">
-				<view class="introduce-section">
-					<text class="title">{{article.title}}</text>
-					<view class="introduce">
-						<text>{{article.user.username}}</text>
-						<text>{{article.date}}</text>
+				<view class="introduce-section cu-list">
+					<view class="content flex-sub" style="margin-top:5upx;">
+						<text class="title">{{article.title}}</text>
+						<view class="introduce">
+							<text>{{article.user.username}}</text>
+							<text>{{article.date}}</text>
+						</view>
 					</view>
 
 					<!-- <rich-text :nodes="detailData.flow"></rich-text> -->
@@ -44,7 +46,7 @@
 				<view class="uni-comment" style="margin-bottom: 100upx;">
 					<view class="uni-comment-list" v-for="(item, index) in commentList" :key="index" style="background-color: #FFFFFF;">
 						<view class="uni-comment-face" style="margin-left: 15upx;">
-							<image :src="item.userimg" mode="widthFix"></image>
+							<image :src="item.user.profileUrl" mode="widthFix"></image>
 						</view>
 						<view class="uni-comment-body">
 							<view class="uni-comment-top" style="text-align: left">
@@ -72,8 +74,8 @@
 			<text class="confirm-btn">发送</text>
 		</view> -->
 		<view class="cu-bar foot input" :style="[{bottom:InputBottom+'px'}]">
-			<input class="solid-bottom" v-model="comment.content" placeholder="快发表评论吧~" :adjust-position="false" :focus="false" maxlength="300"
-			 cursor-spacing="10" @focus="InputFocus" @blur="InputBlur"></input>
+			<input class="solid-bottom" v-model="comment.content" placeholder="快发表评论吧~" :adjust-position="false" :focus="false"
+			 maxlength="300" cursor-spacing="10" @focus="InputFocus" @blur="InputBlur"></input>
 			<button class="cu-btn bg-green shadow" @click="sendComment">发送</button>
 		</view>
 	</view>
@@ -83,7 +85,7 @@
 	import mixLoading from '@/components/mix-loading/mix-loading';
 	export default {
 		onReady: function() {
-			let userId=this.$store.state.userId
+			let userId = this.$store.state.userId
 			this.getUser(userId)
 		},
 		components: {
@@ -102,7 +104,6 @@
 					"article": {},
 					"content": "",
 					"date": "",
-					"id": 0,
 					"user": {}
 				}
 			}
@@ -121,17 +122,16 @@
 				this.InputBottom = 0
 			},
 			getCommentList() {
-				let _this=this;
-				let articleid=this.article.id.toString();
-				let url=this.URLS.commentFindUrl+'?id='+articleid;
+				let _this = this;
+				let articleid = this.article.id.toString();
+				let url = this.URLS.commentFindUrl + '?id=' + articleid;
 				// let url=this.URLS.commentFindUrl;
 				console.log(articleid);
 				this.$api.post(url).then(data => {
 					console.log(data);
-					_this.commentList=data.data.data.content;
-					for(let i=0;i<_this.commentList.length;i++)
-					{
-						_this.commentList[i].date=_this.dateFormat(_this.commentList[i].date);
+					_this.commentList = data.data.data.content;
+					for (let i = 0; i < _this.commentList.length; i++) {
+						_this.commentList[i].date = _this.dateFormat(_this.commentList[i].date);
 					}
 					console.log(_this.commentList)
 				}).catch(error => {
@@ -147,28 +147,28 @@
 					console.log(error)
 				})
 			},
-			sendComment(){
-				let _this=this;
-				this.comment.date=new Date();
-				this.comment.user=this.user;
-				this.comment.article=this.article;
-				this.$api.put(this.URLS.commentInsertUrl,this.comment).then(data => {
+			sendComment() {
+				let _this = this;
+				this.comment.date = new Date();
+				this.comment.user = this.user;
+				this.comment.article = this.article;
+				this.$api.put(this.URLS.commentInsertUrl, this.comment).then(data => {
 					console.log(data);
-					_this.commentList=_this.commentList.concat(data.data.data);
+					_this.commentList = _this.commentList.concat(data.data.data);
 					uni.showToast({
-						title:'发送成功'
+						title: '发送成功'
 					})
-					_this.comment.content=''
+					_this.comment.content = ''
 				}).catch(error => {
 					console.log(error)
 					this.myToast("发送失败")
 				})
 			},
-			articleLike(){
+			articleLike() {
 				console.log('点赞...');
-				let url=this.URLS.articleLikeUrl+'?article_id='+this.article.id;
+				let url = this.URLS.articleLikeUrl + '?article_id=' + this.article.id;
 				this.$api.post(url).then(data => {
-					this.article.likeNum+=1;
+					this.article.likeNum += 1;
 					console.log(data)
 				}).catch(error => {
 					console.log(error)

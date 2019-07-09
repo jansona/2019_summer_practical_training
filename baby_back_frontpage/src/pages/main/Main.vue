@@ -56,16 +56,22 @@ export default {
         .then(data => {
           console.log("已经登陆成功 ", data);
           this.$store.commit("setUserID", {
-            id: data.data.data.id,
-            flag: this.rememberLogin
+            'id': data.data.id,
+            flag: false
           });
-          this.$store.commit('setUserInfo',data.data.data)
+          this.$store.commit('setUserInfo',data.data)
           console.log("userInfo",this.$store.state.userInfo)
         })
         .catch(error => {
 					this.$store.commit('setToken',{token:'',flag:true})
 					this.$store.commit('setUserID',{id:-1,flag:true})
           console.log(error);
+          this.$notify({
+            title: "登录超时",
+            offset: 50,
+            type: "info",
+            duration: 1500,
+          })
         });
     }
   },

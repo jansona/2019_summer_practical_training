@@ -110,6 +110,7 @@ export default {
             flag: this.rememberLogin
           });
           this.$store.commit("setUserInfo", data.data.data);
+          this.$store.commit("setUserID",{id:data.data.data.id,flag:true})
           console.log("userInfo", this.$store.state.userInfo);
         })
         .catch(error => {

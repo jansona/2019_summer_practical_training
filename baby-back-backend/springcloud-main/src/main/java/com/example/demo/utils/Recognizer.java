@@ -43,7 +43,8 @@ public class Recognizer {
         ArrayList<LostBaby> matchedBabies;
         try {
             file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
-            String[] cmd = {"docker", "exec", "fr", "face_recognition", "/photo/lost", "/photo/temp/" + fileName};
+         //   String[] cmd = {"docker", "exec", "fr", "face_recognition", "/photo/lost", "/photo/temp/" + fileName};
+            String[] cmd = {"face_recognition", "./photo/lost", "./photo/temp/" + fileName};
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
@@ -78,7 +79,7 @@ public class Recognizer {
         ArrayList<String> matches = new ArrayList<>();
         ArrayList<LostBaby> matchedBaby;
 
-        String[] cmd = {"py", "ldf.py", txt};
+        String[] cmd = {"python3", "ldf.py", txt};
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
