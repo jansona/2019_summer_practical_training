@@ -34,7 +34,7 @@
         class="message-style"
       >
         <el-popover placement="top-start" width="400" trigger="hover">
-          <el-table :data="$store.state.messageList">
+          <el-table :data="this.$store.state.messageList" @row-click="gotoInfo">
             <el-table-column width="100" property="name" label="姓名"></el-table-column>
             <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
             <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
@@ -90,7 +90,13 @@ export default {
     };
   },
   methods: {
-    
+    gotoInfo(row){
+      console.log(row)
+      this.$router.push({
+        path: "faceDetail",
+        query: { id: row.id ,type:1}
+      });
+    },
     
     loadData(id) {
       let url = URLS.lostBabyFindUrl
