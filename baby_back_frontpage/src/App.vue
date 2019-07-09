@@ -44,6 +44,19 @@ export default {
         // this.websock.onmessage = this.websocketonmessage; 
         this.initWebSocket();
     },
+    loadData(id) {
+      let url = URLS.lostBabyFindUrl
+      let _this= this
+      request(url, { id: id })
+        .then(data => {
+          if (data.rtnCode == 200) {
+            _this.$store.commit("setMessageList", data.data.content);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     reload() {
       this.isRouterAlive = false;
       this.$nextTick(function() {
@@ -94,14 +107,17 @@ export default {
       console.log("WebSocket连接发生错误");
     },
     websocketonmessage(e){ //数据接收 
-      console.log(e.data); 
+      console.log(e.data);
+      this.loadData(e.data)
+
     }, 
     websocketsend(agentData){//数据发送 
       this.websock.send(agentData);   
     }, 
     websocketclose(e){ //关闭 
       console.log("connection closed (" + e.code + ")"); 
-    }
+    },
+
   }
 };
 </script>

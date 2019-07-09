@@ -34,7 +34,7 @@
         class="message-style"
       >
         <el-popover placement="top-start" width="400" trigger="hover">
-          <el-table :data="gridData">
+          <el-table :data="$store.state.messageList">
             <el-table-column width="100" property="name" label="姓名"></el-table-column>
             <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
             <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
@@ -76,45 +76,12 @@ export default {
     this.$nextTick(() => {
       this._initBody();
     });
-    // const wsuri = "ws://localhost:18080/websocket";
-    // this.websock = new WebSocket(wsuri, ["91b04edd-70b8-4a4d-8570-05cc5cb8f96d"]);
-    // this.websocket = new WebSocket(wsuri);
-    // this.websocket.onopen = this.websocketonopen;
-  },
-  mounted(){
-    // this.initWebSocket();
-    // this.$options.sockets.onmessage = this.onMessage;
-  },
-  destroyed(){
-    // this.websocketclose();
   },
   props: {
     imgUrl: String
   },
   data() {
     return {
-      gridData: [
-        // {
-        //   date: "2016-05-02",
-        //   name: "王小虎",
-        //   place: "上海市普陀区金沙江路 1518 弄"
-        // },
-        // {
-        //   date: "2016-05-04",
-        //   name: "王小虎",
-        //   place: "上海市普陀区金沙江路 1518 弄"
-        // },
-        // {
-        //   date: "2016-05-01",
-        //   name: "王小虎",
-        //   place: "上海市普陀区金沙江路 1518 弄"
-        // },
-        // {
-        //   date: "2016-05-03",
-        //   name: "王小虎",
-        //   place: "上海市普陀区金沙江路 1518 弄"
-        // }
-      ],
       activeIndex: "1",
       hasMessage: true,
       hasLogin: this.$store.state.hasLogin,
@@ -123,59 +90,8 @@ export default {
     };
   },
   methods: {
-    onMessage(data){
-      console.log(data);
-      if(data.data === "Who are you?"){
-        this.$socket.send(this.$store.state.userID);
-      }
-    },
-    initWebSocket(){ //初始化weosocket 
-      // const wsuri = "ws://localhost:18080/websocket";//ws地址
-      // this.websock = new WebSocket(wsuri);
-      // this.websocket.onopen = this.websocketonopen;
-      // this.websocket.onerror = this.websocketonerror;
-      // this.websock.onmessage = this.websocketonmessage; 
-      // this.websock.onclose = this.websocketclose;
-      var ws = null;
-     //判断当前浏览器是否支持WebSocket
-     if ('WebSocket' in window) {
-         ws = new WebSocket("ws://localhost:18080/websocket");
-     }
-     else {
-         alert('当前浏览器 Not support websocket')
-     }
- 
-     //连接发生错误的回调方法
-     ws.onerror = this.websocketonerror;
- 
-     //连接成功建立的回调方法
-     ws.onopen = this.websocketonopen;
- 
-     //接收到消息的回调方法
-     ws.onmessage = this.websocketonmessage;
- 
-     //连接关闭的回调方法
-     ws.onclose = this.websocketclose;
-
-     this.websocket = ws;
-    }, 
-    websocketonopen() {
-      console.log("WebSocket连接成功");
-      this.websocket.send(this.$store.state.userID);
-    },
-    websocketonerror(e) { //错误
-      console.log("WebSocket连接发生错误");
-    },
-    websocketonmessage(e){ //数据接收 
-      console.log(e.data);
-      this.loadData(e.data)
-    }, 
-    websocketsend(agentData){//数据发送 
-      this.websock.send(agentData);   
-    }, 
-    websocketclose(e){ //关闭 
-      console.log("connection closed (" + e.code + ")"); 
-    },
+    
+    
     loadData(id) {
       let url = URLS.lostBabyFindUrl
       let _this= this
@@ -189,14 +105,7 @@ export default {
           console.log(error);
         });
     },
-    connect(){
-        console.log("connected!!!!!!!!");
-        // const wsuri = "ws://localhost:18080/websocket";
-        // this.websocket = new WebSocket(wsuri);
-        // this.websocket.onopen = this.websocketonopen;
-        // this.websock.onmessage = this.websocketonmessage; 
-        this.initWebSocket();
-    },
+    
     handleSelect(key, keyPath) {
       // console.log(key, keyPath);
       this.$emit("on-navbar-click");
@@ -321,11 +230,9 @@ export default {
 .head-icon :hover {
   cursor: pointer;
 }
-
 .red {
   background-color: red;
 }
-
 @media screen and (min-width: 100px) {
   .head-container {
     overflow: hidden;
@@ -355,7 +262,6 @@ export default {
 .el-menu--horizontal {
   border-bottom-width: 0px !important ;
 }
-
 .el-menu-item {
   background-color: transparent !important;
 }
