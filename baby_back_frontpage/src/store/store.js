@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
     hasLogin: localStorage.getItem('hasLogin') === 'true' || false,
     imageId: -1,
     token: localStorage.getItem('token') || '',
+    userInfo: {},
   },
   modules: {
     //sys,
@@ -51,6 +52,12 @@ export const store = new Vuex.Store({
     delToken(state) {
       state.token = '';
       localStorage.removeItem("token");
+      state.hasLogin = false
+      state.userID = -1
+      state.userInfo = {}
+    },
+    setUserInfo(state, data){
+      state.userInfo = data
     }
   }
 })

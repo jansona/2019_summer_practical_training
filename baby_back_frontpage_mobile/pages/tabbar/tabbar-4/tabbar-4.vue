@@ -27,6 +27,7 @@
 				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:400upx;margin: 0 auto;margin-top: 50upx;" @click="Recognition">实名认证</button>
 			</view>
 		</view>
+		<view class="cu-tabbar-height"></view>
 	</view>
 </template>
 
