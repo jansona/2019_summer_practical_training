@@ -43,7 +43,7 @@
 				<!-- <mixLoading class="mix-loading" v-if="loading"></mixLoading> -->
 				<view class="uni-comment" style="margin-bottom: 100upx;">
 					<view class="uni-comment-list" v-for="(item, index) in commentList" :key="index" style="background-color: #FFFFFF;">
-						<view class="uni-comment-face" style="margin-left: 15upx;">
+						<view class="uni-comment-face" style="margin-left: 15upx;" @click="navToAuthorDetail(item)">
 							<image :src="item.userimg" mode="widthFix"></image>
 						</view>
 						<view class="uni-comment-body">
@@ -102,7 +102,6 @@
 					"article": {},
 					"content": "",
 					"date": "",
-					"id": 0,
 					"user": {}
 				}
 			}
@@ -172,6 +171,11 @@
 					console.log(data)
 				}).catch(error => {
 					console.log(error)
+				})
+			},
+			navToAuthorDetail(item){
+				uni.navigateTo({
+					url: '/pages/author-detail/author-detail?id=' + item.user.id
 				})
 			}
 		}

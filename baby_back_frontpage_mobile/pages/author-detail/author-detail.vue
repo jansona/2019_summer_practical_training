@@ -7,7 +7,7 @@
 						<view class="avator">
 							<img src="../../static/logo.png"/>
 						</view>
-						<view class="nickname">咕咕咕</view>
+						<view class="nickname">{{user.username}}</view>
 					</view>
 				</view>
 			</view>
@@ -201,6 +201,7 @@
 		onLoad(options) {
 			//把JSON字符串转换为对象
 			this.user.id = JSON.parse(options.id);
+			this.getUser(this.user.id);
 			this.getArticleList();
 			this.getFindList();
 			this.getLostList();
@@ -252,7 +253,7 @@
 				})
 			},
 			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + this.user.Id;
+				let url = this.URLS.userFindByIdUrl + '?id=' + this.user.id;
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data;

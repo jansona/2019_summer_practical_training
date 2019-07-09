@@ -26,9 +26,9 @@
 					<view class="cu-item">
 						<view class="cu-avatar round lg"></view>
 						<view class="content flex-sub" style="margin-top:5upx;">
-							<view>item.user.username</view>
+							<view>{{item.user.username}}</view>
 							<view class="text-gray text-sm flex justify-between">
-								item.date
+								{{item.date}}
 							</view>
 						</view>
 					</view>
@@ -36,7 +36,7 @@
 					</view>
 					<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;" @click="deleteComment(item)"></text>
 				</view>
-				<view class="cu-card dynamic" style="margin: 20upx 20upx;background-color: #EAEAEA;border-radius: 20upx;overflow: hidden;">
+				<view class="cu-card dynamic" @click="navToDetails(item)" style="margin: 20upx 20upx;background-color: #EAEAEA;border-radius: 20upx;overflow: hidden;">
 					<view class="title">
 						<view class="text-cut" style="font-weight: 700;margin-left: 15upx;margin-top: 15upx;">{{item.article.title}}</view>
 					</view>
@@ -71,6 +71,7 @@
 				scrollLeft: 0, //顶部选项卡左滑距离
 				commentList: [],
 				userid: this.$store.state.userId,
+				user:{},
 				modalName:null,
 				modalContent:null,
 				deleteid:-1
@@ -83,9 +84,8 @@
 			 */
 			getData() {
 				let _this = this;
-	
-				let commenturl =this.URLS.commentFindByUserUrl +'?user='+this.user.id
-				this.$api.post(url)
+				let commenturl =this.URLS.commentFindByUserUrl +'?user='+this.userid
+				this.$api.post(commenturl)
 					.then(data => {
 						_this.commentList = data.data.data.content;
 					}).catch(error => {
@@ -96,7 +96,7 @@
 				this.modalName = null
 			},
 			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + this.userId;
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data

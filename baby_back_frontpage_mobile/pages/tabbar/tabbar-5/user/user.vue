@@ -5,10 +5,10 @@
 			<view class="bg">
 				<view class="box">
 					<view class="box-hd">
-						<view class="avator" @click="goToPage('../author-detail/author-detail')">
-							<img src="../../../../static/logo.png" />
+						<view class="avator" @click="setInfo">
+							<img :src="user.profileUrl"/>
 						</view>
-						<view class="nickname">咕咕咕</view>
+						<view class="nickname">{{user.username}}</view>
 					</view>
 					<view class="box-bd">
 						<view class="item" @click="goToPage('../tabbar-5-detail/mycomment')">
@@ -75,14 +75,29 @@
 </template>
 <script>
 	export default {
+		mounted: function() {
+			this.getUser(this.$store.state.userId);
+			console.log(this.user);
+		},
 		data() {
 			return {
 				avator: '',
-				nickname: ''
+				nickname: '',
+				user:{}
 			};
 		},
 		onLoad() {},
 		methods: {
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.user = data.data.data;
+					console.log(_this.user)
+				}).catch(error => {
+					console.log(error)
+				})
+			},
 			SetArea() {
 				uni.navigateTo({
 					url: "../tabbar-4-detail/joinvolunteer"
@@ -97,6 +112,11 @@
 				uni.navigateTo({
 					url
 				});
+			},
+			setInfo(){
+				uni.navigateTo({
+					url: '../tabbar-5-detail/update-user?data=' + JSON.stringify(this.user)
+				})
 			},
 			logout() {
 				this.$store.commit('logout','')

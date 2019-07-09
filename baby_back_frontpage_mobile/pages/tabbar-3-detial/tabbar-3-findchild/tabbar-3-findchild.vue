@@ -214,10 +214,11 @@
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
 						if (this.imgList.length != 0) {
-							this.imgList = this.imgList.concat(res.tempFilePaths)
+							this.imgList = this.imgList.concat(res.tempFilePaths);
 						} else {
 							this.imgList = res.tempFilePaths
 						}
+						console.log(this.imgList)
 					}
 				});
 			},
@@ -334,7 +335,6 @@
 								_this.modalName='Modal';
 								_this.modalContent='发布成功！';
 								_this.isSend=true;
-								uni.navigateBack()
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);

@@ -31,14 +31,14 @@
 		<view class="grid col-2 grid-square" v-show="findShow">
 			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 			 v-for="(item,index) in findList" :key="index">
-				<img :src="findPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,0)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+				<image :src="findPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,0)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></image>
 				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
 			</view>
 		</view>
 		<view class="grid col-2 grid-square" v-show="lostShow">
 			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 			 v-for="(item,index) in lostList" :key="index">
-				<img :src="lostPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+				<image :src="lostPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></image>
 				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
 			</view>
 		</view>
@@ -184,9 +184,11 @@
 							this.totalPageNum = data.data.data.totalPages
 
 							let appendList = data.data.data.content
+							console.log(appendList)
 							for (let i = 0; i < appendList.length; i++) {
 								let id = appendList[i].id;
-								this.lostPicUrls.push(this.yieldPicUrl(id));
+								console.log(appendList[i].picUrl);
+								this.lostPicUrls.push(appendList[i].picUrl);
 							}
 							this.lostList = this.lostList.concat(appendList);
 						}).catch(error => {
@@ -202,7 +204,7 @@
 							let appendList = data.data.data.content
 							for (let i = 0; i < appendList.length; i++) {
 								let id = appendList[i].id;
-								this.findPicUrls.push(this.yieldPicUrl(id));
+								this.findPicUrls.push(appendList[i].picUrl);
 							}
 							this.findList = this.findList.concat(appendList);
 						}).catch(error => {
@@ -221,7 +223,7 @@
 						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
+							this.lostPicUrls.push(_this.lostList[i].picUrl);
 						}
 
 					}).catch(error => {
@@ -234,7 +236,7 @@
 						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
 							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
+							this.findPicUrls.push(_this.findList[i].picUrl);
 						}
 					}).catch(error => {
 						console.log(error)
@@ -248,7 +250,7 @@
 						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
+							this.lostPicUrls.push(_this.lostList[i].picUrl);
 						}
 
 					}).catch(error => {
@@ -261,7 +263,7 @@
 						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
 							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
+							this.findPicUrls.push(_this.findList[i].picUrl);
 						}
 					}).catch(error => {
 						console.log(error)
@@ -274,7 +276,7 @@
 						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
+							this.lostPicUrls.push(_this.lostList[i].picUrl);
 						}
 
 					}).catch(error => {
@@ -287,7 +289,7 @@
 						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
 							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
+							this.findPicUrls.push(_this.findList[i].picUrl);
 						}
 					}).catch(error => {
 						console.log(error)
@@ -301,7 +303,7 @@
 						_this.lostPicUrls = [];
 						for (let i = 0; i < _this.lostList.length; i++) {
 							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
+							this.lostPicUrls.push(_this.lostList[i].picUrl);
 						}
 
 					}).catch(error => {
@@ -313,32 +315,22 @@
 						_this.findList = data.data.data.content;
 						_this.findPicUrls = [];
 						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
+							// let id = _this.findList[i].id;
+							this.findPicUrls.push(_this.findList[i].picUrl);
 						}
 					}).catch(error => {
 						console.log(error)
 					})
 				}
 			},
-			yieldPicUrl(id) {
-				if (this.lostShow) {
-					return this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg"
-				} else {
-					return this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg"
-				}
-
-			},
 			goToDetail(item, index, flag) {
 				if (flag == 0) {
 					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
-							"/resource/photo/match/" + this.findList[index].id + ".jpg"
+						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + item.picUrl
 					})
 				} else if (flag == 1) {
 					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
-							"/resource/photo/lost/" + this.lostList[index].id + ".jpg"
+						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + item.picUrl
 					})
 				}
 			}

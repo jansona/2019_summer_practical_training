@@ -174,6 +174,7 @@
 					let url = this.URLS.articleFindByUserNameUrl + '?user_name=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
+						_this.articleList=[];
 						_this.articleList = data.data.data.content;
 					}).catch(error => {
 						console.log(error)
@@ -182,6 +183,7 @@
 					let url = this.URLS.articleFindUrl + '?key_word=' + _this.searchInput;
 					this.$api.post(url).then(data => {
 						console.log(data);
+						_this.articleList=[];
 						_this.articleList = data.data.data.content;
 					}).catch(error => {
 						console.log(error)

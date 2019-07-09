@@ -181,7 +181,7 @@
 					contactPhone: '',
 					otherContactMethod: '',
 					user: {
-						id: 2,
+						id: this.$store.state.userId,
 					}
 				},
 				items: [{
@@ -290,7 +290,7 @@
 				}
 				//上传表单信息
 				this.$api.post(this.URLS.matchBabyInsertUrl,this.findParentForm).then(data => {
-					//console.log(data)
+					console.log(data)
 					_this.matchbabyid=data.data.data.id;
 					console.log(_this.matchbabyid);
 					//上传图片
@@ -303,12 +303,14 @@
 							formData: {
 								'id': _this.matchbabyid
 							},
+							header: {
+								'Authorization': 'Bearer '+ this.$store.state.token
+							},
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes);
 								_this.isSend=true;
 								_this.modalName='Modal';
 								_this.modalContent='发布成功！';
-								uni.navigateBack()
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);

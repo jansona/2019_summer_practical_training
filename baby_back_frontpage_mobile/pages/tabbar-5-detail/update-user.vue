@@ -1,0 +1,118 @@
+<template>
+	<view>
+		<view class="padding bg-white">
+			<view class="avatar" @click="ChooseImage">
+				<image :src="user.profileUrl" style="width: 200upx;height: 200upx;" mode="aspectFill"></image>
+			</view>
+		</view>
+		<form @submit="formSubmit">
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">昵称</view>
+				<input :placeholder="user.username" @input="nickChange" name="nick"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">手机号</view>
+				<input disabled="true" :placeholder="user.tel"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">邮箱</view>
+				<input :placeholder="user.email" @input="emailChange"></input>
+			</view>
+			<view class="cu-form-group">
+				<button class="cu-btn bg-blue round" style="width:200upx;margin: 0 auto;"
+				 form-type="submit">确定</button>
+			</view>
+		</form>
+	</view>
+</template>
+
+<script>
+	var graceChecker = require("../../common/graceChecker.js");
+	export default {
+		data() {
+			return {
+				user: {}
+			}
+		},
+		onLoad(options) {
+			//把JSON字符串转换为对象
+			console.log(options.data);
+			this.user = JSON.parse(options.data);
+			console.log(this.user)
+		},
+		methods: {
+			nickChange(e){
+				this.user.username=e.detail.value;
+				console.log(this.user.username);
+			},
+			emailChange(e){
+				this.user.email=e.detail.value;
+				console.log(this.user.email);
+			},
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + this.user.id;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.user = data.data.data
+				}).catch(error => {
+					console.log(error)
+				})
+			},
+			ChooseImage() {
+				uni.chooseImage({
+					count: 1, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: (res) => {
+						console.log('res.tempFilePaths:'+res.tempFilePaths);
+						this.user.profileUrl = res.tempFilePaths[0];
+						console.log(this.user.profileUrl);
+					}
+				});
+			},
+			formSubmit: function(e) {
+				//将下列代码加入到对应的检查位置
+				//定义表单规则
+				var rule = [
+					{
+						name: "nick",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请填写昵称"
+					}
+				];
+				//进行表单检查
+				var formData = e.detail.value;
+				var checkRes = graceChecker.check(formData, rule);
+				let _this=this;
+				if (checkRes) {
+					uni.showToast({
+						title: "验证通过!",
+						icon: "none"
+					});
+				} else {
+					uni.showToast({
+						title: graceChecker.error,
+						icon: "none"
+					});
+					return;
+				}
+				
+			},
+		}
+	}
+</script>
+
+<style>
+	.avatar{
+		margin: 0 auto;
+		border-radius: 50%;
+		overflow: hidden;
+		align-items: center;
+		background-color: #0081ff;
+		width: 200upx;
+		height: 200upx;
+		vertical-align: middle;
+		justify-content:center; 
+	}
+</style>

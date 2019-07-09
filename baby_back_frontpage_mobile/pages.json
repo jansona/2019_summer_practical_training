@@ -112,6 +112,10 @@
 			"style": {}
 		},
 		{
+			"path": "pages/tabbar-5-detail/update-user",
+			"style": {}
+		},
+		{
 			"path": "pages/author-detail/author-detail",
 			"style": {}
 		}
