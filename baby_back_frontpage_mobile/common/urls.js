@@ -13,7 +13,10 @@ if (mode === 'dev') {
 } else if (mode === 'test') {
   baseUrl = 'http://42.159.91.0:9999/api/main'
   baseUrl2 = 'http://42.159.91.0:9999'
-} 
+} else if (mode === 'ybg'){
+	baseUrl = 'http://127.0.0.1:9999'
+	baseUrl2 = 'http://127.0.0.1:9999'
+}
 
 let imgUrl = 'http://42.159.4.66:2333'
 
@@ -56,6 +59,10 @@ const commentInsertUrl = baseUrl + '/comment/insert'
 //查询用户信息
 const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
+const userUpdateUrl = baseUrl + '/user/update'
+
+// 消息收发
+const websocketUrl = baseUrl + "/websocket"
 
 const URLS = {
 	userInfoUrl,
@@ -86,7 +93,9 @@ const URLS = {
 	lostBabyFindByUserUrl,
 	matchBabyFindByUserUrl,
 	lostBabyDeleteUrl,
-	matchBabyDeleteUrl
+	matchBabyDeleteUrl,
+	websocketUrl,
+	userUpdateUrl
 }
 
 module.exports = URLS
