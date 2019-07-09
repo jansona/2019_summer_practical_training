@@ -190,7 +190,7 @@
 			},
 			resetData(index) {
 				if (index == null) index = this.tabCurrentIndex
-				this.refreshData(index,false)
+				this.refreshData(index, false)
 			},
 			refreshData(index, flag) { // flag 用来表示是添加还是刷新
 				if (index == null) {
@@ -233,123 +233,68 @@
 					return;
 				}
 			},
-			searchClick(e) {
+			async  searchClick(e) {
 				let _this = this;
 				if (this.pickerLabel == '身高') {
-					let url = this.URLS.lostBabyFindUrl + '?height=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = his.URLS.matchBabyFindUrl + '?height=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
+					let urls = [this.URLS.lostBabyFindUrl + '?height=' + _this.searchInput, this.URLS.matchBabyFindUrl + '?height=' +
+						_this.searchInput
+					];
+					for (var i = 0; i < urls.length; i++) {
+						this.$api.post(urls[i]).then(data => {
+							console.log(data);
+							_this.pageData[i].data = data.data.data.content;
+						}).catch(error => {
+							console.log(error)
+						});
+					}
 				} else if (this.pickerLabel == '姓名') {
-
-					let url = this.URLS.lostBabyFindUrl + '?name=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = this.URLS.matchBabyFindUrl + '?name=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
+					let urls = [this.URLS.lostBabyFindUrl + '?name=' + _this.searchInput, this.URLS.matchBabyFindUrl + '?name=' +
+						_this
+						.searchInput
+					];
+					for (var i = 0; i < urls.length; i++) {
+						let getData = new Promise(() => {
+							this.$api.post(urls[i]).then(data => {
+								console.log(data,this.pageData[i],data.data.data.content);
+								_this.pageData[i].data = data.data.data.content;
+							}).catch(error => {
+								console.log(error)
+							});
+						})
+						await getData;
+					}
 				} else if (this.pickerLabel == '籍贯') {
-					let url = this.URLS.lostBabyFindUrl + '?nativePlace=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = his.URLS.matchBabyFindUrl + '?nativePlace=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
-
+					let urls = [this.URLS.lostBabyFindUrl + '?nativePlace=' + _this.searchInput, this.URLS.matchBabyFindUrl +
+						'?nativePlace=' + _this.searchInput
+					];
+					for (var i = 0; i < urls.length; i++) {
+						this.$api.post(urls[i]).then(data => {
+							console.log(data);
+							_this.pageData[i].data = data.data.data.content;
+						}).catch(error => {
+							console.log(error)
+						});
+					}
 				} else if (this.pickerLabel == '失踪地点') {
-					let url = this.URLS.lostBabyFindUrl + '?place=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.lostList = data.data.data.content;
-						_this.lostPicUrls = [];
-						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							this.lostPicUrls.push(this.yieldPicUrl(id));
-						}
-
-					}).catch(error => {
-						console.log(error)
-					});
-					url = this.URLS.matchBabyFindUrl + '?place=' + _this.searchInput;
-					this.$api.post(url).then(data => {
-						console.log(data);
-						_this.findList = data.data.data.content;
-						_this.findPicUrls = [];
-						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							this.findPicUrls.push(this.yieldPicUrl(id));
-						}
-					}).catch(error => {
-						console.log(error)
-					})
+					let urls = [this.URLS.lostBabyFindUrl + '?place=' + _this.searchInput, this.URLS.matchBabyFindUrl + '?place=' +
+						_this
+						.searchInput
+					];
+					for (var i = 0; i < urls.length; i++) {
+						this.$api.post(urls[i]).then(data => {
+							console.log(data);
+							_this.pageData[i].data = data.data.data.content;
+						}).catch(error => {
+							console.log(error)
+						});
+					}
 				}
-			},
-			yieldPicUrl(id) {
-				if (this.lostShow) {
-					return this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg"
-				} else {
-					return this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg"
+				for(var i = 0 ; i < 2 ; i++){
+					this.pageData[i].totalPage = 1
+					this.pageData[i].curPage = 0
+					this.pageData[i].data.push({})
+					this.pageData[i].data.pop()
 				}
-
 			},
 			goToDetail(item, index, flag) {
 				if (flag == 0) {
