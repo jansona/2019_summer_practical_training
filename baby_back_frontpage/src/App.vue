@@ -23,8 +23,9 @@ export default {
   },
   created() {
     const wsuri = "ws://localhost:18080/websocket";
-    this.websocket = new WebSocket(wsuri);
-    this.websocket.onopen = this.websocketonopen;
+    this.websock = new WebSocket(wsuri, ["91b04edd-70b8-4a4d-8570-05cc5cb8f96d"]);
+    // this.websocket = new WebSocket(wsuri);
+    // this.websocket.onopen = this.websocketonopen;
   },
   mounted(){
     // this.initWebSocket();
