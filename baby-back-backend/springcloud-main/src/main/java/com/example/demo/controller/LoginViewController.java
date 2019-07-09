@@ -3,7 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.UserRepository;
+import com.example.demo.utils.LocationConvertor;
+import com.example.demo.utils.SMSSender;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class LoginViewController {
@@ -18,6 +24,11 @@ public class LoginViewController {
     // 预先设置好的正确的用户名和密码，用于登录验证
     private String rightUserName = "";
     private String rightPassword = "";
+
+    final String resetMarkPrefix = "RESET:";
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     UserRepository userRepository;
@@ -86,6 +97,60 @@ public class LoginViewController {
         } catch (Exception e) {
             e.printStackTrace();
             responseBase = new ResponseBase(20002, "登出异常", null);
+        }
+        return responseBase;
+    }
+
+
+    @ApiOperation(value = "发送验证码")
+    @GetMapping("/sms-verify-reset-pwd")
+    public ResponseBase sendRegisterSMS(@RequestParam String tel) {
+        ResponseBase responseBase;
+
+        if(userRepository.findByTel(tel) == null){
+            return new ResponseBase(60001, "该电话未注册", null);
+        }
+
+        if(stringRedisTemplate.hasKey(resetMarkPrefix + tel)){
+            return new ResponseBase(60002, "短信验证过于频繁", null);
+        }else{
+            stringRedisTemplate.opsForValue().set(resetMarkPrefix + tel, tel, 1L, TimeUnit.MINUTES);
+        }
+
+        try {
+            String code = SMSSender.sendSMS(tel);
+            stringRedisTemplate.delete(tel);
+            stringRedisTemplate.opsForValue().set(tel, code, 10L, TimeUnit.MINUTES);
+            responseBase = new ResponseBase(200, "验证码短信发送成功", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseBase = new ResponseBase(60003, "验证码短信发送异常", null);
+        }
+        return responseBase;
+    }
+
+    @ApiOperation(value = "验证并重置密码")
+    @PostMapping(value = "/reset-pwd")
+    public ResponseBase resetPwd(@RequestParam String tel, @RequestBody String pwd, @RequestParam String code){
+        ResponseBase responseBase;
+
+        User newUser = userRepository.findByTel(tel);
+
+        try {
+            String realCode = stringRedisTemplate.opsForValue().get(tel);
+
+            if (realCode != null && realCode.equals(code)) {
+                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+                newUser.setPassword(bCryptPasswordEncoder.encode(pwd));
+                userRepository.save(newUser);
+                stringRedisTemplate.delete(newUser.getTel());
+                responseBase = new ResponseBase(200, "重置密码成功", null);
+            } else {
+                responseBase = new ResponseBase(50003, "重置密码失败", null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBase(50002, "短信验证码验证异常", null);
         }
         return responseBase;
     }
