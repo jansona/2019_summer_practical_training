@@ -77,7 +77,7 @@ public class UserController {
         userRepository.deleteById(id);
         return new ResponseBase(200, "删除成功", null);
     }
-    @ApiOperation(value = "新增一个用户")
+    @ApiOperation(value = "更新一个用户")
     @PostMapping("/update")
     public ResponseBase updateUser(@RequestBody User user) {
         ResponseBase responseBase;
