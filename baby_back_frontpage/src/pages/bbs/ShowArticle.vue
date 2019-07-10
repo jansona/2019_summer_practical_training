@@ -221,7 +221,7 @@ export default {
       }
     },
     getComment(id,pageNum) {
-      let url = URLS.commentFindByArticle + "?article=" + id+'&page='+pageNum+'&size=2';
+      let url = URLS.commentFindByArticle + "?article=" + id+'&page='+pageNum+'&size=10';
       let _this = this;
       axios
         .post(url)
