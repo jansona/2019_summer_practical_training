@@ -28,7 +28,7 @@
 			</view>
 		</scroll-view>
 		<!--图片布局-->
-		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper">
+		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper" style="height: 1100upx;">
 			<swiper-item v-for="(content,index1) in pageData" :key="index1">
 				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData(index1)">
 					<view class="grid col-2 grid-square" style="z-index: 10;">
@@ -44,6 +44,10 @@
 					<view class="cu-tabbar-height"></view>
 				</scroll-view>
 			</swiper-item>
+		<!-- 	<swiper-item>
+				<view style="height: 1000upx;background-color: #0081FF;">asdfasdfasdfdfadsfasdf</view>
+			</swiper-item> -->
+		
 		</swiper>
 	</view>
 </template>
