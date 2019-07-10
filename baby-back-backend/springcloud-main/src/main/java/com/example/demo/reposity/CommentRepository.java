@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaSpecificationExecutor<Comment> {
@@ -23,6 +24,8 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaS
     List<Comment> findAllByArticle(Article article);
 
     List<Comment> findAllByUser(User user);
+
+    @Transactional
     void deleteAllByArticle(Article article);
 
 }

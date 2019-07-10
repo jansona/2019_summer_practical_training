@@ -6,10 +6,12 @@ import com.example.demo.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer>, JpaSpecificationExecutor<Article> {
 
     //    String findAllByUserIdSQL = "SELECT * FROM ";
     List<Article> findAllByUser(User user);
+
 }
