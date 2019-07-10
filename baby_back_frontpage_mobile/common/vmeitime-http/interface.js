@@ -57,7 +57,19 @@ export default {
 				config.header.Authorization ='Basic Y2xpZW50OnNlY3JldA=='
 			}
 		},
-		response: null
+		response: (response) => {
+			console.log("response interceptor:",response)
+			if(response.statusCode == 401){
+				uni.showToast({
+					title: '登录超时，请重新登录！',
+					icon: 'none',
+					position: 'bottom',
+				});
+				uni.reLaunch({
+					url: '/pages/login',
+				});
+			}
+		}
 	},
 	request(options) {
 		if (!options) {

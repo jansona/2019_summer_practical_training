@@ -2,7 +2,7 @@
 	<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;">
 		<view class="padding bg-white">
 			<view class="avatar">
-				<image :src="imgsrc" mode="aspectFit">
+				<image :src="babyDetail.picUrl" mode="aspectFit">
 				</image>
 			</view>
 		</view>
@@ -77,7 +77,6 @@
 		onLoad(options) {
 			//把JSON字符串转换为对象
 			this.babyDetail = JSON.parse(options.data);
-			this.imgsrc = options.src;
 			console.log(this.babyDetail);
 			console.log(this.imgsrc)
 		},

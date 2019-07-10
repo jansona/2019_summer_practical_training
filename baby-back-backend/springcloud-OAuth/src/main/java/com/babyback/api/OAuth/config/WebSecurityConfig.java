@@ -15,8 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Security 安全配置
- *
-
  */
 @Configuration
 @EnableWebSecurity
@@ -67,7 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 暴露`/OAuth/check_token`端点
-        web.ignoring().mvcMatchers("/oauth/check_token", "/user/info/*","swagger-ui.html"
-            ,"/find-by-key/**","/sms-verify","/user/infoTel/*","/sms-verify","/register","/websocket/**","websocket/");
+        web.ignoring().mvcMatchers("/oauth/check_token", "/user/info/*", "swagger-ui.html"
+                , "/find-by-key/**", "/sms-verify", "/user/infoTel/*", "/sms-verify", "/register", "/websocket/**", "websocket/"
+                , "/sms-verify-reset-pwd", "/reset-pwd");
     }
 }
