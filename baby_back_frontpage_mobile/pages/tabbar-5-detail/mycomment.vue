@@ -34,7 +34,7 @@
 					</view>
 					<view style="margin-left: 25upx;margin-top: 15upx;">回复：{{item.content}}
 					</view>
-					<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;" @click="deleteComment(item)"></text>
+					<text class="cuIcon-deletefill" style="margin-left: 600upx;color: #999999;" @click="deleteComment(item)"></text>
 				</view>
 				<view class="cu-card dynamic" @click="navToDetails(item)" style="margin: 20upx 20upx;background-color: #EAEAEA;border-radius: 20upx;overflow: hidden;">
 					<view class="title">

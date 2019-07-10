@@ -46,18 +46,18 @@
 					<view class="text">帮助中心</view>
 					<image class="to" src="../../static/user/to.png"></image>
 				</view>
-				<view class="li ">
+				<view class="li " @click="goToPage('../tabbar-5-detail/about-us')">
 					<view class="icon">
 						<image src="../../static/user/aboutus.png"></image>
 					</view>
 					<view class="text">关于我们</view>
 					<image class="to" src="../../static/user/to.png"></image>
 				</view>
-				<view class="li ">
+				<view class="li " @click="goToPage('../tabbar-5-detail/feedback')">
 					<view class="icon">
 						<image src="../../static/user/contactus.png"></image>
 					</view>
-					<view class="text">联系我们</view>
+					<view class="text">意见反馈</view>
 					<image class="to" src="../../static/user/to.png"></image>
 				</view>
 			</view>

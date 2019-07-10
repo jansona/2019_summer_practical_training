@@ -18,7 +18,7 @@
             </el-form-item>
             <el-form-item>
               <el-checkbox v-model="rememberLogin">记住登录</el-checkbox>
-              <a class="a-style">
+              <a class="a-style" @click="dialogFormVisible = true">
                 <span>忘记密码？</span>
               </a>
             </el-form-item>
@@ -52,6 +52,34 @@
         </div>
       </el-col>
     </el-row>
+
+
+    <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+  <el-form :model="form">
+    <el-form-item label="手机号" label-width="120px">
+      <el-input v-model="form.tel" autocomplete="off" placeholder="请输入手机号"></el-input>
+    </el-form-item>
+    <el-form-item label="验证码" label-width="120px">
+        <el-input
+          v-model="form.code"
+          type="verifacationCode"
+          placeholder="请输入手机验证码"
+        >
+          <el-button slot="append" @click="sendSMS" :disabled="disabled">{{btnTitle}}</el-button>
+        </el-input>
+      </el-form-item>
+    <el-form-item label="新密码" label-width="120px">
+      <el-input v-model="form.pwd" autocomplete="off" placeholder="请输入密码" type="password"></el-input>
+    </el-form-item>
+    <el-form-item label="重复密码" label-width="120px"> 
+      <el-input v-model="rePwd" autocomplete="off" placeholder="请输入重复密码" type="password"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+  </div>
+</el-dialog>
   </div>
 </template>
 
@@ -84,6 +112,12 @@ export default {
       }, 100);
     };
     return {
+       disabled: false, 
+      btnTitle: "获取验证码",
+      countdown: 60,
+      rePwd:'',
+      dialogFormVisible: false,
+      form:{code:'',pwd:'',tel:''},
       wrongPass: false,
       loginForm: {
         username: "",
@@ -165,6 +199,79 @@ export default {
           }
         }
       });
+    },
+    sendSMS() {
+      if (this.btnTitle == "获取验证码") {
+        if(this.form.tel == ''){
+          this.$notify({
+                  message: "手机号不能为空",
+                  type: "warning",
+                  duration: 1500,
+                  offset: 50
+                });
+        }else{
+          this.disabled = true;
+          let countTime = setInterval(() => {
+            --this.countdown;
+            this.btnTitle = this.countdown + "S";
+            if (this.countdown <= 0) {
+              clearInterval(countTime);
+              this.countdown = 60;
+              this.disabled = false;
+              this.btnTitle = "获取验证码";
+              return;
+            }
+          }, 1000);
+
+          let phoneNum = this.form.tel;
+          fetch(URLS.sendSMSUrl2, {tel:phoneNum}).then(data => {
+            console.log(data);
+            if (data.rtnCode != 200) {
+              this.$message({
+                message: data.msg,
+                type: "warning"
+              });
+
+              this.disabled = false;
+              this.countdown = 60;
+              this.btnTitle = "获取验证码";
+            } else {
+              this.$notify({
+                  message: "发送成功",
+                  type: "success",
+                  duration: 1500,
+                  offset: 50
+                });
+            }
+          });
+        }
+        
+         
+          
+        
+      }
+    },commit(){
+      let url=URLS.resetUrl+'?tel='+this.form.tel+'&pwd='+this.form.pwd+'&code='+this.form.code
+      let _this= this
+      axios
+        .post(url)
+        .then(function(response) {
+         _this.$notify({
+            message: "修改成功",
+            type: "success",
+            duration: 1500,
+            offset: 50
+          });
+        })
+        .catch(function(error) {
+          console.log(error);
+          _this.$notify({
+            message: "网络不稳定",
+            type: "warning",
+            duration: 1500,
+            offset: 50
+          });
+        });
     }
   },
   mounted() {

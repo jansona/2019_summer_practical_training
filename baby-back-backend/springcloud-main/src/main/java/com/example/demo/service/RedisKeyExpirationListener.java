@@ -91,6 +91,6 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
         }
 
         // 通知目标用户
-        userInformer.infoUser(ids, PendingMessage.MessageType.LOST_NOTIFICATION, id.toString());
+        userInformer.infoUser(ids, PendingMessage.MessageType.LOST_NOTIFICATION, "LOST:" + id.toString());
     }
 }

@@ -78,7 +78,7 @@ public class FileUploadController {
                 responseBase = fileManager.saveProfile(file, fileName);
                 break;
             case RECOGNITION:
-                responseBase = recognizer.recognition(file, String.format("%s.%s", generateRandomFilename(), postfix));
+                responseBase = recognizer.recognition(file, String.format("%s.%s", generateRandomFilename(), postfix), Recognizer.MatchTarget.LOST_BABY);
                 break;
             default:
                 responseBase = new ResponseBase(40006, "未知图片上传行为", null);
@@ -92,7 +92,7 @@ public class FileUploadController {
     @ApiOperation("自然语言分析接口")
     @PostMapping("/analyze-txt")
     public ResponseBase getTextAndRecog(@RequestBody String txt){
-        return recognizer.analyze(txt);
+        return recognizer.analyze(txt, Recognizer.MatchTarget.LOST_BABY);
     }
 
     public String generateRandomFilename() {
