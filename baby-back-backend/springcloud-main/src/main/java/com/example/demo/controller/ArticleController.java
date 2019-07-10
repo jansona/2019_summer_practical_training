@@ -4,6 +4,7 @@ import com.example.demo.entity.Article;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.ArticleRepository;
+import com.example.demo.reposity.CommentRepository;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
@@ -33,6 +34,8 @@ public class ArticleController {
     ArticleRepository articleRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     PageHelper pageHelper = new PageHelper();
 
@@ -131,7 +134,10 @@ public class ArticleController {
     @ApiOperation(value = "删除一篇文章")
     @DeleteMapping("/delete")      // TODO 填写节点
     public ResponseBase deleteArticle(@RequestParam(value = "id") Integer id) {
+        Article article =articleRepository.findById(id).get();
+        commentRepository.deleteAllByArticle(article);
         articleRepository.deleteById(id);
+
         return new ResponseBase(200, "删除成功", null);
     }
 
