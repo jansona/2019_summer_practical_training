@@ -114,14 +114,14 @@ export default {
       }
       let listString = e.data.split(":");
       if (listString[0] == "LOST") {
-        idList = listString[1].split(",");
+        let idList = listString[1].split(",");
         for (let id in idList) {
-          this.loadData(id);
+          this.loadData(idList[id]);
         }
       } else if (listString[0] == "MATCH") {
-        idList = listString[1].split(",");
+        let idList = listString[1].split(",");
         for (let Mid in idList) {
-          this.loadMatchData(Mid);
+          this.loadMatchData(idList[Mid]);
         }
       }
     },
