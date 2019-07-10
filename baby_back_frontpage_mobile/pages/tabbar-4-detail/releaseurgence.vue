@@ -21,6 +21,12 @@
 					</view>
 				</picker>
 			</view>
+			<view class="cu-form-group">
+				<view class="uni-title">身高</view>
+				<view>
+					<slider name="height" value="100" style="width: 500upx;" @change="sliderChange" min="50" max="200" show-value />
+				</view>
+			</view>
 			<view class="cu-form-group" style="margin-top: 30upx;">
 				<view class="title">失踪日期</view>
 				<picker name="date" mode="date" :value="releaseUrgenceForm.date" start="1910-09-01" end="2020-09-01" @change="LostDateChange">
@@ -96,8 +102,7 @@
 	var graceChecker = require("../../common/graceChecker.js");
 	export default {
 		onReady: function() {
-			//let userId=this.$store.state.userId
-			let userId = 2
+			let userId=this.$store.state.userId
 			this.getUser(userId)
 		},
 		data() {
@@ -107,16 +112,15 @@
 					id: '',
 					name: '',
 					sex: '',
+					height:50,
 					birthday: '2018-12-25',
-					date: '2019-6-25', //失踪时间
+					date: '2019-06-25', //失踪时间
 					place: '',
 					babyDescription: '', //特征描述
 					missDescription: '', //失踪经过
 					otherExplain: '', //其他说明
 					contactRel: '', //联系人与失踪人关系
-					user: {
-						id: 2,
-					}
+					user: {}
 				},
 				items: [
 					{
@@ -130,18 +134,13 @@
 				],
 				modalName: null,
 				modalContent:null,
-				user:{}
+				user:{},
+				lostbabyid:-1
 			}
 		},
 		methods: {
-			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
-				let _this = this
-				this.$api.post(url).then(data => {
-					_this.user = data.data.data
-				}).catch(error => {
-					console.log(error)
-				})
+			hideModal(e) {
+				this.modalName = null
 			},
 			radioChange: function(e) {
 				this.releaseUrgenceForm.sex = e.detail.value;
@@ -149,12 +148,16 @@
 			BirthDateChange(e) {
 				this.releaseUrgenceForm.birthday = e.detail.value
 			},
+			sliderChange(e) {
+				console.log('value 发生变化：' + e.detail.value);
+				this.releaseUrgenceForm.height=e.detail.value
+			},
 			LostDateChange(e) {
 				this.releaseUrgenceForm.date = e.detail.value
 			},
 			ChooseImage() {
 				uni.chooseImage({
-					count: 4, //默认9
+					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
@@ -188,6 +191,7 @@
 			formSubmit: function(e) {
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
+				let _this=this;
 				var rule = [{
 						name: "name",
 						checkType: "string",
@@ -239,10 +243,55 @@
 						icon: "none"
 					});
 				}
+				console.log(this.releaseUrgenceForm)
+				this.$api.post(this.URLS.lostBabyInsertUrl,this.releaseUrgenceForm,true).then(data => {
+					console.log(data)
+					_this.lostbabyid = data.data.data.id
+					//上传图片
+					if (_this.imgList != null && _this.imgList.length > 0) {
+						console.log('开始上传图片...');
+						uni.uploadFile({
+							url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS", 
+							filePath: _this.imgList[0],
+							name: 'file',
+							formData: {
+								'id': _this.lostbabyid
+							},
+							header: {
+								'Authorization': 'Bearer '+ this.$store.state.token
+							},
+							success: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.modalName='Modal';
+								_this.modalContent='发布成功！';
+							},
+							fail: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.modalName='Modal';
+								_this.modalContent='图片上传失败！';
+								return;
+							}
+						});
+					}
+				}).catch(error => {
+					console.log(error)
+					_this.modalName='Modal';
+					_this.modalContent='发布失败！';
+				})
 			},
 			formReset: function(e) {
 				console.log("清空数据")
 				this.chosen = ''
+			},
+			getUser(userId) {
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
+				let _this = this
+				this.$api.post(url).then(data => {
+					_this.releaseUrgenceForm.user = data.data.data
+					console.log(_this.releaseUrgenceForm.user)
+				}).catch(error => {
+					console.log(error)
+				})
 			}
 		}
 	}

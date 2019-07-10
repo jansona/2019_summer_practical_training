@@ -242,14 +242,15 @@
 
 	,
 	.passage-content {
-		text-align: center;
+		text-align: left;
 		height: 30upx;
 		margin-top: 0;
 	}
 
 	,
 	.text-content {
-		text-align: center;
+		text-align: left;
+		margin-left: 8upx;
 		padding-left: 5upx;
 		padding-right: 5upx;
 		overflow: hidden;
