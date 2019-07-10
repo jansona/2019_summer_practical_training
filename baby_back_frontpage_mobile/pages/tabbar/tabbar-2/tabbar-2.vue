@@ -227,7 +227,7 @@
 			},
 			goToUser(item) {
 				uni.navigateTo({
-					url:'/author-detail/author-detail?id='+item.id
+					url:'../author-detail/author-detail?id='+item.user.id
 				})
 			},
 		}
