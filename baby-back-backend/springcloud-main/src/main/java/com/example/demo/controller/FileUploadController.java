@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.LostBaby;
-import com.example.demo.entity.MatchBaby;
-import com.example.demo.entity.ResponseBase;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.reposity.LostBabyRepository;
 import com.example.demo.reposity.MatchBabyRepository;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.utils.FileManager;
 import com.example.demo.utils.Recognizer;
+import com.example.demo.utils.UserInformer;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +47,8 @@ public class FileUploadController {
     @Autowired
     MatchBabyRepository matchBabyRepository;
 
+    UserInformer userInformer = new UserInformer();
+
     @ApiOperation(value = "上传图片")
     @PostMapping("/upload")
     public ResponseBase uploadPic(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "id") String id, Action action) {
@@ -70,6 +70,7 @@ public class FileUploadController {
         switch (action) {
             case AS_LOST_PICS:
                 responseBase = fileManager.saveLostPic(file, fileName);
+                matchOnInsertAndInfo(id, file);
                 break;
             case AS_MATCH_PICS:
                 responseBase = fileManager.saveMatchPic(file, fileName);
@@ -91,7 +92,7 @@ public class FileUploadController {
 
     @ApiOperation("自然语言分析接口")
     @PostMapping("/analyze-txt")
-    public ResponseBase getTextAndRecog(@RequestBody String txt){
+    public ResponseBase getTextAndRecog(@RequestParam String txt){
         return recognizer.analyze(txt, Recognizer.MatchTarget.LOST_BABY);
     }
 
@@ -134,6 +135,64 @@ public class FileUploadController {
                 matchBabyRepository.save(matchBaby);
                 break;
         }
+    }
+
+    void matchOnInsertAndInfo(String lostBabyId, MultipartFile picFile){
+        LostBaby lostBaby = lostBabyRepository.findById(Integer.valueOf(lostBabyId)).get();
+        ArrayList<Integer> matchedIDs = matchSynthetically(lostBaby, picFile);
+
+        User user = lostBaby.getUser();
+        ArrayList<Integer> userIDs = new ArrayList<>();
+        userIDs.add(user.getId());
+
+        String matchResult = "";
+        for(Integer id : matchedIDs){
+            matchResult += (id + ",");
+        }
+
+        userInformer.infoUser(userIDs, PendingMessage.MessageType.MATCH_NOTIFICATION, matchResult);
+    }
+
+    private ArrayList<Integer> matchSynthetically(LostBaby lostBaby, MultipartFile pic){
+
+        ArrayList<Integer> matchedIDs = matchOnInsertInfo(lostBaby);
+
+        String postfix = "";
+        try {
+            pic.getOriginalFilename();
+            pic.getName();
+            postfix = pic.getOriginalFilename().split("\\.")[1];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ResponseBase responseBase = recognizer.recognition(pic, String.format("%s.%s", generateRandomFilename(), postfix), Recognizer.MatchTarget.MATCH_BABY);
+        ArrayList<MatchBaby> matchBabies = (ArrayList<MatchBaby>) responseBase.getData();
+        if(matchBabies != null) {
+            for (MatchBaby matchBaby : matchBabies) {
+                if (!matchedIDs.contains(matchBaby.getId())) {
+                    matchedIDs.add(matchBaby.getId());
+                }
+            }
+        }
+
+        return matchedIDs;
+    }
+
+    ArrayList<Integer> matchOnInsertInfo(LostBaby lostBaby){
+
+        String info = lostBaby.toString();
+        ResponseBase responseBase = recognizer.analyze(info, Recognizer.MatchTarget.MATCH_BABY);
+        ArrayList<MatchBaby> matchBabies = (ArrayList<MatchBaby>)responseBase.getData();
+        ArrayList<Integer> matchIDs = new ArrayList<>();
+        if(matchBabies == null){
+            return new ArrayList<>();
+        }
+        for(MatchBaby matchBaby : matchBabies){
+            matchIDs.add(matchBaby.getId());
+        }
+
+        return matchIDs;
     }
 
 }
