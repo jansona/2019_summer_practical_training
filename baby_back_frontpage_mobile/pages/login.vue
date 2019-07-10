@@ -43,7 +43,7 @@
 			this.isLogin();
 		},
 		onLoad:function(){
-			uni.clearStorage();
+			//uni.clearStorage();
 			this.loadExecution();
 		},
 		methods: {
