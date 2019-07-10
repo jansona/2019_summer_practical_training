@@ -20,7 +20,7 @@
           <el-col :offset="20" :span="4">
             <el-button type="primary" size="small" style="float:right" @click="nlpAnalyze">开始匹配</el-button>
           </el-col>
-          <br>
+          <br />
           <el-divider></el-divider>
           <div class="text item">
             <div class="block">
@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import URLS from '@/config/config';
-import { request,fetch } from "@/api/api";
+import URLS from "@/config/config";
+import { request, fetch } from "@/api/api";
 import PicUpload from "@/pages/findChildren/PicUpload";
 import Pictures from "../faceWall/components/Pictures";
 export default {
@@ -86,14 +86,22 @@ export default {
         });
       }
     },
-    nlpAnalyze(){
-      request(URLS.uploadTxtAndRecogUrl, {'txt': this.input})
-      .then(
-        data => {
-          console.log(data);
-          if (data.rtnCode == 200) {
+    nlpAnalyze() {
+      // request(URLS.uploadTxtAndRecogUrl, {'txt': this.input})
+      axios({
+        method: "post",
+        url: URLS.uploadTxtAndRecogUrl,
+        headers: {
+          "Content-type": "application/json;charset=UTF-8"
+        },
+        params: {
+          txt: this.input
+        }
+      })
+        .then(response => {
+          if (response.data.rtnCode == 200) {
             if (this.choosed == -1) this.choosed = 0;
-            this.datas = JSON.parse(JSON.stringify(data.data));
+            this.datas = JSON.parse(JSON.stringify(response.data.data));
             this.dataTypes = [];
             for (let i = 0, len = this.datas.length; i < len; i++) {
               this.dataTypes.push(this.choosed);
@@ -105,8 +113,10 @@ export default {
               this.choosed = saved;
             });
           }
-        }
-      )
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
