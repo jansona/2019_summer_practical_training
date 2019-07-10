@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || '',
     userInfo: {},
     messageList : [],
+    matchMessageList:[],
   },
   modules: {
     //sys,
@@ -24,6 +25,9 @@ export const store = new Vuex.Store({
     setMessageList(state,content){
       state.messageList=state.messageList.concat(content)
 
+    },
+    setMatchMessageList(state,content){
+      state.matchMessageList=state.matchMessageList.concat(content)
     },
     setStatus(state, status) {
       state.status = status
