@@ -37,6 +37,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/sms-verify","/register","/**/*.jpg","/**/*.png","/websocket/**")
                 .permitAll()
+                .antMatchers("/sms-verify-reset-pwd","/reset-pwd")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
 

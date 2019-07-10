@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-tab-bar">
+	<view class="uni-tab-bar" style="height: 100%;">
 		<view class="topView"></view>
 		<view class="mpvue-picker">
 			<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :mode="mode" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
@@ -29,12 +29,12 @@
 		</scroll-view>
 		<!--图片布局-->
 		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper">
-			<swiper-item v-for="(content,index1) in pageData">
+			<swiper-item v-for="(content,index1) in pageData" :key="index1">
 				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData(index1)">
 					<view class="grid col-2 grid-square" style="z-index: 10;">
 						<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 						 v-for="(item,index2) in content.data" :key="index2">
-							<img :src="item.picUrl" mode="aspectFill" @click="goToDetail(item)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+							<img :src="item.picUrl" mode="aspectFill" @click="goToDetail(item,index1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
 							<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
 						</view>
 					</view>
@@ -45,40 +45,6 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-
-		<!-- <swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper">
-			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData">
-					<view class="grid col-2 grid-square" style="z-index: 10;">
-						<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
-						 v-for="(item,index) in lostList" :key="index">
-							<img :src="findPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,0)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
-							<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
-						</view>
-					</view>
-					<view class="uni-tab-bar-loading">
-						{{loadingText1}}
-					</view>
-					<view class="cu-tabbar-height"></view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData">
-					<view class="grid col-2 grid-square">
-						<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
-						 v-for="(item,index) in findList" :key="index">
-							<img :src="lostPicUrls[index]" mode="aspectFill" @click="goToDetail(item,index,1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
-							<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
-						</view>
-					</view>
-					<view class="uni-tab-bar-loading">
-						{{loadingText2}}
-					</view>
-					<view class="cu-tabbar-height"></view>
-				</scroll-view>
-			</swiper-item>
-		</swiper> -->
-
 	</view>
 </template>
 
@@ -121,8 +87,6 @@
 				isBottom: false,
 				pageNo: 0,
 				searchInput: '',
-				totalPageNum1: 2,
-				totalPageNum2: 2,
 				findShow: false,
 				lostShow: true,
 				title: 'Hello',
@@ -296,16 +260,14 @@
 					this.pageData[i].data.pop()
 				}
 			},
-			goToDetail(item, index, flag) {
+			goToDetail(item,flag) {
 				if (flag == 0) {
 					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
-							"/resource/photo/match/" + this.findList[index].id + ".jpg"
+						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item)
 					})
 				} else if (flag == 1) {
 					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + this.URLS.baseUrl +
-							"/resource/photo/lost/" + this.lostList[index].id + ".jpg"
+						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item)
 					})
 				}
 			}
@@ -319,12 +281,7 @@
 		font-size: 28upx;
 		color: #999;
 	}
-
-	span {
-		color: #007AFF;
-		z-index: 10;
-	}
-
+	
 	.topView {
 		width: 100%;
 		height: var(--status-bar-height);

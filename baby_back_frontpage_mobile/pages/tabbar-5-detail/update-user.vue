@@ -2,13 +2,17 @@
 	<view>
 		<view class="padding bg-white">
 			<view class="avatar" @click="ChooseImage">
-				<image :src="user.profileUrl" style="width: 200upx;height: 200upx;" mode="aspectFill"></image>
+				<image :src="user.profileUrl" style="width: 250upx;height: 250upx;" mode="aspectFill"></image>
 			</view>
 		</view>
 		<form @submit="formSubmit">
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">昵称</view>
-				<input :placeholder="user.username" @input="nickChange" name="nick"></input>
+				<input :value="user.username" @input="nickChange" name="nick"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title" style="width: 150upx;">活动范围</view>
+				<input disabled="true" :placeholder="user.location"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">手机号</view>
@@ -16,7 +20,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">邮箱</view>
-				<input :placeholder="user.email" @input="emailChange"></input>
+				<input :value="user.email" @input="emailChange"></input>
 			</view>
 			<view class="cu-form-group">
 				<button class="cu-btn bg-blue round" style="width:200upx;margin: 0 auto;"
@@ -97,6 +101,15 @@
 					});
 					return;
 				}
+				console.log(this.user)
+				//let url = this.URLS.userUpdateUrl + '?user=' + this.user;
+				this.$api.post(this.URLS.userUpdateUrl,this.user).then(data => {
+					_this.myToast('更新成功')
+					console.log(data)
+				}).catch(error => {
+					_this.myToast('更新失败')
+					console.log(error)
+				})
 				
 			},
 		}
@@ -107,11 +120,14 @@
 	.avatar{
 		margin: 0 auto;
 		border-radius: 50%;
+		border-color: #0081ff;
+		border-style: solid;
+		border-width: 8upx;
 		overflow: hidden;
 		align-items: center;
 		background-color: #0081ff;
-		width: 200upx;
-		height: 200upx;
+		width: 250upx;
+		height: 250upx;
 		vertical-align: middle;
 		justify-content:center; 
 	}

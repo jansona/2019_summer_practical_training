@@ -138,6 +138,7 @@
 			deleteArticle(item){
 				this.modalName='Modal';
 				this.modalContent='您确定删除这篇帖子吗？';
+				console.log(item)
 				this.deleteid=item.id
 			},
 			deleteConfirm(){

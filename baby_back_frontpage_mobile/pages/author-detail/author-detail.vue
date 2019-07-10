@@ -5,7 +5,7 @@
 				<view class="box">
 					<view class="box-hd">
 						<view class="avator">
-							<img src="../../static/logo.png"/>
+							<img :src="user.profileUrl"/>
 						</view>
 						<view class="nickname">{{user.username}}</view>
 					</view>
@@ -26,7 +26,7 @@
 		<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;" v-show="lostShow" v-for="(item,index) in lostList" :key=index>
 			<view class="padding bg-white">
 				<view class="avatar">
-					<image :src="lostPicUrls[index]" mode="aspectFit">
+					<image :src="lostPicUrls[index]" mode="aspectFit" @click="goToDetail(item)">
 					</image>
 				</view>
 			</view>
@@ -44,16 +44,8 @@
 					<input disabled="true" :placeholder="item.birthday"></input>
 				</view>
 				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">籍贯</view>
-					<input disabled="true" :placeholder="item.nativePlace"></input>
-				</view>
-				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">身高</view>
 					<input disabled="true" :placeholder="item.height"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">特征</view>
-					<input disabled="true" :placeholder="item.babyDescription"></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪日期</view>
@@ -62,41 +54,13 @@
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪地点</view>
 					<input disabled="true" :placeholder="item.place"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">失踪过程</view>
-					<input disabled="true" :placeholder="item.missDescription"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">其他描述</view>
-					<input disabled="true" :placeholder="item.otherDescription"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">其他说明</view>
-					<input disabled="true" :placeholder="item.otherExplain"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">联系人</view>
-					<input disabled="true" :placeholder="item.contactName"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">手机号</view>
-					<input disabled="true" :placeholder="item.contactPhone"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">邮箱</view>
-					<input disabled="true" :placeholder="item.contactEmail"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">其他方式</view>
-					<input disabled="true" :placeholder="item.otherContactMethod"></input>
 				</view>
 			</form>
 		</view>
 		<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;" v-show="findShow" v-for="(item,index) in findList" :key=index>
 			<view class="padding bg-white">
 				<view class="avatar">
-					<image :src="findPicUrls[index]" mode="aspectFit">
+					<image :src="findPicUrls[index]" mode="aspectFit" @click="goToDetail(item)">
 					</image>
 				</view>
 			</view>
@@ -114,16 +78,8 @@
 					<input disabled="true" :placeholder="item.birthday"></input>
 				</view>
 				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">籍贯</view>
-					<input disabled="true" :placeholder="item.nativePlace"></input>
-				</view>
-				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">身高</view>
 					<input disabled="true" :placeholder="item.height"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">特征</view>
-					<input disabled="true" :placeholder="item.babyDescription"></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪日期</view>
@@ -132,34 +88,6 @@
 				<view class="cu-form-group">
 					<view class="title" style="width: 150upx;">失踪地点</view>
 					<input disabled="true" :placeholder="item.place"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">失踪过程</view>
-					<input disabled="true" :placeholder="item.missDescription"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">其他描述</view>
-					<input disabled="true" :placeholder="item.otherDescription"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">其他说明</view>
-					<input disabled="true" :placeholder="item.otherExplain"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">联系人</view>
-					<input disabled="true" :placeholder="item.contactName"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">手机号</view>
-					<input disabled="true" :placeholder="item.contactPhone"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">邮箱</view>
-					<input disabled="true" :placeholder="item.contactEmail"></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title" style="width: 150upx;">其他方式</view>
-					<input disabled="true" :placeholder="item.otherContactMethod"></input>
 				</view>
 			</form>
 		</view>
@@ -253,7 +181,7 @@
 				})
 			},
 			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + this.user.id;
+				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data;
@@ -287,6 +215,7 @@
 					})
 			},
 			getLostList(){
+				let _this = this
 				let losturl =this.URLS.lostBabyFindByUserUrl+'?user='+this.user.id;
 				this.$api.post(losturl)
 					.then(data => {
@@ -303,6 +232,7 @@
 								
 			},
 			getFindList(){
+				let _this = this
 				let findurl =this.URLS.matchBabyFindByUserUrl +'?user='+this.user.id
 				this.$api.post(findurl)
 					.then(data => {
@@ -314,6 +244,11 @@
 					}).catch(error => {
 						console.log(error)
 					})
+			},
+			goToDetail(item) {
+				uni.navigateTo({
+					url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item) + '&src=' + item.picUrl
+				})
 			}
 		},
 	}
