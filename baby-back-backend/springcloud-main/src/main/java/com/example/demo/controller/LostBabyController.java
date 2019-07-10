@@ -44,7 +44,7 @@ public class LostBabyController {
     @CrossOrigin
     @ApiOperation(value = "新增一个丢失儿童信息")
     @PostMapping("/insert")
-    public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby) {
+    public ResponseBase insertLostBaby(@RequestBody LostBaby lostBaby, @RequestParam(defaultValue = "false")boolean urgent) {
         ResponseBase responseBase;
 
         if(lostBaby.getPlace() != null && !lostBaby.getPlace().equals("")){
@@ -57,26 +57,10 @@ public class LostBabyController {
         }
         LostBaby lostBabySaved = lostBabyRepository.save(lostBaby);
 
-        return new ResponseBase(200, "插入成功", lostBabySaved);
-    }
-
-    @CrossOrigin
-    @ApiOperation(value = "快速寻人")
-    @PostMapping("/urgent-search")
-    public ResponseBase urgentSearchLostBaby(@RequestBody LostBaby lostBaby) {
-
-        if(lostBaby.getPlace() != null && !lostBaby.getPlace().equals("")){
-            try{
-                lostBaby.setCoordinate(LocationConvertor.getCoordinate(lostBaby.getPlace()));
-            } catch (Exception e){
-                e.printStackTrace();
-                return new ResponseBase(60002, "无效地址", null);
-            }
+        if(urgent){
+            String compositedKey = String.format("%d-%d", lostBabySaved.getId(), 2);
+            stringRedisTemplate.opsForValue().set(compositedKey, "", 2, TimeUnit.SECONDS);
         }
-        LostBaby lostBabySaved = lostBabyRepository.save(lostBaby);
-
-        String compositedKey = String.format("%d-%d", lostBabySaved.getId(), 2);
-        stringRedisTemplate.opsForValue().set(compositedKey, "", 2, TimeUnit.SECONDS);
 
         return new ResponseBase(200, "插入成功", lostBabySaved);
     }
