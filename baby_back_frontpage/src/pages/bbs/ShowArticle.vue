@@ -173,7 +173,12 @@ export default {
           });
         });
     },
-    gotoAuthorInfo() {},
+    gotoAuthorInfo() {
+      this.$router.push({
+        path: "userDetail",
+        query: { id: this.article.user.id }
+      });
+    },
     //时间格式化函数，此处仅针对yyyy-MM-dd hh:mm:ss 的格式进行格式化
     dateFormat: function(time) {
       var date = new Date(time);
