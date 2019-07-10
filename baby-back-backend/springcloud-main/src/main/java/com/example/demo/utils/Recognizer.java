@@ -165,7 +165,7 @@ public class Recognizer {
         for(String id : ids){
             try{
                 LostBaby lostBaby = recognizer.lostBabyRepository.findById(Integer.valueOf(id)).get();
-                lostBaby.getUser().setPassword("");
+//                lostBaby.getUser().setPassword("");
                 matchedBabies.add(lostBaby);
             }catch (Exception e){
                 e.printStackTrace();
@@ -180,7 +180,7 @@ public class Recognizer {
         for(String id : ids){
             try{
                 MatchBaby matchBaby = recognizer.matchBabyRepository.findById(Integer.valueOf(id)).get();
-                matchBaby.getUser().setPassword("");
+//                matchBaby.getUser().setPassword("");
                 matchedBabies.add(matchBaby);
             }catch (Exception e){
                 e.printStackTrace();
