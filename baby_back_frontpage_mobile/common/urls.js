@@ -1,4 +1,4 @@
-let mode = 'hbj'
+let mode = 'prod'
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
@@ -37,11 +37,9 @@ const matchBabyDeleteUrl = baseUrl + "/match-baby/delete"
 const loginUrl = baseUrl2 + "/api/auth/oauth/token"
 const userInfoUrl = baseUrl2 + '/api/admin/user/infoTel'
 const logoutUrl = baseUrl2+ '/api/auth/token/logout'
-// const loginUrl = baseUrl + "/login" 
+// const loginUrl = baseUrl + "/login"
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
-const sendForgetSMSUrl = baseUrl + "/sms-verify-reset-pwd"
-const resetPwdUrl = baseUrl + "/reset-pwd"
 
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'
@@ -67,8 +65,6 @@ const userUpdateUrl = baseUrl + '/user/update'
 const websocketUrl = baseUrl + "/websocket"
 
 const URLS = {
-	resetPwdUrl,
-	sendForgetSMSUrl,
 	userInfoUrl,
 	logoutUrl,
 	imgUrl,

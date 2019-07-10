@@ -29,29 +29,31 @@ export default {
     // this.websocket = new WebSocket(wsuri);
     // this.websocket.onopen = this.websocketonopen;
   },
-  mounted(){
+  mounted() {
     // this.initWebSocket();
     // this.$options.sockets.onmessage = this.onMessage;
   },
-  destroyed(){
+  destroyed() {
     // this.websocketclose();
   },
   methods: {
-    connect(){
-        console.log("connected!!!!!!!!");
-        // const wsuri = "ws://localhost:18080/websocket";
-        // this.websocket = new WebSocket(wsuri);
-        // this.websocket.onopen = this.websocketonopen;
-        // this.websock.onmessage = this.websocketonmessage; 
-        this.initWebSocket();
+    connect() {
+      console.log("connected!!!!!!!!");
+      // const wsuri = "ws://localhost:18080/websocket";
+      // this.websocket = new WebSocket(wsuri);
+      // this.websocket.onopen = this.websocketonopen;
+      // this.websock.onmessage = this.websocketonmessage;
+      this.initWebSocket();
     },
     loadData(id) {
-      let url = URLS.lostBabyFindUrl
-      let _this= this
+      let url = URLS.lostBabyFindUrl;
+      let _this = this;
       request(url, { id: id })
         .then(data => {
           if (data.rtnCode == 200) {
-            data.data.content[0].date=_this.dateFormat(data.data.content[0].date)
+            data.data.content[0].date = _this.dateFormat(
+              data.data.content[0].date
+            );
             _this.$store.commit("setMessageList", data.data.content);
           }
         })
@@ -65,54 +67,67 @@ export default {
         this.isRouterAlive = true;
       });
     },
-    initWebSocket(){ //初始化weosocket 
+    initWebSocket() {
+      //初始化weosocket
       // const wsuri = "ws://localhost:18080/websocket";//ws地址
       // this.websock = new WebSocket(wsuri);
       // this.websocket.onopen = this.websocketonopen;
       // this.websocket.onerror = this.websocketonerror;
-      // this.websock.onmessage = this.websocketonmessage; 
+      // this.websock.onmessage = this.websocketonmessage;
       // this.websock.onclose = this.websocketclose;
       var ws = null;
-     //判断当前浏览器是否支持WebSocket
-     if ('WebSocket' in window) {
-         ws = new WebSocket("ws://localhost:18080/websocket");
-     }
-     else {
-         alert('当前浏览器 Not support websocket')
-     }
- 
-     //连接发生错误的回调方法
-     ws.onerror = this.websocketonerror;
- 
-     //连接成功建立的回调方法
-     ws.onopen = this.websocketonopen;
- 
-     //接收到消息的回调方法
-     ws.onmessage = this.websocketonmessage;
- 
-     //连接关闭的回调方法
-     ws.onclose = this.websocketclose;
+      //判断当前浏览器是否支持WebSocket
+      if ("WebSocket" in window) {
+        ws = new WebSocket("ws://localhost:18080/websocket");
+      } else {
+        alert("当前浏览器 Not support websocket");
+      }
 
-     this.websocket = ws;
-    }, 
+      //连接发生错误的回调方法
+      ws.onerror = this.websocketonerror;
+
+      //连接成功建立的回调方法
+      ws.onopen = this.websocketonopen;
+
+      //接收到消息的回调方法
+      ws.onmessage = this.websocketonmessage;
+
+      //连接关闭的回调方法
+      ws.onclose = this.websocketclose;
+
+      this.websocket = ws;
+    },
     websocketonopen() {
       console.log("WebSocket连接成功");
       this.websocket.send(this.$store.state.userID);
     },
-    websocketonerror(e) { //错误
+    websocketonerror(e) {
+      //错误
       console.log("WebSocket连接发生错误");
     },
-    websocketonmessage(e){ //数据接收 
+    websocketonmessage(e) {
+      //数据接收
       console.log(e.data);
-      if(e.data === "Who are you?"){
+      if (e.data === "Who are you?") {
         this.websocket.send(this.$store.state.userID);
         return;
       }
-      this.loadData(e.data)
-
-    }, 
-    websocketclose(e){ //关闭 
-      console.log("connection closed (" + e.code + ")"); 
+      let listString = e.data.split(":");
+      if (listString[0] == "LOST") {
+        let idList = listString[1].split(",");
+        for (let id in idList) {
+          this.loadData(idList[id]);
+        }
+      } else if (listString[0] == "MATCH") {
+        let idList = listString[1].split(",");
+        for (let Mid in idList) {
+          this.loadMatchData(idList[Mid]);
+        }
+      }
+    },
+    websocketclose(e) {
+      //关闭
+      console.log("connection closed (" + e.code + ")");
     },
     dateFormat: function(time) {
       var date = new Date(time);
@@ -137,16 +152,25 @@ export default {
         "-" +
         month +
         "-" +
-        day +
-        " " +
-        hours +
-        ":" +
-        minutes +
-        ":" +
-        seconds
+        day
       );
     },
-
+    loadMatchData(id) {
+      let url = URLS.matchBabyFindUrl;
+      let _this = this;
+      request(url, { id: id })
+        .then(data => {
+          if (data.rtnCode == 200) {
+            data.data.content[0].date = _this.dateFormat(
+              data.data.content[0].date
+            );
+            _this.$store.commit("setMatchMessageList", data.data.content);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
 };
 </script>

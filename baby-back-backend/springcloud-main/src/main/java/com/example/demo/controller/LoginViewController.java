@@ -108,11 +108,11 @@ public class LoginViewController {
         ResponseBase responseBase;
 
         if(userRepository.findByTel(tel) == null){
-            return new ResponseBase(60001, "该电话未注册", null);
+            return new ResponseBase(70001, "该电话未注册", null);
         }
 
         if(stringRedisTemplate.hasKey(resetMarkPrefix + tel)){
-            return new ResponseBase(60002, "短信验证过于频繁", null);
+            return new ResponseBase(70002, "短信验证过于频繁", null);
         }else{
             stringRedisTemplate.opsForValue().set(resetMarkPrefix + tel, tel, 1L, TimeUnit.MINUTES);
         }
@@ -124,7 +124,7 @@ public class LoginViewController {
             responseBase = new ResponseBase(200, "验证码短信发送成功", null);
         } catch (Exception e) {
             e.printStackTrace();
-            responseBase = new ResponseBase(60003, "验证码短信发送异常", null);
+            responseBase = new ResponseBase(70003, "验证码短信发送异常", null);
         }
         return responseBase;
     }

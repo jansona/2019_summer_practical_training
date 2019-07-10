@@ -92,7 +92,7 @@ public class UserController {
             responseBase = new ResponseBase(200, "更新成功", userRepository.save(user));
         }catch (Exception e){
             e.printStackTrace();
-            responseBase = new ResponseBase(13240, "更新失败", user);
+            responseBase = new ResponseBase(60002, "更新失败", user);
         }
 
         return responseBase;

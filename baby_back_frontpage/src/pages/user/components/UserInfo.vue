@@ -129,6 +129,7 @@ export default {
     commit() {
       let _this=this
       let url=URLS.userUpdateUrl
+      this.user.coordinate=null
       axios
         .post(url, this.user)
         .then(function(response) {

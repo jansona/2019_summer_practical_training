@@ -6,7 +6,7 @@ import numpy as np
 import sys
 def getConnectData():
     # 创建连接
-    conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db='babyback')
+    conn = pymysql.connect(host='gugugu.mysql.database.chinacloudapi.cn', port=3306, user='jansona@gugugu', passwd='2ale0LI1pona9', db='baby_back')
     # 创建游标
     cursor = conn.cursor()
     cursor.execute("select id,baby_description,back_ground,miss_description," +
