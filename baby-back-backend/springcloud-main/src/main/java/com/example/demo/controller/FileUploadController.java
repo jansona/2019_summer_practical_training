@@ -22,6 +22,9 @@ import java.util.Random;
 @RequestMapping(value = "file")
 public class FileUploadController {
 
+    private static final String FILE_NAME_TEMPLATE = "%s.%s";
+    private static final String FILE_PATH_TEMPLATE = "%s%s%s.%s";
+
     String photoBaseUrl = "/resource/photo/";
 
     @Value("${server.port}")
@@ -79,7 +82,7 @@ public class FileUploadController {
                 responseBase = fileManager.saveProfile(file, fileName);
                 break;
             case RECOGNITION:
-                responseBase = recognizer.recognition(file, String.format("%s.%s", generateRandomFilename(), postfix), Recognizer.MatchTarget.LOST_BABY);
+                responseBase = recognizer.recognition(file, String.format(FILE_NAME_TEMPLATE, generateRandomFilename(), postfix), Recognizer.MatchTarget.LOST_BABY);
                 break;
             default:
                 responseBase = new ResponseBase(40006, "未知图片上传行为", null);
@@ -121,18 +124,20 @@ public class FileUploadController {
         switch (action){
             case AS_PROFILE:
                 User user = userRepository.findById(nId).get();
-                user.setProfileUrl(String.format("%s%s%s.%s", photoBaseUrl, "profile/", id, suffix));
+                user.setProfileUrl(String.format(FILE_PATH_TEMPLATE, photoBaseUrl, "profile/", id, suffix));
                 userRepository.save(user);
                 break;
             case AS_LOST_PICS:
                 LostBaby lostBaby = lostBabyRepository.findById(nId).get();
-                lostBaby.setPicUrl(String.format("%s%s%s.%s", photoBaseUrl, "lost/", id, suffix));
+                lostBaby.setPicUrl(String.format(FILE_PATH_TEMPLATE, photoBaseUrl, "lost/", id, suffix));
                 lostBabyRepository.save(lostBaby);
                 break;
             case AS_MATCH_PICS:
                 MatchBaby matchBaby = matchBabyRepository.findById(nId).get();
-                matchBaby.setPicUrl(String.format("%s%s%s.%s", photoBaseUrl, "match/", id, suffix));
+                matchBaby.setPicUrl(String.format(FILE_PATH_TEMPLATE, photoBaseUrl, "match/", id, suffix));
                 matchBabyRepository.save(matchBaby);
+                break;
+            default:
                 break;
         }
     }
@@ -166,7 +171,7 @@ public class FileUploadController {
             e.printStackTrace();
         }
 
-        ResponseBase responseBase = recognizer.recognition(pic, String.format("%s.%s", generateRandomFilename(), postfix), Recognizer.MatchTarget.MATCH_BABY);
+        ResponseBase responseBase = recognizer.recognition(pic, String.format(FILE_NAME_TEMPLATE, generateRandomFilename(), postfix), Recognizer.MatchTarget.MATCH_BABY);
         ArrayList<MatchBaby> matchBabies = (ArrayList<MatchBaby>) responseBase.getData();
         if(matchBabies != null) {
             for (MatchBaby matchBaby : matchBabies) {

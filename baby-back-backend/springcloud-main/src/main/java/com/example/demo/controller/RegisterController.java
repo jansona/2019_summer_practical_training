@@ -64,11 +64,7 @@ public class RegisterController {
                 BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 if(user.getLocation() != null && !user.getLocation().equals("")) {
-                    try {
-                        user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                    user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));
                 }
                 User user_saved = userRepository.save(user);
                 stringRedisTemplate.delete(user.getTel());
