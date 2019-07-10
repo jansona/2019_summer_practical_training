@@ -38,6 +38,7 @@ import URLS from "@/config/config";
 import { request, fetch } from "@/api/api";
 import PicUpload from "@/pages/findChildren/PicUpload";
 import Pictures from "../faceWall/components/Pictures";
+import axios from "axios";
 export default {
   name: "FsatMatch",
   data() {
@@ -89,10 +90,10 @@ export default {
     nlpAnalyze() {
       // request(URLS.uploadTxtAndRecogUrl, {'txt': this.input})
       axios({
-        method: "post",
+        method: "POST",
         url: URLS.uploadTxtAndRecogUrl,
         headers: {
-          "Content-type": "application/json;charset=UTF-8"
+          "Content-type": "charset=UTF-8"
         },
         params: {
           'txt': this.input

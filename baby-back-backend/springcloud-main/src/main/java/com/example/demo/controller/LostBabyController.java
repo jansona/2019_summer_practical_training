@@ -61,7 +61,7 @@ public class LostBabyController {
         }
         LostBaby lostBabySaved = lostBabyRepository.save(lostBaby);
 
-        matchOnInsertInfo(lostBabySaved);
+//        matchOnInsertInfo(lostBabySaved);
 
         if(urgent){
             String compositedKey = String.format("%d-%d", lostBabySaved.getId(), 2);
@@ -103,28 +103,6 @@ public class LostBabyController {
 
         Page<LostBaby> pageResult = new PageImpl(result, page, totalNum);
         return new ResponseBase(200, "查询成功", pageResult);
-    }
-
-    void matchOnInsertInfo(LostBaby lostBaby){
-
-        String info = lostBaby.toString();
-        ResponseBase responseBase = recognizer.analyze(info, Recognizer.MatchTarget.MATCH_BABY);
-        ArrayList<MatchBaby> matchBabies = (ArrayList<MatchBaby>)responseBase.getData();
-        ArrayList<String> matchIDs = new ArrayList<>();
-        if(matchBabies == null){
-            return;
-        }
-        String matchResult = "";
-        for(MatchBaby matchBaby : matchBabies){
-//            matchIDs.add(matchBaby.getId().toString());
-            matchResult += matchBaby.getId().toString() + ",";
-        }
-//        String matchResult = String.join(",", (Iterable<? extends CharSequence>) matchIDs.iterator());
-
-        ArrayList<Integer> userIDs = new ArrayList<>();
-        userIDs.add(lostBaby.getUser().getId());
-
-        userInformer.infoUser(userIDs, PendingMessage.MessageType.MATCH_NOTIFICATION, matchResult);
     }
 
 //    @ApiOperation(value = "根据关键字查找用户")
