@@ -92,7 +92,7 @@
 			</form>
 		</view>
 		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic" v-show="articleShow">
-			<view class="cu-item shadow">
+			<view class="cu-item shadow" @click="navToDetails(item)">
 				<view class="cu-list menu-avatar">
 					<view class="cu-item">
 						<view class="cu-avatar round lg"></view>
@@ -104,10 +104,10 @@
 						</view>
 					</view>
 				</view>
-				<view class="title" @click="navToDetails(item)">
+				<view class="title">
 					<view class="text-cut" style="font-weight: 700;margin-left: 15upx;margin-top: 15upx;">{{item.title}}</view>
 				</view>
-				<view class="passage-content" style="margin-top: 5upx;" @click="navToDetails(item)">
+				<view class="passage-content" style="margin-top: 5upx;">
 					<!-- <view class="bg-img" v-for="(item1,index1) in item.imgList" :key="index1">
 						<image :src="item1.value" style="max-height:200upx;max-width: 200upx;"></image>
 					</view> -->

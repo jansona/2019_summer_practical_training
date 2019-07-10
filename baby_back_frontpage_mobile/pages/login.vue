@@ -42,6 +42,10 @@
 			_this = this;
 			this.isLogin();
 		},
+		onLoad:function(){
+			uni.clearStorage();
+			this.loadExecution();
+		},
 		methods: {
 			isLogin() {
 				//判断缓存中是否登陆过，直接登陆
@@ -123,6 +127,48 @@
 					})
 				})
 
+			},
+			loadExecution: function(){
+				/**
+				 * 获取本地存储中launchFlag的值
+				 * 若存在，说明不是首次启动，直接进入首页；
+				 * 若不存在，说明是首次启动，进入引导页；
+				 */
+				try {
+				    const value = uni.getStorageSync('launchFlag');
+					console.log(value);
+				    if (value) {
+				        if (value == true) {
+				            return;
+				        } else {
+				            uni.redirectTo({
+				                url: '/pages/index/guide'
+				            });
+				        }
+				    } else {
+				        uni.setStorage({
+				            key: 'launchFlag',
+				            data: true,
+				            success: function() {
+								console.log('存储launchFlag');
+							}
+				        });
+				        uni.redirectTo({
+				            url: '/pages/index/guide'
+				        });
+				    }
+				} catch(e) { 
+					// error 
+					uni.setStorage({ 
+						key: 'launchFlag', 
+						data: true, 
+						success: function () {
+							console.log('error时存储launchFlag');
+						} 
+					}); 
+					uni.redirectTo({ url: '/pages/index/guide' }); 
+				}
+				return;
 			}
 		}
 	}

@@ -84,7 +84,31 @@
 				})
 			},
 			submit(e){
-				
+				let _this=this;
+				if (_this.imgList != null && _this.imgList.length > 0) {
+					console.log('开始上传图片...');
+					console.log(_this.imgList[0])
+					uni.uploadFile({
+						url: this.URLS.uploadPictureUrl + "?action=RECOGNITION", 
+						filePath: _this.imgList[0],
+						name: 'file',
+						formData: {
+							'id': 0
+						},
+						header: {
+							'Authorization': 'Bearer '+ this.$store.state.token
+						},
+						success: (uploadFileRes) => {
+							console.log(uploadFileRes);
+							_this.myToast('成功');
+						},
+						fail: (uploadFileRes) => {
+							console.log(uploadFileRes);
+							_this.myToast('失败');
+							return;
+						}
+					});
+				}
 			}
 		}
 	};
