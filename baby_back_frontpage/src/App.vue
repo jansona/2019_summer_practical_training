@@ -108,7 +108,15 @@ export default {
         this.websocket.send(this.$store.state.userID);
         return;
       }
-      this.loadData(e.data)
+      let listString = e.data.split(':')
+      if(listString[0]=='LOST'){
+        this.loadData(listString[1])
+      }else if(listString[0]=='MATCH'){
+        idList = listString[1].split(',')
+        for(let Mid in idList){
+
+        }
+      }
 
     }, 
     websocketclose(e){ //关闭 
@@ -146,7 +154,20 @@ export default {
         seconds
       );
     },
-
+loadMatchData(id) {
+      let url = URLS.matchBabyFindUrl
+      let _this= this
+      request(url, { id: id })
+        .then(data => {
+          if (data.rtnCode == 200) {
+            data.data.content[0].date=_this.dateFormat(data.data.content[0].date)
+            _this.$store.commit("setMatchMessageList", data.data.content);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
   }
 };
 </script>

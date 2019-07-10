@@ -33,9 +33,14 @@
         v-if="this.$store.state.hasLogin"
         class="message-style"
       >
-        <el-popover placement="top-start" width="400" trigger="hover">
+        <el-popover placement="top-start" width="200" trigger="hover">
           <el-table :data="this.$store.state.messageList" @row-click="gotoInfo">
-            <el-table-column width="100" property="name" label="姓名"></el-table-column>
+            <el-table-column width="100" property="name" label="走失儿童"></el-table-column>
+            <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
+            <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
+          </el-table>
+          <el-table :data="this.$store.state.matchMessageList" @row-click="gotoMInfo">
+            <el-table-column width="100" property="name" label="匹配儿童"></el-table-column>
             <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
             <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
           </el-table>
@@ -97,7 +102,13 @@ export default {
         query: { id: row.id ,type:1}
       });
     },
-    
+    gotoMInfo(row){
+      console.log(row)
+      this.$router.push({
+        path: "faceDetail",
+        query: { id: row.id ,type:2}
+      });
+    },
     loadData(id) {
       let url = URLS.lostBabyFindUrl
       let _this= this
