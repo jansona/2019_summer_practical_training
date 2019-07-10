@@ -29,9 +29,9 @@
 				游子寻家
 			</view>
 		</scroll-view>
-		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper">
+		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper" style="height: 1100upx;" >
 			<swiper-item v-for="(content,index1) in pageData">
-				<scroll-view scroll-y="true" style="height: calc(100% );" @scrolltolower="refreshData(index1)">
+				<scroll-view scroll-y="true" style="height: calc(100% );">
 					<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;"  v-for="(item,index) in content.data" :key="index">
 						<view class="padding bg-white">
 							<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;margin-left: 550upx;" @click="deleteRelease(item)"></text>
@@ -40,7 +40,7 @@
 								</image>
 							</view>
 						</view>
-						<form>
+						<form style="height: 500px;">
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">姓名</view>
 								<input disabled="true" :placeholder="item.name"></input>

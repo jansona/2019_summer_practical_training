@@ -28,13 +28,13 @@
 			</view>
 		</scroll-view>
 		<!--图片布局-->
-		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper">
+		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper" style="height: 1100upx;">
 			<swiper-item v-for="(content,index1) in pageData" :key="index1">
 				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData(index1)">
 					<view class="grid col-2 grid-square" style="z-index: 10;">
 						<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 						 v-for="(item,index2) in content.data" :key="index2">
-							<img :src="item.picUrl" mode="aspectFill" @click="goToDetail(item,index1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+							<img :src="item.picUrl" mode="aspectFill" @click="goToDetail(item)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
 							<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
 						</view>
 					</view>
@@ -44,6 +44,10 @@
 					<view class="cu-tabbar-height"></view>
 				</scroll-view>
 			</swiper-item>
+		<!-- 	<swiper-item>
+				<view style="height: 1000upx;background-color: #0081FF;">asdfasdfasdfdfadsfasdf</view>
+			</swiper-item> -->
+		
 		</swiper>
 	</view>
 </template>
@@ -261,15 +265,9 @@
 				}
 			},
 			goToDetail(item,flag) {
-				if (flag == 0) {
-					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item)
-					})
-				} else if (flag == 1) {
-					uni.navigateTo({
-						url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item)
-					})
-				}
+				uni.navigateTo({
+					url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item)
+				})
 			}
 		}
 	};

@@ -34,6 +34,14 @@
 				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:300upx;margin: 0 auto;" @click="submit">确认上传</button>
 			</view>
 		</form>
+		
+		<view class="grid col-2 grid-square" style="z-index: 10;margin-top: 50upx;">
+			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
+			 v-for="(item,index) in matchData" :key="index">
+				<img :src="item.picUrl" mode="aspectFill" @click="goToDetail(item)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+				<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -43,7 +51,8 @@
 			return {
 				imgList: [],
 				photoInfo:'',
-				content:'请选择上传面容清晰的近期正面照，\n若有其余衣着外貌特征等照片，请适当添加照片说明。'
+				content:'请选择上传面容清晰的近期正面照，\n若有其余衣着外貌特征等照片，请适当添加照片说明。',
+				matchData: [{name:"a",picUrl:"http://127.0.0.1:18080/resource/photo/match/16.jpg"},{name:"b",picUrl:"http://127.0.0.1:18080/resource/photo/match/16.jpg"}],
 			};
 		},
 		methods:{
@@ -84,7 +93,37 @@
 				})
 			},
 			submit(e){
-				
+				let _this = this
+				uni.uploadFile({
+					url: this.URLS.uploadPictureUrl + "?action=RECOGNITION", 
+					filePath: _this.imgList[0],
+					name: 'file',
+					formData: {
+						'id': -1
+					},
+					header: {
+						'Authorization': 'Bearer '+ this.$store.state.token
+					},
+					success: (uploadFileRes) => {
+						console.log(uploadFileRes);
+						if(uploadFileRes.statusCode == 401){
+							this.myToast("验证过期，请重新登录")
+							uni.reLaunch({
+								url: "/pages/login"
+							})
+							return
+						}
+					},
+					fail: (uploadFileRes) => {
+						console.log(uploadFileRes);
+						if(uploadFileRes.statusCode == 401){
+							this.myToast("验证过期，请重新登录")
+							uni.reLaunch({
+								url: "/pages/login"
+							})
+						}
+					}
+				});
 			}
 		}
 	};
@@ -96,5 +135,25 @@
 		height: 120upx;
 		margin-top: 50upx;
 		margin-bottom: 50upx;
+	}
+	
+	.my-tag {
+		margin-left: 100upx;
+		vertical-align: middle;
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		padding: 0upx 16upx;
+		height: 35upx;
+		font-family: Helvetica Neue, Helvetica, sans-serif;
+		white-space: nowrap;
+		opacity: 0.3;
+		max-width: 150upx;
+		max-height: 35upx;
+		border-radius: 20upx;
+		overflow: hidden;
+		background-color: #0D9FFF;
 	}
 </style>
