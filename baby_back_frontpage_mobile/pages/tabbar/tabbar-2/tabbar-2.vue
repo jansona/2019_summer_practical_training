@@ -34,7 +34,7 @@
 		<view v-for="(item, index) in articleList" :key="index" class="cu-card dynamic">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
-					<view class="cu-item">
+					<view class="cu-item" @click="goToUser(item)">
 						<view class="cu-avatar round lg" style="overflow: hidden;">
 							<image :src="item.user.profileUrl" mode="aspectFit"></image>
 						</view>
@@ -224,7 +224,12 @@
 				}).catch(error => {
 					console.log(error)
 				})
-			}
+			},
+			goToUser(item) {
+				uni.navigateTo({
+					url:'/author-detail/author-detail?id='+item.id
+				})
+			},
 		}
 	}
 </script>

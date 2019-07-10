@@ -38,7 +38,7 @@
 	export default {
 		onReady: function() {
 			let userId=this.$store.state.userId
-			console.log('ON READY...');
+			console.log('ON READY...')
 			this.getUser(userId)
 		},
 		data() {
@@ -129,6 +129,7 @@
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data
+					_this.article.user = _this.user
 				}).catch(error => {
 					console.log(error)
 				})

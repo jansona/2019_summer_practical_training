@@ -294,8 +294,8 @@
 						_this.lostList = data.data.data.content;
 						console.log(_this.lostList);
 						for (let i = 0; i < _this.lostList.length; i++) {
-							let id = _this.lostList[i].id;
-							_this.lostPicUrls.push(this.URLS.baseUrl + "/resource/photo/lost/" + id + ".jpg");
+							//let id = _this.lostList[i].id;
+							_this.lostPicUrls.push(_this.lostList[i].picUrl);
 						}
 					}).catch(error => {
 						console.log(error)
@@ -308,8 +308,8 @@
 					.then(data => {
 						_this.findList = data.data.data.content;
 						for (let i = 0; i < _this.findList.length; i++) {
-							let id = _this.findList[i].id;
-							_this.findPicUrls.push(this.URLS.baseUrl + "/resource/photo/match/" + id + ".jpg")
+							//let id = _this.findList[i].id;
+							_this.findPicUrls.push(_this.findList[i].picUrl)
 						}
 					}).catch(error => {
 						console.log(error)
