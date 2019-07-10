@@ -8,7 +8,8 @@ import javax.persistence.*;
 public class PendingMessage {
 
     public enum MessageType{
-        LOST_NOTIFICATION
+        LOST_NOTIFICATION,
+        MATCH_NOTIFICATION
     }
 
     @Id

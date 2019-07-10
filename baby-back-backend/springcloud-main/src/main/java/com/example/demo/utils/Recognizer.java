@@ -1,9 +1,12 @@
 package com.example.demo.utils;
 
 import com.example.demo.entity.LostBaby;
+import com.example.demo.entity.MatchBaby;
 import com.example.demo.entity.ResponseBase;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.LostBabyRepository;
+import com.example.demo.reposity.MatchBabyRepository;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,10 +25,17 @@ import java.util.Optional;
 @Service(value = "RecognizeService")
 public class Recognizer {
 
+    public enum MatchTarget{
+        LOST_BABY,
+        MATCH_BABY
+    }
+
     public static Log log = LogFactory.getLog(Recognizer.class);
 
     @Autowired
     private LostBabyRepository lostBabyRepository;
+    @Autowired
+    private MatchBabyRepository matchBabyRepository;
 
     FileManager fileManager = new FileManager();
 
@@ -35,16 +45,27 @@ public class Recognizer {
     public void init() {
         recognizer = this;
         recognizer.lostBabyRepository = this.lostBabyRepository;
+        recognizer.matchBabyRepository = this.matchBabyRepository;
     }
 
-    public ResponseBase recognition(MultipartFile file, String fileName) {
+    public ResponseBase recognition(MultipartFile file, String fileName, MatchTarget matchTarget) {
+
+        String targetPath = "";
+        switch (matchTarget){
+            case LOST_BABY:
+                targetPath = "./photo/lost";
+                break;
+            case MATCH_BABY:
+                targetPath = "./photo/match";
+                break;
+        }
+
         ResponseBase responseBase;
         ArrayList<String> matches = new ArrayList<>();
-        ArrayList<LostBaby> matchedBabies;
         try {
             file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
-         //   String[] cmd = {"docker", "exec", "fr", "face_recognition", "/photo/lost", "/photo/temp/" + fileName};
-            String[] cmd = {"face_recognition", "./photo/lost", "./photo/temp/" + fileName};
+            String[] cmd = {"docker", "exec", "fr", "face_recognition", "/photo/lost", "/photo/temp/" + fileName};
+//            String[] cmd = {"face_recognition", targetPath, "./photo/temp/" + fileName};
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
@@ -62,7 +83,15 @@ public class Recognizer {
             input.close();
             ir.close();
 
-            matchedBabies = babyId2Baby(matches);
+            ArrayList<?> matchedBabies;
+            switch (matchTarget){
+                case LOST_BABY:
+                    matchedBabies = babyId2LostBaby(matches);
+                    break;
+                default:
+                    matchedBabies = babyId2MatchBaby(matches);
+                    break;
+            }
 
             responseBase = new ResponseBase(200, "待识别照片上传成功", matchedBabies);
         } catch (Exception e) {
@@ -73,13 +102,24 @@ public class Recognizer {
         return responseBase;
     }
 
-    public ResponseBase analyze(String txt){
+    public ResponseBase analyze(String txt, MatchTarget matchTarget){
+
+        String scriptName = "";
+        switch (matchTarget){
+            case LOST_BABY:
+                scriptName = "./ldf.py";
+                break;
+            case MATCH_BABY:
+                scriptName = "./ldf2.py";
+                break;
+        }
 
         ResponseBase responseBase;
         ArrayList<String> matches = new ArrayList<>();
         ArrayList<LostBaby> matchedBaby;
 
-        String[] cmd = {"python3", "ldf.py", txt};
+//        String[] cmd = {"python3", scriptName, txt};
+        String[] cmd = {"py", scriptName, txt};
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
@@ -99,8 +139,17 @@ public class Recognizer {
                 input.close();
                 ir.close();
 
-                matchedBaby = babyId2Baby(matches);
-                responseBase = new ResponseBase(200, "自然语言分析成功", matchedBaby);
+                ArrayList<?> matchedBabies;
+                switch (matchTarget){
+                    case LOST_BABY:
+                        matchedBabies = babyId2LostBaby(matches);
+                        break;
+                    default:
+                        matchedBabies = babyId2MatchBaby(matches);
+                        break;
+                }
+
+                responseBase = new ResponseBase(200, "自然语言分析成功", matchedBabies);
             }
         }catch (IOException ioe){
             ioe.printStackTrace();
@@ -111,13 +160,28 @@ public class Recognizer {
     }
 
 
-    private ArrayList<LostBaby> babyId2Baby(ArrayList<String> ids){
+    private ArrayList<LostBaby> babyId2LostBaby(ArrayList<String> ids){
         ArrayList<LostBaby> matchedBabies = new ArrayList<>();
         for(String id : ids){
             try{
                 LostBaby lostBaby = recognizer.lostBabyRepository.findById(Integer.valueOf(id)).get();
-                lostBaby.setUser(null);
+                lostBaby.getUser().setPassword("");
                 matchedBabies.add(lostBaby);
+            }catch (Exception e){
+                e.printStackTrace();
+                log.warn("存在无效图片：" + id);
+            }
+        }
+        return matchedBabies;
+    }
+
+    private ArrayList<MatchBaby> babyId2MatchBaby(ArrayList<String> ids){
+        ArrayList<MatchBaby> matchedBabies = new ArrayList<>();
+        for(String id : ids){
+            try{
+                MatchBaby matchBaby = recognizer.matchBabyRepository.findById(Integer.valueOf(id)).get();
+                matchBaby.getUser().setPassword("");
+                matchedBabies.add(matchBaby);
             }catch (Exception e){
                 e.printStackTrace();
                 log.warn("存在无效图片：" + id);
