@@ -95,7 +95,7 @@ export default {
           "Content-type": "application/json;charset=UTF-8"
         },
         params: {
-          txt: this.input
+          'txt': this.input
         }
       })
         .then(response => {
