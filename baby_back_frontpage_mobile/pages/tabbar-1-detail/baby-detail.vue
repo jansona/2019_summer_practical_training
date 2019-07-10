@@ -25,7 +25,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">身高</view>
-				<input disabled="true" :placeholder="babyDetail.height"></input>
+				<input disabled="true" :placeholder="babyDetail.height+''"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">特征</view>

@@ -6,9 +6,9 @@
       infinite-scroll-disabled="disabled">
       <li v-for="(a,i) in articles" class="list-item" :key='i'>
         <a class="a-style">
-          <p style="font-size:15px" @click="gotoArticle(a.id)">{{a.title}}</p>
+          <p style="font-size:15px;"  @click="gotoArticle(a.id)">{{a.title}}</p>
         </a>
-        <p class="date">发布于{{dateFormat(a.date)}}</p>
+        <p class="date" style="">发布于{{dateFormat(a.date)}}</p>
         <el-divider
           style="margin-top: 15px;margin-right: 0px;margin-bottom: 15px;margin-left: 0px;"
         ></el-divider>

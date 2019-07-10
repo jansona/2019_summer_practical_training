@@ -32,6 +32,15 @@
 			}
 		},
 		{
+			"path": "pages/index/guide",
+			"style": {
+				"navigationBarTitleText": "",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
 			"path": "pages/tabbar/tabbar-1/tabbar-1",
 			"style": {
 				"navigationBarTitleText": "asdf",

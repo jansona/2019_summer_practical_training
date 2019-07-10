@@ -75,7 +75,7 @@ export const fetch = (url, params) => {
 // 响应拦截器
 Axios.interceptors.response.use(
   res => {
-    console.log("response interceptor: ",res)
+    // console.log("response interceptor: ",res)
     let data = null
     if (!res.data) {
       data = res
@@ -98,7 +98,7 @@ Axios.interceptors.response.use(
     }
   },
   error => {
-    console.log("response interceptor error:",error)
+    console.log("response interceptor error:",error.response)
     if (store.state.mode === 'dev') {
       return Promise.reject(error)
     } else {
@@ -115,10 +115,18 @@ Axios.interceptors.response.use(
             // })
             break
           case 401:
-            error.message = '认证超时，重新登录'
+            // error.message = '认证超时，重新登录'
             // router.replace({
             //   path: '/login',
             // })
+                 Notification.info({
+              offset:50,
+              title:'登录过期，请重新登录',
+              duration:1500,
+            })
+            router.replace({
+              path: '/login'
+            })
             break
           case 504:
             error.message = '网络超时'

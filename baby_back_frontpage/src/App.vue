@@ -152,13 +152,7 @@ export default {
         "-" +
         month +
         "-" +
-        day +
-        " " +
-        hours +
-        ":" +
-        minutes +
-        ":" +
-        seconds
+        day
       );
     },
     loadMatchData(id) {
