@@ -26,6 +26,13 @@
 					<view class="padding-xl">
 						{{modalContent}}
 					</view>
+					<view class="cu-bar bg-white justify-end">
+						<view class="action">
+							<button class="cu-btn line-blue text-green" @tap="hideModal">取消</button>
+							<button class="cu-btn bg-blue margin-left" @tap="sure">确定</button>
+			
+						</view>
+					</view>
 				</view>
 			</view>
 		</form>
@@ -67,13 +74,22 @@
 			hideModal(e) {
 				this.modalName = null
 			},
+			sure(){
+				if(this.modalContent=='发布失败'||this.modalContent=='已经发布过了'){
+					this.modalName=null;
+				}else if(this.modalContent=='发布成功'){
+					uni.redirectTo({
+						url:'../../index/index'
+					})
+				}
+			},
 			contentInput(e) {
 				this.content = e.detail.value
 			},
 			formSubmit: function(e) {
 				if(this.isSend==true){
 					this.modalName='Modal';
-					this.modalContent='已经发布过了哦~';
+					this.modalContent='已经发布过了';
 					return;
 				}
 				//将下列代码加入到对应的检查位置
@@ -95,10 +111,10 @@
 				var formData = e.detail.value;
 				var checkRes = graceChecker.check(formData, rule);
 				if (checkRes) {
-					uni.showToast({
-						title: "验证通过!",
-						icon: "none"
-					});
+					// uni.showToast({
+					// 	title: "验证通过!",
+					// 	icon: "none"
+					// });
 				} else {
 					uni.showToast({
 						title: graceChecker.error,
@@ -116,12 +132,12 @@
 					console.log(data);
 					_this.isSend=true;
 					_this.modalName='Modal'
-					_this.modalContent='发布成功！'
-					uni.navigateBack()
+					_this.modalContent='发布成功'
+					//uni.navigateBack()
 				}).catch(error => {
 					console.log(error);
 					_this.modalName='Modal';
-					_this.modalContent='发布失败！'
+					_this.modalContent='发布失败'
 				})
 			},
 			getUser(userId) {
