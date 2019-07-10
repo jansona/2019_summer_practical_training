@@ -47,7 +47,7 @@ export default {
       }
     },
     gotoDetail(type,id) {
-      this.$router.push({ name: "FaceDetail", query: { type: 1, id: id } });
+      this.$router.push({ name: "FaceDetail", query: { type: this.types[0] + 1, id: id } });
     }
   },
   mounted() {

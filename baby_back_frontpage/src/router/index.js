@@ -75,7 +75,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.path === '/loginOrRegist' || to.path === '/home' || !store.state.oauth ) {
+    if (to.path === '/loginOrRegist' || to.path === '/home' || to.path === '/more' || !store.state.oauth ) {
       next();
     } else {
       let token = store.state.token

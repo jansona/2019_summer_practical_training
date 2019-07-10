@@ -146,7 +146,7 @@ public class LoginViewController {
                 stringRedisTemplate.delete(newUser.getTel());
                 responseBase = new ResponseBase(200, "重置密码成功", null);
             } else {
-                responseBase = new ResponseBase(50003, "重置密码失败", null);
+                responseBase = new ResponseBase(50003, "验证码有误", null);
             }
         } catch (Exception e) {
             e.printStackTrace();

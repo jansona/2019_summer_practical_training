@@ -75,6 +75,7 @@ export const fetch = (url, params) => {
 // 响应拦截器
 Axios.interceptors.response.use(
   res => {
+    console.log("response interceptor: ",res)
     let data = null
     if (!res.data) {
       data = res
@@ -97,6 +98,7 @@ Axios.interceptors.response.use(
     }
   },
   error => {
+    console.log("response interceptor error:",error)
     if (store.state.mode === 'dev') {
       return Promise.reject(error)
     } else {
@@ -157,7 +159,6 @@ Axios.interceptors.request.use(
   }
 )
 
-// 设置权限请求头
 Axios.defaults.headers.post['Authorization'] = 'Basic Y2xpZW50OnNlY3JldA==';
 
 //时间格式化函数，此处仅针对yyyy-MM-dd hh:mm:ss 的格式进行格式化
