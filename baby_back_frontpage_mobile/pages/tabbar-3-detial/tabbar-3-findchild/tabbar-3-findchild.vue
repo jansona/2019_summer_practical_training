@@ -360,6 +360,7 @@
 				let _this = this
 				this.$api.post(url).then(data => {
 					_this.user = data.data.data
+					_this.findChildForm.user = _this.user
 					console.log(_this.user)
 				}).catch(error => {
 					console.log(error)

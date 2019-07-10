@@ -5,7 +5,7 @@
 			<view class="bg">
 				<view class="box">
 					<view class="box-hd">
-						<view class="avator" @click="goToPage('../author-detail/author-detail')">
+						<view class="avator" @click="setInfo">
 							<img :src="userInfo.profileUrl" />
 						</view>
 						<view class="nickname">{{userInfo.username}}</view>
