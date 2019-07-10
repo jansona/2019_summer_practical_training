@@ -232,4 +232,13 @@ public class LostBaby {
     public void setCoordinate(Pair<Float, Float> coordinate) {
         this.coordinate = coordinate;
     }
+
+    @Override
+    public String toString() {
+        return getPlace() + getBabyDescription() + getBackGround() + getContactAddress()
+                + getContactEmail() + getContactName() + getContactPhone() + getContactRel()
+                + getMissDescription() + getName() + getNativePlace() + getOtherContactMethod()
+                + getOtherDescription() + getOtherExplain() + getRelationship() + getSex()
+                + getBirthday() + getDate() + getHeight();
+    }
 }

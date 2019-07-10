@@ -84,12 +84,16 @@ public class UserController {
         try{
             User oldUser = userRepository.findById(user.getId()).get();
             user.setPassword(oldUser.getPassword());    // 防止密码被置空
+            if(user.getLocation() == null){
+                user.setLocation(oldUser.getLocation());
+            }
+            user.setProfileUrl(oldUser.getProfileUrl());
             user.setCoordinate(LocationConvertor.getCoordinate(user.getLocation()));    // 根据新地址设置坐标
             responseBase = new ResponseBase(200, "更新成功", userRepository.save(user));
         }catch (Exception e){
+            e.printStackTrace();
             responseBase = new ResponseBase(13240, "更新失败", user);
         }
-
 
         return responseBase;
     }

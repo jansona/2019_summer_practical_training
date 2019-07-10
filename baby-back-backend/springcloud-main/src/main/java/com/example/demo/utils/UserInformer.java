@@ -32,8 +32,19 @@ public class UserInformer {
     }
 
     public void infoUser(ArrayList<Integer> ids, PendingMessage.MessageType type, String content){
+
+        String prefix = "";
+        switch (type){
+            case LOST_NOTIFICATION:
+                prefix = "LOST:";
+                break;
+            case MATCH_NOTIFICATION:
+                prefix = "MATCH:";
+                break;
+        }
+
         for(int id : ids){
-            if(!CustomWebSocket.sendMessageToUser(id, content)){
+            if(!CustomWebSocket.sendMessageToUser(id, prefix + content)){
                 System.out.println("目标用户不在");
                 // 此时目标用户不在线
                 userInformer.userRepository.findById(id);

@@ -23,5 +23,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaS
     List<Comment> findAllByArticle(Article article);
 
     List<Comment> findAllByUser(User user);
+    void deleteAllByArticle(Article article);
 
 }
