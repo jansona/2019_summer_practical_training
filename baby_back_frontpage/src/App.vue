@@ -23,26 +23,12 @@ export default {
       connect: this.connect
     };
   },
-  created() {
-    // const wsuri = "ws://localhost:18080/websocket";
-    // this.websock = new WebSocket(wsuri, ["91b04edd-70b8-4a4d-8570-05cc5cb8f96d"]);
-    // this.websocket = new WebSocket(wsuri);
-    // this.websocket.onopen = this.websocketonopen;
-  },
-  mounted() {
-    // this.initWebSocket();
-    // this.$options.sockets.onmessage = this.onMessage;
-  },
   destroyed() {
-    // this.websocketclose();
+    this.websocketclose();
   },
   methods: {
     connect() {
       console.log("connected!!!!!!!!");
-      // const wsuri = "ws://localhost:18080/websocket";
-      // this.websocket = new WebSocket(wsuri);
-      // this.websocket.onopen = this.websocketonopen;
-      // this.websock.onmessage = this.websocketonmessage;
       this.initWebSocket();
     },
     loadData(id) {
@@ -68,17 +54,10 @@ export default {
       });
     },
     initWebSocket() {
-      //初始化weosocket
-      // const wsuri = "ws://localhost:18080/websocket";//ws地址
-      // this.websock = new WebSocket(wsuri);
-      // this.websocket.onopen = this.websocketonopen;
-      // this.websocket.onerror = this.websocketonerror;
-      // this.websock.onmessage = this.websocketonmessage;
-      // this.websock.onclose = this.websocketclose;
       var ws = null;
       //判断当前浏览器是否支持WebSocket
       if ("WebSocket" in window) {
-        ws = new WebSocket("ws://localhost:18080/websocket");
+        ws = new WebSocket(URLS.websocketUrl);
       } else {
         alert("当前浏览器 Not support websocket");
       }
