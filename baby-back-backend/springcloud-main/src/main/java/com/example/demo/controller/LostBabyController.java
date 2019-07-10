@@ -111,10 +111,15 @@ public class LostBabyController {
         ResponseBase responseBase = recognizer.analyze(info, Recognizer.MatchTarget.MATCH_BABY);
         ArrayList<MatchBaby> matchBabies = (ArrayList<MatchBaby>)responseBase.getData();
         ArrayList<String> matchIDs = new ArrayList<>();
-        for(MatchBaby matchBaby : matchBabies){
-            matchIDs.add(matchBaby.getId().toString());
+        if(matchBabies == null){
+            return;
         }
-        String matchResult = String.join(",", (Iterable<? extends CharSequence>) matchIDs.iterator());
+        String matchResult = "";
+        for(MatchBaby matchBaby : matchBabies){
+//            matchIDs.add(matchBaby.getId().toString());
+            matchResult += matchBaby.getId().toString() + ",";
+        }
+//        String matchResult = String.join(",", (Iterable<? extends CharSequence>) matchIDs.iterator());
 
         ArrayList<Integer> userIDs = new ArrayList<>();
         userIDs.add(lostBaby.getUser().getId());

@@ -128,9 +128,9 @@ public class Recognizer {
             if(tempStr == null){
                 responseBase = new ResponseBase(50006, "自然语言分析异常", null);
             }else{
-                for(int i=0; i<4; i++) {
-                    tempStr = input.readLine();
-                }
+//                for(int i=0; i<4; i++) {
+//                    tempStr = input.readLine();
+//                }
                 while(tempStr != null){
                     String id = tempStr;
                     matches.add(id);
