@@ -25,26 +25,33 @@
 				cityPickerValueDefault: [0, 0, 1],
 				themeColor: '#007AFF',
 				pickerText: '',
-				detail:''
+				detail:'',
+				user:this.$store.state.userInfo
 			};
 		},
 		onLoad() {
 		},
 		methods: {
-			changeSkin(){
-				uni.navigateTo({
-						url:"../tabbar/tabbar-5/skin-change/skin-change"
-				});
-			},
 			showMulLinkageThreePicker() {
 			    this.$refs.mpvueCityPicker.show()
 			},
 			onConfirm(e) {
 			    this.pickerText = JSON.stringify(e);
 				this.detail=e.label;
+				this.user.location = this.detail;
 			},
 			Join(e){
-				
+				let _this=this;
+				if(this.detail.length>0){
+					this.$api.post(this.URLS.userUpdateUrl,this.user).then(data => {
+						_this.myToast('加入成功')
+					}).catch(error => {
+						_this.myToast('加入失败')
+						console.log(error)
+					})
+				}else{
+					_this.myToast('请选择活动范围')
+				}
 			}
 		},
 		onBackPress() {

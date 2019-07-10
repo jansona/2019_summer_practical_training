@@ -10,9 +10,9 @@
 				<view class="title" style="width: 150upx;">昵称</view>
 				<input :value="user.username" @input="nickChange" name="nick"></input>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" @click="showMulLinkageThreePicker">
 				<view class="title" style="width: 150upx;">活动范围</view>
-				<input disabled="true" :placeholder="user.location"></input>
+				<input disabled="true" :value="user.location"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">手机号</view>
@@ -27,15 +27,26 @@
 				 form-type="submit">确定</button>
 			</view>
 		</form>
+		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm">
+		</mpvue-city-picker>
 	</view>
 </template>
 
 <script>
 	var graceChecker = require("../../common/graceChecker.js");
+	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue';
+	import cityData from '@/common/city.data.js';
 	export default {
+		components: {
+		    mpvueCityPicker
+		},
 		data() {
 			return {
-				user: {}
+				user: {},
+				cityPickerValueDefault: [0, 0, 1],
+				themeColor: '#007AFF',
+				pickerText: '',
+				detail:''
 			}
 		},
 		onLoad(options) {
@@ -74,6 +85,13 @@
 					}
 				});
 			},
+			showMulLinkageThreePicker() {
+			    this.$refs.mpvueCityPicker.show()
+			},
+			onConfirm(e) {
+			    this.pickerText = JSON.stringify(e);
+				this.user.location=e.label;
+			},
 			formSubmit: function(e) {
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
@@ -104,8 +122,31 @@
 				console.log(this.user)
 				//let url = this.URLS.userUpdateUrl + '?user=' + this.user;
 				this.$api.post(this.URLS.userUpdateUrl,this.user).then(data => {
+					console.log('开始上传图片...');
+					if(this.user.profileUrl!=''){
+						uni.uploadFile({
+							url: this.URLS.uploadPictureUrl + "?action=AS_PROFILE", 
+							filePath: _this.user.profileUrl,
+							name: 'file',
+							formData: {
+								'id': _this.user.id
+							},
+							header: {
+								'Authorization': 'Bearer '+ this.$store.state.token
+							},
+							success: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.myToast('更新成功');
+								return;
+							},
+							fail: (uploadFileRes) => {
+								console.log(uploadFileRes);
+								_this.myToast('头像上传失败')
+								return;
+							}
+						});
+					}
 					_this.myToast('更新成功')
-					console.log(data)
 				}).catch(error => {
 					_this.myToast('更新失败')
 					console.log(error)
