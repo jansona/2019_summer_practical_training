@@ -1,20 +1,26 @@
 let mode = "test"
 let baseUrl = ''
 let baseUrl2 = ''
+let wsUrl = ''
 if (mode === 'dev') {
   baseUrl = 'http://127.0.0.1:18080'
   baseUrl2 = 'http://127.0.0.1:18080'
+  wsUrl = 'ws://42.159.91.0:18080/websocket'
 } else if (mode == 'hbj') {
   baseUrl = 'http://192.168.137.1:18080'
+  wsUrl = 'ws://42.159.91.0:18080/websocket'
 } else if (mode == 'pro') {
   baseUrl = 'http://42.159.91.0:9999/api/main'
   baseUrl2 = 'http://42.159.91.0:9999'
+  wsUrl = 'ws://42.159.91.0:18080/websocket'
 } else if (mode == 'test') {
   baseUrl = 'http://127.0.0.1:9999/api/main'
   baseUrl2 = 'http://127.0.0.1:9999'
+  wsUrl = 'ws://localhost:18080/websocket'
 } else if (mode == 'lrf') {
   baseUrl = 'http://192.168.151.207:9999/api/main'
   baseUrl2 = 'http://192.168.151.207:9999'
+  wsUrl = 'ws://42.159.91.0:18080/websocket'
 }
 
 // 填写信息部分
@@ -57,7 +63,7 @@ const userFindUrl = baseUrl + '/user/find'
 const userFindByIdUrl = baseUrl + '/user/find-by-id'
 
 // 消息收发
-const websocketUrl = baseUrl + "/websocket"
+const websocketUrl = wsUrl
 
 
 const URLS = {

@@ -84,7 +84,6 @@ export default {
         return;
       }
       var date = new Date();
-      
       _this.article["date"] = date;
       _this.article["user"] = _this.user;
       _this.article["title"] = _this.title;

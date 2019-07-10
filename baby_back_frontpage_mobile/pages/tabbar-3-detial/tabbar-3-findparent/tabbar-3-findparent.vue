@@ -142,6 +142,13 @@
 				<view class="padding-xl">
 					{{modalContent}}
 				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-blue text-green" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-blue margin-left" @tap="sure">确定</button>
+		
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -165,7 +172,7 @@
 					sex: '',
 					birthday: '2018-12-25',
 					nativePlace: '', //籍贯
-					height: '',
+					height: 50,
 					date: '2019-06-25', //失踪时间
 					place: '',
 					babyDescription: '', //特征描述
@@ -205,6 +212,16 @@
 			hideModal(e) {
 				this.modalName = null
 			},
+			sure(){
+				if(this.modalContent=='请上传照片'||this.modalContent=='发布失败'||this.modalContent=='图片上传失败'||this.modalContent=='已经发布过了')
+				{
+					this.modalName=null;
+				}else if(this.modalContent=='发布成功'){
+					uni.redirectTo({
+						url:'../../index/index'
+					})
+				}
+			},
 			radioChange(e) {
 				this.findParentForm.sex = e.detail.value
 			},
@@ -217,7 +234,7 @@
 			// },
 			ChooseImage() {
 				uni.chooseImage({
-					count: 4, //默认9
+					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
@@ -257,7 +274,7 @@
 			formSubmit: function (e) {
 				if(this.isSend==true){
 					this.modalName='Modal';
-					this.modalContent='已经发布过了~';
+					this.modalContent='已经发布过了';
 					return;
 				}
 				//将下列代码加入到对应的检查位置
@@ -310,12 +327,12 @@
 								console.log(uploadFileRes);
 								_this.isSend=true;
 								_this.modalName='Modal';
-								_this.modalContent='发布成功！';
+								_this.modalContent='发布成功';
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);
 								_this.modalName='Modal';
-								_this.modalContent='图片上传失败！';
+								_this.modalContent='图片上传失败';
 								return;
 							}
 						});
@@ -323,7 +340,7 @@
 				}).catch(error => {
 					console.log(error)
 					_this.modalName='Modal';
-					_this.modalContent='发布失败！';
+					_this.modalContent='发布失败';
 				})
 				
 			},

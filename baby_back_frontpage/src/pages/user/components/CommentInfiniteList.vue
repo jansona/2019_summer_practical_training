@@ -5,16 +5,19 @@
       v-infinite-scroll="load"
       infinite-scroll-disabled="disabled">
       <li v-for="(c,i) in comments" class="list-item" v-bind:key='i'>
-        <a class="a-style">
-          <p style="font-size:15px">{{c.article.title}}</p>
-        </a>
-        <p>
+        <el-col :span="24">
+          <p style="margin-bottom: 5px;text-align:left;font-size:13px" class="date">
+            <a class="a-style">
+              <span>文章:{{c.article.title}}</span>
+            </a>
+          </p>
+          <p style="text-align:left;margin-bottom: 2px;">
             {{c.content}}
         </p>
-        <p class="date">发布于{{dateFormat(c.date)}}</p>
-        <el-divider
-          style="margin-top: 15px;margin-right: 0px;margin-bottom: 15px;margin-left: 0px;"
-        ></el-divider>
+          <p class="date" style="float:left">发布于{{dateFormat(c.date)}}</p>
+        </el-col>
+      
+        <hr>
       </li>
     </ul>
     <p v-if="loading">加载中...</p>

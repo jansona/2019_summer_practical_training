@@ -34,6 +34,7 @@ public class User {
     private String profileUrl;
 
     private String location;
+    @JsonIgnore
     private Pair<Float, Float> coordinate;
 
     public User() {

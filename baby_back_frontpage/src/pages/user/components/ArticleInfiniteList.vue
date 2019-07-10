@@ -1,17 +1,19 @@
 <template>
   <div class="infinite-list-wrapper">
-    <ul
-      class="list"
-      v-infinite-scroll="load"
-      infinite-scroll-disabled="disabled">
-      <li v-for="(a,i) in articles" class="list-item" :key='i'>
-        <a class="a-style">
-          <p style="font-size:15px" @click="gotoArticle(a.id)">{{a.title}}</p>
-        </a>
-        <p class="date">发布于{{dateFormat(a.date)}}</p>
-        <el-divider
+    <ul class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
+      <li v-for="(a,i) in articles" class="list-item" :key="i">
+        <el-col :span="24">
+          <p class="date" style="margin-bottom: 5px;text-align:left;font-size:15px;color:black" >
+            <a class="a-style">
+              <span @click="gotoArticle(a.id)">{{a.title}}</span>
+            </a>
+          </p>
+          <p class="date" style="float:left">发布于{{dateFormat(a.date)}}</p>
+        </el-col>
+        <!-- <el-divider
           style="margin-top: 15px;margin-right: 0px;margin-bottom: 15px;margin-left: 0px;"
-        ></el-divider>
+        ></el-divider>-->
+        <hr />
       </li>
     </ul>
     <p v-if="loading">加载中...</p>
@@ -20,54 +22,50 @@
 </template>
 
 <script>
-import URLS from '@/config/config'
-import { request,fetch } from "@/api/api";
+import URLS from "@/config/config";
+import { request, fetch } from "@/api/api";
 
 export default {
   name: "ArticleInfiniteList",
-  props:{
+  props: {
     // articles: Array
     user: Number
   },
-  data () {
+  data() {
     return {
       loading: false,
       noMore: false,
       articles: [],
       index: 0
-    }
+    };
   },
   computed: {
-    disabled () {
-      return this.loading || this.noMore
+    disabled() {
+      return this.loading || this.noMore;
     }
   },
   methods: {
-    load () {
-      this.loading = true
-      request(URLS.articleInfiniteUrl, {user: this.user, index: this.index})
-      .then(
-        data => {
+    load() {
+      this.loading = true;
+      request(URLS.articleInfiniteUrl, { user: this.user, index: this.index })
+        .then(data => {
           // console.log(data);
-          if(data.rtnCode === 200){
-            if(data.data !== null){
+          if (data.rtnCode === 200) {
+            if (data.data !== null) {
               this.articles.push(data.data);
               this.index += 1;
-            }else{
+            } else {
               this.noMore = true;
             }
           }
           this.loading = false;
-        }
-      )
-      .catch(
-        error => {
+        })
+        .catch(error => {
           console.log(error);
-        }
-      )
+        });
     },
     gotoArticle(id) {
-      this.$router.push({name:"showArticle",query:{id:id}});
+      this.$router.push({ name: "showArticle", query: { id: id } });
     },
     dateFormat: function(time) {
       var date = new Date(time);
@@ -102,12 +100,12 @@ export default {
       );
     }
   }
-}
+};
 </script>
 
 <style scoped>
-ul li{
-  list-style-type:none;
+ul li {
+  list-style-type: none;
 }
 
 .date {

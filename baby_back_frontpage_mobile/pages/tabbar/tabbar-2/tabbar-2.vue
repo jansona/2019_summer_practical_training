@@ -58,9 +58,15 @@
 					</view>
 				</view>
 				<view class="text-gray text-sm text-right padding">
-					<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.viewNum}}
-					<text class="cuIcon-appreciatefill margin-lr-xs" @click="articleLike(item)"></text> {{item.likeNum}}
-					<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replyNum}}
+					<text class="cuIcon-attentionfill margin-lr-xs">
+						<text style="margin-left: 8upx;">{{item.viewNum}}</text>
+					</text>
+					<text class="cuIcon-appreciatefill margin-lr-xs" @click="articleLike(item)">
+						<text style="margin-left: 8upx;">{{item.likeNum}}</text>
+					</text>
+					<text class="cuIcon-messagefill margin-lr-xs">
+						<text style="margin-left: 8upx;">{{item.replyNum}}</text>
+					</text>
 				</view>
 			</view>
 		</view>
@@ -242,14 +248,15 @@
 
 	,
 	.passage-content {
-		text-align: center;
+		text-align: left;
 		height: 30upx;
 		margin-top: 0;
 	}
 
 	,
 	.text-content {
-		text-align: center;
+		text-align: left;
+		margin-left: 8upx;
 		padding-left: 5upx;
 		padding-right: 5upx;
 		overflow: hidden;

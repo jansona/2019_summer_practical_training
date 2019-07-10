@@ -221,7 +221,7 @@ export default {
       }
     },
     getComment(id,pageNum) {
-      let url = URLS.commentFindByArticle + "?article=" + id+'&page='+pageNum+'&size=2';
+      let url = URLS.commentFindByArticle + "?article=" + id+'&page='+pageNum+'&size=10';
       let _this = this;
       axios
         .post(url)
@@ -277,7 +277,7 @@ export default {
           console.log("发布评论成功");
           _this.$notify({
             message: "发布评论成功",
-            type: "warning",
+            type: "success",
             duration: 1500,
             offset: 50
           });
