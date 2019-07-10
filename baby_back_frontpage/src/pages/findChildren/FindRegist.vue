@@ -20,7 +20,7 @@
         <fill-regist-info v-if="activeStep == 1" @on-next-step-click="handleNextStepClick" :fillType="findType"></fill-regist-info>
         <PicUpload
           v-if="activeStep == 2"
-          :id="'dfgsdfg'"
+          :type="findType"
           @on-prior-step-click="handlePriorStepClick"
           @on-next-step-click="handleNextStepClick"
         ></PicUpload>
@@ -53,7 +53,7 @@ export default {
   methods: {
     handleTypeClick(type) {
       console.log(type);
-      this.findType = type;
+      this.findType = type == 1 ? 1 : 3; 
       this.activeStep++;
       if (type == 1) {
         this.title += " - 家寻宝贝";

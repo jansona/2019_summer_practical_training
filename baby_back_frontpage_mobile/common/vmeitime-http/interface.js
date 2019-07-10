@@ -50,7 +50,7 @@ export default {
 	},
 	interceptor: {
 		request: (config) => {
-			console.log("请求拦截器：", store.state.token)
+			// console.log("请求拦截器：", store.state.token)
 			if (store.state.token != '') {
 				config.header.Authorization ='Bearer '+ store.state.token
 			} else {
@@ -58,7 +58,7 @@ export default {
 			}
 		},
 		response: (response) => {
-			console.log("response interceptor:",response)
+			// console.log("response interceptor:",response)
 			if(response.statusCode == 401){
 				uni.showToast({
 					title: '登录超时，请重新登录！',
