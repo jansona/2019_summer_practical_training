@@ -6,6 +6,8 @@ import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.LocationConvertor;
 import com.example.demo.utils.PageHelper;
+import com.example.demo.utils.Recognizer;
+import com.example.demo.utils.UserInformer;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ public class LostBabyController {
     private StringRedisTemplate stringRedisTemplate;
 
     PageHelper pageHelper = new PageHelper();
+    Recognizer recognizer = new Recognizer();
+    UserInformer userInformer = new UserInformer();
 
     @CrossOrigin
     @ApiOperation(value = "新增一个丢失儿童信息")
@@ -56,6 +60,8 @@ public class LostBabyController {
             }
         }
         LostBaby lostBabySaved = lostBabyRepository.save(lostBaby);
+
+        matchOnInsertInfo(lostBabySaved);
 
         if(urgent){
             String compositedKey = String.format("%d-%d", lostBabySaved.getId(), 2);
@@ -97,6 +103,23 @@ public class LostBabyController {
 
         Page<LostBaby> pageResult = new PageImpl(result, page, totalNum);
         return new ResponseBase(200, "查询成功", pageResult);
+    }
+
+    void matchOnInsertInfo(LostBaby lostBaby){
+
+        String info = lostBaby.toString();
+        ResponseBase responseBase = recognizer.analyze(info, Recognizer.MatchTarget.MATCH_BABY);
+        ArrayList<MatchBaby> matchBabies = (ArrayList<MatchBaby>)responseBase.getData();
+        ArrayList<String> matchIDs = new ArrayList<>();
+        for(MatchBaby matchBaby : matchBabies){
+            matchIDs.add(matchBaby.getId().toString());
+        }
+        String matchResult = String.join(",", (Iterable<? extends CharSequence>) matchIDs.iterator());
+
+        ArrayList<Integer> userIDs = new ArrayList<>();
+        userIDs.add(lostBaby.getUser().getId());
+
+        userInformer.infoUser(userIDs, PendingMessage.MessageType.MATCH_NOTIFICATION, matchResult);
     }
 
 //    @ApiOperation(value = "根据关键字查找用户")

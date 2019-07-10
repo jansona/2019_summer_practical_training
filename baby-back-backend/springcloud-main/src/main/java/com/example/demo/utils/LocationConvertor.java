@@ -20,6 +20,11 @@ public class LocationConvertor {
     public static Float DISTANCE_III = 20.0F;
 
     public static Pair<Float, Float> getCoordinate(String addr) throws IOException {
+
+        if(addr == null || addr.equals("")){
+            return null;
+        }
+
         String lng = null;//经度
         String lat = null;//纬度
         String address = null;
