@@ -1,4 +1,4 @@
-let mode = "test"
+let mode = "lrf"
 let baseUrl = ''
 let baseUrl2 = ''
 if (mode === 'dev') {
@@ -38,8 +38,9 @@ if (mode != 'dev') {
 }
 const registUrl = baseUrl + "/register"
 const sendSMSUrl = baseUrl + "/sms-verify"
-
+const sendSMSUrl2 = baseUrl + '/sms-verify-reset-pwd'
 const userUpdateUrl = baseUrl + '/user/update'
+const resetUrl = baseUrl+'/reset-pwd'
 
 // 论坛部分
 const articleFindUrl = baseUrl + '/article/find'
@@ -88,7 +89,9 @@ const URLS = {
   userInfoUrl,
   logoutUrl,
   websocketUrl,
-  userUpdateUrl
+  userUpdateUrl,
+  sendSMSUrl2,
+  resetUrl
 }
 
 export default URLS
