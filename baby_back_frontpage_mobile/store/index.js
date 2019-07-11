@@ -22,6 +22,7 @@ const store = new Vuex.Store({
 			state.hasLogin = false
 			state.token = ''
 			state.userId = -1
+			state.connected = false
 			uni.removeStorageSync('userId')
 			uni.removeStorageSync('token')
 		},
