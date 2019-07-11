@@ -3,10 +3,10 @@
     <h1 style="position: absolute;
     top: 10%;
     font-size: 3em;
-    left: 20%;">宝贝回家移动端</h1>
+    left: 20%;">思归移动端</h1>
     <h2 style="position: absolute;
     left: 25%;
-    top: 17%;">为每一个回家的宝贝找寻道路</h2>
+    top: 17%;">悲离居之劳心兮，情悁悁而思归</h2>
     <el-image
       style="width: 300px;
     height: 300px;

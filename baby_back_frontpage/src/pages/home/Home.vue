@@ -2,7 +2,7 @@
   <div class="hello">
     <!-- <el-button @click="show">asd</el-button> -->
     <span class="title1">What we do</span>
-    <span class="title2">宝贝回家</span>
+    <span class="title2">思归</span>
     <span class="title3">
       &nbsp &nbsp &nbsp &nbsp将人脸识别技术整合到寻人服务中，自今年8月上线以来，短短几天内已找回3名走失者，识别率超过99％。
     </span>
@@ -134,7 +134,7 @@ export default {
   color: blue;
   font-size: 3em;
   position: absolute;
-  left: 15%;
+  left: 17%;
   top: 17%;
 }
 
@@ -143,7 +143,7 @@ export default {
   font-size: 1.3em;
   position: absolute;
   left: 14%;
-  top: 25%;
+  top: 23%;
   width: 20%;
   word-wrap: break-word;
   text-align: left;
