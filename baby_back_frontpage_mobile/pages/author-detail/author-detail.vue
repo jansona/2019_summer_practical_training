@@ -35,7 +35,7 @@
 								</image>
 							</view>
 						</view>
-						<form>
+						<form @click="goToDetail(item)">
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">姓名</view>
 								<input disabled="true" :placeholder="item.name"></input>
@@ -74,7 +74,7 @@
 								</image>
 							</view>
 						</view>
-						<form>
+						<form @click="goToDetail(item)">
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">姓名</view>
 								<input disabled="true" :placeholder="item.name"></input>

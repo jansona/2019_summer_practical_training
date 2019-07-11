@@ -33,14 +33,14 @@
 			<swiper-item v-for="(content,index1) in pageData" :key=index1>
 				<scroll-view scroll-y="true" style="height: calc(100% );">
 					<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;"  v-for="(item,index) in content.data" :key="index">
-						<view class="padding bg-white" @click="goToDetail(item)">
+						<view class="padding bg-white">
 							<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;margin-left: 550upx;" @click="deleteRelease(item)"></text>
-							<view class="avatar">
+							<view class="avatar" @click="goToDetail(item)">
 								<image :src="item.picUrl" mode="aspectFit">
 								</image>
 							</view>
 						</view>
-						<form style="height: 500px;">
+						<form style="height: 500px;" @click="goToDetail(item)">
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">姓名</view>
 								<input disabled="true" :placeholder="item.name"></input>
