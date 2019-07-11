@@ -46,7 +46,6 @@
 			// uni.clearStorage();
 			this.loadExecution();
 		},
-		inject: ['connect'],
 		methods: {
 			isLogin() {
 				//判断缓存中是否登陆过，直接登陆
