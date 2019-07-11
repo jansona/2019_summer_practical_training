@@ -35,7 +35,9 @@
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
 					<view class="cu-item">
-						<view class="cu-avatar round lg"></view>
+						<view class="cu-avatar round lg" style="overflow: hidden;">
+							<image :src="item.user.profileUrl" mode="aspectFit"></image>
+						</view>
 						<view class="content flex-sub" style="margin-top:5upx;">
 							<view>{{item.user.username}}</view>
 							<view class="text-gray text-sm flex justify-between">
