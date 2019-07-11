@@ -111,19 +111,20 @@
 					return false;
 				}
 				console.log("重置密码成功")
-				
+				let _this = this
 				this.$api.post(this.URLS.resetPwdUrl+"?code="+this.verCode+"&tel="+this.phoneData,this.passData).then(data => {
 					console.log(data)
 					if(data.data.rtnCode != 200 ){
-						this.myToast(data.data.msg)
+						_this.myToast(data.data.msg)
 					} else {
-						this.myToast('重置密码成功!')
-						this.setTimeout(function() {
+						_this.myToast('重置密码成功!')
+						setTimeout(function() {
 							uni.navigateBack()
 						}, 500);
 					}
 				}).catch(error => {
-					this.myToast('网络错误')
+					console.log(error)
+					_this.myToast('网络错误')
 				})
 			}
 		},
