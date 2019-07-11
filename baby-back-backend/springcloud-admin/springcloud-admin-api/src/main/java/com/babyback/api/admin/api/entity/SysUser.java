@@ -51,4 +51,6 @@ public class SysUser implements Serializable {
 //    private Date createTime;
 
     private String email;
+
+    private String location;
 }
