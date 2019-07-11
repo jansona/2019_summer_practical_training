@@ -1,13 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Article;
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.ResponseBase;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.reposity.CommentRepository;
 import com.example.demo.reposity.UserRepository;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.PageHelper;
+import com.example.demo.utils.UserInformer;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,13 +30,20 @@ public class CommentController {
     @Autowired
     UserRepository userRepository;
 
+    UserInformer userInformer = new UserInformer();
+
     PageHelper pageHelper = new PageHelper();
 
     @ApiOperation(value = "新增一篇评论")
     @PutMapping("/insert")     // TODO 填写节点
     public ResponseBase insertComment(@RequestBody Comment comment) {
         ResponseBase responseBase;
-        return new ResponseBase(200, "加入评论成功", commentRepository.save(comment));
+
+        Comment commentSaved = commentRepository.save(comment);
+
+        sendInformOnInsert(commentSaved.getArticle().getUser(), commentSaved.getArticle().getId());
+
+        return new ResponseBase(200, "加入评论成功", commentSaved);
     }
 
     @ApiOperation(value = "查找评论")
@@ -94,6 +100,12 @@ public class CommentController {
     public ResponseBase deleteComment(@RequestParam(value = "id") Integer id) {
         commentRepository.deleteById(id);
         return new ResponseBase(200, "删除成功", null);
+    }
+
+    void sendInformOnInsert(User user, Integer articleId){
+        ArrayList<Integer> ids = new ArrayList<>();
+        ids.add(user.getId());
+        userInformer.infoUser(ids, PendingMessage.MessageType.COMMENT_INFO, articleId.toString());
     }
 
 }

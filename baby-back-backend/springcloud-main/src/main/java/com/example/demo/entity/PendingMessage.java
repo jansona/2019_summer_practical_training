@@ -9,7 +9,8 @@ public class PendingMessage {
 
     public enum MessageType{
         LOST_NOTIFICATION,
-        MATCH_NOTIFICATION
+        MATCH_NOTIFICATION,
+        COMMENT_INFO
     }
 
     @Id
