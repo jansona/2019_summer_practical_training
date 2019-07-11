@@ -14,6 +14,7 @@ import java.util.Random;
 public class SMSSender {
 
     static final int codeLength = 6;
+    static Random random = new Random();
 
     public static String sendSMS(String tel) {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAIIDYDeNbGY15M", "677hr6fbFS4DvIgIsJAZZEJNpiOUSD");
@@ -46,7 +47,6 @@ public class SMSSender {
     static String verifyCode() {
         String str = "";
         String[] ch = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        Random random = new Random();
         for (int i = 0; i < codeLength; i++) {
             String num = ch[random.nextInt(ch.length)];
             str += num;

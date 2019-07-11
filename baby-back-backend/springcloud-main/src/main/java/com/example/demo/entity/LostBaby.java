@@ -44,6 +44,7 @@ public class LostBaby {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     private Pair<Float, Float> coordinate;
 
     public LostBaby() {

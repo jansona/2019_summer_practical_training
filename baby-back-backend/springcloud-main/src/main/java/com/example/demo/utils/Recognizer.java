@@ -25,6 +25,8 @@ import java.util.Optional;
 @Service(value = "RecognizeService")
 public class Recognizer {
 
+    private static boolean isRemote = false;
+
     public enum MatchTarget{
         LOST_BABY,
         MATCH_BABY
@@ -64,8 +66,12 @@ public class Recognizer {
         ArrayList<String> matches = new ArrayList<>();
         try {
             file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
-            String[] cmd = {"docker", "exec", "fr", "face_recognition", "/photo/lost", "/photo/temp/" + fileName};
-//            String[] cmd = {"face_recognition", targetPath, "./photo/temp/" + fileName};
+            String[] cmd;
+            if(isRemote){
+                cmd = new String[]{"face_recognition", targetPath, "./photo/temp/" + fileName};
+            }else{
+                cmd = new String[]{"docker", "exec", "fr", "face_recognition", targetPath, "/photo/temp/" + fileName};
+            }
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
@@ -83,15 +89,7 @@ public class Recognizer {
             input.close();
             ir.close();
 
-            ArrayList<?> matchedBabies;
-            switch (matchTarget){
-                case LOST_BABY:
-                    matchedBabies = babyId2LostBaby(matches);
-                    break;
-                default:
-                    matchedBabies = babyId2MatchBaby(matches);
-                    break;
-            }
+            ArrayList<?> matchedBabies = babyId2Baby(matches, matchTarget);
 
             responseBase = new ResponseBase(200, "待识别照片上传成功", matchedBabies);
         } catch (Exception e) {
@@ -118,8 +116,12 @@ public class Recognizer {
         ArrayList<String> matches = new ArrayList<>();
         ArrayList<LostBaby> matchedBaby;
 
-//        String[] cmd = {"python3", scriptName, txt};
-        String[] cmd = {"py", scriptName, txt};
+        String cmd[];
+        if(isRemote){
+            cmd = new String[]{"python3", scriptName, txt};;
+        }else{
+            cmd = new String[]{"py", scriptName, txt};
+        }
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
@@ -128,9 +130,6 @@ public class Recognizer {
             if(tempStr == null){
                 responseBase = new ResponseBase(50006, "自然语言分析异常", null);
             }else{
-//                for(int i=0; i<4; i++) {
-//                    tempStr = input.readLine();
-//                }
                 while(tempStr != null){
                     String id = tempStr;
                     matches.add(id);
@@ -139,15 +138,7 @@ public class Recognizer {
                 input.close();
                 ir.close();
 
-                ArrayList<?> matchedBabies;
-                switch (matchTarget){
-                    case LOST_BABY:
-                        matchedBabies = babyId2LostBaby(matches);
-                        break;
-                    default:
-                        matchedBabies = babyId2MatchBaby(matches);
-                        break;
-                }
+                ArrayList<?> matchedBabies = babyId2Baby(matches, matchTarget);
 
                 responseBase = new ResponseBase(200, "自然语言分析成功", matchedBabies);
             }
@@ -159,6 +150,19 @@ public class Recognizer {
         return responseBase;
     }
 
+    private ArrayList<?> babyId2Baby(ArrayList<String> ids, MatchTarget matchTarget){
+        ArrayList<?> matchedBabies;
+        switch (matchTarget){
+            case LOST_BABY:
+                matchedBabies = babyId2LostBaby(ids);
+                break;
+            default:
+                matchedBabies = babyId2MatchBaby(ids);
+                break;
+        }
+
+        return matchedBabies;
+    }
 
     private ArrayList<LostBaby> babyId2LostBaby(ArrayList<String> ids){
         ArrayList<LostBaby> matchedBabies = new ArrayList<>();

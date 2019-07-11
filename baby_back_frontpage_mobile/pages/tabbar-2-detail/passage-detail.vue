@@ -124,7 +124,7 @@
 			getCommentList() {
 				let _this = this;
 				let articleid = this.article.id.toString();
-				let url = this.URLS.commentFindUrl + '?id=' + articleid;
+				let url = this.URLS.commentFindByArticleUrl + '?article=' + articleid;
 				// let url=this.URLS.commentFindUrl;
 				console.log(articleid);
 				this.$api.post(url).then(data => {

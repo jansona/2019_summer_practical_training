@@ -6,9 +6,9 @@
 				<view class="box">
 					<view class="box-hd">
 						<view class="avator" @click="setInfo">
-							<img :src="userInfo.profileUrl" />
+							<img :src="user.profileUrl" />
 						</view>
-						<view class="nickname">{{userInfo.username}}</view>
+						<view class="nickname">{{user.username}}</view>
 					</view>
 					<view class="box-bd">
 						<view class="item" @click="goToPage('../tabbar-5-detail/mycomment')">
@@ -83,7 +83,7 @@
 			return {
 				avator: '',
 				nickname: 'asd',
-				userInfo: this.$store.state.userInfo,
+				//userInfo: this.$store.state.userInfo,
 				user:{}
 			};
 		},
@@ -123,9 +123,14 @@
 			},
 			logout() {
 				this.$store.commit('logout', '')
+				uni.closeSocket();
 				uni.reLaunch({
 					url: '../login'
 				})
+				// plus.push.createMessage("youyitiaoxiaoxi!!","type:123123")
+				// plus.push.addEventListener("click",(msg) => {
+				// 	console.log(msg)
+				// })
 			}
 		},
 		onBackPress() {

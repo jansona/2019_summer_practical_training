@@ -43,9 +43,10 @@
 			this.isLogin();
 		},
 		onLoad:function(){
-			uni.clearStorage();
+			// uni.clearStorage();
 			this.loadExecution();
 		},
+		inject: ['connect'],
 		methods: {
 			isLogin() {
 				//判断缓存中是否登陆过，直接登陆
@@ -59,6 +60,8 @@
 							this.$store.commit('setUserId', data.data.data.id)
 							this.$store.commit('setUserInfo', data.data.data)
 							console.log('userInfo:', data)
+							// console.log(this.connect)
+							this.$store.commit('setConnected',true)
 							uni.reLaunch({
 								url: './index/index',
 							});
@@ -67,7 +70,8 @@
 							this.$store.commit('logout');
 							uni.showToast({
 								title: "登录过期",
-								position: 'bottom'
+								position: 'bottom',
+								icon: 'none'
 							})
 						})
 					}
