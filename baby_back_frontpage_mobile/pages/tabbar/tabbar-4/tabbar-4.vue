@@ -17,15 +17,18 @@
 					<view class="solid-bottom padding">
 						<text>{{urgentHint}}</text>
 					</view>
+					<view class="uni-text" style="font-weight: 800;">失踪时间超过24小时请报警</view>
 					<view class="padding">
 						<button class="cu-btn bg-blue margin-tb-sm lg" style="width:300upx;margin: 0 auto;margin-bottom: 20upx;" @click="ReleaseUrgence">发布紧急寻人</button>
 					</view>
 				</view>
 			</view>
 			<view class="padding text-center">
-				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:400upx;margin: 0 auto;margin-top: 50upx;" @click="JoinClick">加入紧急寻人志愿者</button>
+				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:400upx;margin: 0 auto;margin-top: 20upx;" @click="JoinClick">加入紧急寻人志愿者</button>
 				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:400upx;margin: 0 auto;margin-top: 50upx;" @click="Recognition">实名认证</button>
+			
 			</view>
+			<view class="text-gray" style="text-align: center;">必须实名认证后才可发布紧急寻人</view>
 		</view>
 		<view class="cu-tabbar-height"></view>
 	</view>

@@ -27,17 +27,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-content" style="margin-top: 100upx;">
-			<view class="list" @click="SetArea">
-				<view class="li noborder">
-					<view class="icon">
-						<image src="../../static/user/setarea.png" mode="aspectFit"></image>
-					</view>
-					<view class="text">设置活动范围</view>
-					<image class="to" src="../../static/user/to.png"></image>
-				</view>
-			</view>
-
+		<view class="list-content" style="margin-top: 130upx;">
 			<view class="list">
 				<view class="li " @click="goToPage('../tabbar-5-detail/help')">
 					<view class="icon">
@@ -76,7 +66,6 @@
 <script>
 	export default {
 		mounted: function() {
-			this.getUser(this.$store.state.userId);
 			console.log(this.user);
 		},
 		data() {
@@ -84,28 +73,23 @@
 				avator: '',
 				nickname: 'asd',
 				//userInfo: this.$store.state.userInfo,
-				user:{}
+				user: this.$store.state.userInfo
 			};
 		},
 		onReady() {
 			console.log("ready")
 		},
+		computed: {
+			userInfo() {
+				return this.$store.state.userInfo
+			}
+		},
+		watch: {
+			userInfo(newValue, oldValue) {
+				this.user = newValue
+			}
+		},
 		methods: {
-			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
-				let _this = this
-				this.$api.post(url).then(data => {
-					_this.user = data.data.data;
-					console.log(_this.user)
-				}).catch(error => {
-					console.log(error)
-				})
-			},
-			SetArea() {
-				uni.navigateTo({
-					url: "../tabbar-4-detail/joinvolunteer"
-				})
-			},
 			onConfirm(e) {
 				this.pickerText = JSON.stringify(e);
 				this.detail = e.label;
@@ -154,12 +138,11 @@
 
 	.header {
 		background: #fff;
-		height: 290upx;
+		height: 350upx;
 		padding-bottom: 110upx;
-
 		.bg {
 			width: 100%;
-			height: 200upx;
+			height: 350upx;
 			padding-top: 100upx;
 			background-color: #4191ea;
 		}
@@ -170,6 +153,7 @@
 		height: 280upx;
 		border-radius: 20upx;
 		margin: 0 auto;
+		margin-top:70upx;
 		background: #fff;
 		box-shadow: 0 5upx 20upx 0upx rgba(0, 0, 150, .2);
 

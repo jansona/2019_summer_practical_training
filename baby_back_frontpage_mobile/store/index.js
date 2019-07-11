@@ -39,7 +39,8 @@ const store = new Vuex.Store({
 			uni.setStorageSync('token',token)
 		},
 		setUserInfo(state,data){
-			state.userInfo = data
+			state.userInfo = JSON.parse(JSON.stringify(data))
+			state.userInfo.username = data.username
 		},
 		setConnected(state,data){
 			state.connected = data

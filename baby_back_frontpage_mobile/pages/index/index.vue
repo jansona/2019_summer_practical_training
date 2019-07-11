@@ -55,6 +55,10 @@
 		onPullDownRefresh() {
 			if (this.curPage == 1) {
 				this.$refs.tab1.resetData();
+				this.curPage = -1;
+				this.$nextTick(function(){
+					this.curPage = 1;
+				})
 			} else if (this.curPage == 4) {
 				this.$refs.tab4.resetData();
 			}
@@ -65,7 +69,6 @@
 
 		},
 		onReachBottom() {
-			console.log('me')
 			if (this.curPage == 1) {
 				this.$refs.tab1.refreshData();
 			} else if (this.curPage == 4) {

@@ -46,13 +46,13 @@
 				cityPickerValueDefault: [0, 0, 1],
 				themeColor: '#007AFF',
 				pickerText: '',
-				detail:''
+				detail:'',
+				uploadedPic: false,
 			}
 		},
 		onLoad(options) {
 			//把JSON字符串转换为对象
-			console.log(options.data);
-			this.user = JSON.parse(options.data);
+			this.user = this.$store.state.userInfo
 			console.log(this.user)
 		},
 		methods: {
@@ -82,6 +82,7 @@
 						console.log('res.tempFilePaths:'+res.tempFilePaths);
 						this.user.profileUrl = res.tempFilePaths[0];
 						console.log(this.user.profileUrl);
+						this.uploadedPic = true;
 					}
 				});
 			},
@@ -90,7 +91,9 @@
 			},
 			onConfirm(e) {
 			    this.pickerText = JSON.stringify(e);
+				console.log(e);
 				this.user.location=e.label;
+				console.log(this.user.location)
 			},
 			formSubmit: function(e) {
 				//将下列代码加入到对应的检查位置
@@ -129,7 +132,8 @@
 				//let url = this.URLS.userUpdateUrl + '?user=' + this.user;
 				this.$api.post(this.URLS.userUpdateUrl,this.user).then(data => {
 					console.log('开始上传图片...');
-					if(this.user.profileUrl!=''){
+					console.log(data)
+					if(this.user.profileUrl!='' && this.uploadedPic){
 						uni.uploadFile({
 							url: this.URLS.uploadPictureUrl + "?action=AS_PROFILE", 
 							filePath: _this.user.profileUrl,
@@ -143,7 +147,6 @@
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes);
 								_this.myToast('更新成功');
-								return;
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);
@@ -152,6 +155,8 @@
 							}
 						});
 					}
+					_this.$store.commit('setUserInfo',data.data.data)
+					console.log(_this.$store.state.userInfo)
 					_this.myToast('更新成功')
 				}).catch(error => {
 					_this.myToast('更新失败')

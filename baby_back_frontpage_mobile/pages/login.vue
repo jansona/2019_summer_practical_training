@@ -3,7 +3,7 @@
 		<view class="content">
 			<!-- 头部logo -->
 			<view class="header">
-				<image src="../static/logo.png"></image>
+				<image src="../static/img/applogo.png"></image>
 			</view>
 			<!-- 主体表单 -->
 			<view class="main">
@@ -58,7 +58,7 @@
 						this.$api.get(this.URLS.userInfoUrl).then(data => {
 							this.$store.commit('setUserId', data.data.data.id)
 							this.$store.commit('setUserInfo', data.data.data)
-							console.log('userInfo:', data)
+							console.log('userInfo:', this.$store.state.userInfo)
 							// console.log(this.connect)
 							this.$store.commit('setConnected',true)
 							uni.reLaunch({
@@ -194,7 +194,7 @@
 		width: 161upx;
 		height: 161upx;
 		box-shadow: 0upx 0upx 60upx 0upx rgba(0, 129, 255, 0.1);
-		border-radius: 50%;
+		border-radius: 50upx;
 		margin-top: 128upx;
 		margin-bottom: 48upx;
 		margin-left: auto;
@@ -204,7 +204,7 @@
 	.header image {
 		width: 161upx;
 		height: 161upx;
-		border-radius: 50%;
+		border-radius: 50upx;
 	}
 
 	/* 主体 */

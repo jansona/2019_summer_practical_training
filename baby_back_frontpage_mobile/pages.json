@@ -4,7 +4,7 @@
 		{
 		    "path" : "pages/login",
 		    "style" : {
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				"onReachBottomDistance": 0,
 				"app-plus": {  
 					"titleNView": false //禁用原生导航栏  

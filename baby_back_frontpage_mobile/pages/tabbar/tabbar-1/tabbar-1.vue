@@ -28,9 +28,9 @@
 			</view>
 		</scroll-view>
 		<!--图片布局-->
-		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper" style="height: 1100upx;">
+		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper" style="height: 1100upx">
 			<swiper-item v-for="(content,index1) in pageData" :key="index1">
-				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData(index1)">
+				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData(index1)" @touchmove.stop>
 					<view class="grid col-2 grid-square" style="z-index: 10;">
 						<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 						 v-for="(item,index2) in content.data" :key="index2">
@@ -127,6 +127,9 @@
 			};
 		},
 		methods: {
+			handleMove(e){
+				console.log(e);
+			},
 			async onChangeSwiper(e) {
 				let index = e.target.current;
 				this.tabCurrentIndex = index
