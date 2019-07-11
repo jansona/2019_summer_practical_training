@@ -26,7 +26,7 @@
     </el-upload>
 
     <el-row class="ctrl-row">
-      <template v-if="type == 1">
+      <template v-if="type != 2">
         <el-col :span="7" :offset="5">
           <el-button type="success" @click="gotoPriorStep">上一步</el-button>
         </el-col>
@@ -63,8 +63,10 @@ export default {
   mounted() {
     if(this.type === 1){
       this.uploadUrl = URLS.uploadPictureUrl + "?action=AS_LOST_PICS";
-    }else{
+    }else if (this.type == 2){
       this.uploadUrl = URLS.uploadPictureUrl + "?action=RECOGNITION";
+    } else if (this.type == 3){
+      this.uploadUrl = URLS.uploadPictureUrl + "?action=AS_MATCH_PICS";
     }
   },
   methods: {
@@ -94,7 +96,7 @@ export default {
         file.type === "image/jpg" ||
         file.type === "image/png" ||
         file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt5M = file.size / 1024 / 1024 < 5;
       if (!isFormatCorr) {
         this.$notify({
           type: "error",
@@ -102,14 +104,17 @@ export default {
           title: "格式错误"
         });
       }
-      if (!isLt2M) {
+      if (!isLt5M) {
         this.$notify({
           type: "error",
-          message: "图片大小大于2M",
+          message: "图片大小大于5M",
           title: "图片过大"
         });
       }
-      if(!isFormatCorr||!isLt2M) return false
+      if(!isFormatCorr||!isLt5M) {
+        this.loading = false
+        return false
+      }
       this.uploadFile = file;
     },
     handleHttpRequest() {
@@ -122,11 +127,10 @@ export default {
         if (data.rtnCode == 200) {
           this.$notify({
             type: "success",
-            message: data.msg,
             title: "上传成功",
             offset: 50,
           });
-          if(this.type == 1){
+          if(this.type != 2){
           this.$emit('on-next-step-click')
           } else {
             this.$emit('return-data',data)
@@ -138,29 +142,6 @@ export default {
     uploadAndRecog(){
       this.loading = true;
       this.$refs.uploader.submit();
-    },
-    beforeImgUpload(file) {
-      console.log(file);
-      const isFormatCorr =
-        file.type === "image/jpg" ||
-        file.type === "image/png" ||
-        file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isFormatCorr) {
-        this.$notify({
-          type: "error",
-          message: "图片格式请使用jpg/png",
-          title: "格式错误"
-        });
-      }
-      if (!isLt2M) {
-        this.$notify({
-          type: "error",
-          message: "图片大小大于2M",
-          title: "图片过大"
-        });
-      }
-      return isFormatCorr && isLt2M;
     },
   }
 };

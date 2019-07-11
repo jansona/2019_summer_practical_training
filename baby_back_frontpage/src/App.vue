@@ -57,7 +57,9 @@ export default {
       var ws = null;
       //判断当前浏览器是否支持WebSocket
       if ("WebSocket" in window) {
-        ws = new WebSocket(URLS.websocketUrl);
+        let baseUrl = URLS.baseUrl
+        baseUrl = baseUrl.split(':')[1].substring(2)
+        ws = new WebSocket("ws://"+baseUrl+":18080/websocket");
       } else {
         alert("当前浏览器 Not support websocket");
       }

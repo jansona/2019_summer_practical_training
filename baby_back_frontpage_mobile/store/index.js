@@ -10,7 +10,8 @@ const store = new Vuex.Store({
 		openid: null,
 		userId: uni.getStorageSync('userId') || -1,
 		token: uni.getStorageSync('token'),
-		userInfo: {}
+		userInfo: {},
+		connected: false,
 	},
 	mutations: {
 		login(state, provider) {
@@ -39,6 +40,9 @@ const store = new Vuex.Store({
 		},
 		setUserInfo(state,data){
 			state.userInfo = data
+		},
+		setConnected(state,data){
+			state.connected = data
 		}
 	},
 	actions: {

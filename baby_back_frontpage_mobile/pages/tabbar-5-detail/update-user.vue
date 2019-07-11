@@ -20,7 +20,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title" style="width: 150upx;">邮箱</view>
-				<input :value="user.email" @input="emailChange"></input>
+				<input :value="user.email" @input="emailChange" name="email"></input>
 			</view>
 			<view class="cu-form-group">
 				<button class="cu-btn bg-blue round" style="width:200upx;margin: 0 auto;"
@@ -101,6 +101,12 @@
 						checkType: "notnull",
 						checkRule: "",
 						errorMsg: "请填写昵称"
+					},
+					{
+						name: "email",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请填写邮箱"
 					}
 				];
 				//进行表单检查
