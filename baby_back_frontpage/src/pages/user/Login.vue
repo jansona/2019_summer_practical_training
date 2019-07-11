@@ -144,7 +144,7 @@ export default {
             flag: this.rememberLogin
           });
           this.$store.commit("setUserInfo", data.data.data);
-          this.$store.commit("setUserID",{id:data.data.data.id,flag:true})
+          this.$store.commit("setUserID",{id:data.data.data.id,flag:this.rememberLogin})
           this.connect();
           console.log("userInfo", this.$store.state.userInfo);
         })
