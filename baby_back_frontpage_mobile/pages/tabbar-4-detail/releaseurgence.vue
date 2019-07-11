@@ -1,5 +1,16 @@
 <template>
 	<view>
+		<w-picker
+			mode="dateTime" 
+			startYear="2019" 
+			endYear="2020"
+			step="1"
+			:defaultVal="[1,1,1,1,2,5]" 
+			:current="true" 
+			@confirm="onConfirm" 
+			ref="dateTime" 
+			themeColor="#0081ff"
+		></w-picker>
 		<form @submit="formSubmit" @reset="formReset">
 			<view class="cu-form-group">
 				<view class="title">姓名</view>
@@ -28,13 +39,16 @@
 					<slider name="height" value="100" style="width: 500upx;" @change="sliderChange" min="50" max="200" show-value />
 				</view>
 			</view>
-			<view class="cu-form-group" style="margin-top: 30upx;">
-				<view class="title">失踪日期</view>
-				<picker name="date" mode="date" :value="releaseUrgenceForm.date" start="1910-09-01" end="2020-09-01" @change="LostDateChange">
+			<view class="cu-form-group" style="margin-top: 30upx;" @click="showTimePicker">
+				<view class="title">失踪时间</view>
+				<!-- <picker name="date" mode="date" :value="releaseUrgenceForm.date" start="1910-09-01" end="2020-09-01" @change="LostDateChange">
 					<view class="picker">
 						{{releaseUrgenceForm.date}}
 					</view>
-				</picker>
+				</picker> -->
+				<view class="picker">
+					{{datelabel}}
+				</view>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">失踪时地址</view>
@@ -94,14 +108,25 @@
 				<view class="padding-xl">
 					{{modalContent}}
 				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-blue text-green" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-blue margin-left" @tap="sure">确定</button>
+		
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import wPicker from "@/components/w-picker/w-picker.vue";
 	var graceChecker = require("../../common/graceChecker.js");
 	export default {
+		components:{
+			wPicker
+		},
 		onReady: function() {
 			let userId = this.$store.state.userId
 			this.getUser(userId)
@@ -115,7 +140,7 @@
 					sex: '',
 					height: 50,
 					birthday: '2018-12-25',
-					date: '2019-06-25', //失踪时间
+					date: '2019-7-14 10:00:00', //失踪时间
 					place: '',
 					babyDescription: '', //特征描述
 					missDescription: '', //失踪经过
@@ -137,9 +162,25 @@
 				user: {},
 				lostbabyid: -1,
 				successFlag: false,
+				datelabel:'2019-7-14 10:00:00'
 			}
 		},
 		methods: {
+			onConfirm(val){
+				//console.log(val);
+				//如果页面需要调用多个mode类型，可以根据mode处理结果渲染到哪里;
+				// switch(this.mode){
+				// 	case "date":
+				// 		break;
+				// }
+				let a= val.result.split(' ')
+				this.datelabel = val.result;
+				this.releaseUrgenceForm.date=a[0]+'T'+a[1];
+				console.log(this.releaseUrgenceForm.date);
+			},
+			showTimePicker(){
+				this.$refs.dateTime.show();
+			},
 			hideModal(e) {
 				if (this.successFlag) {
 					uni.navigateBack({
@@ -148,6 +189,16 @@
 					});
 				}
 				this.modalName = null
+			},
+			sure(){
+				if(this.modalContent=='请上传照片'||this.modalContent=='发布失败'||this.modalContent=='图片上传失败'||this.modalContent=='已经发布过了')
+				{
+					this.modalName=null;
+				}else if(this.modalContent=='发布成功'){
+					uni.redirectTo({
+						url:'../index/index'
+					})
+				}
 			},
 			radioChange: function(e) {
 				this.releaseUrgenceForm.sex = e.detail.value;
@@ -196,6 +247,11 @@
 				})
 			},
 			formSubmit: function(e) {
+				if(this.successFlag==true){
+					this.modalName='Modal';
+					this.modalContent='已经发布过了';
+					return;
+				}
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
 				let _this = this;
@@ -216,12 +272,6 @@
 						checkType: "notnull",
 						checkRule: "",
 						errorMsg: "请选择出生日期"
-					},
-					{
-						name: "date",
-						checkType: "notnull",
-						checkRule: "",
-						errorMsg: "请选择失踪日期"
 					},
 					{
 						name: "place",
@@ -270,13 +320,13 @@
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes);
 								_this.modalName = 'Modal';
-								_this.modalContent = '发布成功！';
+								_this.modalContent = '发布成功';
 								_this.successFlag = true;
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);
 								_this.modalName = 'Modal';
-								_this.modalContent = '图片上传失败！';
+								_this.modalContent = '图片上传失败';
 								return;
 							}
 						});
@@ -284,7 +334,7 @@
 				}).catch(error => {
 					console.log(error)
 					_this.modalName = 'Modal';
-					_this.modalContent = '发布失败！';
+					_this.modalContent = '发布失败';
 				})
 			},
 			formReset: function(e) {

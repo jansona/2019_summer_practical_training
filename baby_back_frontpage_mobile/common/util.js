@@ -20,9 +20,9 @@ function dateFormat(time) {
  	// 拼接
  	return (
  		year +
- 		"-" +
+ 		"/" +
  		month +
- 		"-" +
+ 		"/" +
  		day +
  		" " +
  		hours +

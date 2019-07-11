@@ -111,7 +111,6 @@
 				uni.reLaunch({
 					url: '../login'
 				})
-				
 				// plus.push.createMessage("youyitiaoxiaoxi!!","type:123123")
 				// plus.push.addEventListener("click",(msg) => {
 				// 	console.log(msg)
@@ -145,7 +144,7 @@
 			width: 100%;
 			height: 350upx;
 			padding-top: 100upx;
-			background-color: #4191ea;
+			background-image: url("../../../../static/user/user.jpg");
 		}
 	}
 
