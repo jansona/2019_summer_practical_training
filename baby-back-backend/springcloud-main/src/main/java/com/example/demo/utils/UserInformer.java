@@ -50,7 +50,7 @@ public class UserInformer {
                 userInformer.userRepository.findById(id);
                 User user = userInformer.userRepository.findById(id).get();
                 PendingMessage pendingMessage = new PendingMessage();
-                pendingMessage.setType(PendingMessage.MessageType.LOST_NOTIFICATION);
+                pendingMessage.setType(type);
                 pendingMessage.setContent(content);
                 pendingMessage.setUser(user);
 

@@ -106,10 +106,8 @@ public class CustomWebSocket {
                 User user = customWebSocket.userRepository.findById(this.id).get();
                 List<PendingMessage> pendingMessageList = customWebSocket.pendingMessageRepository.findByUser(user);
                 // TODO 暂时只返回lostbaby的ID
-                ArrayList<Integer> arrayList = new ArrayList<>();
                 for(PendingMessage pendingMessage : pendingMessageList){
                     if(pendingMessage.getType() == PendingMessage.MessageType.LOST_NOTIFICATION){
-                        arrayList.add(Integer.valueOf(pendingMessage.getContent()));
                         session.getBasicRemote().sendText(pendingMessage.getContent());
                     }
                     customWebSocket.pendingMessageRepository.delete(pendingMessage);
