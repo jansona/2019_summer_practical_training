@@ -113,7 +113,8 @@
 				console.log("重置密码成功")
 				
 				this.$api.post(this.URLS.resetPwdUrl+"?code="+this.verCode+"&tel="+this.phoneData,this.passData).then(data => {
-					if(data.data.rtnCode != 200 && data.data.rtnCode != '200'){
+					console.log(data)
+					if(data.data.rtnCode != 200 ){
 						this.myToast(data.data.msg)
 					} else {
 						this.myToast('重置密码成功!')
