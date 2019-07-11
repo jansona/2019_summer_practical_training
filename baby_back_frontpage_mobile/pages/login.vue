@@ -42,7 +42,7 @@
 			_this = this;
 			this.isLogin();
 		},
-		onLoad:function(){
+		onLoad: function() {
 			//uni.clearStorage();
 			this.loadExecution();
 		},
@@ -51,6 +51,7 @@
 				//判断缓存中是否登陆过，直接登陆
 				console.log(this.$store.state.hasLogin, this.$store.state.userId, this.$store.state.token)
 				try {
+					console.log("userinfourl:", this.URLS.userInfoUrl)
 					const value = uni.getStorageSync('token');
 					if (value) {
 						//有登陆信息
@@ -60,7 +61,7 @@
 							this.$store.commit('setUserInfo', data.data.data)
 							console.log('userInfo:', this.$store.state.userInfo)
 							// console.log(this.connect)
-							this.$store.commit('setConnected',true)
+							this.$store.commit('setConnected', true)
 							uni.reLaunch({
 								url: './index/index',
 							});
@@ -131,45 +132,47 @@
 				})
 
 			},
-			loadExecution: function(){
+			loadExecution: function() {
 				/**
 				 * 获取本地存储中launchFlag的值
 				 * 若存在，说明不是首次启动，直接进入首页；
 				 * 若不存在，说明是首次启动，进入引导页；
 				 */
 				try {
-				    const value = uni.getStorageSync('launchFlag');
+					const value = uni.getStorageSync('launchFlag');
 					console.log(value);
-				    if (value) {
-				        if (value == true) {
-				            return;
-				        } else {
-				            uni.redirectTo({
-				                url: '/pages/index/guide'
-				            });
-				        }
-				    } else {
-				        uni.setStorage({
-				            key: 'launchFlag',
-				            data: true,
-				            success: function() {
+					if (value) {
+						if (value == true) {
+							return;
+						} else {
+							uni.redirectTo({
+								url: '/pages/index/guide'
+							});
+						}
+					} else {
+						uni.setStorage({
+							key: 'launchFlag',
+							data: true,
+							success: function() {
 								console.log('存储launchFlag');
 							}
-				        });
-				        uni.redirectTo({
-				            url: '/pages/index/guide'
-				        });
-				    }
-				} catch(e) { 
+						});
+						uni.redirectTo({
+							url: '/pages/index/guide'
+						});
+					}
+				} catch (e) {
 					// error 
-					uni.setStorage({ 
-						key: 'launchFlag', 
-						data: true, 
-						success: function () {
+					uni.setStorage({
+						key: 'launchFlag',
+						data: true,
+						success: function() {
 							console.log('error时存储launchFlag');
-						} 
-					}); 
-					uni.redirectTo({ url: '/pages/index/guide' }); 
+						}
+					});
+					uni.redirectTo({
+						url: '/pages/index/guide'
+					});
 				}
 				return;
 			}

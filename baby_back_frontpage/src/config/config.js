@@ -1,4 +1,4 @@
-let mode = "pro"
+let mode = "test"
 let baseUrl = ''
 let baseUrl2 = ''
 let wsUrl = ''

@@ -125,7 +125,7 @@ Axios.interceptors.response.use(
               duration:1500,
             })
             router.replace({
-              path: '/login'
+              path: '/loginOrRegist'
             })
             break
           case 504:

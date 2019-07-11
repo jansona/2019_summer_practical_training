@@ -111,6 +111,7 @@
 				uni.reLaunch({
 					url: '../login'
 				})
+				
 				// plus.push.createMessage("youyitiaoxiaoxi!!","type:123123")
 				// plus.push.addEventListener("click",(msg) => {
 				// 	console.log(msg)

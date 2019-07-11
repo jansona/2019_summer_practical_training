@@ -38,6 +38,9 @@ public class UserInformer {
             case MATCH_NOTIFICATION:
                 prefix = "MATCH:";
                 break;
+            case COMMENT_INFO:
+                prefix = "COMMENT:";
+                break;
             default:
                 prefix = "ERROR:";
                 break;
