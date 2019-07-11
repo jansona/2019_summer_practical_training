@@ -172,7 +172,7 @@
 					sex: '',
 					birthday: '2018-12-25',
 					nativePlace: '', //籍贯
-					height: 50,
+					height: 100,
 					date: '2019-06-25', //失踪时间
 					place: '',
 					babyDescription: '', //特征描述

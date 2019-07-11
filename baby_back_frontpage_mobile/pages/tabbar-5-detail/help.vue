@@ -7,25 +7,21 @@
 				<view class="swiper-item">
 					<view class="swiper-item-img"><image src="../../static/img/start1.gif" mode="aspectFit"></image></view>
 				</view>
-				<view class="jump-over" @tap="launchFlag">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="swiper-item-img"><image src="../../static/img/start2.gif" mode="aspectFit"></image></view>
 				</view>
-				<view class="jump-over" @tap="launchFlag">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="swiper-item-img"><image src="../../static/img/start3.gif" mode="aspectFit"></image></view>
 				</view>
-				<view class="jump-over" @tap="launchFlag">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="swiper-item-img"><image src="../../static/img/start4.gif" mode="aspectFit"></image></view>
 				</view>
-				<view class="experience" @tap="launchFlag">{{experience}}</view>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -37,25 +33,11 @@
 			return {
 				background: ['color1', 'color2', 'color3'],
 				autoplay: false,
-				duration: 500,
-				jumpover: '跳过',
-				experience: '立即体验'
+				duration: 500
 			}
 		},
 		methods: {
-			launchFlag: function(){
-				/**
-				 * 向本地存储中设置launchFlag的值，即启动标识；
-				 */
-				uni.setStorage({
-						key: 'launchFlag',
-						data: true,
-				});
-				uni.redirectTo({
-					url: '/pages/login'
-				});
-				
-			}
+			
 		}
 	}
 </script>

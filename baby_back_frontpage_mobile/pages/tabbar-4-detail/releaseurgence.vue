@@ -244,7 +244,7 @@
 					});
 				}
 				console.log(this.releaseUrgenceForm)
-				this.$api.post(this.URLS.lostBabyInsertUrl,this.releaseUrgenceForm,true).then(data => {
+				this.$api.post(this.URLS.lostBabyInsertUrl+"?urgent=true",this.releaseUrgenceForm).then(data => {
 					console.log(data)
 					_this.lostbabyid = data.data.data.id
 					//上传图片
