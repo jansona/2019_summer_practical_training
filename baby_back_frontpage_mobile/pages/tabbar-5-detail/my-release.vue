@@ -30,10 +30,10 @@
 			</view>
 		</scroll-view>
 		<swiper class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="onChangeSwiper" style="height: 1100upx;" >
-			<swiper-item v-for="(content,index1) in pageData">
+			<swiper-item v-for="(content,index1) in pageData" :key=index1>
 				<scroll-view scroll-y="true" style="height: calc(100% );">
 					<view style="margin:50upx 50upx;width: 650upx;border-radius: 20upx;overflow: hidden;"  v-for="(item,index) in content.data" :key="index">
-						<view class="padding bg-white">
+						<view class="padding bg-white" @click="goToDetail(item)">
 							<text class="cuIcon-deletefill" style="margin-left: 570upx;color: #999999;margin-left: 550upx;" @click="deleteRelease(item)"></text>
 							<view class="avatar">
 								<image :src="item.picUrl" mode="aspectFit">
@@ -47,7 +47,7 @@
 							</view>
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">出生日期</view>
-								<input disabled="true" :placeholder="item.birthday"></input>
+								<input disabled="true" :placeholder="dateFormat(item.birthday)"></input>
 							</view>
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">身高</view>
@@ -55,7 +55,7 @@
 							</view>
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">失踪日期</view>
-								<input disabled="true" :placeholder="item.date"></input>
+								<input disabled="true" :placeholder="dateFormat(item.date)"></input>
 							</view>
 							<view class="cu-form-group">
 								<view class="title" style="width: 150upx;">失踪地点</view>
@@ -235,7 +235,44 @@
 					this.myToast('删除失败')
 					console.log(error)
 				})
-			}
+			},
+			dateFormat(time) {
+			 	var date = new Date(time);
+			 	var year = date.getFullYear();
+			 	/* 在日期格式中，月份是从0开始的，因此要加0
+			 	 * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+			 	 * */
+			 	var month =
+			 		date.getMonth() + 1 < 10 ?
+			 		"0" + (date.getMonth() + 1) :
+			 		date.getMonth() + 1;
+			 	var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+			 	var hours =
+			 		date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+			 	var minutes =
+			 		date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+			 	var seconds =
+			 		date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+			 	// 拼接
+			 	return (
+			 		year +
+			 		"-" +
+			 		month +
+			 		"-" +
+			 		day +
+			 		" " +
+			 		hours +
+			 		":" +
+			 		minutes +
+			 		":" +
+			 		seconds
+			 	);
+			 },
+			 goToDetail(item) {
+			 	uni.navigateTo({
+			 		url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item)
+			 	})
+			 }
 		},
 	}
 </script>

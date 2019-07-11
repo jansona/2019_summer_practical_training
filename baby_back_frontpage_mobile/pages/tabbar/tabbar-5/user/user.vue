@@ -39,7 +39,7 @@
 			</view>
 
 			<view class="list">
-				<view class="li ">
+				<view class="li " @click="goToPage('../tabbar-5-detail/help')">
 					<view class="icon">
 						<image src="../../static/user/help.png"></image>
 					</view>
