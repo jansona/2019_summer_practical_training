@@ -321,7 +321,7 @@ export default {
       this.getComment(this.$route.query.id , this.pageNo - 1);
     },
     yieldPicUrl(partialUrl){
-      return URLS.baseUrl + partialUrl;
+      return partialUrl;
     }
   }
 };
