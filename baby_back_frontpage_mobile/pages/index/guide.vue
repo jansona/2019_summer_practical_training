@@ -5,25 +5,25 @@
 		:duration="duration">
 			<swiper-item>
 				<view class="swiper-item">
-					<view class="swiper-item-img"><image src="../../static/img/start1.png" mode="aspectFit"></image></view>
+					<view class="swiper-item-img"><image src="../../static/img/start1.gif" mode="aspectFit"></image></view>
 				</view>
 				<view class="jump-over" @tap="launchFlag">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
-					<view class="swiper-item-img"><image src="../../static/img/start1.png" mode="aspectFit"></image></view>
+					<view class="swiper-item-img"><image src="../../static/img/start2.gif" mode="aspectFit"></image></view>
 				</view>
 				<view class="jump-over" @tap="launchFlag">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
-					<view class="swiper-item-img"><image src="../../static/img/start4.png" mode="aspectFit"></image></view>
+					<view class="swiper-item-img"><image src="../../static/img/start3.gif" mode="aspectFit"></image></view>
 				</view>
 				<view class="jump-over" @tap="launchFlag">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
-					<view class="swiper-item-img"><image src="../../static/img/start4.png" mode="aspectFit"></image></view>
+					<view class="swiper-item-img"><image src="../../static/img/start4.gif" mode="aspectFit"></image></view>
 				</view>
 				<view class="experience" @tap="launchFlag">{{experience}}</view>
 			</swiper-item>
@@ -109,6 +109,6 @@
 	.experience{
 		right: 50%;
 		margin-right: -105upx;
-		bottom: 30upx;
+		bottom: 250upx;
 	}
 </style>
