@@ -76,7 +76,6 @@
 <script>
 	export default {
 		mounted: function() {
-			this.getUser(this.$store.state.userId);
 			console.log(this.user);
 		},
 		data() {
@@ -84,23 +83,13 @@
 				avator: '',
 				nickname: 'asd',
 				//userInfo: this.$store.state.userInfo,
-				user:{}
+				user: this.$store.state.userInfo
 			};
 		},
 		onReady() {
 			console.log("ready")
 		},
 		methods: {
-			getUser(userId) {
-				let url = this.URLS.userFindByIdUrl + '?id=' + userId;
-				let _this = this
-				this.$api.post(url).then(data => {
-					_this.user = data.data.data;
-					console.log(_this.user)
-				}).catch(error => {
-					console.log(error)
-				})
-			},
 			SetArea() {
 				uni.navigateTo({
 					url: "../tabbar-4-detail/joinvolunteer"

@@ -15,7 +15,8 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">出生日期</view>
-				<picker mode="date" :value="releaseUrgenceForm.birthday" start="1910-09-01" end="2020-09-01" name="birthday" @change="BirthDateChange">
+				<picker mode="date" :value="releaseUrgenceForm.birthday" start="1910-09-01" end="2020-09-01" name="birthday"
+				 @change="BirthDateChange">
 					<view class="picker">
 						{{releaseUrgenceForm.birthday}}
 					</view>
@@ -56,12 +57,12 @@
 				<textarea maxlength="-1" v-model="releaseUrgenceForm.otherExplain" placeholder="请输入其他的说明"></textarea>
 			</view>
 			<view class="cu-bar bg-white margin-top">
-					<view class="action">
-						图片上传
-					</view>
-					<view class="action">
-						{{imgList.length}}/1
-					</view>
+				<view class="action">
+					图片上传
+				</view>
+				<view class="action">
+					{{imgList.length}}/1
+				</view>
 			</view>
 			<view class="cu-form-group">
 				<view class="grid col-4 grid-square flex-sub">
@@ -102,17 +103,17 @@
 	var graceChecker = require("../../common/graceChecker.js");
 	export default {
 		onReady: function() {
-			let userId=this.$store.state.userId
+			let userId = this.$store.state.userId
 			this.getUser(userId)
 		},
 		data() {
 			return {
-				imgList:[],
+				imgList: [],
 				releaseUrgenceForm: {
 					id: '',
 					name: '',
 					sex: '',
-					height:50,
+					height: 50,
 					birthday: '2018-12-25',
 					date: '2019-06-25', //失踪时间
 					place: '',
@@ -122,24 +123,30 @@
 					contactRel: '', //联系人与失踪人关系
 					user: {}
 				},
-				items: [
-					{
+				items: [{
 						name: 'man',
 						value: '男'
-					}, 
+					},
 					{
 						name: 'woman',
 						value: '女'
 					}
 				],
 				modalName: null,
-				modalContent:null,
-				user:{},
-				lostbabyid:-1
+				modalContent: null,
+				user: {},
+				lostbabyid: -1,
+				successFlag: false,
 			}
 		},
 		methods: {
 			hideModal(e) {
+				if (this.successFlag) {
+					uni.navigateBack({
+						animationType: "slide-out-right",
+						animationDuration: 300,
+					});
+				}
 				this.modalName = null
 			},
 			radioChange: function(e) {
@@ -150,7 +157,7 @@
 			},
 			sliderChange(e) {
 				console.log('value 发生变化：' + e.detail.value);
-				this.releaseUrgenceForm.height=e.detail.value
+				this.releaseUrgenceForm.height = e.detail.value
 			},
 			LostDateChange(e) {
 				this.releaseUrgenceForm.date = e.detail.value
@@ -191,7 +198,7 @@
 			formSubmit: function(e) {
 				//将下列代码加入到对应的检查位置
 				//定义表单规则
-				let _this=this;
+				let _this = this;
 				var rule = [{
 						name: "name",
 						checkType: "string",
@@ -225,9 +232,9 @@
 					//{name:"img", checkType : "notnull", checkRule:"",  errorMsg:"请上传照片"}
 				];
 				//进行表单检查
-				if(this.imgList.length<=0){
-					this.modalName='Modal';
-					this.modalContent='请上传照片';
+				if (this.imgList.length <= 0) {
+					this.modalName = 'Modal';
+					this.modalContent = '请上传照片';
 					return;
 				}
 				var formData = e.detail.value;
@@ -244,39 +251,40 @@
 					});
 				}
 				console.log(this.releaseUrgenceForm)
-				this.$api.post(this.URLS.lostBabyInsertUrl+"?urgent=true",this.releaseUrgenceForm).then(data => {
+				this.$api.post(this.URLS.lostBabyInsertUrl + "?urgent=true", this.releaseUrgenceForm).then(data => {
 					console.log(data)
 					_this.lostbabyid = data.data.data.id
 					//上传图片
 					if (_this.imgList != null && _this.imgList.length > 0) {
 						console.log('开始上传图片...');
 						uni.uploadFile({
-							url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS", 
+							url: this.URLS.uploadPictureUrl + "?action=AS_LOST_PICS",
 							filePath: _this.imgList[0],
 							name: 'file',
 							formData: {
 								'id': _this.lostbabyid
 							},
 							header: {
-								'Authorization': 'Bearer '+ this.$store.state.token
+								'Authorization': 'Bearer ' + this.$store.state.token
 							},
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes);
-								_this.modalName='Modal';
-								_this.modalContent='发布成功！';
+								_this.modalName = 'Modal';
+								_this.modalContent = '发布成功！';
+								_this.successFlag = true;
 							},
 							fail: (uploadFileRes) => {
 								console.log(uploadFileRes);
-								_this.modalName='Modal';
-								_this.modalContent='图片上传失败！';
+								_this.modalName = 'Modal';
+								_this.modalContent = '图片上传失败！';
 								return;
 							}
 						});
 					}
 				}).catch(error => {
 					console.log(error)
-					_this.modalName='Modal';
-					_this.modalContent='发布失败！';
+					_this.modalName = 'Modal';
+					_this.modalContent = '发布失败！';
 				})
 			},
 			formReset: function(e) {
@@ -295,7 +303,6 @@
 			}
 		}
 	}
-	
 </script>
 
 <style>
