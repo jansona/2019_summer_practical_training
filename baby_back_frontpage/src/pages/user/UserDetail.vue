@@ -9,7 +9,7 @@
       :user='this.user' ref="userInfo">
       </UserInfo>
     </el-tab-pane>
-    <el-tab-pane label="我的失踪者申报" name="baby_aply">
+    <el-tab-pane label="已申报失踪者" name="baby_aply">
       <el-tabs @tab-click="subTabClick" style="margin-top:10px;" v-if='mark===1'>
       <el-tab-pane class="tab-container">
         <div slot="label">
@@ -45,13 +45,13 @@
       </el-tab-pane>
     </el-tabs>
     </el-tab-pane>
-    <el-tab-pane label="我的文章" name="article">
+    <el-tab-pane label="已发布文章" name="article">
       <ArticleInfiniteList
       :user="this.id" v-if="mark===2"
       >
       </ArticleInfiniteList>
     </el-tab-pane>
-    <el-tab-pane label="我的评论" name="comment">
+    <el-tab-pane label="已发布评论" name="comment">
       <CommentInfiniteList
       :user="this.id" v-if="mark===3"
       ></CommentInfiniteList>
@@ -86,7 +86,6 @@ export default {
   },
   data () {
     return {
-
       mark: 0,
       activeName: 'user_info',
 
