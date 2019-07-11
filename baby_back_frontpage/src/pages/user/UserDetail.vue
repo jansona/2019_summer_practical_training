@@ -101,7 +101,7 @@ export default {
       dataTypes: [],
       totalNum: 0,
       currentPage: 1,
-      pageSize: 3,
+      pageSize: 16,
       user:{},
 
       // 文章分页相关

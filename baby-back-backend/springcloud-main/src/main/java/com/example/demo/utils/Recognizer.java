@@ -25,7 +25,7 @@ import java.util.Optional;
 @Service(value = "RecognizeService")
 public class Recognizer {
 
-    private static boolean isRemote = false;
+    private static boolean isRemote = true;
 
     public enum MatchTarget{
         LOST_BABY,
