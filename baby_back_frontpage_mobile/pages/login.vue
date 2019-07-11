@@ -58,7 +58,7 @@
 						this.$api.get(this.URLS.userInfoUrl).then(data => {
 							this.$store.commit('setUserId', data.data.data.id)
 							this.$store.commit('setUserInfo', data.data.data)
-							console.log('userInfo:', data)
+							console.log('userInfo:', this.$store.state.userInfo)
 							// console.log(this.connect)
 							this.$store.commit('setConnected',true)
 							uni.reLaunch({
