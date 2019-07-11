@@ -5,11 +5,8 @@ import com.example.demo.entity.PendingMessage;
 import com.example.demo.entity.User;
 import com.example.demo.reposity.PendingMessageRepository;
 import com.example.demo.reposity.UserRepository;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ public class UserInformer {
 
     public void infoUser(ArrayList<Integer> ids, PendingMessage.MessageType type, String content){
 
-        String prefix = "";
+        String prefix;
         switch (type){
             case LOST_NOTIFICATION:
                 prefix = "LOST:";
@@ -41,17 +38,21 @@ public class UserInformer {
             case MATCH_NOTIFICATION:
                 prefix = "MATCH:";
                 break;
+            default:
+                prefix = "ERROR:";
+                break;
         }
 
+        String message = prefix + content;
         for(int id : ids){
-            if(!CustomWebSocket.sendMessageToUser(id, prefix + content)){
+            if(!CustomWebSocket.sendMessageToUser(id, message)){
                 System.out.println("目标用户不在");
                 // 此时目标用户不在线
                 userInformer.userRepository.findById(id);
                 User user = userInformer.userRepository.findById(id).get();
                 PendingMessage pendingMessage = new PendingMessage();
-                pendingMessage.setType(PendingMessage.MessageType.LOST_NOTIFICATION);
-                pendingMessage.setContent(content);
+                pendingMessage.setType(type);
+                pendingMessage.setContent(message);
                 pendingMessage.setUser(user);
 
                 userInformer.pendingMessageRepository.save(pendingMessage);

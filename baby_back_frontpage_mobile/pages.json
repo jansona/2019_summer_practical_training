@@ -125,6 +125,10 @@
 			"style": {}
 		},
 		{
+			"path": "pages/tabbar-5-detail/help",
+			"style": {}
+		},
+		{
 			"path": "pages/author-detail/author-detail",
 			"style": {}
 		}
