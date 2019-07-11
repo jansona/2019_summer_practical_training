@@ -25,6 +25,8 @@ import java.util.Optional;
 @Service(value = "RecognizeService")
 public class Recognizer {
 
+    private static boolean isRemote = false;
+
     public enum MatchTarget{
         LOST_BABY,
         MATCH_BABY
@@ -64,8 +66,12 @@ public class Recognizer {
         ArrayList<String> matches = new ArrayList<>();
         try {
             file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
-            String[] cmd = {"docker", "exec", "fr", "face_recognition", targetPath, "/photo/temp/" + fileName};
-//            String[] cmd = {"face_recognition", targetPath, "./photo/temp/" + fileName};
+            String[] cmd;
+            if(isRemote){
+                cmd = new String[]{"face_recognition", targetPath, "./photo/temp/" + fileName};
+            }else{
+                cmd = new String[]{"docker", "exec", "fr", "face_recognition", targetPath, "/photo/temp/" + fileName};
+            }
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
@@ -110,8 +116,12 @@ public class Recognizer {
         ArrayList<String> matches = new ArrayList<>();
         ArrayList<LostBaby> matchedBaby;
 
-//        String[] cmd = {"python3", scriptName, txt};
-        String[] cmd = {"py", scriptName, txt};
+        String cmd[];
+        if(isRemote){
+            cmd = new String[]{"python3", scriptName, txt};;
+        }else{
+            cmd = new String[]{"py", scriptName, txt};
+        }
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             InputStreamReader ir = new InputStreamReader(p.getInputStream());

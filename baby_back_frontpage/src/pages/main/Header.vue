@@ -33,19 +33,21 @@
         v-if="this.$store.state.hasLogin"
         class="message-style"
       >
-        <el-popover placement="top-start" width="200" trigger="hover">
+      
+        <el-popover placement="top-start" width="260" trigger="hover">
           <el-table :data="this.$store.state.messageList" @row-click="gotoInfo">
-            <el-table-column width="100" property="name" label="走失儿童"></el-table-column>
-            <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
-            <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
+            <el-table-column width="80" property="name" label="走失儿童"></el-table-column>
+            <el-table-column width="100" property="date" label="失踪时间"></el-table-column>
+            <el-table-column width="80" property="place" label="失踪地点"></el-table-column>
           </el-table>
           <el-table :data="this.$store.state.matchMessageList" @row-click="gotoMInfo">
-            <el-table-column width="100" property="name" label="匹配儿童"></el-table-column>
-            <el-table-column width="150" property="date" label="失踪时间"></el-table-column>
-            <el-table-column width="300" property="place" label="失踪地点"></el-table-column>
+            <el-table-column width="80" property="name" label="匹配儿童"></el-table-column>
+            <el-table-column width="100" property="date" label="失踪时间"></el-table-column>
+            <el-table-column width="80" property="place" label="失踪地点"></el-table-column>
           </el-table>
           <el-button slot="reference" icon="el-icon-message" circle @click="openMessage"></el-button>
         </el-popover>
+    
         <!-- <el-button icon="el-icon-message" circle @click="openMessage"></el-button> -->
       </el-badge>
       <template v-if="this.$store.state.hasLogin">
