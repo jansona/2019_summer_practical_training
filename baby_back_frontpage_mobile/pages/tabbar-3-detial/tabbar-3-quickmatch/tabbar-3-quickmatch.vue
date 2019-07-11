@@ -12,7 +12,7 @@
 			<view class="cu-form-group">
 				<view class="grid col-1 grid-square flex-sub">
 					<view class="bg-img" @tap="ViewImage" v-if="imgList.length>=1">
-					 <image :src="imgList[0]" mode="aspectFill"></image>
+						<image :src="imgList[0]" mode="aspectFill"></image>
 						<view class="cu-tag bg-red" @tap.stop="DelImg">
 							<text class='cuIcon-close'></text>
 						</view>
@@ -29,12 +29,12 @@
 				<view class="title">照片说明</view>
 				<textarea maxlength="-1" @input="photoInput" placeholder="请输入其他的说明"></textarea>
 			</view>
-			
+
 			<view class="cu-form-group" style="background-color: #FFFFFF;margin-top: 30upx;">
-				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:300upx;margin: 0 auto;" @click="submit">确认上传</button>
+				<button class="cu-btn bg-blue margin-tb-sm lg" style="width:300upx;margin: 0 auto;" @click="submit" :loading="isMatching" :disabled="isMatching">确认上传</button>
 			</view>
 		</form>
-		
+
 		<view class="grid col-2 grid-square" style="z-index: 10;margin-top: 50upx;">
 			<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 			 v-for="(item,index) in matchData" :key="index">
@@ -50,13 +50,14 @@
 		data() {
 			return {
 				imgList: [],
-				photoInfo:'',
-				content:'请选择上传面容清晰的近期正面照，\n若有其余衣着外貌特征等照片，请适当添加照片说明。',
-				matchData: [{name:"a",picUrl:"http://127.0.0.1:18080/resource/photo/match/16.jpg"},{name:"b",picUrl:"http://127.0.0.1:18080/resource/photo/match/16.jpg"}],
+				photoInfo: '',
+				content: '请选择上传面容清晰的近期正面照，\n若有其余衣着外貌特征等照片，请适当添加照片说明。',
+				matchData: [],
+				isMatching: false
 			};
 		},
-		methods:{
-			photoInput(e){
+		methods: {
+			photoInput(e) {
 				this.photoInfo = e.detail.value
 			},
 			ChooseImage() {
@@ -66,7 +67,7 @@
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
 						if (this.imgList.length != 0) {
-							
+
 						} else {
 							this.imgList = res.tempFilePaths
 						}
@@ -92,38 +93,54 @@
 					}
 				})
 			},
-			submit(e){
+			submit(e) {
 				let _this = this
+				this.isMatching = true
 				uni.uploadFile({
-					url: this.URLS.uploadPictureUrl + "?action=RECOGNITION", 
+					url: this.URLS.uploadPictureUrl + "?action=RECOGNITION",
 					filePath: _this.imgList[0],
 					name: 'file',
 					formData: {
 						'id': -1
 					},
 					header: {
-						'Authorization': 'Bearer '+ this.$store.state.token
+						'Authorization': 'Bearer ' + this.$store.state.token
 					},
 					success: (uploadFileRes) => {
 						console.log(uploadFileRes);
-						if(uploadFileRes.statusCode == 401){
-							this.myToast("验证过期，请重新登录")
+						let data1 = JSON.stringify(uploadFileRes.data)
+						let data2 = JSON.parse(JSON.parse(data1))
+						// let data2 = uploadFileRes.data
+						console.log(typeof(data2))
+						console.log(data2.data,data2["data"],data2.rtnCode,data2.msg)
+						if (uploadFileRes.statusCode == 401) {
+							_this.myToast("验证过期，请重新登录")
 							uni.reLaunch({
 								url: "/pages/login"
 							})
 							return
 						}
+						_this.matchData = data2.data
+						_this.matchData.push({})
+						_this.matchData.pop()
+						_this.isMatching = false
 					},
 					fail: (uploadFileRes) => {
 						console.log(uploadFileRes);
-						if(uploadFileRes.statusCode == 401){
-							this.myToast("验证过期，请重新登录")
+						if (uploadFileRes.statusCode == 401) {
+							_this.myToast("验证过期，请重新登录")
 							uni.reLaunch({
 								url: "/pages/login"
 							})
 						}
+						_this.isMatching = false
 					}
 				});
+			},
+			goToDetail(item, flag) {
+				uni.navigateTo({
+					url: '/pages/tabbar-1-detail/baby-detail?data=' + JSON.stringify(item)
+				})
 			}
 		}
 	};
@@ -136,7 +153,7 @@
 		margin-top: 50upx;
 		margin-bottom: 50upx;
 	}
-	
+
 	.my-tag {
 		margin-left: 100upx;
 		vertical-align: middle;
