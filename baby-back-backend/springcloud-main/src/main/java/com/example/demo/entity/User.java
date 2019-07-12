@@ -31,7 +31,7 @@ public class User {
     @JsonIgnore
     private Set<Comment> comments;//发布的可能匹配的儿童信息
 
-    private String profileUrl;
+    private String profileUrl = "http://42.159.91.0:18080/resource/photo/default.jpg";
 
     private String location;
     @JsonIgnore

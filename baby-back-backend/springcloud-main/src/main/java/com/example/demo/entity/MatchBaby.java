@@ -23,7 +23,7 @@ public class MatchBaby {
     private String otherDescription;//其他信息描述
     private String otherExplain;//其他说明
 
-    private String picUrl;
+    private String picUrl = "http://42.159.91.0:18080/resource/photo/default.jpg";
 
     // 联系人信息
     private String contactName;

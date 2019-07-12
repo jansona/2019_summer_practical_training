@@ -30,7 +30,7 @@ public class LostBaby {
     private String otherExplain;//其他说明
     private String relationship;//和报备人关系
 
-    private String picUrl;
+    private String picUrl = "http://42.159.91.0:18080/resource/photo/default.jpg";
 
     // 联系人信息
     private String contactName;
