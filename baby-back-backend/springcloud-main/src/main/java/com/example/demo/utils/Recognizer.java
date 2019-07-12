@@ -68,7 +68,7 @@ public class Recognizer {
             file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
             String[] cmd;
             if(isRemote){
-                cmd = new String[]{"face_recognition", targetPath, "./photo/temp/" + fileName};
+                cmd = new String[]{"face_recognition", targetPath, "./photo/temp/" + fileName, "--tolerance", "0.4", "--cpus", "4"};
             }else{
                 cmd = new String[]{"docker", "exec", "fr", "face_recognition", targetPath, "/photo/temp/" + fileName};
             }
