@@ -186,6 +186,7 @@ export default {
             });
         } else {
           console.log("error submit!!");
+          this.fillLoading = false;
           return false;
         }
       });

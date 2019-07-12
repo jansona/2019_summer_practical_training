@@ -6,7 +6,7 @@
 				<view class="box">
 					<view class="box-hd">
 						<view class="avator" @click="setInfo">
-							<img :src="user.profileUrl" />
+							<img v-if="showImg" :src="user.profileUrl" />
 						</view>
 						<view class="nickname">{{user.username}}</view>
 					</view>
@@ -73,7 +73,8 @@
 				avator: '',
 				nickname: 'asd',
 				//userInfo: this.$store.state.userInfo,
-				user: this.$store.state.userInfo
+				user: this.$store.state.userInfo,
+				showImg: true
 			};
 		},
 		onReady() {
@@ -86,7 +87,15 @@
 		},
 		watch: {
 			userInfo(newValue, oldValue) {
+				console.log("show!")
 				this.user = newValue
+				let savedUrl = this.user.profileUrl
+				this.user.profileUrl = ""
+				this.showImg = false
+				this.$nextTick(function(){
+					this.user.profileUrl = savedUrl
+					this.showImg = true
+				})
 			}
 		},
 		methods: {

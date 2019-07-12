@@ -1,14 +1,14 @@
 <template>
   <div class="main-container">
     <div @click="chooseType(1)">
-      <type-card title="家寻宝贝" picUrl="house.jpg" content='是指家长寻找失踪、被拐时16周岁以下的儿童，可在"家寻宝贝"版块进行寻亲登记。'></type-card>
+      <type-card title="家寻宝贝" picUrl="xunzi.png" content='是指家长寻找失踪、被拐时16周岁以下的儿童，可在"家寻宝贝"版块进行寻亲登记。'></type-card>
     </div>
     <br>
     <br>
     <div @click="chooseType(2)">
       <type-card
         title="宝贝寻家"
-        picUrl="ocean.jpg"
+        picUrl="xunjia.png"
         content='对于自幼被拐、走失及送养的孩子（16周岁以下儿童），可在"宝贝寻家"版块里进行寻亲登记。'
       ></type-card>
     </div>
