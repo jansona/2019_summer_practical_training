@@ -101,7 +101,17 @@ public class CustomWebSocket {
             try {
                 // 前端发来id说明是刚建立连接，此时有两个工作：
                 // 1.为CusWebSocket对象初始化id；2.发送对应该用户的PendingMessage。
+
+                int idGot = Integer.valueOf(message);
+
+                for(CustomWebSocket webSocket : webSocketSet){
+                    if(webSocket.id == idGot){
+                        webSocketSet.remove(webSocket);
+                    }
+                }
+
                 this.id = Integer.valueOf(message);
+
                 System.out.println("用户id:" + this.id);
                 User user = customWebSocket.userRepository.findById(this.id).get();
                 List<PendingMessage> pendingMessageList = customWebSocket.pendingMessageRepository.findByUser(user);
@@ -136,8 +146,13 @@ public class CustomWebSocket {
 
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("----websocket-------有异常啦");
-        error.printStackTrace();
+        try {
+            session.close();
+            System.out.println("----websocket-------有异常啦");
+            error.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void subOnlineCount() {
