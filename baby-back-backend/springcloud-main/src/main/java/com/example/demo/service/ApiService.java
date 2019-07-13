@@ -200,7 +200,7 @@ public class ApiService implements InitializingBean {
             predicatesList.add(serviceNamePredicate);
         }
         if (!nativePlace.equals("")) {
-            Predicate serviceNamePredicate = cb.like(root.get("email"), "%" + nativePlace + "%");
+            Predicate serviceNamePredicate = cb.like(root.get("nativePlace"), "%" + nativePlace + "%");
             predicatesList.add(serviceNamePredicate);
         }
         if (!date.equals("")) {

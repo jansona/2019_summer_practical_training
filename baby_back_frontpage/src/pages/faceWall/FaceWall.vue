@@ -1,6 +1,6 @@
 <template>
   <div class="pic-container">
-    <el-collapse accordion class="search-container">
+    <el-collapse accordion class="search-container" @keypress.space="null">
       <el-collapse-item>
         <div slot="title" class="base-search-container" @click.stop>
           <el-input
@@ -8,18 +8,19 @@
             placeholder="请输入关键字"
             style="width:200px;"
             @click.stop="inputClick"
+            @keypress.space.stop=""
           ></el-input>
           <el-select v-model="type" placeholder="类型" style="width:100px;">
             <el-option
               v-for="item in types"
               :key="item.value"
-              :label="item.value"
+              :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
           <el-button icon="el-icon-search" circle @click="doSearch" class="search-btn"></el-button>
         </div>
-        <div class="options-container">
+        <!-- <div class="options-container">
           <el-select v-model="sex" placeholder="性别" style="width:100px;">
             <el-option
               v-for="item in sexs"
@@ -46,7 +47,7 @@
             end-placeholder="结束日期"
             :picker-options="pickerOptions"
           ></el-date-picker>
-        </div>
+        </div> -->
       </el-collapse-item>
     </el-collapse>
     <div class="content-margins">
@@ -103,13 +104,13 @@ export default {
       input: "",
       sex: "",
       date: "",
-      type: "",
+      type: "name",
       datas: [],
       dataTypes: [],
       choosed: 0,
       totalNum: 0,
       currentPage: 1,
-      pageSize: 12,
+      pageSize: 16,
       sexs: [
         {
           value: 0,
@@ -140,16 +141,16 @@ export default {
       ],
       types: [
         {
-          value: "全部"
+          value: "name",
+          label: "名称"
         },
         {
-          value: "姓名"
+          value: "nativePlace",
+          label: "籍贯"
         },
         {
-          value: "特征"
-        },
-        {
-          value: "失踪地点"
+          value: "place",
+          label: "失踪地点"
         }
       ],
       pickerOptions: {
@@ -190,13 +191,17 @@ export default {
       console.log("asdasd");
     },
     doSearch() {
-      console.log("search");
-      console.log(this.$refs.pictures0);
+      console.log("search",this.type);
+      this.currentPage = 1;
+      this.loadData();
     },
     loadData() {
+      let nameOp = this.type == "name" ? this.input : ""
+      let nativePlaceOp = this.type == "nativePlace" ? this.input : ""
+      let placeOp = this.type == "place" ? this.input : ""
       request(
         this.choosed != 1 ? URLS.lostBabyFindUrl : URLS.matchBabyFindUrl,
-        { size: this.pageSize, page: this.currentPage - 1 }
+        { size: this.pageSize, page: this.currentPage - 1, name: nameOp,nativePlace: nativePlaceOp, place: placeOp }
       )
         .then(data => {
           console.log(data);
