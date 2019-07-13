@@ -16,12 +16,16 @@ export const store = new Vuex.Store({
     userInfo: {},
     messageList : [],
     matchMessageList:[],
+    hasMessage: false,
   },
   modules: {
     //sys,
     //global
   },
   mutations: {
+    setHasMessage(state,data){
+      state.hasMessage = data
+    },
     setMessageList(state,content){
       state.messageList=state.messageList.concat(content)
 

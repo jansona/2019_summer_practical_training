@@ -1,6 +1,6 @@
 <template>
 <div>
-<el-card>
+<el-card v-if="show">
   <el-tabs :tab-position="tabPosition" @tab-click="handleTabClick" v-model="activeName">
     <el-tab-pane label="基本信息" name="user_info">
       <UserInfo
@@ -84,11 +84,25 @@ export default {
     ArticleInfiniteList,
     CommentInfiniteList
   },
+  computed: {
+    userid() {
+      return parseInt(this.$route.query.id)
+    }
+  },
+  watch: {
+    userid(newvar,old){
+      this.show = false;
+      this.$nextTick(()=> {
+        this.show = true;
+      })
+      this.id = newvar
+    }
+  },
   data () {
     return {
+      show: true,
       mark: 0,
       activeName: 'user_info',
-
       tabPosition: 'left',
       id: parseInt(this.$route.query.id),
       // id: 8,

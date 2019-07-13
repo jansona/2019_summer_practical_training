@@ -34,7 +34,7 @@
         class="message-style"
       >
       
-        <el-popover placement="top-start" width="260" trigger="hover">
+        <el-popover placement="top-start" width="260" trigger="hover" @after-enter="$store.commit('setHasMessage',false)">
           <el-table :data="this.$store.state.messageList" @row-click="gotoInfo">
             <el-table-column width="80" property="name" label="走失儿童"></el-table-column>
             <el-table-column width="100" property="date" label="失踪时间"></el-table-column>
@@ -90,7 +90,7 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      hasMessage: true,
+      hasMessage: this.$store.state.hasMessage,
       hasLogin: this.$store.state.hasLogin,
       style: {},
       opacity: 0
