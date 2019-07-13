@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="topView"> </view>
+		<!-- <view class="topView"> </view> -->
 		<view class="header">
 			<view class="bg">
 				<view class="box">

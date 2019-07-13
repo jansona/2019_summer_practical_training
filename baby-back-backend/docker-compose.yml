@@ -1,0 +1,17 @@
+version: '2.3'
+
+services:
+  face_recognition:
+    image: face_recognition
+    container_name: face_recognition
+    working_dir: /face_recognition/examples
+    build:
+      context: .
+      #Uncomment this line to run the example on the GPU (requires Nvidia-Docker)
+      # dockerfile: Dockerfile.gpu 
+    command: face_recognition photo/I_know/ photo/stranger/
+    volumes:
+      - ./:/face_recognition
+      - ./photo:/photo
+    #Uncomment this line to run the example on the GPU (requires Nvidia-Docker)
+    # runtime: nvidia

@@ -95,11 +95,13 @@ export default {
       }
       let listString = e.data.split(":");
       if (listString[0] == "LOST") {
+        this.$store.commit('setHasMessage',true)
         let idList = listString[1].split(",");
         for (let id in idList) {
           this.loadData(idList[id]);
         }
       } else if (listString[0] == "MATCH") {
+        this.$store.commit('setHasMessage',true)
         let idList = listString[1].split(",");
         for (let Mid in idList) {
           this.loadMatchData(idList[Mid]);

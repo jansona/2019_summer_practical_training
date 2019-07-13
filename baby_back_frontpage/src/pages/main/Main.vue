@@ -126,6 +126,7 @@ body {
   width: 60%;
   left: 20%;
   top: 100px;
+  margin-bottom: 100px;
 }
 .homepage-container {
   position: absolute;

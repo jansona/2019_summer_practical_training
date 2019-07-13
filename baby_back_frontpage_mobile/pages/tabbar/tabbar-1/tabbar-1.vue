@@ -32,9 +32,9 @@
 			<swiper-item v-for="(content,index1) in pageData" :key="index1">
 				<scroll-view scroll-y="true" style="height: calc(100% - 100upx);" @scrolltolower="refreshData(index1)" @touchmove>
 					<view class="grid col-2 grid-square" style="z-index: 10;">
-						<view class="bg-white" style="margin-top:20upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
+						<view class="bg-white" style="margin-top:10upx;margin-left: 12upx;margin-right: 12upx;width: 350upx;height: 350upx;"
 						 v-for="(item,index2) in content.data" :key="index2">
-							<img :src="item.picUrl" mode="aspectFill" @click="goToDetail(item,index1)" style="width:250upx;height:250upx;margin-top:15upx;margin-left:50upx;margin-right: 50upx;border-radius: 10upx;overflow: hidden;"></img>
+							<img :src="item.picUrl" mode="aspectFill" @click="goToDetail(item,index1)" style="width:300upx;height:300upx;margin-top:15upx;margin-left:25upx;margin-right: 25upx;border-radius: 10upx;overflow: hidden;"></img>
 							<view class="my-tag"><text style="color: #FFFFFF;font-size: 25upx;padding: 0 20upx;">{{ item.name }}</text></view>
 						</view>
 					</view>
@@ -318,5 +318,6 @@
 		border-radius: 20upx;
 		overflow: hidden;
 		background-color: #0D9FFF;
+		margin-top: -30upx;
 	}
 </style>
