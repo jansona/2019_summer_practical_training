@@ -77,6 +77,9 @@ public class LocationConvertor {
     }
 
     public static Boolean shouldResponse(Pair<Float, Float> c0, Pair<Float, Float> c1, Float radius){
+        if(c0 == null || c1 == null){
+            return false;
+        }
         double deltaLon = c0.getKey() - c1.getKey();
         double deltaLat = c0.getValue() - c1.getValue();
         double distance = Math.sqrt(Math.pow(deltaLon, 2.0) + Math.pow(deltaLat, 2.0));

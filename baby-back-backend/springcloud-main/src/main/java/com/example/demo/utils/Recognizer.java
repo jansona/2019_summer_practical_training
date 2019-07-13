@@ -65,10 +65,14 @@ public class Recognizer {
         ResponseBase responseBase;
         ArrayList<String> matches = new ArrayList<>();
         try {
-            file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
+            try {
+                file.transferTo(fileManager.generateFile(FileManager.Path.TEMP, fileName));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             String[] cmd;
             if(isRemote){
-                cmd = new String[]{"face_recognition", targetPath, "./photo/temp/" + fileName};
+                cmd = new String[]{"face_recognition", targetPath, "./photo/temp/" + fileName, "--tolerance", "0.4", "--cpus", "4"};
             }else{
                 cmd = new String[]{"docker", "exec", "fr", "face_recognition", targetPath, "/photo/temp/" + fileName};
             }

@@ -18,11 +18,12 @@ public class FileManager<RequestMapping> {
         PROFILE
     }
 
-    String store_base_path = "./photo/";
-    String store_lost_path = "./photo/lost/";
-    String store_match_path = "./photo/match/";
-    String store_temp_path = "./photo/temp/";
-    String store_profile_path = "./photo/profile/";
+    String homePath = "/home/jansona";
+    String store_base_path = homePath + "/photo/";
+    String store_lost_path = homePath + "/photo/lost/";
+    String store_match_path = homePath + "/photo/match/";
+    String store_temp_path = homePath + "/photo/temp/";
+    String store_profile_path = homePath + "/photo/profile/";
 
     File files[];
 
@@ -86,7 +87,24 @@ public class FileManager<RequestMapping> {
 
     public File generateFile(Path basePath, String fileName) {
 
-        String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName;
+//        String pathStr = files[basePath.ordinal()].getAbsolutePath() + "/" + fileName;
+        String basePathStr;
+        switch (basePath){
+            case LOST:
+                basePathStr = store_lost_path;
+                break;
+            case MATCH:
+                basePathStr = store_match_path;
+                break;
+            case TEMP:
+                basePathStr = store_temp_path;
+                break;
+                default:
+                    basePathStr = store_temp_path;
+        }
+
+        String pathStr = basePathStr + "/" + fileName;
+
         File file = new File(pathStr);
         return file;
     }
