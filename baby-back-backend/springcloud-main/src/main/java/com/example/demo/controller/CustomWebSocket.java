@@ -32,7 +32,7 @@ public class CustomWebSocket {
     private static CopyOnWriteArraySet<CustomWebSocket> webSocketSet = new CopyOnWriteArraySet<CustomWebSocket>();
 
     private Session session;
-    private int id;
+    private int id = 0;
 
     @Autowired
     PendingMessageRepository pendingMessageRepository;
@@ -59,7 +59,7 @@ public class CustomWebSocket {
                     doesExist = true;
                     break;
                 }
-            }catch (IOException ioe){
+            }catch (Exception ioe){
                 ioe.printStackTrace();
             }
         }
@@ -104,11 +104,11 @@ public class CustomWebSocket {
 
                 int idGot = Integer.valueOf(message);
 
-                for(CustomWebSocket webSocket : webSocketSet){
-                    if(webSocket.id == idGot){
-                        webSocketSet.remove(webSocket);
-                    }
-                }
+//                for(CustomWebSocket webSocket : webSocketSet){
+//                    if(webSocket.id == idGot){
+//                        webSocketSet.remove(webSocket);
+//                    }
+//                }
 
                 this.id = Integer.valueOf(message);
 
@@ -136,11 +136,7 @@ public class CustomWebSocket {
         Arrays.asList(webSocketSet.toArray()).forEach(item -> {
             CustomWebSocket customWebSocket = (CustomWebSocket) item;
             //群发
-            try {
-                customWebSocket.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            customWebSocket.sendMessage(message);
         });
     }
 
@@ -167,9 +163,13 @@ public class CustomWebSocket {
         return onlineCount;
     }
 
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(String message) {
         //获取session远程基本连接发送文本消息
-        this.session.getBasicRemote().sendText(message);
+        try {
+            this.session.getBasicRemote().sendText(message);
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+        }
     }
 }
 
